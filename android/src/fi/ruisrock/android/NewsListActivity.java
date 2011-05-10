@@ -29,7 +29,7 @@ public class NewsListActivity extends Activity {
 		newsList = (ListView) findViewById(R.id.newsList);
 		
 		List<NewsArticle> articles = NewsDAO.findAll(this);
-		if (articles.size() == 0) {
+		//if (articles.size() == 0) {
 			RSSReader rssReader = new RSSReader();
 			List<RSSItem> feed = rssReader.loadRSSFeed(RuisrockConstants.NEWS_RSS_URL);
 			if (feed != null && feed.size() > 0) {
@@ -39,7 +39,7 @@ public class NewsListActivity extends Activity {
 				}
 				NewsDAO.replaceAll(this, articles);
 			}
-		}
+		//}
 	    newsList.setAdapter(new NewsArticleAdapter(this, articles));
 	}
 	

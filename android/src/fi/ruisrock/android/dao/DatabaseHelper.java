@@ -43,6 +43,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"newsDate DATE)";
 		db.execSQL(sql);
 	}
+	
+	private void createConfigTable(SQLiteDatabase db) throws Exception {
+		db.execSQL("DROP TABLE IF EXISTS config");
+		String sql = "CREATE TABLE IF NOT EXISTS news (" +
+				"_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				"attributeName VARCHAR(127), " +
+				"attributevalue VARCHAR(255))";
+		db.execSQL(sql);
+	}
+	
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

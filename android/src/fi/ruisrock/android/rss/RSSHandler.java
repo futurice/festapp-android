@@ -7,7 +7,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.util.Log;
+import fi.ruisrock.android.util.StringUtil;
 
 /**
  * RSSHandler.
@@ -18,9 +18,7 @@ public class RSSHandler extends DefaultHandler {
 
 	private List<RSSItem> feedItems;
 	private RSSItem item;
-
-	//private int depth = 0;
-	private RssElementType currentRssElement = RssElementType.CHANNEL;
+	private StringBuilder builder;
 
 	public List<RSSItem> getFeedItems() {
 		return feedItems;
@@ -28,88 +26,49 @@ public class RSSHandler extends DefaultHandler {
 
 	public void startDocument() throws SAXException {
 		feedItems = new ArrayList<RSSItem>();
-		item = new RSSItem();
+		builder = new StringBuilder();
 	}
 
 	public void endDocument() throws SAXException {
 	}
 	
-	private enum RssElementType {
-		CHANNEL,
-		TITLE,
-		LINK,
-		DESCRIPTION,
-		CATEGORY,
-		PUB_DATE
-	}
 
 	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
-		//depth++;
-		if (localName.equals("channel")) {
-			currentRssElement = RssElementType.CHANNEL;
-			return;
-		}
-		if (localName.equals("item")) {
+		String elementName = (StringUtil.isEmpty(localName)) ? qName : localName;
+		
+		if (elementName.equals("item")) {
 			// create a new item
 			item = new RSSItem();
-			return;
 		}
-		if (localName.equals("title")) {
-			currentRssElement = RssElementType.TITLE;
-			return;
-		}
-		if (localName.equals("description")) {
-			currentRssElement = RssElementType.DESCRIPTION;
-			return;
-		}
-		if (localName.equals("link")) {
-			currentRssElement = RssElementType.LINK;
-			return;
-		}
-		if (localName.equals("category")) {
-			currentRssElement = RssElementType.CATEGORY;
-			return;
-		}
-		if (localName.equals("pubDate")) {
-			currentRssElement = RssElementType.PUB_DATE;
-			return;
-		}
-		currentRssElement = RssElementType.CHANNEL;
 	}
 
 	public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
-		//depth--;
-		if (localName.equals("item")) {
-			// add our item to the list!
+		String elementName = (StringUtil.isEmpty(localName)) ? qName : localName;
+		String value = builder.toString();
+		builder.setLength(0);
+		
+		if (item != null) {
+			if (elementName.equals("title")) {
+				item.setTitle(value);
+			} else if (elementName.equals("link")) {
+				item.setLink(value);
+			} else if (elementName.equals("description")) {
+				item.setDescription(value);
+			} else if (elementName.equals("category")) {
+				item.setCategory(value);
+			} else if (elementName.equals("pubDate")) {
+				item.setPubDate(value);
+			}
+		}
+		
+		if (elementName.equals("item")) {
 			feedItems.add(item);
-			return;
+			item = null;
 		}
 	}
 
 	public void characters(char ch[], int start, int length) {
-		String value = new String(ch, start, length);
-		Log.i("RSSReader", "characters[" + value + "]");
-
-		switch (currentRssElement) {
-		case TITLE:
-			item.setTitle(value);
-			break;
-		case LINK:
-			item.setLink(value);
-			break;
-		case DESCRIPTION:
-			item.setDescription(value);
-			break;
-		case CATEGORY:
-			item.setCategory(value);
-			break;
-		case PUB_DATE:
-			item.setPubDate(value);
-			break;
-		default:
-			break;
-		}
-		currentRssElement = RssElementType.CHANNEL;
+		builder.append(ch, start, length);
 	}
 
 }

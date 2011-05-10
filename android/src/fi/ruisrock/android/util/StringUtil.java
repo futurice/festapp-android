@@ -8,7 +8,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 
-public class RuisrockUtil {
+public class StringUtil {
 
 	public static String convertStreamToString(InputStream is) throws IOException {
 		if (is != null) {
@@ -28,5 +28,17 @@ public class RuisrockUtil {
 			return "";
 		}
 	}
+	
+	public static boolean isEmpty(String str) {
+		if (str == null || str.length() == 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean isNotEmpty(String str) {
+		return !isEmpty(str);
+	}
+	
 
 }

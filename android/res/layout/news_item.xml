@@ -6,8 +6,9 @@
   
     <ImageView
       android:id="@+id/image"
-      android:layout_width="32px"
-      android:layout_height="32px" android:src="@drawable/icon" android:scaleType="centerCrop"/>
+      android:layout_width="64px"
+      android:layout_height="64px"
+      android:padding="10dip" android:src="@drawable/icon" android:scaleType="centerCrop"/>
   
   <LinearLayout
  	 xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,7 +27,6 @@
       android:textStyle="bold"
       android:text="VOITA FLEET FOXESIN UUNITUORE LEVY ITSELLESI JA ÄIDILLESI!"
       android:layout_weight="1" android:layout_gravity="left|center_vertical" android:textSize="18dip" android:layout_marginLeft="10dip"
-      
       />
     
     </LinearLayout>

@@ -25,7 +25,7 @@ public class NewsDAO {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
-			db = (new DatabaseHelper(context)).getReadableDatabase();
+			db = (new DatabaseHelper(context)).getWritableDatabase();
 			cursor = db.rawQuery("SELECT _id, title, newsDate, url FROM news", new String[]{});
 			while (cursor.moveToNext()) {
 		        long id = cursor.getLong(0);
@@ -53,13 +53,12 @@ public class NewsDAO {
 		Cursor cursor = null;
 		try {
 			db = (new DatabaseHelper(context)).getWritableDatabase();
-			db.beginTransaction();
 			int deletedArticles = db.delete("news", null, null);
 			for (NewsArticle article : articles) {
-				db.insert("news", "title", convertNewsArticleToContentValues(article));
+				long id = db.insert("news", "date", convertNewsArticleToContentValues(article));
+				System.out.println(id);
 			}
 			Log.i(TAG, String.format("Successfully replaced %d NewsArticles with %d", deletedArticles, articles.size()));
-			db.endTransaction();
 		} finally {
 			if (db != null) {
 				db.close();
