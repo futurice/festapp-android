@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, NewsListActivity!</string>
-    <string name="app_name">Ruisrock 2011</string>
+    <string name="News">Uutiset</string>
+    <string name="Artists">Esiintyjät</string>
+    <string name="app_name">Ruisrock</string>
+    
+    <!-- Activity labels -->
+    <string name="activity.label.News">Ruisrock » Uutiset</string>
 </resources>
