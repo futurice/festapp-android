@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<!-- Single words -->
     <string name="News">Uutiset</string>
     <string name="Artists">Esiintyjät</string>
     <string name="app_name">Ruisrock</string>
+    <string name="Error">Virhe</string>
+    
+    <!-- Common phrases -->
+    
     
     <!-- Activity labels -->
     <string name="activity.label.News">Ruisrock » Uutiset</string>
+    
+    <!-- News view -->
+    <string name="newsActivity.loadingArticles">Ladataan uutisotsikoita...</string>
+    <string name="newsActivity.invalidUrl">Kyseisellä uutisotsikolla ei ole sisältöä.</string>
+    <string name="newsActivity.httpError">Uutisotsikoiden lataaminen epäonnistui. Suuresta kävijäjoukosta johtuen verkkoyhteyksissä voi esiintyä häiriöitä.</string>
+    
 </resources>

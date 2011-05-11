@@ -1,0 +1,9 @@
+"gigs" : [
+  {
+    "artist" : "CHISU",
+    "introduction" : "Tässä Chisun kuvaus.",
+    "startTime" : "2011-07-08T18:00",
+    "endTime" : "2011-07-08T19:00",
+    "venue" : "Joku-lava"
+  },
+]

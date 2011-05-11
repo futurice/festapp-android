@@ -18,7 +18,7 @@ public class RuisrockMainActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main_artists_menu, menu);
+		inflater.inflate(R.menu.main_menu, menu);
 		return true;
 	}
 
@@ -34,5 +34,5 @@ public class RuisrockMainActivity extends Activity {
 		}
 		return false;
 	}
-
+	
 }
