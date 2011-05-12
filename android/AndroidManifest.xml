@@ -14,6 +14,7 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".ArtistListActivity" android:label="@string/activity.label.Artists" android:screenOrientation="portrait" />
+		<activity android:name=".ArtistInfoActivity" android:label="@string/activity.label.ArtistInfo" android:screenOrientation="portrait" />
 		<activity android:name=".NewsListActivity" android:label="@string/activity.label.News" android:screenOrientation="portrait" />
 		<activity android:name=".DebugActivity" android:label="@string/activity.label.Debug" android:screenOrientation="portrait" />
 		<!-- Services -->

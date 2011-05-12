@@ -37,7 +37,6 @@ public class NewsListActivity extends Activity {
 	
 	private ProgressDialog progressDialog;
 	
-	
 	private OnItemClickListener newsArticleClickListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> av, View v, int index, long arg) {

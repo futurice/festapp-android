@@ -10,7 +10,8 @@
     
     
     <!-- Activity labels -->
-    <string name="activity.label.Artists">Ruisrock » Esiintyjät</string>
+    <string name="activity.label.Artists">Ruisrock » Bändit</string>
+    <string name="activity.label.ArtistInfo">Ruisrock » Bändit » Info </string>
     <string name="activity.label.News">Ruisrock » Uutiset</string>
     <string name="activity.label.Debug">Ruisrock » Debug</string>
     
@@ -18,5 +19,8 @@
     <string name="newsActivity.loadingArticles">Ladataan uutisotsikoita...</string>
     <string name="newsActivity.invalidUrl">Kyseisellä uutisotsikolla ei ole sisältöä.</string>
     <string name="newsActivity.httpError">Uutisotsikoiden lataaminen epäonnistui. Suuresta kävijäjoukosta johtuen verkkoyhteyksissä voi esiintyä häiriöitä.</string>
+    
+    <!-- ArtistInfo view -->
+    <string name="artistInfoActivity.invalidId">Bändin tietoja ei löydy.</string>
     
 </resources>

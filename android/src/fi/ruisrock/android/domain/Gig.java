@@ -4,10 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonSetter;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
 import fi.ruisrock.android.util.CalendarUtil;
+import fi.ruisrock.android.util.TimezonelessDeserializer;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Gig {
@@ -73,7 +76,8 @@ public class Gig {
 		return startTime;
 	}
 
-	@JsonSetter("start")
+	@JsonSetter("start") @JsonDeserialize(using=TimezonelessDeserializer.class)
+	@JsonIgnore
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
@@ -82,7 +86,8 @@ public class Gig {
 		return endTime;
 	}
 
-	@JsonSetter("end")
+	@JsonSetter("end") @JsonDeserialize(using=TimezonelessDeserializer.class)
+	@JsonIgnore
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
@@ -135,7 +140,7 @@ public class Gig {
 	}
 	
 	public String getStageAndTime() {
-		String time = getStartDay() + " klo " + sdfHoursAndMinutes.format(startTime) + " - " + sdfHoursAndMinutes.format(endTime);
+		String time = getStartDay().substring(0, 2) + " klo " + sdfHoursAndMinutes.format(startTime) + " - " + sdfHoursAndMinutes.format(endTime);
 		return String.format("%s: %s", stage, time);
 	}
 	

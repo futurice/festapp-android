@@ -84,6 +84,17 @@ public class GigDAO {
 		}
 	}
 	
+	public static Gig findGig(Context context, String id) {
+		SQLiteDatabase db = null;
+		Cursor cursor = null;
+		try {
+			db = (new DatabaseHelper(context)).getReadableDatabase();
+			return findGig(db, id);
+		} finally {
+			closeDb(db, cursor);
+		}
+	}
+	
 	
 	
 	private static Gig findGig(SQLiteDatabase db, String id) {
@@ -92,7 +103,6 @@ public class GigDAO {
 			cursor.moveToFirst();
 			return cursorToGig(cursor, id);
 		}
-		
 		return null;
 	}
 	
