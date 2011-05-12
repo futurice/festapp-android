@@ -1,9 +1,22 @@
-"gigs" : [
+[
   {
-    "artist" : "CHISU",
-    "introduction" : "Tässä Chisun kuvaus.",
-    "startTime" : "2011-07-08T18:00",
-    "endTime" : "2011-07-08T19:00",
-    "venue" : "Joku-lava"
+    "id" : "132",
+    "name" : "THE PRODIGY (UK)",
+    "description" : "Tässä Prodigyn kuvaus.",
+    "start" : "2011-07-08T18:00:00",
+    "end" : "2011-07-08T19:15:00",
+    "stage" : "Joku-lava",
+    "band_image" : null,
+    "band_logo" : null
   },
+  {
+    "id" : "153",
+    "name" : "VON HERTZEN BROTHERS",
+    "description" : "Von Hertzen Brothers -kuvaus.",
+    "start" : "2011-07-08T19:00:00",
+    "end" : "2011-07-08T19:45:00",
+    "stage" : "Toinen-lava",
+    "band_image" : null,
+    "band_logo" : null
+  }
 ]

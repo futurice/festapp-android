@@ -13,6 +13,10 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name="NewsListActivity" android:label="@string/activity.label.News" android:screenOrientation="portrait" />
+		<activity android:name=".ArtistListActivity" android:label="@string/activity.label.Artists" android:screenOrientation="portrait" />
+		<activity android:name=".NewsListActivity" android:label="@string/activity.label.News" android:screenOrientation="portrait" />
+		<activity android:name=".DebugActivity" android:label="@string/activity.label.Debug" android:screenOrientation="portrait" />
+		<!-- Services -->
+		<service android:enabled="true" android:name=".service.RuisrockService" />
 	</application>
 </manifest>

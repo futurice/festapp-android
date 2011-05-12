@@ -10,7 +10,9 @@
     
     
     <!-- Activity labels -->
+    <string name="activity.label.Artists">Ruisrock » Esiintyjät</string>
     <string name="activity.label.News">Ruisrock » Uutiset</string>
+    <string name="activity.label.Debug">Ruisrock » Debug</string>
     
     <!-- News view -->
     <string name="newsActivity.loadingArticles">Ladataan uutisotsikoita...</string>
