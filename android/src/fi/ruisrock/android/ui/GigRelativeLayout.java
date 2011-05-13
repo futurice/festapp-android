@@ -23,6 +23,7 @@ public class GigRelativeLayout extends RelativeLayout implements View.OnClickLis
 		this.context = context;
 		this.gig = gig;
 		LayoutInflater.from(context).inflate(R.layout.test, this, true);
+		setBackgroundResource(R.drawable.schedule_gig);
 		TextView label = (TextView) findViewById(R.id.artistName);
 		label.setText(gig.getArtist());
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -40,9 +41,10 @@ public class GigRelativeLayout extends RelativeLayout implements View.OnClickLis
 	public void onClick(View v) {
 		if (v instanceof GigRelativeLayout) {
 			GigRelativeLayout gl = (GigRelativeLayout) v;
-			Toast.makeText(context, gig.getArtist(), Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "GRL " + gig.getArtist(), Toast.LENGTH_SHORT).show();
 		}
 	}
+	
 	
 	
 

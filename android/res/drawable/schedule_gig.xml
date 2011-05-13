@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
 	android:shape="rectangle">
-	 
-	 <!--  
-	<gradient android:startColor="#FFB0B0B0" android:endColor="#FFB0B0B0"
-		android:angle="250" />
-		-->
+  
 		<gradient
 android:startColor="#ccd0d3"
     android:centerColor="#00babd"
     android:endColor="#ffd0ff"
     android:angle="0"
     />
+
     
     <padding
         android:left="2px"
@@ -33,9 +30,9 @@ android:startColor="#ccd0d3"
         android:color="#000000" />
         
         
-        <!-- TODO: not working? :( -->
+        <!-- 
 	<selector>
-		<item android:state_pressed="true" android:drawable="@drawable/icon">
+		<item android:state_pressed="true" android:drawable="@drawable/artist_138">
 			<stroke
 		        android:width="5dp"
 		        android:color="#555555" />
@@ -43,7 +40,7 @@ android:startColor="#ccd0d3"
 				android:endColor="#ffd0ff" android:angle="0" />
 			
 		</item>
-		<item android:state_selected="true" android:drawable="@drawable/icon">
+		<item android:state_selected="true" android:drawable="@drawable/artist_138">
 			<stroke
 		        android:width="5dp"
 		        android:color="#555555" />
@@ -51,5 +48,6 @@ android:startColor="#ccd0d3"
 				android:endColor="#ffd0ff" android:angle="0" />
 		</item>
 	</selector>
+  -->
         
 </shape> 

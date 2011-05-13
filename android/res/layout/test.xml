@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="75px"
-	android:shape="@drawable/schedule_gig"
-	android:padding="1dip" android:background="@drawable/schedule_gig" android:layout_width="wrap_content">
+	android:padding="1dip" android:layout_width="wrap_content">
 
 	<ImageView android:id="@+id/icon"
 		android:layout_width="16px"

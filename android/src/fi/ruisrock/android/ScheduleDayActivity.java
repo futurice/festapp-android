@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.*;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.*;
 import android.view.View.OnClickListener;
@@ -35,16 +36,31 @@ public class ScheduleDayActivity extends Activity {
 	private LinearLayout stageLayout;
 	private LinearLayout gigLayout;
 	
+	private GigRelativeLayout gl;
+	
 	private OnClickListener foo = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			if (v instanceof GigRelativeLayout) {
 				GigRelativeLayout gl = (GigRelativeLayout) v;
-				Toast.makeText(getBaseContext(), gl.getGig().getArtist(), Toast.LENGTH_SHORT).show();
+				Drawable d = gl.getBackground();
+				gl.setBackgroundResource(R.drawable.artist_132);
+				Intent artistInfo = new Intent(getBaseContext(), ArtistInfoActivity.class);
+				ScheduleDayActivity.this.gl = gl;
+			    artistInfo.putExtra("gig.id", gl.getGig().getId());
+			    startActivityForResult(artistInfo, 0);
 			}
 		}
 	};
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 0) {
+			if (gl != null) {
+				gl.setBackgroundResource(R.drawable.schedule_gig);
+			}
+		}
+	}
 	
 	//private static final int PIXELS_PER_MINUTE = 4;
 
