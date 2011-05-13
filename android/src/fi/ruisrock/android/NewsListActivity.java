@@ -32,7 +32,7 @@ import fi.ruisrock.android.util.UIUtil;
 public class NewsListActivity extends Activity {
 	
 	private ListView newsList;
-	private boolean errorLoadingRss = false;
+	private boolean rssLoadingSuccess;
 	private List<NewsArticle> articles;
 	
 	private ProgressDialog progressDialog;
@@ -97,7 +97,7 @@ public class NewsListActivity extends Activity {
 	private class ActivityThread extends Thread {
 		@Override
 		public void run() {
-			errorLoadingRss = updateNewsArticlesViaRSS();
+			rssLoadingSuccess = updateNewsArticlesViaRSS();
 			handler.sendEmptyMessage(0);
 		}
 
@@ -105,10 +105,10 @@ public class NewsListActivity extends Activity {
 			@Override
 			public void handleMessage(Message msg) {
 				progressDialog.dismiss();
-				if (errorLoadingRss) {
-					showErrorDialog(getString(R.string.Error), getString(R.string.newsActivity_httpError));
-				} else {
+				if (rssLoadingSuccess) {
 					newsList.setAdapter(new NewsArticleAdapter(getBaseContext(), articles));
+				} else {
+					showErrorDialog(getString(R.string.Error), getString(R.string.newsActivity_httpError));
 				}
 			}
 		};

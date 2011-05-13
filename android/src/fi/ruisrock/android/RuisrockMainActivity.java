@@ -21,18 +21,19 @@ public class RuisrockMainActivity extends Activity {
 	private OnItemClickListener listItemClickListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> av, View v, int index, long arg) {
-			switch (index) {
-			case 0:
-				startActivity(new Intent(getBaseContext(), ArtistListActivity.class));
-				break;
-			case 1:
-				startActivity(new Intent(getBaseContext(), NewsListActivity.class));
-				break;
-			case 2:
-				startActivity(new Intent(getBaseContext(), DebugActivity.class));
-				break;
+			Object o = av.getItemAtPosition(index);
+			if (o instanceof ListItem) {
+				String selectedItem = ((ListItem) o).getName();
+				if (selectedItem.equals(getString(R.string.Schedule))) {
+					startActivity(new Intent(getBaseContext(), ScheduleTabActivity.class));
+				} else if (selectedItem.equals(getString(R.string.Artists))) {
+					startActivity(new Intent(getBaseContext(), ArtistListActivity.class));
+				} else if (selectedItem.equals(getString(R.string.News))) {
+					startActivity(new Intent(getBaseContext(), NewsListActivity.class));
+				} else if (selectedItem.equals(getString(R.string.Debug))) {
+					startActivity(new Intent(getBaseContext(), DebugActivity.class));
+				}
 			}
-			
 		}
 	};
 
@@ -47,9 +48,10 @@ public class RuisrockMainActivity extends Activity {
 	private void createMainMenuItems() {
 		mainList = (ListView) findViewById(R.id.mainList);
 		List<ListItem> items = new ArrayList<ListItem>();
+		items.add(new ListItem(getString(R.string.Schedule), getResources().getDrawable(R.drawable.icon)));
 		items.add(new ListItem(getString(R.string.Artists), getResources().getDrawable(R.drawable.icon)));
 		items.add(new ListItem(getString(R.string.News), getResources().getDrawable(R.drawable.icon)));
-		items.add(new ListItem("Debug", getResources().getDrawable(R.drawable.icon)));
+		items.add(new ListItem(getString(R.string.Debug), getResources().getDrawable(R.drawable.icon)));
 		adapter = new ListItemAdapter(this, items);
 		mainList.setAdapter(adapter);
 		mainList.setOnItemClickListener(listItemClickListener);

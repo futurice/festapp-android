@@ -5,7 +5,7 @@
     "description" : "Tässä Prodigyn kuvaus.",
     "start" : "2011-07-08T18:00:00",
     "end" : "2011-07-08T19:15:00",
-    "stage" : "Joku-lava",
+    "stage" : "1. lava",
     "band_image" : null,
     "band_logo" : null
   },
@@ -15,8 +15,19 @@
     "description" : "Von Hertzen Brothers -kuvaus.",
     "start" : "2011-07-08T19:00:00",
     "end" : "2011-07-08T19:45:00",
-    "stage" : "Toinen-lava",
+    "stage" : "2. lava",
+    "band_image" : null,
+    "band_logo" : null
+  },
+  {
+    "id" : "85",
+    "name" : "Anna Calvi (UK)",
+    "description" : "<p>T&auml;t&auml; salaper&auml;ist&auml;, musiikillaan viettelev&auml;&auml; naisartistia ehdittiin ylist&auml;&auml; taivaisiin jo ennen esikoispitk&auml;soiton julkaisua. Eik&auml; suotta. Tammikuussa ilmestynyt <em>&rdquo;Anna Calvi&rdquo;</em>-debyytti on niin ik&auml;&auml;n ker&auml;nnyt ylist&auml;vi&auml; arvioita monissa arvostetuissa musiikkimedioissa, muun muassa BBC nosti <strong>Anna Calvin</strong> vuoden 2011 lupaavimpien artistien listalle. Ylistyssanoihin Calvin musiikillisesta rikkaudesta ja n&auml;kemyksellisyydest&auml; on yhtynyt my&ouml;s Brian Eno, todeten Calvin olevan isoin juttu sitten Patti Smithin. Muiden muassa PJ Harveyn ja Placebon kanssa ty&ouml;skennelleen Rob Ellisin tuottamalla albumilla kulminoituu Calvin uniikki tyyli niin s&auml;velt&auml;j&auml;n&auml;, laulajana kuin kitaristinakin. Calvi on kaukana popmusiikin trendeist&auml; ja vaikka h&auml;nen musiikkinsa on modernia, artisti on maininnut ty&ouml;ns&auml; suuriksi vaikuttajiksi Ravelin ja Debussyn. Klassisen romantiikan taitureiden lis&auml;ksi Calvia ovat inspiroineet Nina Simonen ja Maria Callasin ajattomat soundit, Jimi Hendrixin rock ja Captain Beefheartin blues. Nick Caven ja Interpolin kanssa lavoja jakanut artisti on saanut kiitosta my&ouml;s intensiivisist&auml; keikoistaan, jotka pursuavat dramatiikkaa, tummaa romantiikkaa ja davidlynchmaista tunnelmaa.</p> <p><span><a href=\"http:\/\/soundcloud.com\/dominorecordco\/anna-calvi-blackout\">Anna Calvi - Blackout<\/a> by <a href=\"http:\/\/soundcloud.com\/dominorecordco\">DominoRecordCo<\/a></span></p>",
+    "start" : "2011-07-08T19:15:00",
+    "end" : "2011-07-08T19:45:00",
+    "stage" : "1. lava",
     "band_image" : null,
     "band_logo" : null
   }
+  
 ]

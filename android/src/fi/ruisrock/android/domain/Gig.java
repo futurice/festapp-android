@@ -9,6 +9,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonSetter;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
+import fi.ruisrock.android.dao.GigDAO;
+import fi.ruisrock.android.domain.to.FestivalDay;
 import fi.ruisrock.android.util.CalendarUtil;
 import fi.ruisrock.android.util.TimezonelessDeserializer;
 
@@ -77,7 +79,7 @@ public class Gig {
 	}
 
 	@JsonSetter("start") @JsonDeserialize(using=TimezonelessDeserializer.class)
-	@JsonIgnore
+	//@JsonIgnore
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
@@ -87,7 +89,7 @@ public class Gig {
 	}
 
 	@JsonSetter("end") @JsonDeserialize(using=TimezonelessDeserializer.class)
-	@JsonIgnore
+	//@JsonIgnore
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
@@ -136,12 +138,13 @@ public class Gig {
 
 	@Override
 	public String toString() {
-		return String.format("Gig {id: %s, artist: %s}", id, artist);
+		return String.format("Gig {id: %s, artist: %s, stage: %s, startTime: %s}", id, artist, stage, startTime);
 	}
 	
 	public String getStageAndTime() {
-		String time = getStartDay().substring(0, 2) + " klo " + sdfHoursAndMinutes.format(startTime) + " - " + sdfHoursAndMinutes.format(endTime);
-		return String.format("%s: %s", stage, time);
+		String time = (startTime != null && endTime != null) ? getStartDay().substring(0, 2).toLowerCase() + " klo " + sdfHoursAndMinutes.format(startTime) + " - " + sdfHoursAndMinutes.format(endTime) : "";
+		String stage = (this.stage != null) ? this.stage : "";
+		return String.format("%s, %s", stage, time);
 	}
 	
 	public String getStartDay() {
@@ -149,5 +152,14 @@ public class Gig {
 		cal.setTime(startTime);
 		return CalendarUtil.getFullWeekdayName(cal.get(Calendar.DAY_OF_WEEK));
 	}
+	
+	public FestivalDay getFestivalDay() {
+		if (startTime == null || endTime == null) {
+			return null;
+		}
+		return GigDAO.getFestivalDay(startTime);
+	}
+	
+	
 
 }

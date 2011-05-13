@@ -32,8 +32,8 @@ public class RuisrockService extends Service {
 		public void run() {
 			Log.i(TAG, "Starting backend operations");
 			try {
-				updateNewsArticles();
-				updateGigs();
+				//updateNewsArticles();
+				//updateGigs();
 			} catch (Throwable t) {
 				Log.e(TAG, "Failed execute backend operations", t);
 			} finally {

@@ -2,6 +2,8 @@ package fi.ruisrock.android;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,6 +46,10 @@ public class ArtistInfoActivity extends Activity {
 				artistImage.setImageDrawable(getResources().getDrawable(imageId));
 				artistImageContainer.setVisibility(View.VISIBLE);
 			}
+			
+			TextView artistDescription = (TextView) findViewById(R.id.artistDescription);
+			artistDescription.setMovementMethod(LinkMovementMethod.getInstance());
+			artistDescription.setText(Html.fromHtml(gig.getDescription()));
 		}
 	}
 	

@@ -2,9 +2,14 @@
 <resources>
 	<!-- Single words -->
     <string name="News">Uutiset</string>
-    <string name="Artists">Esiintyjät</string>
+    <string name="Artists">Bändit</string>
     <string name="app_name">Ruisrock</string>
     <string name="Error">Virhe</string>
+    <string name="Schedule">Aikataulu</string>
+    <string name="Debug">Debug</string>
+    <string name="Friday">Perjantai</string>
+    <string name="Saturday">Lauantai</string>
+    <string name="Sunday">Sunnuntai</string>
     
     <!-- Common phrases -->
     
@@ -14,6 +19,7 @@
     <string name="activity.label.ArtistInfo">Ruisrock » Bändit » Info </string>
     <string name="activity.label.News">Ruisrock » Uutiset</string>
     <string name="activity.label.Debug">Ruisrock » Debug</string>
+    <string name="activity.label.Schedule">Ruisrock » Aikataulu</string>
     
     <!-- News view -->
     <string name="newsActivity.loadingArticles">Ladataan uutisotsikoita...</string>
