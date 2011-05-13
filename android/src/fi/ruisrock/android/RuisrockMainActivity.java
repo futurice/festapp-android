@@ -32,6 +32,8 @@ public class RuisrockMainActivity extends Activity {
 					startActivity(new Intent(getBaseContext(), NewsListActivity.class));
 				} else if (selectedItem.equals(getString(R.string.Debug))) {
 					startActivity(new Intent(getBaseContext(), DebugActivity.class));
+				} else if (selectedItem.equals("Test")) {
+					startActivity(new Intent(getBaseContext(), TestActivity.class));
 				}
 			}
 		}
@@ -52,6 +54,7 @@ public class RuisrockMainActivity extends Activity {
 		items.add(new ListItem(getString(R.string.Artists), getResources().getDrawable(R.drawable.icon)));
 		items.add(new ListItem(getString(R.string.News), getResources().getDrawable(R.drawable.icon)));
 		items.add(new ListItem(getString(R.string.Debug), getResources().getDrawable(R.drawable.icon)));
+		items.add(new ListItem("Test", getResources().getDrawable(R.drawable.icon)));
 		adapter = new ListItemAdapter(this, items);
 		mainList.setAdapter(adapter);
 		mainList.setOnItemClickListener(listItemClickListener);

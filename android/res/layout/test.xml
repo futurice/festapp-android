@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="75px"
+	android:shape="@drawable/schedule_gig"
+	android:padding="1dip" android:background="@drawable/schedule_gig" android:layout_width="wrap_content">
+
+	<ImageView android:id="@+id/icon"
+		android:layout_width="16px"
+		android:layout_height="16px"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true"
+		android:src="@drawable/icon" />
+
+	<TextView android:id="@+id/artistName" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_toLeftOf="@id/icon"
+		android:padding="1dip"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentRight="true"
+		android:singleLine="false"
+		android:ellipsize="marquee"
+		android:textSize="10sp"
+		android:textColor="#000000"
+		android:text="Some band" />
+
+
+</RelativeLayout>

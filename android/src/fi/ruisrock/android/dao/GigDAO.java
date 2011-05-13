@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
@@ -95,7 +96,7 @@ public class GigDAO {
 	public static DaySchedule findDaySchedule(Context context, FestivalDay festivalDay) {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
-		Map<String, List<Gig>> stageGigs = new HashMap<String, List<Gig>>();
+		TreeMap<String, List<Gig>> stageGigs = new TreeMap<String, List<Gig>>();
 		try {
 			db = (new DatabaseHelper(context)).getReadableDatabase();
 			cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND festivalDay = ? AND stage IS NOT NULL", new String[]{festivalDay.name()}, null, null, "stage ASC, startTime ASC");

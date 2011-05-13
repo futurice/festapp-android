@@ -87,6 +87,13 @@ public class Gig {
 	public Date getEndTime() {
 		return endTime;
 	}
+	
+	public Integer getDuration() {
+		if (startTime == null || endTime == null) {
+			return null;
+		}
+		return CalendarUtil.getMinutesBetweenTwoDates(startTime, endTime);
+	}
 
 	@JsonSetter("end") @JsonDeserialize(using=TimezonelessDeserializer.class)
 	//@JsonIgnore

@@ -28,6 +28,16 @@
     "stage" : "1. lava",
     "band_image" : null,
     "band_logo" : null
+  },
+  {
+    "id" : "133",
+    "name" : "Bullet for my Valentine (UK)",
+    "description" : "<p>Suomalaiset rakastavat heit&auml;. Kaksi vuotta sitten Ruisrockissa vieraillut walesilainen metalcore-b&auml;ndi <strong>Bullet For My Valentine<\/strong> saapuu j&auml;lleen villitsem&auml;&auml;n suomalaisia. Fanien m&auml;&auml;r&auml; on vain paisunut sitten viime visiitin, ainakin viime kev&auml;&auml;n&auml; ilmestyneen <em>&rdquo;Fever&rdquo;<\/em>-albumin suosion perusteella; uutukainen nousi suoraan Suomen virallisen listan kolmanneksi. My&ouml;s britit rakastavat heit&auml;. Yhtye on valittu jo kolmena vuonna per&auml;kk&auml;in Kerrang!-lehden gaalassa vuoden parhaaksi brittib&auml;ndiksi. Miljoonia albumeja vuoden 2005 <em>&rdquo;Poison&rdquo;<\/em>-debyyttins&auml; j&auml;lkeen myynyt Bullet For My Valentine sai alkunsa jo vuonna 1998 cover-yhtyeen&auml; mm. Metallican ja Nirvanan tuotannon parissa. 1980-luvun old school thrashist&auml; vaikutteita ottanut nelikko onkin napannut tarttuvia vokaaleja, aggressiivisia riffej&auml; sek&auml; melodioita arvostamiltaan kokoonpanoilta kuten Metallicalta ja Iron Maidenilta, joiden kanssa yhtye on my&ouml;s jakanut esiintymislavoja.<\/p>",
+    "start" : "2011-07-08T20:00:00",
+    "end" : "2011-07-08T21:30:00",
+    "stage" : "1. lava",
+    "band_image" : null,
+    "band_logo" : null
   }
   
 ]

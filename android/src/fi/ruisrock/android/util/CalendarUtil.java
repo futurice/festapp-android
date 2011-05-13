@@ -1,6 +1,7 @@
 package fi.ruisrock.android.util;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +25,11 @@ public class CalendarUtil {
 	
 	public static String getShortWeekdayName(int weekday) {
 		return weekDays.get(weekday).substring(0, 1);
+	}
+	
+	public static int getMinutesBetweenTwoDates(Date start, Date end) {
+		long diff = Math.abs(end.getTime() - start.getTime());
+		return (int) (diff / 1000 / 60);
 	}
 	
 }

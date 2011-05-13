@@ -1,9 +1,12 @@
 package fi.ruisrock.android.domain.to;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import fi.ruisrock.android.domain.Gig;
 
@@ -15,11 +18,11 @@ import fi.ruisrock.android.domain.Gig;
 public class DaySchedule {
 	
 	private FestivalDay festivalDay;
-	private Map<String, List<Gig>> stageGigs = new HashMap<String, List<Gig>>();
+	private Map<String, List<Gig>> stageGigs = new TreeMap<String, List<Gig>>();
 	private Date earliestTime;
 	private Date latestTime;
 	
-	public DaySchedule(FestivalDay festivalDay, Map<String, List<Gig>> stageGigs) {
+	public DaySchedule(FestivalDay festivalDay, TreeMap<String, List<Gig>> stageGigs) {
 		this.festivalDay = festivalDay;
 		this.stageGigs = stageGigs;
 		setEarliestAndLatestTimes();
@@ -39,6 +42,10 @@ public class DaySchedule {
 	
 	public Date getLatestTime() {
 		return latestTime;
+	}
+	
+	public List<String> getStages() {
+		return new ArrayList<String>(stageGigs.keySet());
 	}
 	
 	private void setEarliestAndLatestTimes() {

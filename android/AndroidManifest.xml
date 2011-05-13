@@ -21,6 +21,7 @@
 		<activity android:name=".DebugActivity" android:label="@string/activity.label.Debug" />
 		<activity android:name=".ScheduleTabActivity" android:label="@string/activity.label.Schedule" />
 		<activity android:name=".ScheduleDayActivity" android:label="@string/activity.label.Schedule" />
+		<activity android:name=".TestActivity" android:label="Test" />
 		<!-- Services -->
 		<service android:enabled="true" android:name=".service.RuisrockService" />
 	</application>
