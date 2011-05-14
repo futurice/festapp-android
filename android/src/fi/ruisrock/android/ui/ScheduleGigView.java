@@ -8,26 +8,43 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.AttributeSet;
+import android.view.SurfaceHolder.Callback;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 
 
-public class ScheduleGigView extends View implements View.OnClickListener {
+public class ScheduleGigView extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private static final float MINUTE_IN_PIXELS = 5f;
 	
 	private DaySchedule daySchedule;
 	private Context context;
+	
+	private TutorialThread _thread;
 
 	public ScheduleGigView(Context context) {
 		super(context);
 	}
+	
+	public ScheduleGigView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
 
 	public ScheduleGigView(Context context, DaySchedule daySchedule) {
 		super(context);
+		getHolder().addCallback(this);
 		this.context = context;
 		this.daySchedule = daySchedule;
 		setFocusable(true); //not yet necessary, but you never know what the future brings
-		setOnClickListener(this);
+		
+		_thread = new TutorialThread(getHolder(), this);
+		
+	}
+	
+	public void setDaySchedule(DaySchedule daySchedule) {
+		this.daySchedule = daySchedule;
 	}
 
 	@Override
@@ -42,7 +59,7 @@ public class ScheduleGigView extends View implements View.OnClickListener {
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setColor(Color.RED);
 		paint.setStrokeWidth(3f);
-		canvas.drawLine(0f, 0f, 100f, 20f, paint);
+		canvas.drawLine(0f, 0f, 400f, 20f, paint);
 		
 		
 		drawTimeline(canvas);
@@ -50,6 +67,7 @@ public class ScheduleGigView extends View implements View.OnClickListener {
 		// refresh the canvas
 		//invalidate();
 	}
+	
 	
 	private void drawTimeline(Canvas canvas) {
 		Date startTime = daySchedule.getEarliestTime();
@@ -72,10 +90,60 @@ public class ScheduleGigView extends View implements View.OnClickListener {
 	}
 
 	@Override
-	public void onClick(View v) {
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+		// TODO Auto-generated method stub
+		System.out.println("why?");
+	}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder holder) {
+		setWillNotDraw(false);
 		
 	}
 
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	class TutorialThread extends Thread {
+        private SurfaceHolder _surfaceHolder;
+        private ScheduleGigView _panel;
+        private boolean _run = false;
+ 
+        public TutorialThread(SurfaceHolder surfaceHolder, ScheduleGigView panel) {
+            _surfaceHolder = surfaceHolder;
+            _panel = panel;
+        }
+ 
+        public void setRunning(boolean run) {
+            _run = run;
+        }
+ 
+        @Override
+        public void run() {
+            Canvas c;
+            while (_run) {
+                c = null;
+                try {
+                    c = _surfaceHolder.lockCanvas(null);
+                    synchronized (_surfaceHolder) {
+                        _panel.onDraw(c);
+                    }
+                } finally {
+                    // do this in a finally so that if an exception is thrown
+                    // during the above, we don't leave the Surface in an
+                    // inconsistent state
+                    if (c != null) {
+                        _surfaceHolder.unlockCanvasAndPost(c);
+                    }
+                }
+            }
+        }
+    }
 
 
 }

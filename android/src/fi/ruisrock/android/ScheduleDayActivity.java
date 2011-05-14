@@ -27,6 +27,7 @@ import fi.ruisrock.android.domain.to.DaySchedule;
 import fi.ruisrock.android.domain.to.FestivalDay;
 import fi.ruisrock.android.ui.GigRelativeLayout;
 import fi.ruisrock.android.ui.ScheduleGigView;
+import fi.ruisrock.android.ui.TimelineView;
 import fi.ruisrock.android.util.CalendarUtil;
 import fi.ruisrock.android.util.StringUtil;
 
@@ -91,8 +92,15 @@ public class ScheduleDayActivity extends Activity {
 		addGigs();
 		
 		
+		/*
+		RelativeLayout rl = (RelativeLayout) findViewById(R.id.timeGridContainer);
+		TimelineView tl = new TimelineView(getBaseContext());
+		rl.addView(tl);
+		setContentView(tl);
+		*/
 		
-		//gigLayout.addView(new ScheduleGigView(this, daySchedule));
+		//ScheduleGigView sgv = new ScheduleGigView(this, daySchedule);
+		//rl.addView(sgv);
 	}
 	
 	private void addGigs() {
@@ -108,7 +116,7 @@ public class ScheduleDayActivity extends Activity {
 				if (previousTime.before(gig.getStartTime())) {
 					int margin = GigRelativeLayout.PIXELS_PER_MINUTE * CalendarUtil.getMinutesBetweenTwoDates(previousTime, gig.getStartTime());
 					TextView tv = new TextView(this);
-					tv.setMinHeight(75);
+					tv.setMinHeight(66);
 					tv.setMinWidth(margin);
 					llAlso.addView(tv);
 				}
@@ -168,7 +176,7 @@ public class ScheduleDayActivity extends Activity {
 		for (String stageName : daySchedule.getStages()) {
 			TextView textView = new TextView(this);
 			textView.setText(stageName);
-			textView.setHeight(75);
+			textView.setHeight(66);
 			textView.setPadding(1, 10, 1, 1);
 			stageLayout.addView(textView);
 		}
