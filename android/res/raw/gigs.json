@@ -2,7 +2,7 @@
   {
     "id" : "132",
     "name" : "THE PRODIGY (UK)",
-    "description" : "Tässä Prodigyn kuvaus.",
+    "description" : "T&auml;ss&auml; Prodigyn kuvaus.",
     "start" : "2011-07-08T18:00:00",
     "end" : "2011-07-08T19:15:00",
     "stage" : "1. lava",
@@ -36,6 +36,36 @@
     "start" : "2011-07-08T20:00:00",
     "end" : "2011-07-08T21:30:00",
     "stage" : "1. lava",
+    "band_image" : null,
+    "band_logo" : null
+  },
+  {
+    "id" : "183",
+    "name" : "Kaija Koo",
+    "description" : "<p>Yksi Suomen rakastetuimmista tulkitsijoista, <b>Kaija Koo<\/b>, teki viime vuonna n&auml;ytt&auml;v&auml;n uuden tulemisen. Levymyynnilt&auml;&auml;n ylivoimaisesti Suomen suurin naisartisti l&ouml;ysi yll&auml;tt&auml;en paikkansa Apulannan uudesta P&auml;ij&auml;t-H&auml;meen sorto & riisto -levy-yhti&ouml;st&auml;, joka julkaisi marraskuussa platinaa myyneen ja listoilla menestyneen \"Irti\"-albumin. 17-vuotiaana muusikonuransa aloittanut, monesti palkittu Kaija Koo teki l&auml;pimurtonsa vuonna 1993 albumillaan \"Tuulten viem&auml;&auml;\", joka pysyi Suomen virallisella albumilistalla per&auml;ti 66 viikkoa ja myi triplaplatinaa. Levyn suurin hitti oli jo klassikoksi muodostunut \"Kuka keksi rakkauden\". Eip&auml; sill&auml; v&auml;li&auml;, kuka sen keksi, kunhan sit&auml; on ilmassa Kaija Koon astuessa lavalle kuolemattomien klassikoiden ja uusien hittiens&auml; kanssa. Kaija Koo ottaa yleis&ouml;ns&auml; vankalla kokemuksella, oli kyseess&auml; sitten joulukirkko, loppuunmyyty Tavastia-klubi tai ensi kes&auml;n Ruisrock.<\/p>",
+    "start" : "2011-07-08T20:00:00",
+    "end" : "2011-07-08T21:30:00",
+    "stage" : "3. lava",
+    "band_image" : null,
+    "band_logo" : null
+  },
+  {
+    "id" : "141",
+    "name" : "Apulanta",
+    "description" : "<p>Foo.<\/p>",
+    "start" : "2011-07-08T22:00:00",
+    "end" : "2011-07-08T22:30:00",
+    "stage" : "4. lava",
+    "band_image" : null,
+    "band_logo" : null
+  },
+  {
+    "id" : "189",
+    "name" : "Paramore",
+    "description" : "<p>Foo.<\/p>",
+    "start" : "2011-07-08T18:00:00",
+    "end" : "2011-07-08T19:30:00",
+    "stage" : "5. lava",
     "band_image" : null,
     "band_logo" : null
   }

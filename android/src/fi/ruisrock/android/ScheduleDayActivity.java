@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.*;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -35,6 +36,7 @@ public class ScheduleDayActivity extends Activity {
 	private DaySchedule daySchedule;
 	private LinearLayout stageLayout;
 	private LinearLayout gigLayout;
+	private Vibrator vibrator;
 	
 	private GigRelativeLayout gl;
 	
@@ -44,7 +46,8 @@ public class ScheduleDayActivity extends Activity {
 			if (v instanceof GigRelativeLayout) {
 				GigRelativeLayout gl = (GigRelativeLayout) v;
 				Drawable d = gl.getBackground();
-				gl.setBackgroundResource(R.drawable.artist_132);
+				gl.setBackgroundResource(R.drawable.schedule_gig_hilight);
+				vibrator.vibrate(50l);
 				Intent artistInfo = new Intent(getBaseContext(), ArtistInfoActivity.class);
 				ScheduleDayActivity.this.gl = gl;
 			    artistInfo.putExtra("gig.id", gl.getGig().getId());
@@ -53,6 +56,7 @@ public class ScheduleDayActivity extends Activity {
 		}
 	};
 	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 0) {
@@ -67,6 +71,7 @@ public class ScheduleDayActivity extends Activity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.schedule);
 		setFestivalDay();
@@ -82,7 +87,7 @@ public class ScheduleDayActivity extends Activity {
 		
 		
 		gigLayout = (LinearLayout) findViewById(R.id.gigLayout);
-		addTimeline();
+		//addTimeline();
 		addGigs();
 		
 		
@@ -98,8 +103,17 @@ public class ScheduleDayActivity extends Activity {
 			llAlso.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 			llAlso.setOrientation(LinearLayout.HORIZONTAL);
 
+			Date previousTime = daySchedule.getEarliestTime();
 			for (Gig gig : stageGigs.get(stage)) {
-				GigRelativeLayout gl = new GigRelativeLayout(this, null, gig);
+				if (previousTime.before(gig.getStartTime())) {
+					int margin = GigRelativeLayout.PIXELS_PER_MINUTE * CalendarUtil.getMinutesBetweenTwoDates(previousTime, gig.getStartTime());
+					TextView tv = new TextView(this);
+					tv.setMinHeight(75);
+					tv.setMinWidth(margin);
+					llAlso.addView(tv);
+				}
+				
+				GigRelativeLayout gl = new GigRelativeLayout(this, null, gig, previousTime);
 				/*
 				TextView tv = new TextView(this);
 				tv.setText(gig.getArtist());
@@ -120,6 +134,7 @@ public class ScheduleDayActivity extends Activity {
 				//gl.setMaxWidth(width);
 				llAlso.addView(gl);
 				gl.setOnClickListener(foo);
+				previousTime = gig.getEndTime();
 			}
 			gigLayout.addView(llAlso);
 		}
@@ -154,7 +169,7 @@ public class ScheduleDayActivity extends Activity {
 			TextView textView = new TextView(this);
 			textView.setText(stageName);
 			textView.setHeight(75);
-			textView.setPadding(1, 1, 1, 1);
+			textView.setPadding(1, 10, 1, 1);
 			stageLayout.addView(textView);
 		}
 	}
