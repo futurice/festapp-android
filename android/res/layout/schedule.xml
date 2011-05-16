@@ -15,8 +15,8 @@
 				android:layout_width="fill_parent">
 				
 				
-		        <AbsoluteLayout android:id="@+id/absoluteLayout1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_alignParentLeft="true">
-					<LinearLayout android:layout_width="wrap_content"
+		        <AbsoluteLayout android:id="@+id/absoluteLayout1" android:layout_height="fill_parent" android:layout_width="fill_parent">
+					<LinearLayout android:layout_width="fill_parent"
 						android:orientation="horizontal" android:layout_height="fill_parent"
 						
 						android:layout_centerHorizontal="true"
@@ -24,21 +24,24 @@
 						android:adjustViewBounds="true"
 						
 						android:id="@+id/timelineLayout">
+					</LinearLayout>
+					
+					<LinearLayout android:layout_width="fill_parent"
+						android:orientation="horizontal" android:layout_height="fill_parent"
 						
-			            <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Foobar"></TextView>
-			            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Foobar"></TextView>
-			            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Foobar"></TextView>
-			            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Foobar"></TextView>
-			            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Foobar"></TextView>
-			            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Foobar"></TextView>
-			            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Foobar"></TextView>
-			            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Foobar"></TextView>
-			            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Foobar"></TextView>
-			            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Foobar"></TextView>
-			            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Foobar"></TextView>
+
+						
+						android:id="@+id/timelineLayoutLines">
+						
 						
 					</LinearLayout>
+					
 		        </AbsoluteLayout>
+		        <!-- 
+		        <AbsoluteLayout android:id="@+id/absoluteLayout3" android:layout_width="wrap_content" android:layout_height="fill_parent">
+
+		        </AbsoluteLayout>
+		        -->
 		        <AbsoluteLayout android:id="@+id/absoluteLayout2" android:layout_width="wrap_content" android:layout_height="wrap_content">
 					<LinearLayout android:layout_width="wrap_content"
 						android:orientation="vertical" android:layout_height="fill_parent"

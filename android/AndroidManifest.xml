@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="fi.ruisrock.android" android:versionCode="1"
-	android:versionName="1.0">
+	android:versionName="1.0" android:installLocation="preferExternal">
 
-	<uses-sdk android:minSdkVersion="7" />
+	<uses-sdk android:minSdkVersion="8" />
 	<uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.VIBRATE"/>
+	<uses-permission android:name="android.permission.VIBRATE"/>
 
 	<application android:icon="@drawable/icon" android:label="@string/app_name">
 		<activity android:name=".RuisrockMainActivity" android:label="@string/app_name">
@@ -21,7 +21,7 @@
 		<activity android:name=".NewsListActivity" android:label="@string/activity.label.News" />
 		<activity android:name=".DebugActivity" android:label="@string/activity.label.Debug" />
 		<activity android:name=".ScheduleTabActivity" android:label="@string/activity.label.Schedule" />
-		<activity android:name=".ScheduleDayActivity" android:label="@string/activity.label.Schedule" />
+		<activity android:name="TimelineActivity" android:label="@string/activity.label.Schedule" />
 		<activity android:name=".TestActivity" android:label="Test" />
 		<!-- Services -->
 		<service android:enabled="true" android:name=".service.RuisrockService" />

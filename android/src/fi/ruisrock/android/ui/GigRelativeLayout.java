@@ -15,13 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 
-public class GigRelativeLayout extends RelativeLayout implements View.OnClickListener {
+public class GigRelativeLayout extends RelativeLayout {
 	
 	public static final int PIXELS_PER_MINUTE = 3;
 	private Context context;
 	private Gig gig;
 
-	public GigRelativeLayout(Context context, AttributeSet attrs, Gig gig, Date previousTime) {
+	public GigRelativeLayout(Context context, AttributeSet attrs, Gig gig) {
 		super(context, attrs);
 		this.context = context;
 		this.gig = gig;
@@ -45,16 +45,5 @@ public class GigRelativeLayout extends RelativeLayout implements View.OnClickLis
 	public Gig getGig() {
 		return gig;
 	}
-
-	@Override
-	public void onClick(View v) {
-		if (v instanceof GigRelativeLayout) {
-			GigRelativeLayout gl = (GigRelativeLayout) v;
-			Toast.makeText(context, "GRL " + gig.getArtist(), Toast.LENGTH_SHORT).show();
-		}
-	}
-	
-	
-	
 
 }

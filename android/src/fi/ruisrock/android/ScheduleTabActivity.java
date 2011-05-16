@@ -36,7 +36,7 @@ public class ScheduleTabActivity extends TabActivity {
 		TabSpec tabSpec = tabHost.newTabSpec(festivalDay.name());
 		tabSpec.setIndicator(festivalDay.getFinnishName(), getResources().getDrawable(R.drawable.icon));
 		
-	    Intent intent = new Intent(getBaseContext(), ScheduleDayActivity.class);
+	    Intent intent = new Intent(getBaseContext(), TimelineActivity.class);
 	    intent.putExtra("festivalDay", festivalDay);
 		tabSpec.setContent(intent);
 		tabHost.addTab(tabSpec);

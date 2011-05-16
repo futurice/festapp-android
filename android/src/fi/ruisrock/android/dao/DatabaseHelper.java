@@ -23,7 +23,7 @@ import fi.ruisrock.android.domain.Gig;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME = "futurice_ruisrock_db";
-	private static final int DB_VERSION = 29;
+	private static final int DB_VERSION = 32;
 	private static final String TAG = "DatabaseHelper";
 	
 	private Context context;
