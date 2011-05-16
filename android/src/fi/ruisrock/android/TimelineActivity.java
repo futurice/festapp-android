@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.MarginLayoutParams;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,6 +46,9 @@ public class TimelineActivity extends Activity {
 	private Vibrator vibrator;
 	private LayoutInflater inflater;
 	private Date timelineStartMoment;
+	
+	private static final int ROW_HEIGHT = 66;
+	
 	private Runnable runnable = new Runnable() {
 		@Override
 		public void run() {
@@ -72,6 +76,29 @@ public class TimelineActivity extends Activity {
 			    artistInfo.putExtra("gig.id", gl.getGig().getId());
 			    startActivityForResult(artistInfo, 0);
 			}
+		}
+	};
+	
+	private OnClickListener starListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			
+			if (v instanceof ImageView) {
+				
+			}
+			
+			/*
+			if (v instanceof GigTimelineWidget) {
+				GigTimelineWidget gl = (GigTimelineWidget) v;
+				Drawable d = gl.getBackground();
+				gl.setBackgroundResource(R.drawable.schedule_gig_hilight);
+				vibrator.vibrate(50l);
+				Intent artistInfo = new Intent(getBaseContext(), ArtistInfoActivity.class);
+				TimelineActivity.this.gl = gl;
+			    artistInfo.putExtra("gig.id", gl.getGig().getId());
+			    startActivityForResult(artistInfo, 0);
+			}
+			*/
 		}
 	};
 	
@@ -126,6 +153,9 @@ public class TimelineActivity extends Activity {
 			}
 			
 		}
+		if (timelineStartMoment == null || daySchedule.getLatestTime() == null) { 
+			
+		}
 		if (now.after(timelineStartMoment) && now.before(daySchedule.getLatestTime())) {
 			//LinearLayout timelineNow = (LinearLayout) findViewById(R.id.timelineNow);
 			/*
@@ -168,12 +198,14 @@ public class TimelineActivity extends Activity {
 		
 		TextView textView = new TextView(this);
 		textView.setText("");
-		textView.setHeight(66);
+		textView.setHeight(ROW_HEIGHT);
 		textView.setPadding(1, 10, 1, 1);
 		gigLayout.addView(textView);
 		for (String stage : stageGigs.keySet()) {
 			LinearLayout llAlso = new LinearLayout(this);
-			llAlso.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			params.setMargins(0, 2, 0, 2);
+			llAlso.setLayoutParams(params);
 			llAlso.setOrientation(LinearLayout.HORIZONTAL);
 
 			Date previousTime = timelineStartMoment;
@@ -181,14 +213,18 @@ public class TimelineActivity extends Activity {
 				if (previousTime.before(gig.getStartTime())) {
 					int margin = GigTimelineWidget.PIXELS_PER_MINUTE * CalendarUtil.getMinutesBetweenTwoDates(previousTime, gig.getStartTime());
 					TextView tv = new TextView(this);
-					tv.setMinHeight(66);
+					tv.setMinHeight(ROW_HEIGHT);
 					tv.setMinWidth(margin);
 					llAlso.addView(tv);
 				}
 				
 				GigTimelineWidget gl = new GigTimelineWidget(this, null, gig, previousTime);
 				llAlso.addView(gl);
+				
+				//gl.getStarIcon().setOnClickListener(starListener);
 				gl.setOnClickListener(foo);
+				// TODO: long click
+				//gl.setOnLongClickListener(foo);
 				previousTime = gig.getEndTime();
 			}
 			gigLayout.addView(llAlso);
@@ -219,7 +255,7 @@ public class TimelineActivity extends Activity {
 		}
 		*/
 		TextView tv = new TextView(this);
-		tv.setMinHeight(66);
+		tv.setMinHeight(ROW_HEIGHT);
 		tv.setMinWidth(GigTimelineWidget.PIXELS_PER_MINUTE * minutes - TIMELINE_NUMBERS_LEFT_SHIFT);
 		numbersLayout.addView(tv);
 		
@@ -235,7 +271,7 @@ public class TimelineActivity extends Activity {
 				hour = "0" + hour;
 			}
 			tv.setText(hour);
-			tv.setMinHeight(66);
+			tv.setMinHeight(ROW_HEIGHT);
 			tv.setMinWidth(GigTimelineWidget.PIXELS_PER_MINUTE * 60);
 			numbersLayout.addView(tv);
 			
@@ -255,18 +291,34 @@ public class TimelineActivity extends Activity {
 	}
 
 	private void addStages() {
-		TextView textView = new TextView(this);
-		textView.setText("");
-		textView.setHeight(66);
-		textView.setPadding(1, 10, 1, 1);
-		stageLayout.addView(textView);
-		for (String stageName : daySchedule.getStages()) {
-			textView = new TextView(this);
-			textView.setText(stageName);
-			textView.setHeight(66);
-			textView.setPadding(1, 10, 1, 1);
-			stageLayout.addView(textView);
+		
+		TextView tv = new TextView(this);
+		tv.setHeight(66);
+		stageLayout.addView(tv);
+		
+		List<String> stages = daySchedule.getStages();
+		if (stages != null && !stages.isEmpty()) {
+			for (int i = 0; i < stages.size(); i++) {
+				addStageName(stages.get(i), i);
+			}
 		}
+		stageLayout.bringToFront();
+	}
+	
+	private void addStageName(String name, int i) {
+		View parent = inflater.inflate(R.layout.stage_timeline_box, stageLayout, false);
+		/*
+		if (i == 0) {
+			RelativeLayout rl = (RelativeLayout) parent.findViewWithTag("textContainer");
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			params.height = 66;
+			params.topMargin = 150;
+			rl.setLayoutParams(params);
+		}
+		*/
+		TextView textView = (TextView) parent.findViewWithTag("stageName");
+		textView.setText(name);
+		stageLayout.addView(parent);
 	}
 
 

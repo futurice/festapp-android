@@ -5,6 +5,7 @@ import java.util.Date;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import fi.ruisrock.android.R;
@@ -15,11 +16,12 @@ public class GigTimelineWidget extends RelativeLayout {
 	
 	public static final int PIXELS_PER_MINUTE = 5;
 	private Gig gig;
+	private ImageView starIcon;
 
 	public GigTimelineWidget(Context context, AttributeSet attrs, Gig gig, Date previousTime) {
 		super(context, attrs);
 		this.gig = gig;
-		LayoutInflater.from(context).inflate(R.layout.test, this, true);
+		LayoutInflater.from(context).inflate(R.layout.gig_timeline_box, this, true);
 		setBackgroundResource(R.drawable.schedule_gig);
 		TextView label = (TextView) findViewById(R.id.artistName);
 		label.setText(gig.getArtist());
@@ -32,9 +34,15 @@ public class GigTimelineWidget extends RelativeLayout {
 		}
 		*/
 		
+		starIcon = (ImageView) findViewById(R.id.starIcon);
+		
 		int width = PIXELS_PER_MINUTE * gig.getDuration();
 		params.width = width;
 		setLayoutParams(params);
+	}
+	
+	public ImageView getStarIcon() {
+		return starIcon;
 	}
 	
 	public Gig getGig() {

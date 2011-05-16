@@ -57,6 +57,18 @@ public class GigDAO {
 		return endOfSaturday;
 	}
 	
+	public static void setFavorite(Context context, long gigId, boolean favorite) {
+		SQLiteDatabase db = null;
+		Cursor cursor = null;
+		try {
+			db = (new DatabaseHelper(context)).getWritableDatabase();
+			ContentValues values = new ContentValues();
+			values.put("favorite", favorite);
+			db.update("gig", values, "id = ?", new String[] {String.valueOf(gigId)});
+		} finally {
+			closeDb(db, cursor);
+		}
+	}
 	
 	public static List<String> findDistinctStages(Context context) {
 		List<String> stages = new ArrayList<String>();
