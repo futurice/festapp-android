@@ -14,7 +14,7 @@ import fi.ruisrock.android.domain.Gig;
 import fi.ruisrock.android.util.RuisrockConstants;
 import fi.ruisrock.android.util.UIUtil;
 
-public class ArtistInfoActivity extends Activity {
+public class ArtistInfoActivity extends RuisrockBaseActivity {
 	
 	private LinearLayout artistInfoView;
 	private Gig gig;
@@ -23,7 +23,8 @@ public class ArtistInfoActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.artist_info);
+		setContentView(R.layout.common_artist_info);
+		foo();
 		
 		artistInfoView = (LinearLayout) findViewById(R.id.artistInfoView);
 		gig = getGig();

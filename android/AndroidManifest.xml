@@ -8,7 +8,7 @@
 	<uses-permission android:name="android.permission.VIBRATE"/>
 
 	<application android:icon="@drawable/icon" android:label="@string/app_name">
-		<activity android:name=".RuisrockMainActivity" android:label="@string/app_name">
+		<activity android:name=".RuisrockMainActivity" android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -21,7 +21,7 @@
 		<activity android:name=".NewsListActivity" android:label="@string/activity.label.News" />
 		<activity android:name=".DebugActivity" android:label="@string/activity.label.Debug" />
 		<activity android:name=".ScheduleTabActivity" android:label="@string/activity.label.Schedule" />
-		<activity android:name="TimelineActivity" android:label="@string/activity.label.Schedule" />
+		<activity android:name=".TimelineActivity" android:label="@string/activity.label.Schedule" />
 		<activity android:name=".TestActivity" android:label="Test" />
 		<!-- Services -->
 		<service android:enabled="true" android:name=".service.RuisrockService" />

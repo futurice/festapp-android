@@ -1,0 +1,11 @@
+
+<RelativeLayout android:id="@+id/relativeLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent"
+				xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:layout_width="fill_parent" android:layout_alignParentTop="true" android:id="@+id/frameLayout1" android:layout_height="fill_parent" android:layout_above="@+id/linearLayout1">
+    	<include layout="@layout/main"/>
+    </FrameLayout>
+    <LinearLayout android:background="@drawable/bottombar_bg" android:id="@+id/linearLayout1" android:layout_alignParentBottom="true" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <ImageView android:src="@drawable/button_main" android:id="@+id/bottomMenu_main" android:layout_height="wrap_content" android:layout_width="wrap_content"></ImageView>
+        <ImageView android:src="@drawable/button_main" android:id="@+id/bottomMenu_artists" android:layout_height="wrap_content" android:layout_width="wrap_content"></ImageView>    	
+    </LinearLayout>
+</RelativeLayout>

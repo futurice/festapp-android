@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- When selected, use grey -->
     <item android:drawable="@drawable/icon"
-          android:state_selected="true" />
+          android:state_selected="true" android:textColor="#000000" />
     <!-- When not selected, use white-->
-    <item android:drawable="@drawable/icon" />
+    <item android:drawable="@drawable/icon" android:textColor="#ffffff" />
 </selector>

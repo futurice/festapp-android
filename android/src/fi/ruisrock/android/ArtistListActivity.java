@@ -14,7 +14,7 @@ import fi.ruisrock.android.domain.Gig;
 import fi.ruisrock.android.ui.ArtistAdapter;
 import fi.ruisrock.android.util.StringUtil;
 
-public class ArtistListActivity extends Activity {
+public class ArtistListActivity extends RuisrockBaseActivity {
 	
 	private ListView artistList;
 	private List<Gig> gigs;
@@ -38,7 +38,8 @@ public class ArtistListActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.artists);
+		setContentView(R.layout.common_artists);
+		foo();
 		createArtistList();
 	}
 	
