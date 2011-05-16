@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="timeline.verticalLine.height">350dip</dimen>
+	<dimen name="timeline.verticalLine.marginTop">22dip</dimen>
+</resources>

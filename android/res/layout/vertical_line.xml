@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <View xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="1dip"
-    android:layout_height="350dip"
-    android:background="#B5B5B5"
-    android:layout_marginTop="22dip"
-    
+    android:layout_width="5px"
+    android:layout_height="@dimen/timeline.verticalLine.height"
+    android:background="#555555"
+    android:layout_marginTop="@dimen/timeline.verticalLine.marginTop"
 	android:layout_centerHorizontal="true"
 	android:layout_alignParentTop="true"
 	android:adjustViewBounds="true"
-    
+	android:tag="verticalLine"
 />

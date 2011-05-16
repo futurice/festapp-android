@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="66px"
-	android:padding="1dip" android:layout_width="wrap_content">
+	android:padding="1dip" android:layout_width="wrap_content" android:layout_marginLeft="0px">
 
 <!-- 
 	<ImageView android:id="@+id/icon"

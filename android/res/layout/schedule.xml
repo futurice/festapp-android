@@ -23,25 +23,34 @@
 						android:layout_alignParentTop="true"
 						android:adjustViewBounds="true"
 						
-						android:id="@+id/timelineLayout">
+						android:id="@+id/timelineNumbers">
 					</LinearLayout>
 					
 					<LinearLayout android:layout_width="fill_parent"
 						android:orientation="horizontal" android:layout_height="fill_parent"
-						
-
-						
-						android:id="@+id/timelineLayoutLines">
-						
-						
+						android:id="@+id/timelineVerticalLines">
 					</LinearLayout>
 					
+					<LinearLayout android:layout_width="fill_parent"
+						android:orientation="horizontal" android:layout_height="fill_parent"
+						android:id="@+id/timelineNow">
+							<TextView android:id="@+id/timelineNowMargin" 
+								android:text="" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+						
+							<View android:id="@+id/timelineNowLine"
+							    android:layout_width="3px"
+							    android:layout_height="@dimen/timeline.verticalLine.height"
+							    android:background="#ff0000"
+							    android:layout_marginTop="@dimen/timeline.verticalLine.marginTop"
+								android:layout_centerHorizontal="true"
+								android:layout_alignParentTop="true"
+								android:adjustViewBounds="true"
+								android:tag="verticalLine"
+								android:visibility="gone"
+							/>
+					</LinearLayout>
 		        </AbsoluteLayout>
-		        <!-- 
-		        <AbsoluteLayout android:id="@+id/absoluteLayout3" android:layout_width="wrap_content" android:layout_height="fill_parent">
 
-		        </AbsoluteLayout>
-		        -->
 		        <AbsoluteLayout android:id="@+id/absoluteLayout2" android:layout_width="wrap_content" android:layout_height="wrap_content">
 					<LinearLayout android:layout_width="wrap_content"
 						android:orientation="vertical" android:layout_height="fill_parent"

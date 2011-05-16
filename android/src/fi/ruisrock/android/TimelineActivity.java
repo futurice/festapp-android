@@ -1,36 +1,42 @@
 package fi.ruisrock.android;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.*;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
-import android.view.*;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import fi.ruisrock.android.dao.GigDAO;
 import fi.ruisrock.android.domain.Gig;
 import fi.ruisrock.android.domain.to.DaySchedule;
 import fi.ruisrock.android.domain.to.FestivalDay;
-import fi.ruisrock.android.ui.GigRelativeLayout;
-import fi.ruisrock.android.ui.ScheduleGigView;
+import fi.ruisrock.android.ui.GigTimelineWidget;
 import fi.ruisrock.android.util.CalendarUtil;
-import fi.ruisrock.android.util.StringUtil;
 
 public class TimelineActivity extends Activity {
+	
+	private static final String TAG = "TimelineActivity";
+	
+	private static final int TIMELINE_NUMBERS_LEFT_SHIFT = 30;
 	
 	private FestivalDay festivalDay;
 	private DaySchedule daySchedule;
@@ -38,14 +44,26 @@ public class TimelineActivity extends Activity {
 	private LinearLayout gigLayout;
 	private Vibrator vibrator;
 	private LayoutInflater inflater;
+	private Date timelineStartMoment;
+	private Runnable runnable = new Runnable() {
+		@Override
+		public void run() {
+			updateCurrentTimeline();
+			handler.postDelayed(this, 5 * 1000L);
+		}
+	};
+	private Handler handler = new Handler();
 	
-	private GigRelativeLayout gl;
+	private Date now = null;
+	
+	
+	private GigTimelineWidget gl;
 	
 	private OnClickListener foo = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			if (v instanceof GigRelativeLayout) {
-				GigRelativeLayout gl = (GigRelativeLayout) v;
+			if (v instanceof GigTimelineWidget) {
+				GigTimelineWidget gl = (GigTimelineWidget) v;
 				Drawable d = gl.getBackground();
 				gl.setBackgroundResource(R.drawable.schedule_gig_hilight);
 				vibrator.vibrate(50l);
@@ -78,7 +96,60 @@ public class TimelineActivity extends Activity {
 		setContentView(R.layout.schedule);
 		setFestivalDay();
 		daySchedule = GigDAO.findDaySchedule(this, festivalDay);
+		setTimelineStartMoment();
 		constructUiElements();
+		
+		handler.postDelayed(runnable, 5 * 1000L);
+		
+		/*
+		timer = new Timer("TimelineActivityTimer");
+		timer.schedule(timerTask, 1000L, 1 * 60 * 1000L);
+		*/
+	}
+	
+	private void setTimelineStartMoment() {
+		Calendar cal = Calendar.getInstance();
+		if (daySchedule.getEarliestTime() != null) {
+			cal.setTime(daySchedule.getEarliestTime());
+			cal.add(Calendar.MINUTE, -15);
+			this.timelineStartMoment = cal.getTime();
+		}
+	}
+
+	private void updateCurrentTimeline() {
+		if (now == null) {
+			this.now = new Date();
+			try {
+				now = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse("2011-07-08 22:00");
+			} catch (Exception e) {
+				
+			}
+			
+		}
+		if (now.after(timelineStartMoment) && now.before(daySchedule.getLatestTime())) {
+			//LinearLayout timelineNow = (LinearLayout) findViewById(R.id.timelineNow);
+			/*
+			tv = new TextView(this);
+			tv.setMinWidth((CalendarUtil.getMinutesBetweenTwoDates(startTime, now) + magicNumber) * GigTimelineWidget.PIXELS_PER_MINUTE);
+			timelineNow.addView(tv);
+			*/
+			//View parent = inflater.inflate(R.layout.vertical_line, timelineNow);
+			
+			View line = findViewById(R.id.timelineNowLine);
+			line.setVisibility(View.VISIBLE);
+			line.setBackgroundColor(Color.RED);
+			TextView marginView = (TextView) findViewById(R.id.timelineNowMargin);
+			marginView.setMinWidth(CalendarUtil.getMinutesBetweenTwoDates(timelineStartMoment, now) * GigTimelineWidget.PIXELS_PER_MINUTE);
+		} else {
+			View line = findViewById(R.id.timelineNowLine);
+			line.setVisibility(View.GONE);
+		}
+		/*
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(now);
+		cal.add(Calendar.MINUTE, 1);
+		now = cal.getTime();
+		*/
 	}
 	
 	
@@ -87,21 +158,9 @@ public class TimelineActivity extends Activity {
 		stageLayout.removeAllViews();
 		addStages();
 		
-		
 		gigLayout = (LinearLayout) findViewById(R.id.gigLayout);
 		addTimeline();
 		addGigs();
-		
-		
-		/*
-		RelativeLayout rl = (RelativeLayout) findViewById(R.id.timeGridContainer);
-		TimelineView tl = new TimelineView(getBaseContext());
-		rl.addView(tl);
-		setContentView(tl);
-		*/
-		
-		//ScheduleGigView sgv = new ScheduleGigView(this, daySchedule);
-		//rl.addView(sgv);
 	}
 	
 	private void addGigs() {
@@ -114,43 +173,23 @@ public class TimelineActivity extends Activity {
 		gigLayout.addView(textView);
 		for (String stage : stageGigs.keySet()) {
 			LinearLayout llAlso = new LinearLayout(this);
-			llAlso.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+			llAlso.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 			llAlso.setOrientation(LinearLayout.HORIZONTAL);
 
-			Calendar previousTime = Calendar.getInstance();
-			previousTime.setTime(daySchedule.getEarliestTime());
-			previousTime.add(Calendar.MINUTE, -30);
+			Date previousTime = timelineStartMoment;
 			for (Gig gig : stageGigs.get(stage)) {
-				if (previousTime.getTime().before(gig.getStartTime())) {
-					int margin = GigRelativeLayout.PIXELS_PER_MINUTE * CalendarUtil.getMinutesBetweenTwoDates(previousTime.getTime(), gig.getStartTime());
+				if (previousTime.before(gig.getStartTime())) {
+					int margin = GigTimelineWidget.PIXELS_PER_MINUTE * CalendarUtil.getMinutesBetweenTwoDates(previousTime, gig.getStartTime());
 					TextView tv = new TextView(this);
 					tv.setMinHeight(66);
 					tv.setMinWidth(margin);
 					llAlso.addView(tv);
 				}
 				
-				GigRelativeLayout gl = new GigRelativeLayout(this, null, gig);
-				/*
-				TextView tv = new TextView(this);
-				tv.setText(gig.getArtist());
-				tv.setBackgroundResource(R.drawable.schedule_gig);
-				tv.setTextColor(Color.BLACK);
-				tv.setOnClickListener(new View.OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
-				*/
-				//int width = gig.getDuration() * PIXELS_PER_MINUTE;
-				//gl.setMinimumWidth(width);
-				//gl.setMinWidth(width);
-				//gl.setMaxWidth(width);
+				GigTimelineWidget gl = new GigTimelineWidget(this, null, gig, previousTime);
 				llAlso.addView(gl);
 				gl.setOnClickListener(foo);
-				previousTime.setTime(gig.getEndTime());
+				previousTime = gig.getEndTime();
 			}
 			gigLayout.addView(llAlso);
 		}
@@ -167,50 +206,52 @@ public class TimelineActivity extends Activity {
 			return;
 		}
 		
-		LinearLayout timelineLayout = (LinearLayout) findViewById(R.id.timelineLayout);
-		LinearLayout timelineLayoutLines = (LinearLayout) findViewById(R.id.timelineLayoutLines);
+		LinearLayout numbersLayout = (LinearLayout) findViewById(R.id.timelineNumbers);
+		LinearLayout timelineVerticalLines = (LinearLayout) findViewById(R.id.timelineVerticalLines);
 		
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(startTime);
-		cal.add(Calendar.MINUTE, -30);
+		cal.setTime(timelineStartMoment);
 		
 		int minutes = 60 - cal.get(Calendar.MINUTE);
-		int magicNumber = 30;
-		if (minutes < magicNumber) {
+		/*
+		if (minutes < TIMELINE_OFFSET) {
 			minutes += 60;
 		}
-		int margin = GigRelativeLayout.PIXELS_PER_MINUTE * minutes - magicNumber;
+		*/
 		TextView tv = new TextView(this);
 		tv.setMinHeight(66);
-		tv.setMinWidth(margin);
-		timelineLayout.addView(tv);
+		tv.setMinWidth(GigTimelineWidget.PIXELS_PER_MINUTE * minutes - TIMELINE_NUMBERS_LEFT_SHIFT);
+		numbersLayout.addView(tv);
 		
 		tv = new TextView(this);
-		tv.setMinWidth(margin + magicNumber);
-		timelineLayoutLines.addView(tv);
+		tv.setMinWidth(GigTimelineWidget.PIXELS_PER_MINUTE * minutes);
+		timelineVerticalLines.addView(tv);
 		cal.add(Calendar.MINUTE, minutes);
-			
 		
 		while (cal.getTime().before(endTime)) {
 			tv = new TextView(this);
-			tv.setText(cal.get(Calendar.HOUR_OF_DAY) + ":00");
+			String hour = cal.get(Calendar.HOUR_OF_DAY) + ":00";
+			if (hour.startsWith("0")) {
+				hour = "0" + hour;
+			}
+			tv.setText(hour);
 			tv.setMinHeight(66);
-			tv.setMinWidth(GigRelativeLayout.PIXELS_PER_MINUTE * 60);
-			timelineLayout.addView(tv);
+			tv.setMinWidth(GigTimelineWidget.PIXELS_PER_MINUTE * 60);
+			numbersLayout.addView(tv);
 			
-			View verticalLine = inflater.inflate(R.layout.vertical_line, timelineLayoutLines);
-			
+			View verticalLine = inflater.inflate(R.layout.vertical_line, timelineVerticalLines);
 			tv = new TextView(this);
 			tv.setText("");
-			tv.setMinWidth(GigRelativeLayout.PIXELS_PER_MINUTE * 59);
-			timelineLayoutLines.addView(tv);
-			
+			int width = GigTimelineWidget.PIXELS_PER_MINUTE * 59;
+			tv.setWidth(width);
+			//tv.setMinimumWidth(width);
+			timelineVerticalLines.addView(tv);
 			
 			cal.add(Calendar.HOUR, 1);
 		}
 		
 		
-		
+		updateCurrentTimeline();
 	}
 
 	private void addStages() {
