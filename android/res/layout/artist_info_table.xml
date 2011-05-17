@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:layout_height="wrap_content"
+	android:layout_width="fill_parent"
+	android:id="@+id/artistInfoTable">
+	<TableRow
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<TextView android:background="#ffffff" android:layout_margin="1dip" android:text="Lava" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+		<TextView android:background="#ffffff" android:layout_margin="1dip" android:text="Esiintymisaika" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+		<TextView android:background="#ffffff" android:layout_margin="1dip" android:text="Suosikki" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+	</TableRow>
+	<TableRow
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<TextView android:layout_margin="1dip" android:id="@+id/artistStage" android:text="Päälava" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+		<TextView android:layout_margin="1dip" android:id="@+id/artistLiveTime" android:text="pe klo 22:00 - 23:00" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+		
+		<!-- 
+		<ToggleButton android:layout_margin="1dip" android:id="@+id/artistFavorite"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textOn="" android:textOff="" 
+		        android:background="@drawable/star" />
+		-->
+		<CheckBox android:text="" android:id="@+id/artistFavorite" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
+
+	</TableRow>
+</TableLayout>

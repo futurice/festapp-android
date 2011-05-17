@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import fi.ruisrock.android.service.RuisrockService;
 import fi.ruisrock.android.ui.ListItem;
@@ -19,6 +20,22 @@ import fi.ruisrock.android.ui.ListItemAdapter;
 
 public class RuisrockMainActivity extends Activity {
 	
+	private View.OnClickListener clickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.mainGridArtists:
+				startActivity(new Intent(getBaseContext(), ArtistListActivity.class));
+				break;
+			case R.id.mainGridSchedule:
+				startActivity(new Intent(getBaseContext(), ScheduleTabActivity.class));
+			default:
+				break;
+			}
+		}
+	};
+	
+	/*
 	private ListView mainList;
 	private ListItemAdapter adapter;
 	private OnItemClickListener listItemClickListener = new OnItemClickListener() {
@@ -41,6 +58,7 @@ public class RuisrockMainActivity extends Activity {
 			}
 		}
 	};
+	*/
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +69,14 @@ public class RuisrockMainActivity extends Activity {
 	}
 	
 	private void createMainMenuItems() {
+		findViewById(R.id.mainGridInfo).setOnClickListener(clickListener);
+		findViewById(R.id.mainGridArtists).setOnClickListener(clickListener);
+		findViewById(R.id.mainGridSchedule).setOnClickListener(clickListener);
+		findViewById(R.id.mainGridMap).setOnClickListener(clickListener);
+		findViewById(R.id.mainGridFonecta).setOnClickListener(clickListener);
+		
+		
+		/*
 		mainList = (ListView) findViewById(R.id.mainList);
 		List<ListItem> items = new ArrayList<ListItem>();
 		items.add(new ListItem(getString(R.string.Schedule), getResources().getDrawable(R.drawable.icon)));
@@ -61,6 +87,7 @@ public class RuisrockMainActivity extends Activity {
 		adapter = new ListItemAdapter(this, items);
 		mainList.setAdapter(adapter);
 		mainList.setOnItemClickListener(listItemClickListener);
+		*/
 	}
 
 	

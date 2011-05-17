@@ -28,6 +28,9 @@
 		<TextView android:id="@+id/artistName" style="@style/Header1"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:text="Bullet for my Valentine" />
+			
+		<!-- Info table -->
+		<include layout="@layout/artist_info_table" />
 		
 		<!-- Description -->
 		<TextView android:id="@+id/artistDescription"
