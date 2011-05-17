@@ -61,7 +61,7 @@ public class TimelineActivity extends Activity {
 	private Date now = null;
 	
 	
-	private GigTimelineWidget gl;
+	private GigTimelineWidget gigWidget;
 	
 	private OnClickListener foo = new OnClickListener() {
 		@Override
@@ -72,7 +72,7 @@ public class TimelineActivity extends Activity {
 				gl.setBackgroundResource(R.drawable.schedule_gig_hilight);
 				vibrator.vibrate(50l);
 				Intent artistInfo = new Intent(getBaseContext(), ArtistInfoActivity.class);
-				TimelineActivity.this.gl = gl;
+				TimelineActivity.this.gigWidget = gl;
 			    artistInfo.putExtra("gig.id", gl.getGig().getId());
 			    startActivityForResult(artistInfo, 0);
 			}
@@ -106,8 +106,9 @@ public class TimelineActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 0) {
-			if (gl != null) {
-				gl.setBackgroundResource(R.drawable.schedule_gig);
+			if (gigWidget != null) {
+				Gig gig = GigDAO.findGig(this, gigWidget.getGig().getId());
+				gigWidget.setFavorite(gig.isFavorite());
 			}
 		}
 	}
@@ -154,7 +155,7 @@ public class TimelineActivity extends Activity {
 			
 		}
 		if (timelineStartMoment == null || daySchedule.getLatestTime() == null) { 
-			
+			return;
 		}
 		if (now.after(timelineStartMoment) && now.before(daySchedule.getLatestTime())) {
 			//LinearLayout timelineNow = (LinearLayout) findViewById(R.id.timelineNow);

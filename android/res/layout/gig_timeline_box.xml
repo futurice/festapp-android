@@ -4,12 +4,19 @@
 	android:layout_marginTop="2px" android:layout_marginBottom="2px"
 	>
 
+<!-- 
 	<ImageView android:id="@+id/starIcon"
 		android:layout_width="32px"
 		android:layout_height="32px"
 		android:layout_centerVertical="true"
 		android:layout_alignParentLeft="true"
 		android:src="@drawable/icon" />
+-->
+	<ToggleButton android:layout_margin="1dip" android:id="@+id/starIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="" android:textOff="" 
+        android:background="@drawable/star" />
 
 
 	<!-- android:layout_toLeftOf="@id/icon"-->

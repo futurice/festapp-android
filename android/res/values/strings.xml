@@ -28,5 +28,7 @@
     
     <!-- ArtistInfo view -->
     <string name="artistInfoActivity.invalidId">Bändin tietoja ei löydy.</string>
+    <string name="artistInfoActivity.favoriteOn">Bändi merkittiin suosikiksi. Puhelin hälyttää 15 min ennen keikan alkua.</string>
+    <string name="artistInfoActivity.favoriteOff">Bändin keikkamuistutus poistettiin.</string>
     
 </resources>

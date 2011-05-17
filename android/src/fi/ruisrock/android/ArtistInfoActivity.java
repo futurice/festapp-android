@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 import fi.ruisrock.android.dao.GigDAO;
 import fi.ruisrock.android.domain.Gig;
 import fi.ruisrock.android.util.RuisrockConstants;
@@ -19,6 +22,22 @@ public class ArtistInfoActivity extends Activity {
 	
 	private LinearLayout artistInfoView;
 	private Gig gig;
+	private OnClickListener favoriteListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (v.getId() == R.id.artistInfoFavorite) {
+				ToggleButton favoriteButton = (ToggleButton) v;
+				boolean isFavorite = favoriteButton.isChecked();
+				GigDAO.setFavorite(ArtistInfoActivity.this, gig.getId(), isFavorite);
+				gig.setFavorite(isFavorite);
+				if (isFavorite) {
+					Toast.makeText(getApplicationContext(), getString(R.string.artistInfoActivity_favoriteOn), Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(getApplicationContext(), getString(R.string.artistInfoActivity_favoriteOff), Toast.LENGTH_SHORT).show();
+				}
+			}
+		}
+	};
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -45,9 +64,11 @@ public class ArtistInfoActivity extends Activity {
 			TableLayout infoTable = (TableLayout) findViewById(R.id.artistInfoTable);
 			if (gig.getStage() != null && gig.getStartTime() != null && gig.getEndTime() != null) {
 				infoTable.setVisibility(View.VISIBLE);
-				
-				
-				
+				((TextView) findViewById(R.id.artistInfoStage)).setText(gig.getStage());
+				((TextView) findViewById(R.id.artistInfoLiveTime)).setText(gig.getTime());
+				ToggleButton favoriteButton = (ToggleButton) findViewById(R.id.artistInfoFavorite);
+				favoriteButton.setChecked(gig.isFavorite());
+				favoriteButton.setOnClickListener(favoriteListener);
 			} else {
 				infoTable.setVisibility(View.GONE);
 			}

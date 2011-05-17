@@ -57,7 +57,7 @@ public class GigDAO {
 		return endOfSaturday;
 	}
 	
-	public static void setFavorite(Context context, long gigId, boolean favorite) {
+	public static void setFavorite(Context context, String gigId, boolean favorite) {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {

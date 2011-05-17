@@ -149,9 +149,12 @@ public class Gig {
 	}
 	
 	public String getStageAndTime() {
-		String time = (startTime != null && endTime != null) ? getStartDay().substring(0, 2).toLowerCase() + " klo " + sdfHoursAndMinutes.format(startTime) + " - " + sdfHoursAndMinutes.format(endTime) : "";
 		String stage = (this.stage != null) ? this.stage : "";
-		return String.format("%s, %s", stage, time);
+		return String.format("%s, %s", stage, getTime());
+	}
+	
+	public String getTime() {
+		return (startTime != null && endTime != null) ? getStartDay().substring(0, 2).toLowerCase() + " klo " + sdfHoursAndMinutes.format(startTime) + " - " + sdfHoursAndMinutes.format(endTime) : "";
 	}
 	
 	public String getStartDay() {
