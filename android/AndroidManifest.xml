@@ -31,6 +31,7 @@
 		<activity android:name=".ScheduleTabActivity" android:label="@string/activity.label.Schedule" />
 		<activity android:name=".TimelineActivity" android:label="@string/activity.label.Schedule" />
 		<activity android:name=".TestActivity" android:label="Test" />
+		<activity android:name=".MapActivity" android:label="@string/Map" />
 		
 		<!-- Services -->
 		<service android:enabled="true" android:name=".service.RuisrockService" />
