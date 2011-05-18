@@ -6,9 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -198,9 +196,7 @@ public class GigDAO {
 			// TODO: Use these, and remove from above!
 			//String timeInFuture = getDateStringWithMinuteDifference(new Date(), 15);
 			//String now = DB_DATE_FORMATTER.format(new Date()); 
-			
-			
-			cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND alerted = 0 AND datetime(startTime) <= datetime(?) AND datetime(endTime) > datetime(?)", new String[]{timeInFuture, now}, null, null, "startTime ASC");
+			cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND favorite = 1 AND alerted = 0 AND datetime(startTime) <= datetime(?) AND datetime(endTime) > datetime(?)", new String[]{timeInFuture, now}, null, null, "startTime ASC");
 			while (cursor.moveToNext()) {
 		        Gig gig = convertCursorToGig(cursor, cursor.getString(0));
 		        gigs.add(gig);

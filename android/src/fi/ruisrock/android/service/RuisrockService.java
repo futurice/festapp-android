@@ -1,12 +1,17 @@
 package fi.ruisrock.android.service;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.util.Log;
 import fi.ruisrock.android.ArtistInfoActivity;
 import fi.ruisrock.android.R;
 import fi.ruisrock.android.dao.GigDAO;
@@ -16,17 +21,6 @@ import fi.ruisrock.android.domain.NewsArticle;
 import fi.ruisrock.android.rss.RSSItem;
 import fi.ruisrock.android.rss.RSSReader;
 import fi.ruisrock.android.util.RuisrockConstants;
-
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
-import android.os.IBinder;
-import android.os.SystemClock;
-import android.util.Log;
 
 /**
  * Application background services.
