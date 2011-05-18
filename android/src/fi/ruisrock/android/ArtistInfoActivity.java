@@ -92,8 +92,8 @@ public class ArtistInfoActivity extends Activity {
 	private Gig getGig() {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			String id = (String) getIntent().getExtras().get("gig.id");
-			if (id!= null) {
+			String id = (String) extras.get("gig.id");
+			if (id != null) {
 				return GigDAO.findGig(this, id);
 			}
 		}

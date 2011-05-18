@@ -1,20 +1,31 @@
 package fi.ruisrock.android.service;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import fi.ruisrock.android.ArtistInfoActivity;
+import fi.ruisrock.android.R;
 import fi.ruisrock.android.dao.GigDAO;
 import fi.ruisrock.android.dao.NewsDAO;
+import fi.ruisrock.android.domain.Gig;
 import fi.ruisrock.android.domain.NewsArticle;
 import fi.ruisrock.android.rss.RSSItem;
 import fi.ruisrock.android.rss.RSSReader;
 import fi.ruisrock.android.util.RuisrockConstants;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.util.Log;
 
 /**
@@ -23,6 +34,8 @@ import android.util.Log;
  * @author Pyry-Samuli Lahti / Futurice
  */
 public class RuisrockService extends Service {
+	
+	enum GigConvertTarget { ARTIST, STAGE_AND_TIME }
 	
 	private static final String TAG = RuisrockService.class.getSimpleName();
 	private Timer timer;
@@ -34,6 +47,7 @@ public class RuisrockService extends Service {
 			try {
 				//updateNewsArticles();
 				//updateGigs();
+				alertGigs();
 			} catch (Throwable t) {
 				Log.e(TAG, "Failed execute backend operations", t);
 			} finally {
@@ -41,6 +55,31 @@ public class RuisrockService extends Service {
 			}
 		}
 	};
+	
+	private void alertGigs() {
+		List<Gig> gigs = GigDAO.findGigsToAlert(getBaseContext());
+		if (gigs.size() > 0) {
+			for (Gig gig : gigs) {
+				notify(gig);
+			}
+		}
+	}
+	
+	private void notify(Gig gig) {
+		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		
+	    Intent contentIntent = new Intent(this, ArtistInfoActivity.class);
+	    contentIntent.putExtra("gig.id", gig.getId());
+	    int uniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
+	    PendingIntent pending = PendingIntent.getActivity(getBaseContext(), uniqueId, contentIntent, 0);
+
+	    Notification notification = new Notification(R.drawable.icon, gig.getArtist() + ": " + gig.getStageAndTime(), System.currentTimeMillis());
+	    notification.flags |= Notification.FLAG_AUTO_CANCEL;
+	    notification.defaults |= Notification.DEFAULT_SOUND;
+	    notification.defaults |= Notification.DEFAULT_VIBRATE;
+	    notification.setLatestEventInfo(getBaseContext(), gig.getArtist(), gig.getStageAndTime(), pending);
+	    notificationManager.notify(gig.getId(), 0, notification);
+	}
 	
 	private void updateNewsArticles() {
 		RSSReader rssReader = new RSSReader();
@@ -68,7 +107,7 @@ public class RuisrockService extends Service {
 		Log.i(TAG, "Creating service");
 		
 		timer = new Timer("RuisrockTimer");
-		timer.schedule(backendTask, 1000L, 1 * 60 * 1000L);
+		timer.schedule(backendTask, 1000L, RuisrockConstants.SERVICE_FREQUENCY);
 	}
 
 	@Override

@@ -9,15 +9,19 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonSetter;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import fi.ruisrock.android.dao.GigDAO;
 import fi.ruisrock.android.domain.to.FestivalDay;
 import fi.ruisrock.android.util.CalendarUtil;
 import fi.ruisrock.android.util.TimezonelessDeserializer;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Gig {
+public class Gig implements Parcelable {
 	
 	private static final SimpleDateFormat sdfHoursAndMinutes = new SimpleDateFormat("HH:mm");
+	private static final SimpleDateFormat parcelableDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	private String id;
 	private String artist;
@@ -30,13 +34,14 @@ public class Gig {
 	
 	private boolean favorite;
 	private boolean active = true;
+	private boolean alerted = false;
 	
 	public Gig() {
 		
 	}
 
 	public Gig(String id, String artist, String description, Date startTime, Date endTime, String stage,
-			String bandImageUrl, String bandLogoUrl, boolean favorite, boolean active) {
+			String bandImageUrl, String bandLogoUrl, boolean favorite, boolean active, boolean alerted) {
 		this.id = id;
 		this.artist = artist;
 		this.description = description;
@@ -47,6 +52,17 @@ public class Gig {
 		this.bandLogoUrl = bandLogoUrl;
 		this.favorite = favorite;
 		this.active = active;
+		this.alerted = alerted;
+	}
+
+	public Gig(Parcel in) {
+		String[] data = new String[3];
+		in.readStringArray(data);
+		this.id = data[0];
+		this.artist = data[1];
+		this.stage = data[2];
+		this.startTime = getDateFromParcelable(data[3]);
+		this.endTime = getDateFromParcelable(data[4]);
 	}
 
 	public void setId(String id) {
@@ -143,6 +159,14 @@ public class Gig {
 		this.bandLogoUrl = bandLogoUrl;
 	}
 
+	public void setAlerted(boolean alerted) {
+		this.alerted = alerted;
+	}
+
+	public boolean isAlerted() {
+		return alerted;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("Gig {id: %s, artist: %s, stage: %s, startTime: %s}", id, artist, stage, startTime);
@@ -169,7 +193,44 @@ public class Gig {
 		}
 		return GigDAO.getFestivalDay(startTime);
 	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeStringArray(new String[] {this.id, this.artist, this.stage, getParcelableDateString(startTime), getParcelableDateString(endTime)});
+	}
 	
+	private String getParcelableDateString(Date date) {
+		try {
+			return parcelableDateFormat.format(date);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	private Date getDateFromParcelable(String str) {
+		try {
+			return parcelableDateFormat.parse(str);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+
+		public Gig createFromParcel(Parcel in) {
+			return new Gig(in);
+		}
+
+		public Gig[] newArray(int size) {
+			return new Gig[size];
+		}
+
+	};
 	
 
 }

@@ -22,8 +22,8 @@ import fi.ruisrock.android.domain.Gig;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
-	private static final String DB_NAME = "futurice_ruisrock_db";
-	private static final int DB_VERSION = 39;
+	private static final String DB_NAME = "ruisrock2011_db";
+	private static final int DB_VERSION = 41;
 	private static final String TAG = "DatabaseHelper";
 	
 	private Context context;
@@ -84,6 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"bandLogoUrl VARCHAR(511), " +
 				"active BOOLEAN, " +
 				"favorite BOOLEAN, " +
+				"alerted BOOLEAN, " +
 				"stage VARCHAR(255))";
 		db.execSQL(sql);
 	}

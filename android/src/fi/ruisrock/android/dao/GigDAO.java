@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,10 +33,10 @@ import fi.ruisrock.android.util.StringUtil;
  */
 public class GigDAO {
 	
-	private static final String TAG = "NewsDAO";
+	private static final String TAG = "GigDAO";
 	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	private static final String[] GIG_COLUMNS = { "id", "artist", "description",
-		"startTime", "endTime", "stage", "bandImageUrl", "bandLogoUrl", "favorite", "active" };
+		"startTime", "endTime", "stage", "bandImageUrl", "bandLogoUrl", "favorite", "active", "alerted" };
 	
 	private static Date beginningOfSaturday = null;
 	private static Date endOfSaturday = null;
@@ -136,7 +137,7 @@ public class GigDAO {
 			try {
 				db = (new DatabaseHelper(context)).getWritableDatabase();
 				db.beginTransaction();
-				db.rawQuery("UPDATE gig SET active = 0", null);
+				db.execSQL("UPDATE gig SET active = 0");
 				
 				int invalidGigs = 0, newGigs = 0, updatedGigs = 0;
 				for (Gig gig : gigs) {
@@ -144,6 +145,7 @@ public class GigDAO {
 						Gig existingGig = findGig(db, gig.getId());
 						if (existingGig != null) {
 							gig.setFavorite(existingGig.isFavorite());
+							gig.setAlerted(existingGig.isAlerted());
 							db.update("gig", convertGigToContentValues(gig), "id = ?", new String[] {gig.getId()});
 							updatedGigs++;
 						} else {
@@ -176,7 +178,55 @@ public class GigDAO {
 		}
 	}
 	
+	public static List<Gig> findGigsToAlert(Context context) {
+		SQLiteDatabase db = null;
+		Cursor cursor = null;
+		List<Gig> gigs = new ArrayList<Gig>();
+		try {
+			db = (new DatabaseHelper(context)).getWritableDatabase();
+			db.beginTransaction();
+			
+			String timeInFuture = "";
+			String now = "";
+			try {
+				Date d = DB_DATE_FORMATTER.parse("2011-07-08 17:55");
+				timeInFuture = getDateStringWithMinuteDifference(d, 15);
+				now = DB_DATE_FORMATTER.format(d);
+			} catch (Exception e) {
+			}
+
+			// TODO: Use these, and remove from above!
+			//String timeInFuture = getDateStringWithMinuteDifference(new Date(), 15);
+			//String now = DB_DATE_FORMATTER.format(new Date()); 
+			
+			
+			cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND alerted = 0 AND datetime(startTime) <= datetime(?) AND datetime(endTime) > datetime(?)", new String[]{timeInFuture, now}, null, null, "startTime ASC");
+			while (cursor.moveToNext()) {
+		        Gig gig = convertCursorToGig(cursor, cursor.getString(0));
+		        gigs.add(gig);
+			}
+			
+			for (Gig gig : gigs) {
+				// TODO: Uncomment
+				//db.execSQL("UPDATE gig SET alerted = 1 where id = ?", new Object[]{gig.getId()});
+			}
+			
+			Log.i(TAG, String.format("Successfully found and marked %d Gigs as alerted.", gigs.size()));
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
+			closeDb(db, cursor);
+		}
+		return gigs;
+	}
 	
+	private static String getDateStringWithMinuteDifference(Date date, int minuteDifference) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.MINUTE, minuteDifference);
+		
+		return DB_DATE_FORMATTER.format(cal.getTime());
+	}
 	
 	private static Gig findGig(SQLiteDatabase db, String id) {
 		Cursor cursor = db.query("gig", GIG_COLUMNS, "id = " + id, null, null, null, null);
@@ -197,7 +247,8 @@ public class GigDAO {
 				cursor.getString(6),
 				cursor.getString(7),
 				cursor.getInt(8) > 0,
-				cursor.getInt(9) > 0);
+				cursor.getInt(9) > 0,
+				cursor.getInt(10) > 0);
 	}
 	
 	public static ContentValues convertGigToContentValues(Gig gig) {
@@ -214,6 +265,7 @@ public class GigDAO {
 		values.put("endTime", endTime);
 		values.put("active", gig.isActive());
 		values.put("favorite", gig.isFavorite());
+		values.put("alerted", gig.isAlerted());
 		if (gig.getFestivalDay() != null) {
 			values.put("festivalDay", gig.getFestivalDay().name());
 		} else {
