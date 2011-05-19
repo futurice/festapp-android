@@ -270,8 +270,9 @@ public class MapActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_CODE_GPS) {
 			if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-				// TODO: implement, mapLayerOptions should be class-level field ?
+				mapLayerOptions.setOptionValue(getString(R.string.mapActivity_layer_gps), false);
 			}
+			ConfigDAO.updateMapLayers(this, mapLayerOptions);
 		}
 	}
 

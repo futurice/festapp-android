@@ -55,7 +55,6 @@ public class MapLayerOptions {
 		return sb.toString();
 	}
 	
-	/*
 	public void setOptionValue(String option, boolean value) {
 		for (SelectableOption o : options) {
 			if (o.getName().equals(option)) {
@@ -63,6 +62,5 @@ public class MapLayerOptions {
 			}
 		}
 	}
-	*/
 
 }
