@@ -1,5 +1,5 @@
 package fi.ruisrock.android.ui.map;
 
-abstract class AnimationCallback {
-	abstract void onTimer(int centerX, int centerY, float scale);
+public abstract class AnimationCallback {
+	public abstract void onTimer(int centerX, int centerY, float scale);
 }

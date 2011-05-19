@@ -33,7 +33,7 @@ public class RuisrockMainActivity extends Activity {
 				break;
 			case R.id.mainGridMap:
 				//startActivity(new Intent(getBaseContext(), MapActivity.class));
-				startActivity(new Intent(getBaseContext(), AndroidBigImage.class));
+				startActivity(new Intent(getBaseContext(), MapActivity.class));
 				break;
 			default:
 				break;

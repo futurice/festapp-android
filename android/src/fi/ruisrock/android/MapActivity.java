@@ -4,7 +4,9 @@ import java.util.Timer;
 
 import fi.ruisrock.android.R;
 import fi.ruisrock.android.ui.map.Animation;
+import fi.ruisrock.android.ui.map.AnimationCallback;
 import fi.ruisrock.android.ui.map.MapImageView;
+import fi.ruisrock.android.ui.map.SizeCallback;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -20,8 +22,8 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
 
-public class AndroidBigImage extends Activity {
-	private MapImageView 	androidBigImageView;
+public class MapActivity extends Activity {
+	private MapImageView 	mapImageView;
 	private ImageButton	zoomInButton;
 	private ImageButton	zoomOutButton;
 	private Matrix 		matrix;
@@ -53,8 +55,8 @@ public class AndroidBigImage extends Activity {
         super.onCreate(savedInstanceState);
         
         requestWindowFeature(Window.FEATURE_NO_TITLE); 
-        setContentView(R.layout.map2);
-        androidBigImageView = (MapImageView)findViewById(R.id.image);
+        setContentView(R.layout.map);
+        mapImageView = (MapImageView)findViewById(R.id.image);
         zoomInButton = (ImageButton)findViewById(R.id.zoomIn);
         zoomOutButton = (ImageButton)findViewById(R.id.zoomOut);
                
@@ -74,14 +76,14 @@ public class AndroidBigImage extends Activity {
         timer = new Timer();
         animation = new Animation(handle, current_centerX, current_centerY, current_scale);
         
-        androidBigImageView.setHandle(handle);
-        //androidBigImageView.setCallBack(sizeCallback);
+        mapImageView.setHandle(handle);
+        mapImageView.setCallBack(sizeCallback);
         
         animation.stopProcess();
-        //animation.setCallBack(animationCallBack);
+        animation.setCallBack(animationCallBack);
         timer.scheduleAtFixedRate(animation, 200, 30);
         
-        androidBigImageView.setOnTouchListener(metroListener);
+        mapImageView.setOnTouchListener(metroListener);
         zoomInButton.setOnClickListener(zoomInListener);
         zoomOutButton.setOnClickListener(zoomOutListener);
         
@@ -90,9 +92,9 @@ public class AndroidBigImage extends Activity {
         imageSizeX  = bitmap.getWidth();
         imageSizeY = bitmap.getHeight();
 
-    	androidBigImageView.setImageBitmap(bitmap);
-    	androidBigImageView.getDrawable().setFilterBitmap(true);
-    	androidBigImageView.setImageMatrix(matrix);
+    	mapImageView.setImageBitmap(bitmap);
+    	mapImageView.getDrawable().setFilterBitmap(true);
+    	mapImageView.setImageMatrix(matrix);
     }
     
     @Override
@@ -134,8 +136,8 @@ public class AndroidBigImage extends Activity {
     			lastTwoYMoves[0] = event.getY();
     			
     			if(moveHistorySize >= 2){
-	    			current_centerX += (int)((lastTwoXMoves[1] - lastTwoXMoves[0]) * (imageSizeX / current_scale) / androidBigImageView.getWidth());
-	    			current_centerY += (int)((lastTwoYMoves[1] - lastTwoYMoves[0]) * (imageSizeY / current_scale) / androidBigImageView.getHeight());
+	    			current_centerX += (int)((lastTwoXMoves[1] - lastTwoXMoves[0]) * (imageSizeX / current_scale) / mapImageView.getWidth());
+	    			current_centerY += (int)((lastTwoYMoves[1] - lastTwoYMoves[0]) * (imageSizeY / current_scale) / mapImageView.getHeight());
 		    		
 		    		updateDisplay();
     			}
@@ -150,8 +152,8 @@ public class AndroidBigImage extends Activity {
     		else if((event.getAction() == MotionEvent.ACTION_UP) && (moveHistorySize >= 1)) {
     			
     			if(event.getEventTime() != downTimer){
-	    			float speedX = (lastTwoXMoves[1] - lastTwoXMoves[0]) * (imageSizeX / current_scale) / androidBigImageView.getWidth();
-	    			float speedY = (lastTwoYMoves[1] - lastTwoYMoves[0]) * (imageSizeY / current_scale) / androidBigImageView.getHeight();
+	    			float speedX = (lastTwoXMoves[1] - lastTwoXMoves[0]) * (imageSizeX / current_scale) / mapImageView.getWidth();
+	    			float speedY = (lastTwoYMoves[1] - lastTwoYMoves[0]) * (imageSizeY / current_scale) / mapImageView.getHeight();
 	    			
 	    			speedX /= event.getEventTime() - downTimer;
 	    			speedY /= event.getEventTime() - downTimer;
@@ -192,7 +194,7 @@ public class AndroidBigImage extends Activity {
     };
     
     
-    /*
+    
     private AnimationCallback animationCallBack = new AnimationCallback() {
     	public void onTimer(int centerX, int centerY, float scale){
 			current_centerX = centerX;
@@ -208,13 +210,13 @@ public class AndroidBigImage extends Activity {
     		updateDisplay();
     	}
     };
-    */
+    
     
     
     private void updateDisplay(){
     	calculateSourceRect(current_centerX, current_centerY, current_scale);
 		matrix.setRectToRect(sourceRect, destinationRect, Matrix.ScaleToFit.FILL);
-		androidBigImageView.setImageMatrix(matrix);
+		mapImageView.setImageMatrix(matrix);
     }
     
     private void calculateSourceRect(int centerX, int centerY, float scale){
@@ -225,13 +227,13 @@ public class AndroidBigImage extends Activity {
 	    	ySubValue = (int)((imageSizeY/2) / scale);
 	    	xSubValue = ySubValue;
 	    	
-	    	xSubValue = (int) (xSubValue * ((float)androidBigImageView.getWidth() / (float)androidBigImageView.getHeight()));
+	    	xSubValue = (int) (xSubValue * ((float)mapImageView.getWidth() / (float)mapImageView.getHeight()));
     	}
     	else{
     		xSubValue = (int)((imageSizeX/2) / scale);
 	    	ySubValue = xSubValue;
 	    	
-	    	ySubValue = (int) (ySubValue * ((float)androidBigImageView.getHeight() / (float)androidBigImageView.getWidth()));
+	    	ySubValue = (int) (ySubValue * ((float)mapImageView.getHeight() / (float)mapImageView.getWidth()));
     	}
     	
     	if(centerX - xSubValue < 0) {
@@ -261,8 +263,8 @@ public class AndroidBigImage extends Activity {
     	current_drawable = resId;
     	bitmap.recycle();
     	bitmap = BitmapFactory.decodeResource(getResources(), resId);
-    	androidBigImageView.setImageBitmap(bitmap);
-    	androidBigImageView.getDrawable().setFilterBitmap(true);
+    	mapImageView.setImageBitmap(bitmap);
+    	mapImageView.getDrawable().setFilterBitmap(true);
     	
     	current_scale = INITIAL_SCALE;
     	imageSizeX = bitmap.getWidth();
