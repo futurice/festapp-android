@@ -17,6 +17,7 @@ import android.widget.ListView;
 import fi.ruisrock.android.service.RuisrockService;
 import fi.ruisrock.android.ui.ListItem;
 import fi.ruisrock.android.ui.ListItemAdapter;
+import fi.ruisrock.android.ui.map.MapImageView;
 
 public class RuisrockMainActivity extends Activity {
 	
@@ -31,7 +32,8 @@ public class RuisrockMainActivity extends Activity {
 				startActivity(new Intent(getBaseContext(), ScheduleTabActivity.class));
 				break;
 			case R.id.mainGridMap:
-				startActivity(new Intent(getBaseContext(), MapActivity.class));
+				//startActivity(new Intent(getBaseContext(), MapActivity.class));
+				startActivity(new Intent(getBaseContext(), AndroidBigImage.class));
 				break;
 			default:
 				break;
