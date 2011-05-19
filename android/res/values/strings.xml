@@ -8,9 +8,13 @@
     <string name="Schedule">Aikataulu</string>
     <string name="Debug">Debug</string>
     <string name="Map">Kartta</string>
+    <string name="Save">Tallenna</string>
+    <string name="Cancel">Peruuta</string>
     <string name="Friday">Perjantai</string>
     <string name="Saturday">Lauantai</string>
     <string name="Sunday">Sunnuntai</string>
+    <string name="Yes">Kyllä</string>
+    <string name="No">Ei</string>
     
     <!-- Common phrases -->
     
@@ -31,5 +35,10 @@
     <string name="artistInfoActivity.invalidId">Bändin tietoja ei löydy.</string>
     <string name="artistInfoActivity.favoriteOn">Bändi merkittiin suosikiksi. Puhelin hälyttää 15 min ennen keikan alkua.</string>
     <string name="artistInfoActivity.favoriteOff">Bändin keikkamuistutus poistettiin.</string>
+    
+    <!-- Map view -->
+    <string name="mapActivity.ChooseLayers">Kartalla näytetään:</string>
+    <string name="mapActivity.layer.gps">Oma sijainti (GPS)</string>
+    <string name="mapActivity.prompt.EnableGPS">Jotta oma sijainti voidaan näyttää tarkasti, tulee puhelimen GPS-paikannus aktivoida. Haluatko siirtyä puhelimen asetuksiin ominaisuuden aktivoimiseksi?</string>
     
 </resources>

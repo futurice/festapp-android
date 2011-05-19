@@ -23,7 +23,7 @@ import fi.ruisrock.android.domain.Gig;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME = "ruisrock2011_db";
-	private static final int DB_VERSION = 41;
+	private static final int DB_VERSION = 43;
 	private static final String TAG = "DatabaseHelper";
 	
 	private Context context;
@@ -95,7 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String sql = "CREATE TABLE IF NOT EXISTS config (" +
 				//"_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				"attributeName VARCHAR(127) PRIMARY KEY, " +
-				"attributevalue VARCHAR(255))";
+				"attributevalue VARCHAR(1023))";
 		db.execSQL(sql);
 	}
 	
