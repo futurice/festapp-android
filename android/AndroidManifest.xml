@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="fi.ruisrock.android" android:versionCode="1"
+	package="fi.ruisrock2011.android" android:versionCode="1"
 	android:versionName="1.0" android:installLocation="preferExternal">
 
 	<uses-sdk android:minSdkVersion="8" />
@@ -35,10 +35,9 @@
 		<activity android:name=".TimelineActivity" android:label="@string/activity.label.Schedule" />
 		<activity android:name=".TestActivity" android:label="Test" />
 		<activity android:name=".MapActivity" android:label="@string/Map" />
-		<activity android:name="MapActivity" android:label="@string/Map" />
 		
 		<!-- Services -->
-		<service android:enabled="true" android:name="service.RuisrockService" />
+		<service android:enabled="true" android:name=".service.RuisrockService" />
 		
 	</application>
 </manifest>
