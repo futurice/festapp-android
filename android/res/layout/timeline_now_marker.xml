@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	android:id="@+id/timelineNowLine"
+    android:layout_height="@dimen/timeline.verticalLine.height"
+    android:layout_marginTop="50px"
+	android:layout_width="wrap_content" xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+    	android:src="@drawable/timeline_now_arrow"
+    	android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true"></ImageView>
+    	
+	<View 
+	    android:layout_width="2px"
+	    android:layout_height="fill_parent"
+	    android:background="#44ad0000"
+		android:layout_centerHorizontal="true"
+		android:layout_alignParentTop="true"
+		android:adjustViewBounds="true"
+	/>
+	
+</RelativeLayout>

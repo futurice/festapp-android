@@ -48,6 +48,7 @@ public class TimelineActivity extends Activity {
 	private LayoutInflater inflater;
 	private Date timelineStartMoment;
 	
+	private static final int HOUR_MARKER_WIDTH = 24;
 	private static final int ROW_HEIGHT = 66;
 	
 	private Runnable runnable = new Runnable() {
@@ -146,10 +147,12 @@ public class TimelineActivity extends Activity {
 	}
 
 	private void updateCurrentTimeline() {
+		findViewById(R.id.timelineNowLine).setVisibility(View.GONE);
+		findViewById(R.id.timelineNowLine).bringToFront();
 		if (now == null) {
 			this.now = new Date();
 			try {
-				now = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse("2011-07-08 22:00");
+				now = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse("2011-07-08 19:00");
 			} catch (Exception e) {
 				
 			}
@@ -169,9 +172,8 @@ public class TimelineActivity extends Activity {
 			
 			View line = findViewById(R.id.timelineNowLine);
 			line.setVisibility(View.VISIBLE);
-			line.setBackgroundColor(Color.RED);
 			TextView marginView = (TextView) findViewById(R.id.timelineNowMargin);
-			marginView.setMinWidth(CalendarUtil.getMinutesBetweenTwoDates(timelineStartMoment, now) * GigTimelineWidget.PIXELS_PER_MINUTE);
+			marginView.setWidth(CalendarUtil.getMinutesBetweenTwoDates(timelineStartMoment, now) * GigTimelineWidget.PIXELS_PER_MINUTE - HOUR_MARKER_WIDTH/2);
 		} else {
 			View line = findViewById(R.id.timelineNowLine);
 			line.setVisibility(View.GONE);
@@ -257,12 +259,12 @@ public class TimelineActivity extends Activity {
 		}
 		*/
 		TextView tv = new TextView(this);
-		tv.setMinHeight(ROW_HEIGHT);
-		tv.setMinWidth(GigTimelineWidget.PIXELS_PER_MINUTE * minutes - TIMELINE_NUMBERS_LEFT_SHIFT);
+		tv.setHeight(ROW_HEIGHT);
+		tv.setWidth(GigTimelineWidget.PIXELS_PER_MINUTE * minutes - TIMELINE_NUMBERS_LEFT_SHIFT);
 		numbersLayout.addView(tv);
 		
 		tv = new TextView(this);
-		tv.setMinWidth(GigTimelineWidget.PIXELS_PER_MINUTE * minutes);
+		tv.setWidth(GigTimelineWidget.PIXELS_PER_MINUTE * minutes - HOUR_MARKER_WIDTH/2);
 		timelineVerticalLines.addView(tv);
 		cal.add(Calendar.MINUTE, minutes);
 		
@@ -277,12 +279,11 @@ public class TimelineActivity extends Activity {
 			tv.setMinWidth(GigTimelineWidget.PIXELS_PER_MINUTE * 60);
 			numbersLayout.addView(tv);
 			
-			View verticalLine = inflater.inflate(R.layout.vertical_line, timelineVerticalLines);
+			inflater.inflate(R.layout.timeline_hour_marker, timelineVerticalLines);
 			tv = new TextView(this);
 			tv.setText("");
-			int width = GigTimelineWidget.PIXELS_PER_MINUTE * 59;
+			int width = GigTimelineWidget.PIXELS_PER_MINUTE * 60 - (HOUR_MARKER_WIDTH);
 			tv.setWidth(width);
-			//tv.setMinimumWidth(width);
 			timelineVerticalLines.addView(tv);
 			
 			cal.add(Calendar.HOUR, 1);
@@ -293,11 +294,6 @@ public class TimelineActivity extends Activity {
 	}
 
 	private void addStages() {
-		
-		TextView tv = new TextView(this);
-		tv.setHeight(66);
-		stageLayout.addView(tv);
-		
 		List<String> stages = daySchedule.getStages();
 		if (stages != null && !stages.isEmpty()) {
 			for (int i = 0; i < stages.size(); i++) {
