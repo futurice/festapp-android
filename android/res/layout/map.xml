@@ -5,11 +5,11 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
     
-    <fi.ruisrock.android.ui.map.MapImageView android:id="@+id/image"
+    <fi.ruisrock2011.android.ui.map.MapImageView android:id="@+id/image"
     	android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
     	android:scaleType="matrix" > <!-- Change it to "centerCrop" for Android 1.5 -->
-    </fi.ruisrock.android.ui.map.MapImageView>
+    </fi.ruisrock2011.android.ui.map.MapImageView>
     
     <include layout="@layout/map_lower_buttons"></include>
     <!-- 

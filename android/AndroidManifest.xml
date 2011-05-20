@@ -27,14 +27,14 @@
 		
 		
 		<!--android:screenOrientation="portrait"-->
-		<activity android:name=".ArtistListActivity" android:label="@string/activity.label.Artists" />
-		<activity android:name=".ArtistInfoActivity" android:label="@string/activity.label.ArtistInfo" />
-		<activity android:name=".NewsListActivity" android:label="@string/activity.label.News" />
-		<activity android:name=".DebugActivity" android:label="@string/activity.label.Debug" />
-		<activity android:name=".ScheduleTabActivity" android:label="@string/activity.label.Schedule" />
-		<activity android:name=".TimelineActivity" android:label="@string/activity.label.Schedule" />
-		<activity android:name=".TestActivity" android:label="Test" />
-		<activity android:name=".MapActivity" android:label="@string/Map" />
+		<activity android:name=".ArtistListActivity" android:label="@string/activity.label.Artists" android:theme="@android:style/Theme.NoTitleBar" />
+		<activity android:name=".ArtistInfoActivity" android:label="@string/activity.label.ArtistInfo" android:theme="@android:style/Theme.NoTitleBar" />
+		<activity android:name=".NewsListActivity" android:label="@string/activity.label.News" android:theme="@android:style/Theme.NoTitleBar" />
+		<activity android:name=".DebugActivity" android:label="@string/activity.label.Debug" android:theme="@android:style/Theme.NoTitleBar" />
+		<activity android:name=".ScheduleTabActivity" android:label="@string/activity.label.Schedule" android:theme="@android:style/Theme.NoTitleBar" />
+		<activity android:name=".TimelineActivity" android:label="@string/activity.label.Schedule" android:theme="@android:style/Theme.NoTitleBar" />
+		<activity android:name=".TestActivity" android:label="Test" android:theme="@android:style/Theme.NoTitleBar" />
+		<activity android:name=".MapActivity" android:label="@string/Map" android:theme="@android:style/Theme.NoTitleBar" />
 		
 		<!-- Services -->
 		<service android:enabled="true" android:name=".service.RuisrockService" />

@@ -11,13 +11,13 @@
 			android:orientation="vertical" android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/artistImageContainer">
 
-			<fi.ruisrock.android.ui.AspectRatioImageView
+			<fi.ruisrock2011.android.ui.AspectRatioImageView
 				android:layout_centerHorizontal="true" android:src="@drawable/artist_132"
 				android:id="@+id/artistImage" android:layout_alignParentTop="true"
 				android:layout_height="wrap_content" android:layout_width="fill_parent"
 				android:adjustViewBounds="true" />
 
-			<fi.ruisrock.android.ui.AspectRatioImageView
+			<fi.ruisrock2011.android.ui.AspectRatioImageView
 				android:layout_centerHorizontal="true" android:src="@drawable/overlay"
 				android:layout_alignParentTop="true" android:layout_height="wrap_content"
 				android:layout_width="fill_parent" android:adjustViewBounds="true" />

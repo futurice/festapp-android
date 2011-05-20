@@ -33,7 +33,7 @@
 		android:text="Some band" />
 		
 		<!-- 
-	<fi.ruisrock.android.ui.TextViewMultilineEllipse 
+	<fi.ruisrock2011.android.ui.TextViewMultilineEllipse 
 		android:id="@+id/artistName" android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:padding="1dip"
