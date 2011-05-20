@@ -21,6 +21,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.RectF;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -378,5 +379,10 @@ public class MapActivity extends Activity {
 		animation.setScaleInfo(current_scale, current_scale);
 
 		updateDisplay();
+	}
+
+	public void updateGpsLocation(Location location) {
+		// TODO Auto-generated method stub
+		
 	}
 }
