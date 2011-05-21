@@ -15,6 +15,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import fi.ruisrock2011.android.R;
+import fi.ruisrock2011.android.dao.GigDAO;
+import fi.ruisrock2011.android.domain.Gig;
 import fi.ruisrock2011.android.service.RuisrockService;
 import fi.ruisrock2011.android.ui.ListItem;
 import fi.ruisrock2011.android.ui.ListItemAdapter;
@@ -73,6 +75,13 @@ public class RuisrockMainActivity extends Activity {
 		setContentView(R.layout.main);
 		startService(new Intent(this, RuisrockService.class));
 		createMainMenuItems();
+		
+		String alertGigId = getAlertGigId();
+		if (alertGigId != null) {
+			Intent artistInfo = new Intent(getBaseContext(), ArtistInfoActivity.class);
+		    artistInfo.putExtra("gig.id", alertGigId);
+		    startActivity(artistInfo);
+		}
 	}
 	
 	private void createMainMenuItems() {
@@ -95,6 +104,17 @@ public class RuisrockMainActivity extends Activity {
 		mainList.setAdapter(adapter);
 		mainList.setOnItemClickListener(listItemClickListener);
 		*/
+	}
+	
+	private String getAlertGigId() {
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			String id = (String) extras.get("alert.gig.id");
+			if (id != null) {
+				return id;
+			}
+		}
+		return null;
 	}
 
 	

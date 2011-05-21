@@ -14,6 +14,7 @@ import android.os.IBinder;
 import android.util.Log;
 import fi.ruisrock2011.android.R;
 import fi.ruisrock2011.android.ArtistInfoActivity;
+import fi.ruisrock2011.android.RuisrockMainActivity;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.dao.NewsDAO;
 import fi.ruisrock2011.android.domain.Gig;
@@ -62,8 +63,8 @@ public class RuisrockService extends Service {
 	private void notify(Gig gig) {
 		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		
-	    Intent contentIntent = new Intent(this, ArtistInfoActivity.class);
-	    contentIntent.putExtra("gig.id", gig.getId());
+	    Intent contentIntent = new Intent(getBaseContext(), RuisrockMainActivity.class);
+	    contentIntent.putExtra("alert.gig.id", gig.getId());
 	    int uniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
 	    PendingIntent pending = PendingIntent.getActivity(getBaseContext(), uniqueId, contentIntent, 0);
 

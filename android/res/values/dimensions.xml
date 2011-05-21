@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<dimen name="timeline.verticalLine.height">470px</dimen>
-	<dimen name="timeline.verticalLine.marginTop">44px</dimen>
+	<dimen name="timeline.verticalLine.height">520px</dimen>
+	<dimen name="timeline.verticalLine.marginTop">25px</dimen>
 	
-	<dimen name="timeline.gig.height">66px</dimen>
+	<dimen name="timeline.gig.height">58px</dimen>
 </resources>

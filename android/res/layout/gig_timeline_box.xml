@@ -47,12 +47,13 @@
 	<!-- android:ellipsize="marquee" -->
 	<TextView android:id="@+id/artistName" android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:padding="2dip"
+		android:padding="1px"
 		android:layout_alignParentTop="true"
 		android:layout_alignParentRight="true"
 		android:layout_toRightOf="@id/starIcon"
-		android:typeface="monospace"
-		android:textSize="11sp"
+		android:ellipsize="marquee"
+		android:typeface="sans"
+		android:textSize="13sp"
 		android:textColor="#000000"
 		android:text="Some band" />
 		

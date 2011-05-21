@@ -33,12 +33,14 @@ import fi.ruisrock2011.android.domain.to.DaySchedule;
 import fi.ruisrock2011.android.domain.to.FestivalDay;
 import fi.ruisrock2011.android.ui.GigTimelineWidget;
 import fi.ruisrock2011.android.util.CalendarUtil;
+import fi.ruisrock2011.android.util.RuisrockConstants;
 
 public class TimelineActivity extends Activity {
 	
 	private static final String TAG = "TimelineActivity";
 	
 	private static final int TIMELINE_NUMBERS_LEFT_SHIFT = 30;
+	private static final long NOW_MARKER_FREQUENCY = 60 * 1000L;
 	
 	private FestivalDay festivalDay;
 	private DaySchedule daySchedule;
@@ -49,13 +51,13 @@ public class TimelineActivity extends Activity {
 	private Date timelineStartMoment;
 	
 	private static final int HOUR_MARKER_WIDTH = 24;
-	private static final int ROW_HEIGHT = 66;
+	private static int ROW_HEIGHT = 66;
 	
 	private Runnable runnable = new Runnable() {
 		@Override
 		public void run() {
 			updateCurrentTimeline();
-			handler.postDelayed(this, 5 * 1000L);
+			handler.postDelayed(this, NOW_MARKER_FREQUENCY);
 		}
 	};
 	private Handler handler = new Handler();
@@ -122,19 +124,16 @@ public class TimelineActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		inflater = LayoutInflater.from(this);
+		ROW_HEIGHT = (int) getResources().getDimension(R.dimen.timeline_gig_height);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.schedule);
 		setFestivalDay();
 		daySchedule = GigDAO.findDaySchedule(this, festivalDay);
+		findViewById(R.id.timelineNowLine).setVisibility(View.GONE);
 		setTimelineStartMoment();
 		constructUiElements();
 		
-		handler.postDelayed(runnable, 5 * 1000L);
-		
-		/*
-		timer = new Timer("TimelineActivityTimer");
-		timer.schedule(timerTask, 1000L, 1 * 60 * 1000L);
-		*/
+		handler.postDelayed(runnable, NOW_MARKER_FREQUENCY);
 	}
 	
 	private void setTimelineStartMoment() {
@@ -147,12 +146,11 @@ public class TimelineActivity extends Activity {
 	}
 
 	private void updateCurrentTimeline() {
-		findViewById(R.id.timelineNowLine).setVisibility(View.GONE);
 		findViewById(R.id.timelineNowLine).bringToFront();
 		if (now == null) {
 			this.now = new Date();
 			try {
-				now = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse("2011-07-08 19:00");
+				now = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse("2011-07-08 22:00");
 			} catch (Exception e) {
 				
 			}
@@ -173,7 +171,7 @@ public class TimelineActivity extends Activity {
 			View line = findViewById(R.id.timelineNowLine);
 			line.setVisibility(View.VISIBLE);
 			TextView marginView = (TextView) findViewById(R.id.timelineNowMargin);
-			marginView.setWidth(CalendarUtil.getMinutesBetweenTwoDates(timelineStartMoment, now) * GigTimelineWidget.PIXELS_PER_MINUTE - HOUR_MARKER_WIDTH/2);
+			marginView.setWidth(CalendarUtil.getMinutesBetweenTwoDates(timelineStartMoment, now) * GigTimelineWidget.PIXELS_PER_MINUTE - HOUR_MARKER_WIDTH/2 - 3);
 		} else {
 			View line = findViewById(R.id.timelineNowLine);
 			line.setVisibility(View.GONE);
@@ -205,6 +203,7 @@ public class TimelineActivity extends Activity {
 		textView.setHeight(ROW_HEIGHT);
 		textView.setPadding(1, 10, 1, 1);
 		gigLayout.addView(textView);
+		int row = 1;
 		for (String stage : stageGigs.keySet()) {
 			LinearLayout llAlso = new LinearLayout(this);
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -231,9 +230,30 @@ public class TimelineActivity extends Activity {
 				//gl.setOnLongClickListener(foo);
 				previousTime = gig.getEndTime();
 			}
+			gigLayout.addView(getGuitarString(row++));
 			gigLayout.addView(llAlso);
 		}
+		if (row > 1) {
+			gigLayout.addView(getGuitarString(row++));
+		}
+	}
+	
+	private View getGuitarString(int i) {
+		LinearLayout llAlso = new LinearLayout(this);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		llAlso.setLayoutParams(params);
+		llAlso.setOrientation(LinearLayout.HORIZONTAL);
 		
+		if (i > 6) {
+			i = 6;
+		}
+		if (i < 1) {
+			i = 1;
+		}
+		int imageId = getResources().getIdentifier(RuisrockConstants.DRAWABLE_GUITAR_STRING_PREFIX + i, "drawable", getPackageName());
+		llAlso.setBackgroundResource(imageId);
+		
+		return llAlso;
 	}
 
 
@@ -276,13 +296,15 @@ public class TimelineActivity extends Activity {
 			}
 			tv.setText(hour);
 			tv.setMinHeight(ROW_HEIGHT);
-			tv.setMinWidth(GigTimelineWidget.PIXELS_PER_MINUTE * 60);
+			minutes = CalendarUtil.getMinutesBetweenTwoDates(cal.getTime(), endTime);
+			minutes = (minutes < 60) ? minutes : 60;
+			tv.setMinWidth(GigTimelineWidget.PIXELS_PER_MINUTE * minutes);
 			numbersLayout.addView(tv);
 			
 			inflater.inflate(R.layout.timeline_hour_marker, timelineVerticalLines);
 			tv = new TextView(this);
 			tv.setText("");
-			int width = GigTimelineWidget.PIXELS_PER_MINUTE * 60 - (HOUR_MARKER_WIDTH);
+			int width = GigTimelineWidget.PIXELS_PER_MINUTE * minutes - (HOUR_MARKER_WIDTH);
 			tv.setWidth(width);
 			timelineVerticalLines.addView(tv);
 			
@@ -297,23 +319,14 @@ public class TimelineActivity extends Activity {
 		List<String> stages = daySchedule.getStages();
 		if (stages != null && !stages.isEmpty()) {
 			for (int i = 0; i < stages.size(); i++) {
-				addStageName(stages.get(i), i);
+				addStageName(stages.get(i));
 			}
 		}
 		stageLayout.bringToFront();
 	}
 	
-	private void addStageName(String name, int i) {
+	private void addStageName(String name) {
 		View parent = inflater.inflate(R.layout.stage_timeline_box, stageLayout, false);
-		/*
-		if (i == 0) {
-			RelativeLayout rl = (RelativeLayout) parent.findViewWithTag("textContainer");
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			params.height = 66;
-			params.topMargin = 150;
-			rl.setLayoutParams(params);
-		}
-		*/
 		TextView textView = (TextView) parent.findViewWithTag("stageName");
 		textView.setText(name);
 		stageLayout.addView(parent);

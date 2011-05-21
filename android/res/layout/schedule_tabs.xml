@@ -2,14 +2,20 @@
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@android:id/tabhost" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-	<LinearLayout android:orientation="vertical"
+	<RelativeLayout android:orientation="vertical"
 		android:layout_width="fill_parent" android:layout_height="fill_parent">
-	    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" 
-	    	android:src="@drawable/ruisrock_logo" android:layout_gravity="center"></ImageView>	
+	    <ImageView
+	    	android:id="@+id/scheduleTopImage"
+	    	android:layout_width="wrap_content" android:layout_height="wrap_content"
+	    	android:layout_alignParentTop="true" 
+	    	android:src="@drawable/ruisrock_logo" />	
 		<TabWidget android:id="@android:id/tabs"
+			android:layout_marginTop="-30px"
+			android:layout_below="@id/scheduleTopImage"
 			android:layout_width="fill_parent" android:layout_height="wrap_content" />
 		<FrameLayout android:id="@android:id/tabcontent"
+			android:layout_below="@android:id/tabs"
 			android:layout_width="fill_parent" android:layout_height="fill_parent">
 		</FrameLayout>
-	</LinearLayout>
+	</RelativeLayout>
 </TabHost>

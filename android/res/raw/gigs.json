@@ -68,6 +68,27 @@
     "stage" : "1. lava",
     "band_image" : null,
     "band_logo" : null
+  },
+  {
+    "id" : "134",
+    "name" : "Hurts (UK)",
+    "description" : "<p>Hurts (UK).<\/p>",
+    "start" : "2011-07-08T20:30:00",
+    "end" : "2011-07-08T21:15:00",
+    "stage" : "3. lava",
+    "band_image" : null,
+    "band_logo" : null
+  },
+  {
+    "id" : "186",
+    "name" : "Manu Chao La Ventura (FRA)",
+    "description" : "<p>Manu Chao La Ventura (FRA).<\/p>",
+    "start" : "2011-07-08T20:30:00",
+    "end" : "2011-07-08T21:15:00",
+    "stage" : "Pitka lavan nimi, siis todella pitka",
+    "band_image" : null,
+    "band_logo" : null
   }
+  
   
 ]

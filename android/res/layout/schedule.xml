@@ -15,6 +15,7 @@
 		android:layout_height="wrap_content" android:layout_width="fill_parent" />
 		
 	<LinearLayout 
+		android:layout_marginTop="30px"
 		android:gravity="top"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -25,7 +26,7 @@
 	
 	<HorizontalScrollView
 		android:layout_width="fill_parent" android:layout_height="fill_parent" android:fadingEdge="none">
-		<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		<RelativeLayout 
 			android:id="@+id/timeGridContainer"
 			android:layout_height="fill_parent"
 			android:layout_width="fill_parent">
@@ -61,14 +62,13 @@
 
 	        <RelativeLayout android:id="@+id/RelativeLayout2" 
 	        	android:layout_marginTop="30px"
-	        	android:layout_width="wrap_content"
+	        	android:layout_width="fill_parent"
 	        	android:layout_height="wrap_content">
-				<LinearLayout android:layout_width="wrap_content"
+				<LinearLayout android:layout_width="fill_parent"
 					android:orientation="vertical" android:layout_height="fill_parent"
 					
 					android:layout_centerHorizontal="true"
 					android:layout_alignParentTop="true"
-					android:adjustViewBounds="true"
 					
 					android:id="@+id/gigLayout">
 				</LinearLayout>

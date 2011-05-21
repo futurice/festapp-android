@@ -23,7 +23,7 @@ import fi.ruisrock2011.android.domain.Gig;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME = "ruisrock2011_db";
-	private static final int DB_VERSION = 43;
+	private static final int DB_VERSION = 46;
 	private static final String TAG = "DatabaseHelper";
 	
 	private Context context;
