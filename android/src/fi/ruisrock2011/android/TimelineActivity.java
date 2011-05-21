@@ -65,17 +65,17 @@ public class TimelineActivity extends Activity {
 	
 	private GigTimelineWidget gigWidget;
 	
-	private OnClickListener foo = new OnClickListener() {
+	private OnClickListener gigWidgetClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			if (v instanceof GigTimelineWidget) {
-				GigTimelineWidget gl = (GigTimelineWidget) v;
-				Drawable d = gl.getBackground();
-				gl.setBackgroundResource(R.drawable.schedule_gig_hilight);
+				GigTimelineWidget gigWidget = (GigTimelineWidget) v;
+				Drawable d = gigWidget.getBackground();
+				gigWidget.setBackgroundResource(R.drawable.schedule_gig_hilight);
 				vibrator.vibrate(50l);
 				Intent artistInfo = new Intent(getBaseContext(), ArtistInfoActivity.class);
-				TimelineActivity.this.gigWidget = gl;
-			    artistInfo.putExtra("gig.id", gl.getGig().getId());
+				TimelineActivity.this.gigWidget = gigWidget;
+			    artistInfo.putExtra("gig.id", gigWidget.getGig().getId());
 			    startActivityForResult(artistInfo, 0);
 			}
 		}
@@ -217,16 +217,16 @@ public class TimelineActivity extends Activity {
 				if (previousTime.before(gig.getStartTime())) {
 					int margin = GigTimelineWidget.PIXELS_PER_MINUTE * CalendarUtil.getMinutesBetweenTwoDates(previousTime, gig.getStartTime());
 					TextView tv = new TextView(this);
-					tv.setMinHeight(ROW_HEIGHT);
-					tv.setMinWidth(margin);
+					tv.setHeight(ROW_HEIGHT);
+					tv.setWidth(margin);
 					llAlso.addView(tv);
 				}
 				
-				GigTimelineWidget gl = new GigTimelineWidget(this, null, gig, previousTime);
-				llAlso.addView(gl);
+				GigTimelineWidget gigWidget = new GigTimelineWidget(this, null, gig, previousTime);
+				llAlso.addView(gigWidget);
 				
 				//gl.getStarIcon().setOnClickListener(starListener);
-				gl.setOnClickListener(foo);
+				gigWidget.setOnClickListener(gigWidgetClickListener);
 				// TODO: long click
 				//gl.setOnLongClickListener(foo);
 				previousTime = gig.getEndTime();

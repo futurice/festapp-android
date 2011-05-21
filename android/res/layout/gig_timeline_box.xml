@@ -1,8 +1,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="66px"
-	android:padding="1dip" android:layout_width="wrap_content" android:layout_marginLeft="0px"
-	android:layout_marginTop="2px" android:layout_marginBottom="2px"
+	android:layout_height="@dimen/timeline.gig.height"
+	android:layout_width="wrap_content" android:layout_marginLeft="0px"
+	android:layout_marginTop="0px" android:layout_marginBottom="0px"
 	>
+	
+	<!-- LEFT -->
+	<View xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="1px"
+	    android:layout_height="wrap_content"
+	    android:background="#ffffff"
+		android:layout_alignParentTop="true"
+	/>
+	
+	<!-- TOP -->
+	<View xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="wrap_content"
+	    android:layout_height="2px"
+	    android:background="#ffffff"
+		android:layout_alignParentTop="true"
+	/>
+	
+	<!-- BOTTOM -->
+	<View xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="wrap_content"
+	    android:layout_height="2px"
+	    android:background="#ffffff"
+		android:layout_alignParentBottom="true"
+	/>
 
 <!-- 
 	<ImageView android:id="@+id/starIcon"
@@ -12,7 +36,7 @@
 		android:layout_alignParentLeft="true"
 		android:src="@drawable/icon" />
 -->
-	<ToggleButton android:layout_margin="1dip" android:id="@+id/starIcon"
+	<ToggleButton android:layout_marginTop="4px" android:id="@+id/starIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textOn="" android:textOff="" 
@@ -23,12 +47,12 @@
 	<!-- android:ellipsize="marquee" -->
 	<TextView android:id="@+id/artistName" android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:padding="1dip"
+		android:padding="2dip"
 		android:layout_alignParentTop="true"
 		android:layout_alignParentRight="true"
 		android:layout_toRightOf="@id/starIcon"
-		
-		android:textSize="10sp"
+		android:typeface="monospace"
+		android:textSize="11sp"
 		android:textColor="#000000"
 		android:text="Some band" />
 		
@@ -44,7 +68,13 @@
 		android:textColor="#000000"
 		android:text="Some band"
 	 />-->
+	 
+	<View xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="1px"
+	    android:layout_height="wrap_content"
+	    android:background="#ffffff"
+		android:layout_alignParentRight="true" 
 		
-
-
+	/>
+	
 </RelativeLayout>

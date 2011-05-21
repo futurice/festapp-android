@@ -3,6 +3,8 @@ package fi.ruisrock2011.android.ui;
 import java.util.Date;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,20 +24,17 @@ import fi.ruisrock2011.android.util.CalendarUtil;
 
 public class GigTimelineWidget extends RelativeLayout {
 	
-	public static final int PIXELS_PER_MINUTE = 5;
+	public static final int PIXELS_PER_MINUTE = 7;
 	private Gig gig;
 	private ToggleButton starIcon;
+	private TextView artistLabel;
 	private OnCheckedChangeListener favoriteListener = new OnCheckedChangeListener() {
 
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			GigDAO.setFavorite(getContext(), gig.getId(), isChecked);
 			setFavorite(isChecked);
-			if (isChecked) {
-				Toast.makeText(getContext(), getResources().getString(R.string.artistInfoActivity_favoriteOn), Toast.LENGTH_LONG).show();
-			} else {
-				Toast.makeText(getContext(), getResources().getString(R.string.artistInfoActivity_favoriteOff), Toast.LENGTH_SHORT).show();
-			}
+			
 		}
 		/*
 		@Override
@@ -60,8 +59,8 @@ public class GigTimelineWidget extends RelativeLayout {
 		super(context, attrs);
 		this.gig = gig;
 		LayoutInflater.from(context).inflate(R.layout.gig_timeline_box, this, true);
-		TextView label = (TextView) findViewById(R.id.artistName);
-		label.setText(gig.getArtist());
+		artistLabel = (TextView) findViewById(R.id.artistName);
+		artistLabel.setText(gig.getArtist());
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 		/*
 		if (previousTime.before(gig.getStartTime())) {
@@ -78,6 +77,8 @@ public class GigTimelineWidget extends RelativeLayout {
 		
 		int width = PIXELS_PER_MINUTE * gig.getDuration();
 		params.width = width;
+		int height = (int) getResources().getDimension(R.dimen.timeline_gig_height);
+		params.height = height;
 		setLayoutParams(params);
 	}
 	
@@ -85,9 +86,11 @@ public class GigTimelineWidget extends RelativeLayout {
 		gig.setFavorite(fav);
 		starIcon.setChecked(fav);
 		if (fav) {
-			setBackgroundResource(R.drawable.schedule_gig_favorite);
+			setBackgroundResource(R.drawable.schedule_gig_fav);
+			artistLabel.setTextColor(R.color.timeline_brown);
 		} else {
 			setBackgroundResource(R.drawable.schedule_gig);
+			artistLabel.setTextColor(Color.WHITE);
 		}
 	}
 	

@@ -2,4 +2,6 @@
 <resources>
 	<dimen name="timeline.verticalLine.height">470px</dimen>
 	<dimen name="timeline.verticalLine.marginTop">44px</dimen>
+	
+	<dimen name="timeline.gig.height">66px</dimen>
 </resources>

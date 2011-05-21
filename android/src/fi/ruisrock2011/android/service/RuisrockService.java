@@ -67,7 +67,7 @@ public class RuisrockService extends Service {
 	    int uniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
 	    PendingIntent pending = PendingIntent.getActivity(getBaseContext(), uniqueId, contentIntent, 0);
 
-	    Notification notification = new Notification(R.drawable.icon, gig.getArtist() + ": " + gig.getStageAndTime(), System.currentTimeMillis());
+	    Notification notification = new Notification(R.drawable.notification, gig.getArtist() + ": " + gig.getStageAndTime(), System.currentTimeMillis());
 	    notification.flags |= Notification.FLAG_AUTO_CANCEL;
 	    notification.defaults |= Notification.DEFAULT_SOUND;
 	    notification.defaults |= Notification.DEFAULT_VIBRATE;
