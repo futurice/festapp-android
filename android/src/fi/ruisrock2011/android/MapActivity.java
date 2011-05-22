@@ -382,7 +382,11 @@ public class MapActivity extends Activity {
 	}
 
 	public void updateGpsLocation(Location location) {
-		// TODO Auto-generated method stub
-		
+		// TODO: Proper implementation
+		// topRight: 60.493000,24.722333
+		// bottomRight: 60.493000,25.320000
+		// bottomLeft: 60.128000,25.320000
+		// topLeft: 60.128000,24.722333
+		Toast.makeText(this, location.getTime() + "\nLAT: " + location.getLatitude()+ "\nLONG: " + location.getLongitude(), Toast.LENGTH_SHORT);
 	}
 }
