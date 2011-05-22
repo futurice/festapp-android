@@ -7,6 +7,7 @@ import fi.ruisrock2011.android.R;
 import fi.ruisrock2011.android.dao.ConfigDAO;
 import fi.ruisrock2011.android.domain.to.MapLayerOptions;
 import fi.ruisrock2011.android.domain.to.SelectableOption;
+import fi.ruisrock2011.android.gps.GPSLocationListener;
 import fi.ruisrock2011.android.ui.map.Animation;
 import fi.ruisrock2011.android.ui.map.AnimationCallback;
 import fi.ruisrock2011.android.ui.map.MapImageView;
@@ -44,6 +45,8 @@ public class MapActivity extends Activity {
 	private ImageButton menuButton;
 	private LocationManager locationManager;
 	private MapLayerOptions mapLayerOptions;
+	private GPSLocationListener gpsLocationListener;
+	private boolean gpsListenerOnline;
 	private Matrix matrix;
 	private RectF sourceRect;
 	private RectF destinationRect;
@@ -72,15 +75,19 @@ public class MapActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.map);
+		gpsLocationListener = new GPSLocationListener(this);
 		mapImageView = (MapImageView) findViewById(R.id.image);
 		zoomInButton = (ImageButton) findViewById(R.id.zoomIn);
 		zoomOutButton = (ImageButton) findViewById(R.id.zoomOut);
 		menuButton = (ImageButton) findViewById(R.id.mapMenu);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
+		mapLayerOptions = ConfigDAO.findMapLayers(MapActivity.this);
+		
+		
+		if (isGpsLayerSelected() && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			activateGpsListener(true);
+		}
 
 		sourceRect = new RectF();
 		destinationRect = new RectF();
@@ -128,6 +135,21 @@ public class MapActivity extends Activity {
 		current_drawable = inState.getInt("drawable");
 		imageSizeX = inState.getInt("sizeX");
 		imageSizeY = inState.getInt("sizeY");
+	}
+	
+	private void activateGpsListener(boolean turnOn) {
+		if (turnOn) {
+			if (!gpsListenerOnline) {
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5 * 1000L, 2f, gpsLocationListener);
+				Toast.makeText(this, getString(R.string.mapActivity_gpsActivated), Toast.LENGTH_LONG).show();
+			}
+			gpsListenerOnline = true;
+		} else {
+			if (gpsListenerOnline) {
+				locationManager.removeUpdates(gpsLocationListener);
+			}
+			gpsListenerOnline = false;
+		}
 	}
 
 	@Override
@@ -191,10 +213,11 @@ public class MapActivity extends Activity {
 	};
 	
 	private void handleMapLayerSelection(MapLayerOptions mapLayerOptions) {
-		if (mapLayerOptions.isOptionSelected(getString(R.string.mapActivity_layer_gps)) && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+		if (isGpsLayerSelected() && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 			showNoGpsDialog();
 		} else {
 			ConfigDAO.updateMapLayers(this, mapLayerOptions);
+			activateGpsListener(isGpsLayerSelected());
 		}
 	}
 	
@@ -223,27 +246,9 @@ public class MapActivity extends Activity {
 			builder.setMultiChoiceItems(items, itemValues, new DialogInterface.OnMultiChoiceClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-					/*
-					String optionName = mapLayerOptions.getSelectableOptions().get(which).getName();
-					if (getString(R.string.mapActivity_layer_gps).equals(optionName) && isChecked) {
-						if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-							showNoGpsDialog();
-							return;
-						}
-					}
-					*/
-					//Toast.makeText(getApplicationContext(), "GPS ON: " + locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER), Toast.LENGTH_SHORT).show();
 					mapLayerOptions.setOptionValue(which, isChecked);
 				}
 			});
-			
-			/*
-			builder.setItems(items, new DialogInterface.OnClickListener() {
-			    public void onClick(DialogInterface dialog, int item) {
-			        Toast.makeText(getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
-			    }
-			});
-			*/
 			
 			AlertDialog alert = builder.create();
 			alert.show();
@@ -252,7 +257,8 @@ public class MapActivity extends Activity {
 	
 	private void showNoGpsDialog() {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(getString(R.string.mapActivity_prompt_EnableGPS)).setCancelable(false)
+		builder.setTitle(getString(R.string.mapActivity_prompt_EnableGPS_title));
+		builder.setMessage(getString(R.string.mapActivity_prompt_EnableGPS_message)).setCancelable(false)
 			.setPositiveButton(getString(R.string.Yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -274,7 +280,12 @@ public class MapActivity extends Activity {
 				mapLayerOptions.setOptionValue(getString(R.string.mapActivity_layer_gps), false);
 			}
 			ConfigDAO.updateMapLayers(this, mapLayerOptions);
+			activateGpsListener(isGpsLayerSelected());
 		}
+	}
+	
+	private boolean isGpsLayerSelected() {
+		return mapLayerOptions.isOptionSelected(getString(R.string.mapActivity_layer_gps));
 	}
 
 
@@ -387,6 +398,6 @@ public class MapActivity extends Activity {
 		// bottomRight: 60.493000,25.320000
 		// bottomLeft: 60.128000,25.320000
 		// topLeft: 60.128000,24.722333
-		Toast.makeText(this, location.getTime() + "\nLAT: " + location.getLatitude()+ "\nLONG: " + location.getLongitude(), Toast.LENGTH_SHORT);
+		Toast.makeText(this, "" + location.getTime() + "\nLAT: " + location.getLatitude()+ "\nLONG: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
 	}
 }

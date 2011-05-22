@@ -11,17 +11,12 @@ import android.os.Bundle;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class GPSLocationListener implements LocationListener, Listener {
+public class GPSLocationListener implements LocationListener {
 	
 	private MapActivity mapActivity;
 	
 	public GPSLocationListener(MapActivity mapActivity) {
 		this.mapActivity = mapActivity;
-	}
-
-	@Override
-	public void onGpsStatusChanged(int event) {
-		
 	}
 
 	@Override

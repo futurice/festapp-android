@@ -40,8 +40,10 @@
     <string name="artistInfoActivity.favoriteOff">Bändin keikkamuistutus poistettiin.</string>
     
     <!-- Map view -->
-    <string name="mapActivity.ChooseLayers">Kartalla näytetään:</string>
+    <string name="mapActivity.ChooseLayers">Näytä kartalla</string>
     <string name="mapActivity.layer.gps">Oma sijainti (GPS)</string>
-    <string name="mapActivity.prompt.EnableGPS">Jotta oma sijainti voidaan näyttää tarkasti, tulee puhelimen GPS-paikannus aktivoida. Haluatko siirtyä puhelimen asetuksiin ominaisuuden aktivoimiseksi?</string>
+    <string name="mapActivity.prompt.EnableGPS.title">Aktivoi GPS</string>
+    <string name="mapActivity.prompt.EnableGPS.message">Jotta oma sijainti voidaan näyttää tarkasti, tulee puhelimen GPS-paikannus aktivoida. Haluatko siirtyä puhelimen asetuksiin ominaisuuden aktivoimiseksi?</string>
+    <string name="mapActivity.gpsActivated">Aloitetaan GPS-paikannus.</string>
     
 </resources>
