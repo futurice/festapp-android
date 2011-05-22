@@ -12,30 +12,24 @@
 		android:layout_alignParentTop="true"
 	/>
 	
-	<!-- TOP -->
+	<!-- TOP 
 	<View xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:layout_width="wrap_content"
 	    android:layout_height="2px"
 	    android:background="#ffffff"
 		android:layout_alignParentTop="true"
 	/>
+	-->
 	
-	<!-- BOTTOM -->
+	<!-- BOTTOM
 	<View xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:layout_width="wrap_content"
 	    android:layout_height="2px"
 	    android:background="#ffffff"
 		android:layout_alignParentBottom="true"
 	/>
+	-->
 
-<!-- 
-	<ImageView android:id="@+id/starIcon"
-		android:layout_width="32px"
-		android:layout_height="32px"
-		android:layout_centerVertical="true"
-		android:layout_alignParentLeft="true"
-		android:src="@drawable/icon" />
--->
 	<ToggleButton android:layout_marginTop="4px" android:id="@+id/starIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,18 +51,6 @@
 		android:textColor="#000000"
 		android:text="Some band" />
 		
-		<!-- 
-	<fi.ruisrock2011.android.ui.TextViewMultilineEllipse 
-		android:id="@+id/artistName" android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:padding="1dip"
-		android:layout_alignParentTop="true"
-		android:layout_alignParentRight="true"
-		
-		android:textSize="10sp"
-		android:textColor="#000000"
-		android:text="Some band"
-	 />-->
 	 
 	<View xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:layout_width="1px"

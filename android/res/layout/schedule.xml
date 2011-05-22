@@ -11,6 +11,7 @@
 	<ImageView
 		android:layout_below="@id/timelineVerticalBg"
 		android:scaleType="fitXY"
+		android:id="@+id/timelineWoodenBg"
 		android:layout_centerHorizontal="true" android:src="@drawable/timeline_wooden_bg"
 		android:layout_height="wrap_content" android:layout_width="fill_parent" />
 		

@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" android:id="@+id/artistInfoView">
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:orientation="vertical" android:id="@+id/artistInfoView">
+	<!-- Banner -->
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:id="@+id/artistImageContainer">
 
-		<!-- Banner -->
-		<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="vertical" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@+id/artistImageContainer">
+		<fi.ruisrock2011.android.ui.AspectRatioImageView
+			android:layout_centerHorizontal="true" android:src="@drawable/artist_132"
+			android:id="@+id/artistImage" android:layout_alignParentTop="true"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"
+			android:adjustViewBounds="true" />
 
-			<fi.ruisrock2011.android.ui.AspectRatioImageView
-				android:layout_centerHorizontal="true" android:src="@drawable/artist_132"
-				android:id="@+id/artistImage" android:layout_alignParentTop="true"
-				android:layout_height="wrap_content" android:layout_width="fill_parent"
-				android:adjustViewBounds="true" />
+		<fi.ruisrock2011.android.ui.AspectRatioImageView
+			android:layout_centerHorizontal="true" android:src="@drawable/overlay"
+			android:layout_alignParentTop="true" android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:adjustViewBounds="true" />
 
-			<fi.ruisrock2011.android.ui.AspectRatioImageView
-				android:layout_centerHorizontal="true" android:src="@drawable/overlay"
-				android:layout_alignParentTop="true" android:layout_height="wrap_content"
-				android:layout_width="fill_parent" android:adjustViewBounds="true" />
-
-		</RelativeLayout>
-		
-		<!-- Artist name -->
-		<TextView android:id="@+id/artistName" style="@style/Header1"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:text="Bullet for my Valentine" />
-			
-		<!-- Info table -->
-		<include layout="@layout/artist_info_table" />
-		
+	</RelativeLayout>
+	
+	<!-- Artist name -->
+	<TextView android:id="@+id/artistName" style="@style/Header1"
+		android:gravity="center_horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:text="Bullet for my Valentine" />
+	
+	<!-- Info table -->
+	<include layout="@layout/artist_info_table" />
+	
+	<ScrollView android:background="@drawable/content_area_bg" 
+		android:layout_height="fill_parent" android:id="@+id/scrollView1" android:layout_width="fill_parent">
 		<!-- Description -->
 		<TextView android:id="@+id/artistDescription"
+			android:padding="2px"
 			android:layout_width="fill_parent" android:layout_height="wrap_content" />
+	</ScrollView>
+	
 
-	</LinearLayout>
-</ScrollView>
+
+</LinearLayout>

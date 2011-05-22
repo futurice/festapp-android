@@ -15,6 +15,9 @@
     <string name="Sunday">Sunnuntai</string>
     <string name="Yes">Kyllä</string>
     <string name="No">Ei</string>
+    <string name="Stage">Lava</string>
+    <string name="PerformanceTime">Esiintymisaika</string>
+    <string name="Favorite">Suosikki</string>
     
     <!-- Common phrases -->
     

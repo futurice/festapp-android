@@ -38,6 +38,9 @@ public class RuisrockMainActivity extends Activity {
 				//startActivity(new Intent(getBaseContext(), MapActivity.class));
 				startActivity(new Intent(getBaseContext(), MapActivity.class));
 				break;
+			case R.id.mainGridInfo:
+				startActivity(new Intent(getBaseContext(), InfoPageActivity.class));
+				break;
 			default:
 				break;
 			}
