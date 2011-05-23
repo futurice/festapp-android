@@ -1,17 +1,6 @@
 package fi.ruisrock2011.android;
 
-import java.util.List;
 import java.util.Timer;
-
-import fi.ruisrock2011.android.R;
-import fi.ruisrock2011.android.dao.ConfigDAO;
-import fi.ruisrock2011.android.domain.to.MapLayerOptions;
-import fi.ruisrock2011.android.domain.to.SelectableOption;
-import fi.ruisrock2011.android.gps.GPSLocationListener;
-import fi.ruisrock2011.android.ui.map.Animation;
-import fi.ruisrock2011.android.ui.map.AnimationCallback;
-import fi.ruisrock2011.android.ui.map.MapImageView;
-import fi.ruisrock2011.android.ui.map.SizeCallback;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -29,11 +18,19 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+import fi.ruisrock2011.android.dao.ConfigDAO;
+import fi.ruisrock2011.android.domain.to.MapLayerOptions;
+import fi.ruisrock2011.android.gps.GPSLocationListener;
+import fi.ruisrock2011.android.ui.map.Animation;
+import fi.ruisrock2011.android.ui.map.AnimationCallback;
+import fi.ruisrock2011.android.ui.map.MapImageView;
+import fi.ruisrock2011.android.ui.map.SizeCallback;
 
 public class MapActivity extends Activity {
 	
@@ -46,6 +43,7 @@ public class MapActivity extends Activity {
 	private LocationManager locationManager;
 	private MapLayerOptions mapLayerOptions;
 	private GPSLocationListener gpsLocationListener;
+	private ImageView currentPositionImage;
 	private boolean gpsListenerOnline;
 	private Matrix matrix;
 	private RectF sourceRect;
@@ -83,10 +81,14 @@ public class MapActivity extends Activity {
 		menuButton = (ImageButton) findViewById(R.id.mapMenu);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		mapLayerOptions = ConfigDAO.findMapLayers(MapActivity.this);
+		currentPositionImage = (ImageView) findViewById(R.id.currentPosition);
+		currentPositionImage.setVisibility(View.GONE);
 		
 		
 		if (isGpsLayerSelected() && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 			activateGpsListener(true);
+		} else {
+			mapLayerOptions.setOptionValue(getString(R.string.mapActivity_layer_gps), false);
 		}
 
 		sourceRect = new RectF();
@@ -126,6 +128,20 @@ public class MapActivity extends Activity {
 		mapImageView.getDrawable().setFilterBitmap(true);
 		mapImageView.setImageMatrix(matrix);
 	}
+	
+	@Override
+	protected void onPause() {
+		activateGpsListener(false);
+		super.onPause();
+	}
+	
+	@Override
+	protected void onResume() {
+		if (isGpsLayerSelected() && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			activateGpsListener(true);
+		}
+		super.onResume();
+	}
 
 	@Override
 	public void onRestoreInstanceState(Bundle inState) {
@@ -140,7 +156,7 @@ public class MapActivity extends Activity {
 	private void activateGpsListener(boolean turnOn) {
 		if (turnOn) {
 			if (!gpsListenerOnline) {
-				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5 * 1000L, 2f, gpsLocationListener);
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5 * 1000L, 0f, gpsLocationListener);
 				Toast.makeText(this, getString(R.string.mapActivity_gpsActivated), Toast.LENGTH_LONG).show();
 			}
 			gpsListenerOnline = true;
@@ -149,6 +165,7 @@ public class MapActivity extends Activity {
 				locationManager.removeUpdates(gpsLocationListener);
 			}
 			gpsListenerOnline = false;
+			currentPositionImage.setVisibility(View.GONE);
 		}
 	}
 
@@ -393,11 +410,29 @@ public class MapActivity extends Activity {
 	}
 
 	public void updateGpsLocation(Location location) {
+		Toast.makeText(this, "" + location.getTime() + "\nLAT: " + location.getLatitude()+ "\nLONG: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
+		
 		// TODO: Proper implementation
+		// north-south,east-west
+		// latitude,longitude,
 		// topRight: 60.493000,24.722333
 		// bottomRight: 60.493000,25.320000
 		// bottomLeft: 60.128000,25.320000
 		// topLeft: 60.128000,24.722333
-		Toast.makeText(this, "" + location.getTime() + "\nLAT: " + location.getLatitude()+ "\nLONG: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
+		
+		double latitude = location.getLatitude();
+		double longitude = location.getLongitude();
+		
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		lp.topMargin = 0 + (int)(Math.random() * ((400 - 0) + 1));
+		lp.leftMargin = 0 + (int)(Math.random() * ((400 - 0) + 1));
+		currentPositionImage.setLayoutParams(lp);
+		currentPositionImage.setVisibility(View.VISIBLE);
+		currentPositionImage.bringToFront();
+		
+		//Projection proj = ProjectionFactory.readProjectionFile();
+		
+		
+		
 	}
 }

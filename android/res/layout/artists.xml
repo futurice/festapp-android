@@ -8,17 +8,19 @@
     <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" 
     	android:src="@drawable/ruisrock_logo" android:layout_gravity="center"></ImageView>
     
-    <ImageView
-    	android:layout_marginTop="-25px"
-    	android:layout_width="wrap_content" android:layout_height="wrap_content" 
-    	android:src="@drawable/title_artists" />
-	    
-    <ListView
-    	android:background="@drawable/content_area_bg"
-        android:id="@+id/artistList"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" 
-        android:cacheColorHint="#00000000"
-         />
+         
+   	<RelativeLayout android:layout_marginTop="-20px" android:background="@drawable/content_area_bg" android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/relativeLayout1">
+	    <ImageView
+	    	android:id="@+id/artistsTitle"
+	    	android:layout_width="wrap_content" android:layout_height="wrap_content" 
+	    	android:src="@drawable/title_artists" />
+	    <ListView
+	    	android:layout_below="@id/artistsTitle"
+	        android:id="@+id/artistList"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent" 
+	        android:cacheColorHint="#00000000"
+	         />
+   	</RelativeLayout>
         
 </LinearLayout>
