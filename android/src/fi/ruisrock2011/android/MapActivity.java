@@ -55,8 +55,8 @@ public class MapActivity extends Activity {
 	private Location location;
 	private Handler handle = new Handler();
 
-	private int imageSizeX = 2047;
-	private int imageSizeY = 2047;
+	private int imageSizeX = 2953;
+	private int imageSizeY = 2126;
 	private static final float INITIAL_SCALE = (float) 1;
 	private static final float MAGNIFY_SCALE = (float) 1.9;
 
@@ -69,6 +69,8 @@ public class MapActivity extends Activity {
 	private float lastTwoXMoves[] = new float[2];
 	private float lastTwoYMoves[] = new float[2];
 	private long downTimer;
+	
+	private BitmapFactory.Options opts = new BitmapFactory.Options();
 	
 	private static final long CURRENT_POSITION_ANIM_FREQ = 1000L;
 	private Runnable currentPositionRunnable = new Runnable() {
@@ -100,6 +102,7 @@ public class MapActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
+		opts.inScaled = false;
 		gpsLocationListener = new GPSLocationListener(this);
 		mapImageView = (MapImageView) findViewById(R.id.image);
 		zoomInButton = (ImageButton) findViewById(R.id.zoomIn);
@@ -145,7 +148,7 @@ public class MapActivity extends Activity {
 		zoomOutButton.setOnClickListener(zoomOutListener);
 		menuButton.setOnClickListener(menuListener);
 
-		bitmap = BitmapFactory.decodeResource(getResources(), current_drawable);
+		bitmap = BitmapFactory.decodeResource(getResources(), current_drawable, opts);
 
 		imageSizeX = bitmap.getWidth();
 		imageSizeY = bitmap.getHeight();
@@ -377,6 +380,9 @@ public class MapActivity extends Activity {
 		calculateSourceRect(current_centerX, current_centerY, current_scale);
 		matrix.setRectToRect(sourceRect, destinationRect, Matrix.ScaleToFit.FILL);
 		mapImageView.setImageMatrix(matrix);
+		
+		//mapImageView.setCurrentPosition(location, sourceRect, current_scale);
+		drawGpsLocation();
 	}
 
 	private void calculateSourceRect(int centerX, int centerY, float scale) {
@@ -421,7 +427,7 @@ public class MapActivity extends Activity {
 	public void setNewDrawable(int resId) {
 		current_drawable = resId;
 		bitmap.recycle();
-		bitmap = BitmapFactory.decodeResource(getResources(), resId);
+		bitmap = BitmapFactory.decodeResource(getResources(), resId, opts);
 		mapImageView.setImageBitmap(bitmap);
 		mapImageView.getDrawable().setFilterBitmap(true);
 
@@ -440,7 +446,7 @@ public class MapActivity extends Activity {
 	public void updateGpsLocation(Location location) {
 		Toast.makeText(this, "" + location.getTime() + "\nLAT: " + location.getLatitude()+ "\nLONG: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
 		this.location = location;
-		drawGpsLocation();
+		//drawGpsLocation();
 	}
 	
 	private void drawGpsLocation() {
@@ -451,17 +457,64 @@ public class MapActivity extends Activity {
 		// bottomRight: 60.493000,25.320000
 		// bottomLeft: 60.128000,25.320000
 		// topLeft: 60.128000,24.722333
-		
+		/*
+		if (location == null) {
+			currentPositionImage.setVisibility(View.GONE);
+			return;
+		}
 		
 		double latitude = location.getLatitude();
 		double longitude = location.getLongitude();
+		*/
 		
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-		lp.topMargin = 300;
-		lp.leftMargin = 300;
-		currentPositionImage.setLayoutParams(lp);
-		currentPositionImage.setVisibility(View.VISIBLE);
-		currentPositionImage.bringToFront();
+		float x = 1512;
+		float y = 1118;
+		RectF rect = sourceRect;
+		/*
+		float left = rect.left * scale + 0.5f;
+		float right = rect.right * scale + 0.5f;
+		float top = rect.top * scale + 0.5f;
+		float bottom = rect.bottom * scale + 0.5f;
+		*/
+		
+		int displayHeight = getResources().getDisplayMetrics().heightPixels;
+		int displayWidth = getResources().getDisplayMetrics().heightPixels;
+		
+		float left = (rect.left > 0) ? rect.left : 0;
+		float right = (rect.right > 0) ? rect.right : imageSizeX;
+		float top = (rect.top > 0) ? rect.top : 0;
+		float bottom = (rect.bottom > 0) ? rect.bottom : imageSizeY;
+		
+		boolean tooLeft = x < left;
+		boolean tooRight = x > right;
+		boolean tooTop = y < top;
+		boolean tooBottom = y > bottom;
+		
+		if (tooLeft || tooRight || tooTop || tooBottom) {
+			currentPositionImage.setVisibility(View.GONE);
+		} else {
+			
+			float xFactor = getResources().getDisplayMetrics().xdpi / 160;
+			float yFactor = getResources().getDisplayMetrics().ydpi / 160;
+			float xScale = (right - left) / imageSizeX;
+			float yScale = (bottom - top) / imageSizeY;
+			
+			float currentX = ((x - left) * xFactor);
+			float currentY = ((y - top) * yFactor);
+			
+			float y2 = (currentY/imageSizeY)*displayHeight;
+			float x2 = (currentX/imageSizeX)*displayWidth;
+			
+			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+			lp.leftMargin = (int) x2;
+			lp.topMargin = (int) y2;
+			//lp.width = 40;
+			//lp.height = 40;
+			currentPositionImage.setLayoutParams(lp);
+			currentPositionImage.setVisibility(View.VISIBLE);
+			currentPositionImage.bringToFront();
+		}
+		
 	}
 	
 }
