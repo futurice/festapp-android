@@ -17,7 +17,7 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent">
 	    
-		<ImageView android:layout_width="wrap_content" android:src="@drawable/ic_maps_indicator_current_position" android:id="@+id/currentPosition" android:layout_height="wrap_content"></ImageView>
+		<ImageView android:layout_width="wrap_content" android:src="@drawable/ic_maps_indicator_current_position_anim" android:id="@+id/currentPosition" android:layout_height="wrap_content"></ImageView>
 	</RelativeLayout>
     
     <include layout="@layout/map_lower_buttons"></include>

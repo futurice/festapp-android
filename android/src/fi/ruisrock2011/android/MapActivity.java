@@ -23,6 +23,7 @@ import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import fi.ruisrock2011.android.dao.ConfigDAO;
 import fi.ruisrock2011.android.domain.to.MapLayerOptions;
@@ -51,6 +52,7 @@ public class MapActivity extends Activity {
 	private Bitmap bitmap;
 	private Timer timer;
 	private Animation animation;
+	private Location location;
 	private Handler handle = new Handler();
 
 	private int imageSizeX = 2047;
@@ -67,6 +69,30 @@ public class MapActivity extends Activity {
 	private float lastTwoXMoves[] = new float[2];
 	private float lastTwoYMoves[] = new float[2];
 	private long downTimer;
+	
+	private static final long CURRENT_POSITION_ANIM_FREQ = 1000L;
+	private Runnable currentPositionRunnable = new Runnable() {
+		@Override
+		public void run() {
+			int level = currentPositionImage.getDrawable().getLevel();
+			switch (level) {
+			case 2500:
+				currentPositionImage.getDrawable().setLevel(5000);
+				break;
+			case 5000:
+				currentPositionImage.getDrawable().setLevel(7500);
+				break;
+			case 7500:
+				currentPositionImage.getDrawable().setLevel(10000);
+				break;
+			default:
+				currentPositionImage.getDrawable().setLevel(2500);
+				break;
+			}
+			currentPositionHandler.postDelayed(this, CURRENT_POSITION_ANIM_FREQ);
+		}
+	};
+	private Handler currentPositionHandler = new Handler();
 	
 
 	/** Called when the activity is first created. */
@@ -160,12 +186,14 @@ public class MapActivity extends Activity {
 				Toast.makeText(this, getString(R.string.mapActivity_gpsActivated), Toast.LENGTH_LONG).show();
 			}
 			gpsListenerOnline = true;
+			currentPositionHandler.post(currentPositionRunnable);
 		} else {
 			if (gpsListenerOnline) {
 				locationManager.removeUpdates(gpsLocationListener);
 			}
 			gpsListenerOnline = false;
 			currentPositionImage.setVisibility(View.GONE);
+			currentPositionHandler.removeCallbacks(currentPositionRunnable);
 		}
 	}
 
@@ -411,7 +439,11 @@ public class MapActivity extends Activity {
 
 	public void updateGpsLocation(Location location) {
 		Toast.makeText(this, "" + location.getTime() + "\nLAT: " + location.getLatitude()+ "\nLONG: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
-		
+		this.location = location;
+		drawGpsLocation();
+	}
+	
+	private void drawGpsLocation() {
 		// TODO: Proper implementation
 		// north-south,east-west
 		// latitude,longitude,
@@ -420,19 +452,16 @@ public class MapActivity extends Activity {
 		// bottomLeft: 60.128000,25.320000
 		// topLeft: 60.128000,24.722333
 		
+		
 		double latitude = location.getLatitude();
 		double longitude = location.getLongitude();
 		
-		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-		lp.topMargin = 0 + (int)(Math.random() * ((400 - 0) + 1));
-		lp.leftMargin = 0 + (int)(Math.random() * ((400 - 0) + 1));
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+		lp.topMargin = 300;
+		lp.leftMargin = 300;
 		currentPositionImage.setLayoutParams(lp);
 		currentPositionImage.setVisibility(View.VISIBLE);
 		currentPositionImage.bringToFront();
-		
-		//Projection proj = ProjectionFactory.readProjectionFile();
-		
-		
-		
 	}
+	
 }

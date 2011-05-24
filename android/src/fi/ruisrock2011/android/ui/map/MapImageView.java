@@ -1,6 +1,10 @@
 package fi.ruisrock2011.android.ui.map;
 
+import fi.ruisrock2011.android.R;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -11,9 +15,11 @@ public class MapImageView extends ImageView {
 	private Runnable cbkAction;
 	private int width;
 	private int height;
+	private Context context;
 
 	public MapImageView(Context context) {
 		super(context);
+		this.context = context;
 		cbkAction = new Runnable() {
 			public void run() {
 				if (callBack != null)
@@ -24,6 +30,7 @@ public class MapImageView extends ImageView {
 
 	public MapImageView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		this.context = context;
 		cbkAction = new Runnable() {
 			public void run() {
 				if (callBack != null)
@@ -31,9 +38,22 @@ public class MapImageView extends ImageView {
 			}
 		};
 	}
+	
+	/*
+	@Override
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+		
+		// http://stackoverflow.com/questions/2738834/combining-two-png-files-in-android
+		
+		Bitmap b = BitmapFactory.decodeResource( getResources(), R.drawable.ic_maps_indicator_current_position );
+        canvas.drawBitmap(b, 100.0f, 100.0f, null);
+	}
+	*/
 
 	public MapImageView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		this.context = context;
 		cbkAction = new Runnable() {
 			public void run() {
 				if (callBack != null)
