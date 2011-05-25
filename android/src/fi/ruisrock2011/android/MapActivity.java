@@ -9,8 +9,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -53,6 +55,8 @@ public class MapActivity extends Activity {
 	private Timer timer;
 	private Animation animation;
 	private Location location;
+	private float locationX;
+	private float locationY;
 	private Handler handle = new Handler();
 
 	private int imageSizeX = 2953;
@@ -63,7 +67,7 @@ public class MapActivity extends Activity {
 	private float current_scale = INITIAL_SCALE;
 	private int current_centerX = imageSizeX / 2;
 	private int current_centerY = imageSizeY / 2;
-	private int current_drawable = R.drawable.map;
+	private int current_drawable = R.drawable.map_base;
 
 	private int moveHistorySize;
 	private float lastTwoXMoves[] = new float[2];
@@ -114,6 +118,7 @@ public class MapActivity extends Activity {
 		currentPositionImage.setVisibility(View.GONE);
 		
 		
+		currentPositionHandler.post(currentPositionRunnable); // TODO: <- remove this
 		if (isGpsLayerSelected() && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 			activateGpsListener(true);
 		} else {
@@ -149,7 +154,6 @@ public class MapActivity extends Activity {
 		menuButton.setOnClickListener(menuListener);
 
 		bitmap = BitmapFactory.decodeResource(getResources(), current_drawable, opts);
-
 		imageSizeX = bitmap.getWidth();
 		imageSizeY = bitmap.getHeight();
 
@@ -264,8 +268,7 @@ public class MapActivity extends Activity {
 		if (isGpsLayerSelected() && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 			showNoGpsDialog();
 		} else {
-			ConfigDAO.updateMapLayers(this, mapLayerOptions);
-			activateGpsListener(isGpsLayerSelected());
+			updateMapLayers();
 		}
 	}
 	
@@ -327,11 +330,31 @@ public class MapActivity extends Activity {
 			if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 				mapLayerOptions.setOptionValue(getString(R.string.mapActivity_layer_gps), false);
 			}
-			ConfigDAO.updateMapLayers(this, mapLayerOptions);
-			activateGpsListener(isGpsLayerSelected());
+			updateMapLayers();
 		}
 	}
 	
+	private void updateMapLayers() {
+		ConfigDAO.updateMapLayers(this, mapLayerOptions);
+		activateGpsListener(isGpsLayerSelected());
+		showVisibleMapLayers();
+	}
+	
+	private void showVisibleMapLayers() {
+		/*
+		BitmapFactory.Options opts = new BitmapFactory.Options();
+		opts.inScaled = false;
+		bitmap.recycle();
+		
+		Bitmap bmp = Bitmap.createBitmap(imageSizeX, imageSizeY, Bitmap.Config.ARGB_8888);
+		Canvas comboImage = new Canvas(bmp);
+		comboImage.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.map_base, opts), 0f, 0f, null);
+		mapImageView.setImageBitmap(bmp);
+		mapImageView.getDrawable().setFilterBitmap(true);
+		mapImageView.setImageMatrix(matrix);
+		*/
+	}
+
 	private boolean isGpsLayerSelected() {
 		return mapLayerOptions.isOptionSelected(getString(R.string.mapActivity_layer_gps));
 	}
@@ -449,6 +472,39 @@ public class MapActivity extends Activity {
 		//drawGpsLocation();
 	}
 	
+	public static void convertLocationToMapCoordinates(Location location) {
+		if (location ==  null) {
+			return;
+		}
+		double latitude = location.getLatitude();
+		double longitude = location.getLongitude();
+		
+		double refLatitude = 60.429323654274995;
+		double refLongitude = 22.177708979906505;
+		int refYPixel = 861;
+		int refXPixel = 735;
+		double pixelToLongitudeFactor = 0.0083592037;
+		double pixelToLatitudeFactir = -0.00314236358;
+		
+		double latitudeDiff = latitude - refLatitude;
+		double longitudeDiff = longitude- refLongitude;
+		
+		double x = longitudeDiff*refXPixel;
+		double y = latitudeDiff*refYPixel;
+		
+		System.out.println(x + ", " + y);
+		
+		/*
+x: 1034px = 0.0083592037 LONG
+y: 806px = -0.00314236358 LAT
+		 */
+		
+		
+		
+		
+		
+	}
+	
 	private void drawGpsLocation() {
 		// TODO: Proper implementation
 		// north-south,east-west
@@ -470,15 +526,6 @@ public class MapActivity extends Activity {
 		float x = 1512;
 		float y = 1118;
 		RectF rect = sourceRect;
-		/*
-		float left = rect.left * scale + 0.5f;
-		float right = rect.right * scale + 0.5f;
-		float top = rect.top * scale + 0.5f;
-		float bottom = rect.bottom * scale + 0.5f;
-		*/
-		
-		int displayHeight = getResources().getDisplayMetrics().heightPixels;
-		int displayWidth = getResources().getDisplayMetrics().heightPixels;
 		
 		float left = (rect.left > 0) ? rect.left : 0;
 		float right = (rect.right > 0) ? rect.right : imageSizeX;
@@ -493,26 +540,26 @@ public class MapActivity extends Activity {
 		if (tooLeft || tooRight || tooTop || tooBottom) {
 			currentPositionImage.setVisibility(View.GONE);
 		} else {
+			float xRatio = (x-left)/(right-left);
+			float yRatio = (y-top)/(bottom-top);
 			
-			float xFactor = getResources().getDisplayMetrics().xdpi / 160;
-			float yFactor = getResources().getDisplayMetrics().ydpi / 160;
-			float xScale = (right - left) / imageSizeX;
-			float yScale = (bottom - top) / imageSizeY;
+			float xOnDisplay = xRatio * mapImageView.getWidth();
+			float yOnDisplay = yRatio * mapImageView.getHeight();
 			
-			float currentX = ((x - left) * xFactor);
-			float currentY = ((y - top) * yFactor);
+			int currentPosSize = getResources().getDimensionPixelSize(R.dimen.map_currentPosition_size);
+			int margin = currentPosSize / 2;
+			if (xOnDisplay < margin || yOnDisplay < margin) {
+				currentPositionImage.setVisibility(View.GONE);
+			} else {
+				//RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+				RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(currentPosSize, currentPosSize);
+				lp.leftMargin = (int) xOnDisplay - margin;
+				lp.topMargin = (int) yOnDisplay - margin;
+				currentPositionImage.setLayoutParams(lp);
+				currentPositionImage.setVisibility(View.VISIBLE);
+				currentPositionImage.bringToFront();
+			}
 			
-			float y2 = (currentY/imageSizeY)*displayHeight;
-			float x2 = (currentX/imageSizeX)*displayWidth;
-			
-			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-			lp.leftMargin = (int) x2;
-			lp.topMargin = (int) y2;
-			//lp.width = 40;
-			//lp.height = 40;
-			currentPositionImage.setLayoutParams(lp);
-			currentPositionImage.setVisibility(View.VISIBLE);
-			currentPositionImage.bringToFront();
 		}
 		
 	}

@@ -52,6 +52,14 @@ public class MapImageView extends ImageView {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+		canvas.drawBitmap(getCurrentPosition(), 1512, 1118, null);
+	}
+	*/
+	
+	/*
+	@Override
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
 		
 		// http://stackoverflow.com/questions/2738834/combining-two-png-files-in-android
 		
@@ -86,6 +94,7 @@ public class MapImageView extends ImageView {
 			canvas.drawBitmap(getCurrentPosition(), currentY, currentX, null);
 		}
 	}
+	*/
 	
 	private Bitmap getCurrentPosition() {
 		switch (currentPositionId) {
@@ -106,7 +115,6 @@ public class MapImageView extends ImageView {
 		opts.inScaled = false;
 		return BitmapFactory.decodeResource(getResources(), imageId, opts);
 	}
-	*/
 	
 	
 

@@ -4,4 +4,5 @@
 	<dimen name="timeline.verticalLine.marginTop">25px</dimen>
 	
 	<dimen name="timeline.gig.height">58px</dimen>
+	<dimen name="map.currentPosition.size">36px</dimen>
 </resources>
