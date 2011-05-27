@@ -55,8 +55,8 @@ public class MapActivity extends Activity {
 	private Timer timer;
 	private Animation animation;
 	private Location location;
-	private float locationX;
-	private float locationY;
+	private int locationX = -1;
+	private int locationY = -1;
 	private Handler handle = new Handler();
 
 	private int imageSizeX = 2953;
@@ -472,59 +472,48 @@ public class MapActivity extends Activity {
 		//drawGpsLocation();
 	}
 	
-	public static void convertLocationToMapCoordinates(Location location) {
-		if (location ==  null) {
+	private void convertLocationToMapCoordinates(Location location) {
+		if (location == null) {
+			locationX = -1;
+			locationY = -1;
 			return;
 		}
 		double latitude = location.getLatitude();
 		double longitude = location.getLongitude();
 		
-		double refLatitude = 60.429323654274995;
-		double refLongitude = 22.177708979906505;
-		int refYPixel = 861;
-		int refXPixel = 735;
-		double pixelToLongitudeFactor = 0.0083592037;
-		double pixelToLatitudeFactir = -0.00314236358;
+		if (latitude < 59 || latitude > 62 || longitude < 21 || longitude > 23) {
+			locationX = -1;
+			locationY = -1;
+			return;
+		}
 		
-		double latitudeDiff = latitude - refLatitude;
-		double longitudeDiff = longitude- refLongitude;
+		double referenceLatitude = 60.42836515775148;
+		double referenceLongitude = 22.18308629415958;
+		double referenceX = 1342;
+		double referenceY = 736;
 		
-		double x = longitudeDiff*refXPixel;
-		double y = latitudeDiff*refYPixel;
+		double latitudeGain = 0.00412661358/100;
+		double longitudeGain = 0.00507205725/100;
+		double latitudeGainXPixelChange = -4.74;
+		double latitudeGainYPixelChange = -7.56;
+		double longitudeGainXPixelChange = 4.7;
+		double longitudeGainYPixelChange = -2.92;
+	    
+		double changeInLatitude = (latitude - referenceLatitude) / latitudeGain;
+		double changeInX = changeInLatitude * latitudeGainXPixelChange;
+		double changeInY = changeInLatitude * latitudeGainYPixelChange;
 		
-		System.out.println(x + ", " + y);
-		
-		/*
-x: 1034px = 0.0083592037 LONG
-y: 806px = -0.00314236358 LAT
-		 */
-		
-		
-		
-		
-		
+		double changeInLongitude = (longitude - referenceLongitude) / longitudeGain;
+	    changeInX += changeInLongitude * longitudeGainXPixelChange;
+	    changeInY += changeInLongitude * longitudeGainYPixelChange;
+	    
+	    locationX = (int) (referenceX + changeInX);
+	    locationY = (int) (referenceY + changeInY);
 	}
 	
 	private void drawGpsLocation() {
-		// TODO: Proper implementation
-		// north-south,east-west
-		// latitude,longitude,
-		// topRight: 60.493000,24.722333
-		// bottomRight: 60.493000,25.320000
-		// bottomLeft: 60.128000,25.320000
-		// topLeft: 60.128000,24.722333
-		/*
-		if (location == null) {
-			currentPositionImage.setVisibility(View.GONE);
-			return;
-		}
+		convertLocationToMapCoordinates(location);
 		
-		double latitude = location.getLatitude();
-		double longitude = location.getLongitude();
-		*/
-		
-		float x = 1512;
-		float y = 1118;
 		RectF rect = sourceRect;
 		
 		float left = (rect.left > 0) ? rect.left : 0;
@@ -532,16 +521,16 @@ y: 806px = -0.00314236358 LAT
 		float top = (rect.top > 0) ? rect.top : 0;
 		float bottom = (rect.bottom > 0) ? rect.bottom : imageSizeY;
 		
-		boolean tooLeft = x < left;
-		boolean tooRight = x > right;
-		boolean tooTop = y < top;
-		boolean tooBottom = y > bottom;
+		boolean tooLeft = locationX < left;
+		boolean tooRight = locationX > right;
+		boolean tooTop = locationY < top;
+		boolean tooBottom = locationY > bottom;
 		
 		if (tooLeft || tooRight || tooTop || tooBottom) {
 			currentPositionImage.setVisibility(View.GONE);
 		} else {
-			float xRatio = (x-left)/(right-left);
-			float yRatio = (y-top)/(bottom-top);
+			float xRatio = (locationX-left)/(right-left);
+			float yRatio = (locationY-top)/(bottom-top);
 			
 			float xOnDisplay = xRatio * mapImageView.getWidth();
 			float yOnDisplay = yRatio * mapImageView.getHeight();
