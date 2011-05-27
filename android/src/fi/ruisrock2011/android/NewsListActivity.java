@@ -67,6 +67,7 @@ public class NewsListActivity extends Activity {
 		UIUtil.showErrorDialog(title, message, this);
 	}
 	
+	/*
 	private boolean updateNewsArticlesViaRSS() {
 		RSSReader rssReader = new RSSReader();
 		List<RSSItem> feed = rssReader.loadRSSFeed(RuisrockConstants.NEWS_RSS_URL);
@@ -80,21 +81,25 @@ public class NewsListActivity extends Activity {
 		}
 		return false;
 	}
+	*/
 	
 	private void createNewsList() {
 		newsList = (ListView) findViewById(R.id.newsList);
 		
 		articles = NewsDAO.findAll(this);
+		/*
 		if (articles.size() == 0) {
 			progressDialog = ProgressDialog.show(this, "", getString(R.string.newsActivity_loadingArticles));
 			ActivityThread rssThread = new ActivityThread();
 			rssThread.start();
 		}
+		*/
 		
 	    newsList.setAdapter(new NewsArticleAdapter(this, articles));
 	    newsList.setOnItemClickListener(newsArticleClickListener);
 	}
 	
+	/*
 	private class ActivityThread extends Thread {
 		@Override
 		public void run() {
@@ -114,5 +119,6 @@ public class NewsListActivity extends Activity {
 			}
 		};
 	}
+	*/
 	
 }

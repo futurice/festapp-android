@@ -28,10 +28,12 @@ public class DebugActivity extends Activity {
 		addButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				/*
 				int articles = NewsDAO.deleteAll(getBaseContext());
 				String message = String.format("Deleted following resources from DB:\n" +
 						"- News articles: %d", articles);
 				Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+				*/
 			}
 		});
 	}

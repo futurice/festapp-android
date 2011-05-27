@@ -1,8 +1,14 @@
 package fi.ruisrock2011.android.util;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.Socket;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +49,10 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 
+import android.util.Log;
+
+import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
+
 /**
  * Apache HttpClient helper class for performing HTTP requests.
  * 
@@ -51,6 +61,8 @@ import org.apache.http.protocol.HttpContext;
  * @author Pyry-Samuli Lahti / Futurice
  */
 public class HTTPUtil {
+	
+	private static final String TAG = "HTTPUtil";
 
 	private static final String CONTENT_TYPE = "Content-Type";
 	private static final int POST_TYPE = 1;
@@ -111,15 +123,56 @@ public class HTTPUtil {
 	 * Perform a simple HTTP GET operation.
 	 *
 	 */
-	public String performGet(final String url) {
+	public HTTPBackendResponse performGet(final String url) {
 		return performRequest(null, url, null, null, null, null, HTTPUtil.GET_TYPE);
+	}
+	
+	public static boolean hasContentChanged(String urlString, String previousEtag) throws Exception {
+		if (previousEtag == null || previousEtag.length() == 0) {
+			return true;
+		}
+        URL url = new URL(urlString);
+
+        Socket socket = null;
+        PrintWriter writer = null;
+        BufferedReader reader = null;
+
+        boolean contentChanged = true;
+        try {
+            socket = new Socket(url.getHost(), 80);
+            writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+            writer.println("HEAD "+url.getFile()+" HTTP/1.1");
+            writer.println("Host: " + url.getHost());
+            writer.println(""); // Important, else the server will expect that there's more into the request.
+            writer.flush();
+
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                String etag = "ETag: ";
+                if (line.startsWith(etag)) {
+                	String newEtag = line.replaceFirst(etag, "");
+                	if (newEtag.equals(previousEtag)) {
+                		contentChanged = false;
+                		break;
+                	}
+                }
+            }
+        } finally {
+            if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {} 
+            if (writer != null) { writer.close(); }
+            if (socket != null) try { socket.close(); } catch (IOException logOrIgnore) {} 
+        }
+		
+		return contentChanged;
 	}
 
 	/**
 	 * Perform an HTTP GET operation with user/pass and headers.
 	 *
 	 */
-	public String performGet(final String url, final String user, final String pass,
+	public HTTPBackendResponse performGet(final String url, final String user, final String pass,
 			final Map<String, String> additionalHeaders) {
 		return performRequest(null, url, user, pass, additionalHeaders, null, HTTPUtil.GET_TYPE);
 	}
@@ -128,7 +181,7 @@ public class HTTPUtil {
 	 * Perform a simplified HTTP POST operation.
 	 *
 	 */
-	public String performPost(final String url, final Map<String, String> params) {
+	public HTTPBackendResponse performPost(final String url, final Map<String, String> params) {
 		return performRequest(HTTPUtil.MIME_FORM_ENCODED, url, null, null, null, params, HTTPUtil.POST_TYPE);
 	}
 
@@ -138,7 +191,7 @@ public class HTTPUtil {
 	 * and a default content-type of "application/x-www-form-urlencoded."
 	 *
 	 */
-	public String performPost(final String url, final String user, final String pass,
+	public HTTPBackendResponse performPost(final String url, final String user, final String pass,
 			final Map<String, String> additionalHeaders, final Map<String, String> params) {
 		return performRequest(HTTPUtil.MIME_FORM_ENCODED, url, user, pass, additionalHeaders, params,
 				HTTPUtil.POST_TYPE);
@@ -149,7 +202,7 @@ public class HTTPUtil {
    complicated/flexible version of the method).
 	 *
 	 */
-	public String performPost(final String contentType, final String url, final String user, final String pass,
+	public HTTPBackendResponse performPost(final String contentType, final String url, final String user, final String pass,
 			final Map<String, String> additionalHeaders, final Map<String, String> params) {
 		return performRequest(contentType, url, user, pass, additionalHeaders, params, HTTPUtil.POST_TYPE);
 	}
@@ -157,7 +210,7 @@ public class HTTPUtil {
 	//
 	// private methods
 	//
-	private String performRequest(final String contentType, final String url, final String user, final String pass,
+	private HTTPBackendResponse performRequest(final String contentType, final String url, final String user, final String pass,
 			final Map<String, String> headers, final Map<String, String> params, final int requestType) {
 
 		// add user and pass to client credentials if present
@@ -218,19 +271,27 @@ public class HTTPUtil {
 		return execute(method);
 	}
 
-	private synchronized String execute(final HttpRequestBase method) {
-		String response = null;
+	private synchronized HTTPBackendResponse execute(final HttpRequestBase method) {
 		// execute method returns?!? (rather than async) - do it here sync, and wrap async elsewhere
+		HTTPBackendResponse httpBackendResponse = new HTTPBackendResponse();
 		try {
-			response = HTTPUtil.client.execute(method, responseHandler);
-		} catch (ClientProtocolException e) {
-			response = HTTPUtil.HTTP_RESPONSE_ERROR + " - " + e.getClass().getSimpleName() + " " + e.getMessage();
-			//e.printStackTrace();
-		} catch (IOException e) {
-			response = HTTPUtil.HTTP_RESPONSE_ERROR + " - " + e.getClass().getSimpleName() + " " + e.getMessage();
-			//e.printStackTrace();
+			HttpResponse httpResponse = HTTPUtil.client.execute(method);
+			int responseCode = httpResponse.getStatusLine().getStatusCode();
+			if (responseCode != 200) {
+				String url = method.getURI().toURL().toExternalForm();
+				Log.e(TAG, String.format("Invalid response-code %s received from %s", responseCode, url));
+				httpBackendResponse.setValid(false);
+				return httpBackendResponse;
+			}
+			httpBackendResponse.setContent(StringUtil.convertStreamToString(httpResponse.getEntity().getContent()));
+			httpBackendResponse.setEtag(httpResponse.getHeaders("ETag")[0].getValue());
+			httpBackendResponse.setValid(true);
+			httpResponse.getEntity().consumeContent();
+		} catch (Exception e) {
+			Log.e(TAG, "Cannot execute HTTP request", e);
+			httpBackendResponse.setValid(false);
 		}
-		return response;
+		return httpBackendResponse;
 	}
 
 	static class GzipDecompressingEntity extends HttpEntityWrapper {

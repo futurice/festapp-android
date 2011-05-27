@@ -20,6 +20,7 @@ import android.util.Log;
 import fi.ruisrock2011.android.domain.Gig;
 import fi.ruisrock2011.android.domain.to.DaySchedule;
 import fi.ruisrock2011.android.domain.to.FestivalDay;
+import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
 import fi.ruisrock2011.android.util.HTTPUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
 import fi.ruisrock2011.android.util.StringUtil;
@@ -126,8 +127,13 @@ public class GigDAO {
 	
 	public static void updateGigsOverHttp(Context context) throws Exception {
 		HTTPUtil httpUtil = new HTTPUtil();
-		String gigsJson = httpUtil.performGet(RuisrockConstants.GIGS_JSON_URL, null, null, null);
-		List<Gig> gigs = new ObjectMapper().readValue(gigsJson, new TypeReference<List<Gig>>() {});
+		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.GIGS_JSON_URL);
+		if (!response.isValid() || response.getContent() == null) {
+			return;
+		}
+		ConfigDAO.setEtagForGigs(context, response.getEtag());
+		
+		List<Gig> gigs = new ObjectMapper().readValue(response.getContent(), new TypeReference<List<Gig>>() {});
 		
 		if (gigs != null && gigs.size() > 1) { // Hackish fail-safe
 			SQLiteDatabase db = null;

@@ -15,12 +15,14 @@ import android.util.Log;
 import fi.ruisrock2011.android.R;
 import fi.ruisrock2011.android.ArtistInfoActivity;
 import fi.ruisrock2011.android.RuisrockMainActivity;
+import fi.ruisrock2011.android.dao.ConfigDAO;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.dao.NewsDAO;
 import fi.ruisrock2011.android.domain.Gig;
 import fi.ruisrock2011.android.domain.NewsArticle;
 import fi.ruisrock2011.android.rss.RSSItem;
 import fi.ruisrock2011.android.rss.RSSReader;
+import fi.ruisrock2011.android.util.HTTPUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
 
 /**
@@ -29,8 +31,6 @@ import fi.ruisrock2011.android.util.RuisrockConstants;
  * @author Pyry-Samuli Lahti / Futurice
  */
 public class RuisrockService extends Service {
-	
-	enum GigConvertTarget { ARTIST, STAGE_AND_TIME }
 	
 	private static final String TAG = RuisrockService.class.getSimpleName();
 	private Timer timer;
@@ -41,7 +41,7 @@ public class RuisrockService extends Service {
 			Log.i(TAG, "Starting backend operations");
 			try {
 				//updateNewsArticles();
-				//updateGigs();
+				updateGigs();
 				alertGigs();
 			} catch (Throwable t) {
 				Log.e(TAG, "Failed execute backend operations", t);
@@ -77,20 +77,24 @@ public class RuisrockService extends Service {
 	}
 	
 	private void updateNewsArticles() {
-		RSSReader rssReader = new RSSReader();
-		List<RSSItem> feed = rssReader.loadRSSFeed(RuisrockConstants.NEWS_RSS_URL);
-		if (feed != null && feed.size() > 0) {
-			List<NewsArticle> articles = new ArrayList<NewsArticle>();
-			for (RSSItem rssItem : feed) {
-				articles.add(new NewsArticle(rssItem));
+		try {
+			if (HTTPUtil.hasContentChanged(RuisrockConstants.NEWS_JSON_URL, ConfigDAO.getEtagForNews(this))) {
+				NewsDAO.updateNewsOverHttp(getBaseContext());
+			} else {
+				Log.i(TAG, "Gigs were up-to-date.");
 			}
-			NewsDAO.replaceAll(getBaseContext(), articles);
+		} catch (Exception e) {
+			Log.e(TAG, "Could not update Gigs.", e);
 		}
 	}
 	
 	private void updateGigs() {
 		try {
-			GigDAO.updateGigsOverHttp(getBaseContext());
+			if (HTTPUtil.hasContentChanged(RuisrockConstants.GIGS_JSON_URL, ConfigDAO.getEtagForGigs(this))) {
+				GigDAO.updateGigsOverHttp(getBaseContext());
+			} else {
+				Log.i(TAG, "Gigs were up-to-date.");
+			}
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Gigs.", e);
 		}

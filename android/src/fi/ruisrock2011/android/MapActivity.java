@@ -117,8 +117,6 @@ public class MapActivity extends Activity {
 		currentPositionImage = (ImageView) findViewById(R.id.currentPosition);
 		currentPositionImage.setVisibility(View.GONE);
 		
-		
-		currentPositionHandler.post(currentPositionRunnable); // TODO: <- remove this
 		if (isGpsLayerSelected() && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 			activateGpsListener(true);
 		} else {
@@ -201,6 +199,10 @@ public class MapActivity extends Activity {
 			gpsListenerOnline = false;
 			currentPositionImage.setVisibility(View.GONE);
 			currentPositionHandler.removeCallbacks(currentPositionRunnable);
+			locationX = -1;
+			locationY = -1;
+			location = null;
+			drawCurrentLocation();
 		}
 	}
 
@@ -404,8 +406,7 @@ public class MapActivity extends Activity {
 		matrix.setRectToRect(sourceRect, destinationRect, Matrix.ScaleToFit.FILL);
 		mapImageView.setImageMatrix(matrix);
 		
-		//mapImageView.setCurrentPosition(location, sourceRect, current_scale);
-		drawGpsLocation();
+		drawCurrentLocation();
 	}
 
 	private void calculateSourceRect(int centerX, int centerY, float scale) {
@@ -469,10 +470,11 @@ public class MapActivity extends Activity {
 	public void updateGpsLocation(Location location) {
 		Toast.makeText(this, "" + location.getTime() + "\nLAT: " + location.getLatitude()+ "\nLONG: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
 		this.location = location;
-		//drawGpsLocation();
+		calculateNewPixelsFromLocation();
+		drawCurrentLocation();
 	}
 	
-	private void convertLocationToMapCoordinates(Location location) {
+	private void calculateNewPixelsFromLocation() {
 		if (location == null) {
 			locationX = -1;
 			locationY = -1;
@@ -511,9 +513,11 @@ public class MapActivity extends Activity {
 	    locationY = (int) (referenceY + changeInY);
 	}
 	
-	private void drawGpsLocation() {
-		convertLocationToMapCoordinates(location);
-		
+	private void drawCurrentLocation() {
+		if (locationY < 0 || locationX < 0) {
+			currentPositionImage.setVisibility(View.GONE);
+			return;
+		}
 		RectF rect = sourceRect;
 		
 		float left = (rect.left > 0) ? rect.left : 0;
@@ -540,7 +544,6 @@ public class MapActivity extends Activity {
 			if (xOnDisplay < margin || yOnDisplay < margin) {
 				currentPositionImage.setVisibility(View.GONE);
 			} else {
-				//RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 				RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(currentPosSize, currentPosSize);
 				lp.leftMargin = (int) xOnDisplay - margin;
 				lp.topMargin = (int) yOnDisplay - margin;

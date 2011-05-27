@@ -14,6 +14,8 @@ import android.util.Log;
 import android.widget.Toast;
 import fi.ruisrock2011.android.R;
 import fi.ruisrock2011.android.domain.Gig;
+import fi.ruisrock2011.android.domain.NewsArticle;
+import fi.ruisrock2011.android.util.StringUtil;
 
 /**
  * DatabaseHelper.
@@ -23,7 +25,7 @@ import fi.ruisrock2011.android.domain.Gig;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME = "ruisrock2011_db";
-	private static final int DB_VERSION = 46;
+	private static final int DB_VERSION = 50;
 	private static final String TAG = "DatabaseHelper";
 	
 	private Context context;
@@ -39,6 +41,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createNewsTable(db);
 			createConfigTable(db);
 			createGigTable(db);
+			
+			createNewsArticlesFromLocalJson(db);
 			createGigsFromLocalJson(db);
 		} catch (Exception e) {
 			Log.e(TAG, "Cannot create DB", e);
@@ -49,10 +53,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private void createNewsTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS news");
 		String sql = "CREATE TABLE IF NOT EXISTS news (" +
-				"_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				"title VARCHAR(255), " +
-				"url VARCHAR(1023) UNIQUE, " +
-				"newsDate DATE)";
+				"url TEXT PRIMARY KEY, " +
+				"title TEXT, " +
+				"newsDate DATE," +
+				"content TEXT" +
+				")";
 		db.execSQL(sql);
 	}
 	
@@ -68,14 +73,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 	
+	private void createNewsArticlesFromLocalJson(SQLiteDatabase db) throws Exception {
+		InputStream jsonStream = context.getResources().openRawResource(R.raw.news);
+		String json = StringUtil.convertStreamToString(jsonStream);
+		List<NewsArticle> articles = NewsDAO.parseFromJson(json);
+
+		for (NewsArticle article : articles) {
+				ContentValues values = NewsDAO.convertNewsArticleToContentValues(article);
+				db.insert("news", "content", values);
+		}
+	}
+	
 	
 	
 	private void createGigTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS gig");
 		String sql = "CREATE TABLE IF NOT EXISTS gig (" +
 				//"_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				"id VARCHAR(255) PRIMARY KEY, " +
-				"artist VARCHAR(255), " +
+				"id TEXT PRIMARY KEY, " +
+				"artist TEXT, " +
 				"description TEXT, " +
 				"startTime DATE, " +
 				"endTime DATE, " +
@@ -94,8 +110,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS config");
 		String sql = "CREATE TABLE IF NOT EXISTS config (" +
 				//"_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				"attributeName VARCHAR(127) PRIMARY KEY, " +
-				"attributevalue VARCHAR(1023))";
+				"attributeName TEXT PRIMARY KEY, " +
+				"attributevalue TEXT)";
 		db.execSQL(sql);
 	}
 	

@@ -16,17 +16,18 @@
     	android:src="@drawable/ruisrock_logo" android:layout_gravity="center"></ImageView>
 	    
 	<TableLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/tableLayout1" android:layout_above="@+id/mainGridFonecta">
-		<TableRow android:id="@+id/tableRow1" 
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:gravity="center_horizontal">
-			<ImageView android:src="@drawable/icon" android:layout_width="wrap_content" android:id="@+id/mainGridInfo" android:layout_height="wrap_content" android:padding="20dip"></ImageView>
-			<ImageView android:src="@drawable/icon" android:layout_width="wrap_content" android:id="@+id/mainGridSchedule" android:layout_height="wrap_content" android:padding="20dip"></ImageView>
+		<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_horizontal">
+			<ImageView android:src="@drawable/btn_main_info" android:layout_width="wrap_content" android:id="@+id/mainGridInfo" android:layout_height="wrap_content"></ImageView>
+			<ImageView android:src="@drawable/btn_main_artists" android:layout_width="wrap_content" android:id="@+id/mainGridSchedule" android:layout_height="wrap_content"></ImageView>
 		</TableRow>
-		<TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_horizontal">
-			<ImageView android:src="@drawable/icon" android:layout_width="wrap_content" android:id="@+id/mainGridMap" android:layout_height="wrap_content" android:padding="20dip"></ImageView>
-			<ImageView android:src="@drawable/icon" android:layout_width="wrap_content" android:id="@+id/mainGridArtists" android:layout_height="wrap_content" android:padding="20dip"></ImageView>
+		<TableRow  android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_horizontal">
+			<ImageView android:src="@drawable/btn_main_schedule" android:layout_width="wrap_content" android:id="@+id/mainGridMap" android:layout_height="wrap_content"></ImageView>
+			<ImageView android:src="@drawable/btn_main_map" android:layout_width="wrap_content" android:id="@+id/mainGridArtists" android:layout_height="wrap_content"></ImageView>
+		</TableRow>
+		<TableRow  android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_horizontal">
+			<ImageView android:src="@drawable/btn_main_news" android:layout_width="wrap_content" android:id="@+id/mainGridNews" android:layout_height="wrap_content"></ImageView>
+			<ImageView android:src="@drawable/btn_main_02" android:layout_width="wrap_content" android:id="@+id/mainGridFonecta" android:layout_height="wrap_content"></ImageView>
 		</TableRow>
 	</TableLayout>
-	<ImageView android:layout_height="wrap_content" android:layout_width="wrap_content" android:src="@drawable/icon" android:id="@+id/mainGridFonecta" android:layout_alignParentBottom="true"></ImageView>
 	
 </RelativeLayout>

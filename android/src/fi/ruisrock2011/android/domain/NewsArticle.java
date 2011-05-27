@@ -10,24 +10,24 @@ import fi.ruisrock2011.android.rss.RSSItem;
 import fi.ruisrock2011.android.rss.RSSReader;
 
 public class NewsArticle {
-
-	private Long id;
+	
+	private String url;
 	private String title;
 	private Date date;
-	private String url;
-	//private String content;
+	private String content;
 
 	public NewsArticle() {
 
 	}
 
-	public NewsArticle(Long id, String title, Date date, String url) {
-		this.id = id;
+	public NewsArticle(String url, String title, Date date, String content) {
+		this.url = url;
 		this.title = title;
 		this.date = date;
-		this.url = url;
+		this.content = content;
 	}
 
+	/*
 	public NewsArticle(RSSItem rssItem) {
 		title = rssItem.getTitle();
 		url = rssItem.getLink();
@@ -37,6 +37,7 @@ public class NewsArticle {
 			Log.w("NewsArticle", "Unable to parse pubDate " + rssItem.getPubDate());
 		}
 	}
+	*/
 
 	public String getTitle() {
 		return title;
@@ -62,7 +63,6 @@ public class NewsArticle {
 		this.url = url;
 	}
 
-	/*
 	public String getContent() {
 		return content;
 	}
@@ -70,15 +70,7 @@ public class NewsArticle {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	*/
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 	
 	public String getDateString() {
 		try {
@@ -90,7 +82,7 @@ public class NewsArticle {
 	
 	@Override
 	public String toString() {
-		return String.format("NewsArticle {id=%s, title=%s, date=%s}", id, title, date);
+		return String.format("NewsArticle {url=%s, title=%s}", url, title);
 	}
 
 }

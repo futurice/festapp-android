@@ -29,6 +29,8 @@ public class ConfigDAO {
 	private static final List<String> MAP_LAYER_OPTIONS = new ArrayList<String>();
 	
 	private static final String ATTR_SELECTED_MAP_LAYERS = "selected_map_layers";
+	private static final String ATTR_ETAG_FOR_GIGS = "etag_gigs";
+	private static final String ATTR_ETAG_FOR_NEWS = "etag_news";
 	
 	public static MapLayerOptions findMapLayers(Context context) {
 		String values = getAttributeValue(ATTR_SELECTED_MAP_LAYERS, context);
@@ -44,6 +46,22 @@ public class ConfigDAO {
 	
 	public static void updateMapLayers(Context context, MapLayerOptions mapLayerOptions) {
 		setAttributeValue(ATTR_SELECTED_MAP_LAYERS, mapLayerOptions.getSelectedValuesAsConcatenatedString(), context);
+	}
+	
+	public static String getEtagForGigs(Context context) {
+		return getAttributeValue(ATTR_ETAG_FOR_GIGS, context);
+	}
+	
+	public static void setEtagForGigs(Context context, String etag) {
+		setAttributeValue(ATTR_ETAG_FOR_GIGS, etag, context);
+	}
+	
+	public static String getEtagForNews(Context context) {
+		return getAttributeValue(ATTR_ETAG_FOR_NEWS, context);
+	}
+	
+	public static void setEtagForNews(Context context, String etag) {
+		setAttributeValue(ATTR_ETAG_FOR_NEWS, etag, context);
 	}
 	
 	private static List<String> getAllMapLayers(Context context) {
