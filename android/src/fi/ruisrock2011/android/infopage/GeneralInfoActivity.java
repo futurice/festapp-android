@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class GeneralInfoActivity extends Activity {
 	
@@ -19,8 +20,8 @@ public class GeneralInfoActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.info_sub_page);
-		ImageView title = (ImageView) findViewById(R.id.infoSubPageTitle);
-		title.setImageResource(R.drawable.title_general_info);
+		TextView title = (TextView) findViewById(R.id.infoSubPageTitle);
+		title.setText(getString(R.string.GeneralInfo));
 		
 		contentView = (WebView) findViewById(R.id.infoPageWebView);
 		try {

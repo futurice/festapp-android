@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 import fi.ruisrock2011.android.R;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.domain.Gig;
@@ -35,11 +36,16 @@ public class RuisrockMainActivity extends Activity {
 				startActivity(new Intent(getBaseContext(), ScheduleTabActivity.class));
 				break;
 			case R.id.mainGridMap:
-				//startActivity(new Intent(getBaseContext(), MapActivity.class));
 				startActivity(new Intent(getBaseContext(), MapActivity.class));
 				break;
 			case R.id.mainGridInfo:
 				startActivity(new Intent(getBaseContext(), InfoPageActivity.class));
+				break;
+			case R.id.mainGridNews:
+				startActivity(new Intent(getBaseContext(), NewsListActivity.class));
+				break;
+			case R.id.mainGridFonecta:
+				Toast.makeText(getBaseContext(), "TODO: Implement", Toast.LENGTH_LONG).show();
 				break;
 			default:
 				break;
@@ -93,6 +99,7 @@ public class RuisrockMainActivity extends Activity {
 		findViewById(R.id.mainGridSchedule).setOnClickListener(clickListener);
 		findViewById(R.id.mainGridMap).setOnClickListener(clickListener);
 		findViewById(R.id.mainGridFonecta).setOnClickListener(clickListener);
+		findViewById(R.id.mainGridNews).setOnClickListener(clickListener);
 		
 		
 		/*
@@ -121,7 +128,7 @@ public class RuisrockMainActivity extends Activity {
 	}
 
 	
-	
+	/*
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -141,5 +148,6 @@ public class RuisrockMainActivity extends Activity {
 		}
 		return false;
 	}
+	*/
 	
 }

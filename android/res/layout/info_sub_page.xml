@@ -6,11 +6,12 @@
     	android:src="@drawable/ruisrock_logo" android:layout_gravity="center" />
     	
    	<RelativeLayout android:layout_marginTop="-20px" android:background="@drawable/content_area_bg" android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/relativeLayout1">
-	    <ImageView
-	    	android:id="@+id/infoSubPageTitle"
-	    	android:layout_alignParentTop="true" 
-	    	android:layout_width="wrap_content" android:layout_height="wrap_content" 
-	    	android:src="@drawable/title_general_info" />
+		<TextView  
+			style="@style/Header1"
+			android:id="@+id/infoSubPageTitle"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="" />
 	    <ScrollView android:layout_height="fill_parent" android:id="@+id/scrollView1" android:layout_width="fill_parent" android:layout_below="@id/infoSubPageTitle">
 			<WebView android:id="@+id/infoPageWebView" android:layout_width="fill_parent" android:layout_height="fill_parent"></WebView>
 	    </ScrollView>

@@ -3,15 +3,34 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
+    android:background="@drawable/background_plain">
+    
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" 
+    	android:src="@drawable/ruisrock_logo" android:layout_gravity="center"></ImageView>
+    
+         
+   	<RelativeLayout android:layout_marginTop="-20px" android:background="@drawable/content_area_bg" android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/relativeLayout1">
+   	<!-- 
+	    <ImageView
+	    	android:id="@+id/whiteTitle"
+	    	android:layout_width="wrap_content" android:layout_height="wrap_content" 
+	    	android:src="@drawable/title_news" />
+	-->
+	
 	<TextView  
 		style="@style/Header1"
+		android:id="@+id/whiteTitle"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content" 
 	    android:text="@string/News" />
-    <ListView
-        android:id="@+id/newsList"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" 
-        android:layout_weight="1" />
+	
+	    	
+	    <ListView
+	    	android:layout_below="@id/whiteTitle"
+	        android:id="@+id/newsList"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent" 
+	        android:cacheColorHint="#00000000"
+	         />
+   	</RelativeLayout>
 </LinearLayout>
