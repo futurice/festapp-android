@@ -2,10 +2,19 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
 	android:shape="rectangle">
   
+	<!-- 
 	<gradient
 		android:startColor="#997d350d"
     	android:centerColor="#995c270a"
     	android:endColor="#994d2108"
+    	android:angle="0"
+    	/>
+    -->
+    
+	<gradient
+		android:startColor="#99000000"
+    	android:centerColor="#99333333"
+    	android:endColor="#99444444"
     	android:angle="0"
     	/>
 
@@ -15,16 +24,14 @@
         android:right="5px"
         android:bottom="5px" />
     
-
-	<corners android:bottomRightRadius="6px"
-		android:bottomLeftRadius="6px" android:topLeftRadius="6px"
-		android:topRightRadius="6px" />
-		
-		
+<!-- 
+	<corners android:bottomRightRadius="10px"
+		android:bottomLeftRadius="10px" android:topLeftRadius="0px"
+		android:topRightRadius="0px" />
 
 	<stroke
         android:width="2px"
         android:color="#ffffff" />
-        
+-->
         
 </shape> 

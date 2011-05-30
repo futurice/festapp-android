@@ -1,45 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical" android:id="@+id/artistInfoView">
-
-	<!-- Banner -->
-	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:orientation="vertical" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:id="@+id/artistImageContainer">
-
-		<fi.ruisrock2011.android.ui.AspectRatioImageView
-			android:layout_centerHorizontal="true" android:src="@drawable/artist_132"
-			android:id="@+id/artistImage" android:layout_alignParentTop="true"
-			android:layout_height="wrap_content" android:layout_width="fill_parent"
-			android:adjustViewBounds="true" />
-
-		<fi.ruisrock2011.android.ui.AspectRatioImageView
-			android:layout_centerHorizontal="true" android:src="@drawable/overlay"
-			android:layout_alignParentTop="true" android:layout_height="wrap_content"
-			android:layout_width="fill_parent" android:adjustViewBounds="true" />
-
-	</RelativeLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent" 
+	android:id="@+id/artistInfoView">
 	
-	<!-- Info table -->
-	<include layout="@layout/artist_info_table" />
+	<!-- STAGE/TIME/FAVORITE TABLE -->
+	<!-- android:layout_alignParentBottom="true" -->
+	<TableLayout
+		android:layout_marginBottom="-10px"
+		android:background="@drawable/artist_info_table_bg"
+		android:gravity="center_horizontal"
+		android:layout_alignParentTop="true"
+		android:shrinkColumns="0"
+		android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/artistInfoTable">
+	    <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow1" android:layout_width="wrap_content">
+	        <TextView android:textStyle="bold" android:textColor="#ffffff" android:layout_height="wrap_content" android:layout_margin="3dip" android:layout_width="wrap_content" android:text="@string/Stage"></TextView>
+	        <TextView android:textStyle="bold" android:textColor="#ffffff" android:layout_height="wrap_content" android:layout_margin="3dip" android:layout_width="wrap_content" android:text="@string/PerformanceTime"></TextView>
+	        <TextView android:textStyle="bold" android:textColor="#ffffff" android:layout_height="wrap_content" android:layout_margin="3dip" android:layout_width="wrap_content" android:text="@string/Favorite"></TextView>
+	    </TableRow>
+	    <TableRow android:layout_height="wrap_content" android:id="@+id/tableRow2" android:layout_width="wrap_content">
+	        <TextView android:textColor="#ffffff" android:layout_height="wrap_content" android:layout_margin="3dip" android:layout_width="wrap_content" android:text="Päälava" android:id="@+id/artistInfoStage"></TextView>
+	        <TextView android:textColor="#ffffff" android:layout_height="wrap_content" android:layout_margin="3dip" android:layout_width="wrap_content" android:text="pe klo 22:00 - 23:00" android:id="@+id/artistInfoLiveTime"></TextView>
+	        <RelativeLayout android:layout_height="wrap_content" android:id="@+id/relativeLayout2" android:layout_width="wrap_content" android:gravity="center_horizontal">
+			<ToggleButton android:layout_margin="1dip" android:id="@+id/artistInfoFavorite"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textOn="" android:textOff="" 
+				android:background="@drawable/star" />
+	        </RelativeLayout>
+	    </TableRow>
+	</TableLayout>
 	
-	
-   	<LinearLayout android:orientation="vertical" android:background="@drawable/content_area_bg" android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/relativeLayout1">
-		<!-- Artist name -->
-		<TextView android:id="@+id/artistName" style="@style/Header1"
-			android:gravity="center_horizontal"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:text="Bullet for my Valentine" />
+	<!-- android:layout_above="@id/artistInfoTable" -->
+	<RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/artistInfoContainer"
+		android:layout_below="@id/artistInfoTable">
+	   	<LinearLayout android:orientation="vertical" android:background="@drawable/content_area_bg" android:layout_width="fill_parent" android:layout_height="wrap_content">
+			<!-- Banner -->
+			<RelativeLayout
+				android:orientation="vertical" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/artistImageContainer">
 		
-		<ScrollView android:layout_height="fill_parent" android:id="@+id/scrollView1" android:layout_width="fill_parent">
-			<!-- Description -->
-			<TextView android:id="@+id/artistDescription"
-				android:padding="2px"
-				android:layout_width="fill_parent" android:layout_height="wrap_content" />
-		</ScrollView>
-   	</LinearLayout>
-	
+				<fi.ruisrock2011.android.ui.AspectRatioImageView
+					android:layout_centerHorizontal="true" android:src="@drawable/artist_132"
+					android:id="@+id/artistImage" android:layout_alignParentTop="true"
+					android:layout_height="wrap_content" android:layout_width="fill_parent"
+					android:adjustViewBounds="true" />
+		
+				<fi.ruisrock2011.android.ui.AspectRatioImageView
+					android:layout_centerHorizontal="true" android:src="@drawable/artist_overlay"
+					android:layout_alignParentTop="true" android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:adjustViewBounds="true" />
+		
+			</RelativeLayout>
+	   	
+			<!-- Artist name -->
+			<TextView android:id="@+id/artistName" style="@style/Header1"
+				android:gravity="center_horizontal"
+				android:textSize="24sp"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:text="Bullet for my Valentine" />
+			
+			<ScrollView android:layout_height="wrap_content" android:id="@+id/scrollView1" android:layout_width="fill_parent">
+				<!-- Description -->
+				<TextView android:id="@+id/artistDescription"
+					android:padding="2px"
+					android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempor lacus ac sem consequat rutrum. Maecenas interdum odio in libero tincidunt in condimentum nibh molestie. In elementum nisl id purus pretium semper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec porta diam at nunc pulvinar ultrices. In hac habitasse platea dictumst. Mauris in porta augue. Quisque et nulla dolor, non adipiscing ligula. Suspendisse in nibh vitae nulla pellentesque imperdiet pretium venenatis lectus. Cras enim lorem, faucibus nec ultricies imperdiet, commodo congue tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla vitae justo libero. Praesent semper ipsum quis massa malesuada euismod. Suspendisse potenti. Aenean vulputate arcu orci, sed egestas felis. Donec suscipit venenatis ullamcorper. Curabitur non urna ante, vel mattis nunc. Integer sollicitudin blandit vulputate. Curabitur pharetra placerat risus et commodo. Duis blandit auctor varius. Ut sit amet adipiscing ante. Maecenas iaculis tortor vitae nibh scelerisque id ullamcorper odio consectetur. Suspendisse vehicula pellentesque nibh nec pulvinar. Aliquam pretium bibendum sagittis. Duis placerat vestibulum enim quis rutrum. Nunc porta, sem at congue malesuada, quam augue porttitor est, nec laoreet est felis eu quam. Proin in vehicula purus. Curabitur eu nisl dolor, at interdum velit. Vestibulum nunc mauris, facilisis venenatis dictum sed, placerat sed odio. Fusce lobortis interdum blandit. Suspendisse tincidunt mollis nibh. Mauris semper, elit nec commodo scelerisque, risus lectus faucibus dolor, blandit rhoncus mauris risus ac purus. "
+					android:layout_width="fill_parent" android:layout_height="wrap_content" />
+			</ScrollView>
+	   	</LinearLayout>
+   	</RelativeLayout>
 
-
-</LinearLayout>
+</RelativeLayout>

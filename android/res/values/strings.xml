@@ -49,5 +49,6 @@
     <string name="mapActivity.prompt.EnableGPS.title">Aktivoi GPS</string>
     <string name="mapActivity.prompt.EnableGPS.message">Jotta oma sijainti voidaan näyttää tarkasti, tulee puhelimen GPS-paikannus aktivoida. Haluatko siirtyä puhelimen asetuksiin ominaisuuden aktivoimiseksi?</string>
     <string name="mapActivity.gpsActivated">Aloitetaan GPS-paikannus.</string>
+    <string name="mapActivity.distanceToMap">Etäisyys juhlapaikasta: %s km</string>
     
 </resources>

@@ -21,7 +21,7 @@ import fi.ruisrock2011.android.util.UIUtil;
 
 public class ArtistInfoActivity extends Activity {
 	
-	private LinearLayout artistInfoView;
+	private RelativeLayout artistInfoView;
 	private Gig gig;
 	private OnClickListener favoriteListener = new OnClickListener() {
 		@Override
@@ -46,14 +46,12 @@ public class ArtistInfoActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.artist_info);
 		
-		artistInfoView = (LinearLayout) findViewById(R.id.artistInfoView);
+		artistInfoView = (RelativeLayout) findViewById(R.id.artistInfoView);
 		gig = getGig();
 		populateViewValues();
 	}
 	
 	private void populateViewValues() {
-		
-		
 		if (gig == null) {
 			artistInfoView.setVisibility(View.GONE);
 			UIUtil.showErrorDialog(getString(R.string.Error), getString(R.string.artistInfoActivity_invalidId), this);
@@ -73,6 +71,7 @@ public class ArtistInfoActivity extends Activity {
 			} else {
 				infoTable.setVisibility(View.GONE);
 			}
+			infoTable.bringToFront();
 			
 			ImageView artistImage = (ImageView) findViewById(R.id.artistImage);
 			RelativeLayout artistImageContainer = (RelativeLayout) findViewById(R.id.artistImageContainer);

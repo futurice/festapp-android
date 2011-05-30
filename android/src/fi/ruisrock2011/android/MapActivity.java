@@ -1,5 +1,6 @@
 package fi.ruisrock2011.android;
 
+import java.text.DecimalFormat;
 import java.util.Timer;
 
 import android.app.Activity;
@@ -26,6 +27,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import fi.ruisrock2011.android.dao.ConfigDAO;
 import fi.ruisrock2011.android.domain.to.MapLayerOptions;
@@ -38,11 +40,20 @@ import fi.ruisrock2011.android.ui.map.SizeCallback;
 public class MapActivity extends Activity {
 	
 	private static final int REQUEST_CODE_GPS = 33;
+	private static final double referenceLatitude = 60.42836515775148;
+	private static final double referenceLongitude = 22.18308629415958;
+	private static final Location referenceLocation = new Location("Ruisrock_MapActivity");
+	
+	static {
+		referenceLocation.setLatitude(referenceLatitude);
+		referenceLocation.setLongitude(referenceLongitude);
+	}
 	
 	private MapImageView mapImageView;
 	private ImageButton zoomInButton;
 	private ImageButton zoomOutButton;
 	private ImageButton menuButton;
+	private TextView distanceText;
 	private LocationManager locationManager;
 	private MapLayerOptions mapLayerOptions;
 	private GPSLocationListener gpsLocationListener;
@@ -107,6 +118,8 @@ public class MapActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 		opts.inScaled = false;
+		distanceText = (TextView) findViewById(R.id.mapDistanceText);
+		distanceText.bringToFront();
 		gpsLocationListener = new GPSLocationListener(this);
 		mapImageView = (MapImageView) findViewById(R.id.image);
 		zoomInButton = (ImageButton) findViewById(R.id.zoomIn);
@@ -185,6 +198,7 @@ public class MapActivity extends Activity {
 	}
 	
 	private void activateGpsListener(boolean turnOn) {
+		distanceText.setVisibility(View.GONE);
 		if (turnOn) {
 			if (!gpsListenerOnline) {
 				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5 * 1000L, 0f, gpsLocationListener);
@@ -405,7 +419,6 @@ public class MapActivity extends Activity {
 		calculateSourceRect(current_centerX, current_centerY, current_scale);
 		matrix.setRectToRect(sourceRect, destinationRect, Matrix.ScaleToFit.FILL);
 		mapImageView.setImageMatrix(matrix);
-		
 		drawCurrentLocation();
 	}
 
@@ -472,6 +485,19 @@ public class MapActivity extends Activity {
 		this.location = location;
 		calculateNewPixelsFromLocation();
 		drawCurrentLocation();
+		
+		// Show distance to festival area
+		if (currentPositionImage.getVisibility() == View.GONE && location != null) {
+			try {
+				float distance = location.distanceTo(referenceLocation) / 1000; // in kilometers
+				distanceText.setText(getString(R.string.mapActivity_distanceToMap, new DecimalFormat("#.0").format(distance)));
+				distanceText.setVisibility(View.VISIBLE);
+			} catch (Exception e) {
+				distanceText.setVisibility(View.GONE);
+			}
+		} else {
+			distanceText.setVisibility(View.GONE);
+		}
 	}
 	
 	private void calculateNewPixelsFromLocation() {
@@ -489,8 +515,6 @@ public class MapActivity extends Activity {
 			return;
 		}
 		
-		double referenceLatitude = 60.42836515775148;
-		double referenceLongitude = 22.18308629415958;
 		double referenceX = 1342;
 		double referenceY = 736;
 		
