@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import fi.ruisrock2011.android.infopage.GeneralInfoActivity;
+import fi.ruisrock2011.android.InfoSubPageActivity.InfoSubPageType;
 
 /**
  * InfoPage Activity.
@@ -16,18 +16,23 @@ public class InfoPageActivity extends Activity {
 	private View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			Intent intent = new Intent(getBaseContext(), InfoSubPageActivity.class);
 			switch (v.getId()) {
 			case R.id.infoPage_btnGeneralInfo:
-				startActivity(new Intent(getBaseContext(), GeneralInfoActivity.class));
+			    intent.putExtra("subPage", InfoSubPageType.GENERAL_INFO);
 				break;
 			case R.id.infoPage_btnServices:
+				intent.putExtra("subPage", InfoSubPageType.SERVICES);
 				break;
 			case R.id.infoPage_btnFoodAndDrink:
+			    intent.putExtra("subPage", InfoSubPageType.FOOD_AND_DRINK);
 				break;
-			case R.id.infoPage_btnMoving:
+			case R.id.infoPage_btnTransportation:
+				intent.putExtra("subPage", InfoSubPageType.TRANSPORTATION);
 				break;
-			default:
-				break;
+			}
+			if (intent.hasExtra("subPage")) {
+				startActivity(intent);
 			}
 		}
 	};
@@ -41,7 +46,7 @@ public class InfoPageActivity extends Activity {
 		findViewById(R.id.infoPage_btnGeneralInfo).setOnClickListener(clickListener);
 		findViewById(R.id.infoPage_btnServices).setOnClickListener(clickListener);
 		findViewById(R.id.infoPage_btnFoodAndDrink).setOnClickListener(clickListener);
-		findViewById(R.id.infoPage_btnMoving).setOnClickListener(clickListener);
+		findViewById(R.id.infoPage_btnTransportation).setOnClickListener(clickListener);
 	}
 
 }

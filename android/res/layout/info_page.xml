@@ -19,7 +19,7 @@
     	android:src="@drawable/btn_infopage_fooddrink" android:layout_gravity="center" />
     	
     <ImageView
-    	android:id="@+id/infoPage_btnMoving" 
+    	android:id="@+id/infoPage_btnTransportation" 
     	android:layout_width="wrap_content" android:layout_height="wrap_content" 
     	android:src="@drawable/btn_infopage_transportation" android:layout_gravity="center" />
     	

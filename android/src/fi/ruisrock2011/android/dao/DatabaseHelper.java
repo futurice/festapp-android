@@ -25,7 +25,7 @@ import fi.ruisrock2011.android.util.StringUtil;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME = "ruisrock2011_db";
-	private static final int DB_VERSION = 51;
+	private static final int DB_VERSION = 55;
 	private static final String TAG = "DatabaseHelper";
 	
 	private Context context;
@@ -44,6 +44,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			
 			createNewsArticlesFromLocalJson(db);
 			createGigsFromLocalJson(db);
+			createFoodAndDrinkPageFromLocalFile(db);
+			createTransportationPageFromLocalFile(db);
+			initalizeEtagValues(db);
 		} catch (Exception e) {
 			Log.e(TAG, "Cannot create DB", e);
 			Toast.makeText(context, "Sovelluksen alustus epäonnistui.", Toast.LENGTH_LONG);
@@ -84,6 +87,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 	
+	private void createFoodAndDrinkPageFromLocalFile(SQLiteDatabase db) throws Exception {
+		InputStream is = context.getResources().openRawResource(R.raw.page_foodanddrink);
+		String page = StringUtil.convertStreamToString(is);
+		ContentValues values = new ContentValues();
+		values.put("attributeName", ConfigDAO.ATTR_PAGE_FOODANDDRINK);
+		values.put("attributeValue", page);
+		db.insert("config", "attributeValue", values);
+	}
+	
+	private void createTransportationPageFromLocalFile(SQLiteDatabase db) throws Exception {
+		InputStream is = context.getResources().openRawResource(R.raw.page_transportation);
+		String page = StringUtil.convertStreamToString(is);
+		ContentValues values = new ContentValues();
+		values.put("attributeName", ConfigDAO.ATTR_PAGE_TRANSPORTATION);
+		values.put("attributeValue", page);
+		db.insert("config", "attributeValue", values);
+	}
+	
+	private void initalizeEtagValues(SQLiteDatabase db) {
+		/*
+		ContentValues values = new ContentValues();
+		values.put("attributeName", ConfigDAO.ATTR_PAGE_FOODANDDRINK);
+		values.put("attributeValue", page);
+		db.insert("config", "attributeValue", values);
+		*/
+	}
 	
 	
 	private void createGigTable(SQLiteDatabase db) throws Exception {
@@ -111,7 +140,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String sql = "CREATE TABLE IF NOT EXISTS config (" +
 				//"_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				"attributeName TEXT PRIMARY KEY, " +
-				"attributevalue TEXT)";
+				"attributeValue TEXT)";
 		db.execSQL(sql);
 	}
 	

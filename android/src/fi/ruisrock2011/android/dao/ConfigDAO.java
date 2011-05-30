@@ -31,6 +31,11 @@ public class ConfigDAO {
 	private static final String ATTR_SELECTED_MAP_LAYERS = "selected_map_layers";
 	private static final String ATTR_ETAG_FOR_GIGS = "etag_gigs";
 	private static final String ATTR_ETAG_FOR_NEWS = "etag_news";
+	private static final String ATTR_ETAG_FOR_FOODANDDRINK = "etag_foodanddrink";
+	private static final String ATTR_ETAG_FOR_TRANSPORTATION = "etag_transportation";
+	
+	public static final String ATTR_PAGE_FOODANDDRINK = "page_foodanddrink";
+	public static final String ATTR_PAGE_TRANSPORTATION = "page_transportation";
 	
 	public static MapLayerOptions findMapLayers(Context context) {
 		String values = getAttributeValue(ATTR_SELECTED_MAP_LAYERS, context);
@@ -56,12 +61,45 @@ public class ConfigDAO {
 		setAttributeValue(ATTR_ETAG_FOR_GIGS, etag, context);
 	}
 	
+	public static String getEtagForFoodAndDrink(Context context) {
+		return getAttributeValue(ATTR_ETAG_FOR_FOODANDDRINK, context);
+	}
+	
+	public static void setEtagForFoodAndDrink(Context context, String etag) {
+		setAttributeValue(ATTR_ETAG_FOR_FOODANDDRINK, etag, context);
+	}
+	
 	public static String getEtagForNews(Context context) {
 		return getAttributeValue(ATTR_ETAG_FOR_NEWS, context);
 	}
 	
 	public static void setEtagForNews(Context context, String etag) {
 		setAttributeValue(ATTR_ETAG_FOR_NEWS, etag, context);
+	}
+	
+	public static String getPageFoodAndDrink(Context context) {
+		return getAttributeValue(ATTR_PAGE_FOODANDDRINK, context);
+	}
+	
+	public static void setPageFoodAndDrink(Context context, String page) {
+		setAttributeValue(ATTR_PAGE_FOODANDDRINK, page, context);
+	}
+	
+	
+	public static String getEtagForTransportation(Context context) {
+		return getAttributeValue(ATTR_ETAG_FOR_TRANSPORTATION, context);
+	}
+	
+	public static void setEtagForTransportation(Context context, String etag) {
+		setAttributeValue(ATTR_ETAG_FOR_TRANSPORTATION, etag, context);
+	}
+	
+	public static String getPageTransportation(Context context) {
+		return getAttributeValue(ATTR_PAGE_TRANSPORTATION, context);
+	}
+	
+	public static void setPageTransportation(Context context, String page) {
+		setAttributeValue(ATTR_PAGE_TRANSPORTATION, page, context);
 	}
 	
 	private static List<String> getAllMapLayers(Context context) {

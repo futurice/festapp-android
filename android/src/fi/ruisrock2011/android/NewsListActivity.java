@@ -45,11 +45,12 @@ public class NewsListActivity extends Activity {
 			if (o instanceof NewsArticle) {
 				NewsArticle article = (NewsArticle) o;
 				if (StringUtil.isNotEmpty(article.getUrl())) {
-					Toast.makeText(getBaseContext(), "TODO: implement", Toast.LENGTH_SHORT).show();
-					/*
-					Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(article.getUrl()));
+					//Toast.makeText(getBaseContext(), "TODO: implement", Toast.LENGTH_SHORT).show();
+					Intent i = new Intent(getBaseContext(), NewsContentActivity.class);
+					i.putExtra("news.title", article.getTitle());
+					i.putExtra("news.date", article.getDateString());
+					i.putExtra("news.content", article.getContent());
 					startActivity(i);
-					*/
 					return;
 				}
 			}

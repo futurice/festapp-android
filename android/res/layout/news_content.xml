@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" 
+    	android:src="@drawable/ruisrock_logo" android:layout_gravity="center" />
+    	
+   	<LinearLayout android:layout_marginTop="-20px"
+   		android:background="@drawable/content_area_bg"
+   		android:orientation="vertical"
+   		android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/relativeLayout1">
+		<TextView  
+			android:id="@+id/newsDate"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="1.1.2011 15:15" />
+		<TextView 
+			style="@style/Header1"
+			android:textSize="20sp"
+			android:gravity="left"
+			android:id="@+id/newsTitle"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="Foo" />
+	    <ScrollView android:layout_height="fill_parent" android:id="@+id/scrollView1" android:layout_width="fill_parent" android:layout_below="@id/newsTitle">
+			<WebView android:id="@+id/newsContent" android:layout_width="fill_parent" android:layout_height="fill_parent"></WebView>
+	    </ScrollView>
+   	</LinearLayout>
+    	
+</LinearLayout>

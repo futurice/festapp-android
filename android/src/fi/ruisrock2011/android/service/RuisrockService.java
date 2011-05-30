@@ -2,6 +2,7 @@ package fi.ruisrock2011.android.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,15 +35,20 @@ public class RuisrockService extends Service {
 	
 	private static final String TAG = RuisrockService.class.getSimpleName();
 	private Timer timer;
+	private int counter = 0;
 	
 	private TimerTask backendTask = new TimerTask() {
 		@Override
 		public void run() {
 			Log.i(TAG, "Starting backend operations");
+			counter++;
 			try {
-				//updateNewsArticles();
-				updateGigs();
 				alertGigs();
+				if (counter % 12 == 0) { // every hour
+					updateGigs();
+					updateNewsArticles();
+					updateInfoPages();
+				}
 			} catch (Throwable t) {
 				Log.e(TAG, "Failed execute backend operations", t);
 			} finally {
@@ -86,6 +92,11 @@ public class RuisrockService extends Service {
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Gigs.", e);
 		}
+	}
+	
+	private void updateInfoPages() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	private void updateGigs() {
