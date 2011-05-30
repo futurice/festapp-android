@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  		android:background="@drawable/background_02"
+  		android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/relativeLayout1">
+  		
+	<TextView  
+		android:id="@+id/title"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:textSize="34sp"
+	    android:gravity="center_horizontal"
+	    android:textStyle="bold"
+	    android:textColor="#ffffff"
+	    android:text="KYSY MITÄ VAAN." />
+	    
+	    <!-- 
+	<fi.ruisrock2011.android.ui.AspectRatioImageView
+		android:id="@+id/bgBubbles"
+		android:layout_below="@id/title"
+		android:layout_centerHorizontal="true" android:src="@drawable/ask_anything_bubbles"
+		android:layout_alignParentTop="true" android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:adjustViewBounds="true" />
+		-->
+	    
+	
+	<ImageView android:src="@drawable/ask_anything_bubbles"
+		android:layout_below="@id/title"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:id="@+id/bgBubbles"
+		android:adjustViewBounds="true"
+		android:scaleType="fitXY"
+		/>
+
+	<ImageView android:src="@drawable/btn_call_02"
+		android:layout_alignBottom="@id/bgBubbles"
+		android:layout_width="100dip" android:layout_height="89dip" android:id="@+id/call02Button"></ImageView>
+	
+	    
+	    
+
+	    
+</RelativeLayout>

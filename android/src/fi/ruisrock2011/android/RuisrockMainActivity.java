@@ -45,9 +45,7 @@ public class RuisrockMainActivity extends Activity {
 				startActivity(new Intent(getBaseContext(), NewsListActivity.class));
 				break;
 			case R.id.mainGridFonecta:
-				Toast.makeText(getBaseContext(), "TODO: Implement", Toast.LENGTH_LONG).show();
-				break;
-			default:
+				startActivity(new Intent(getBaseContext(), FonectaActivity.class));
 				break;
 			}
 		}
