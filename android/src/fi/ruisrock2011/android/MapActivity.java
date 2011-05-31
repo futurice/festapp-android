@@ -10,10 +10,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -25,7 +23,6 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +34,11 @@ import fi.ruisrock2011.android.ui.map.AnimationCallback;
 import fi.ruisrock2011.android.ui.map.MapImageView;
 import fi.ruisrock2011.android.ui.map.SizeCallback;
 
+/**
+ * View for festival Map.
+ * 
+ * @author Pyry-Samuli Lahti / Futurice
+ */
 public class MapActivity extends Activity {
 	
 	private static final int REQUEST_CODE_GPS = 33;

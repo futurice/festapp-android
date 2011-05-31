@@ -1,14 +1,16 @@
 package fi.ruisrock2011.android;
 
-import fi.ruisrock2011.android.dao.GigDAO;
-import fi.ruisrock2011.android.util.RuisrockConstants;
-import fi.ruisrock2011.android.util.StringUtil;
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.WebView;
 import android.widget.TextView;
+import fi.ruisrock2011.android.util.RuisrockConstants;
 
+/**
+ * View for showing content of a News-article. 
+ * 
+ * @author Pyry-Samuli Lahti / Futurice
+ */
 public class NewsContentActivity extends Activity {
 	
 	private static final String TAG = "NewsDescriptionActivity";

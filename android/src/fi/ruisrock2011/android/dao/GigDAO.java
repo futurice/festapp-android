@@ -18,7 +18,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import fi.ruisrock2011.android.domain.Gig;
-import fi.ruisrock2011.android.domain.NewsArticle;
 import fi.ruisrock2011.android.domain.to.DaySchedule;
 import fi.ruisrock2011.android.domain.to.FestivalDay;
 import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;

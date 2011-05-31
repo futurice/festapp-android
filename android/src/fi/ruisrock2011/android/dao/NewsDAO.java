@@ -20,6 +20,11 @@ import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
 import fi.ruisrock2011.android.util.HTTPUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
 
+/**
+ * DAO for News-articles.
+ * 
+ * @author Pyry-Samuli Lahti / Futurice
+ */
 public class NewsDAO {
 	
 	private static DateFormat RSS_DATE_FORMATTER = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");

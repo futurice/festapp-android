@@ -1,8 +1,6 @@
 package fi.ruisrock2011.android.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,15 +12,11 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 import fi.ruisrock2011.android.R;
-import fi.ruisrock2011.android.ArtistInfoActivity;
 import fi.ruisrock2011.android.RuisrockMainActivity;
 import fi.ruisrock2011.android.dao.ConfigDAO;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.dao.NewsDAO;
 import fi.ruisrock2011.android.domain.Gig;
-import fi.ruisrock2011.android.domain.NewsArticle;
-import fi.ruisrock2011.android.rss.RSSItem;
-import fi.ruisrock2011.android.rss.RSSReader;
 import fi.ruisrock2011.android.util.HTTPUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
 
@@ -45,10 +39,15 @@ public class RuisrockService extends Service {
 			try {
 				alertGigs();
 				if (counter % 12 == 0) { // every hour
+					Log.i(TAG, "Executing 1-hour operations.");
 					updateGigs();
 					updateNewsArticles();
+				}
+				if (counter % 12*5 == 0) { // every 5 hour
+					Log.i(TAG, "Executing 5-hour operations.");
 					updateFoodAndDrinkPage();
 					updateTransportationPage();
+					updateServicesPageData();
 				}
 			} catch (Throwable t) {
 				Log.e(TAG, "Failed execute backend operations", t);
@@ -92,6 +91,18 @@ public class RuisrockService extends Service {
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update News.", e);
+		}
+	}
+	
+	private void updateServicesPageData() {
+		try {
+			if (HTTPUtil.isContentUpdated(RuisrockConstants.SERVICES_JSON_URL, ConfigDAO.getEtagForServices(getBaseContext()))) {
+				ConfigDAO.updateServicePagesOverHttp(getBaseContext());
+			} else {
+				Log.i(TAG, "Services data was up-to-date.");
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "Could not update Services data.", e);
 		}
 	}
 	

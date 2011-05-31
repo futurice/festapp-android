@@ -7,18 +7,21 @@ import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import fi.ruisrock2011.android.R;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.domain.Gig;
 import fi.ruisrock2011.android.util.RuisrockConstants;
 import fi.ruisrock2011.android.util.UIUtil;
 
+/**
+ * View for Artist-info.
+ * 
+ * @author Pyry-Samuli Lahti / Futurice
+ */
 public class ArtistInfoActivity extends Activity {
 	
 	private RelativeLayout artistInfoView;

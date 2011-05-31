@@ -2,6 +2,7 @@ package fi.ruisrock2011.android.dao;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -22,7 +23,7 @@ import fi.ruisrock2011.android.util.StringUtil;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME = "ruisrock2011_db";
-	private static final int DB_VERSION = 59;
+	private static final int DB_VERSION = 63;
 	private static final String TAG = "DatabaseHelper";
 	
 	private Context context;
@@ -43,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createGigsFromLocalJson(db);
 			createFoodAndDrinkPageFromLocalFile(db);
 			createTransportationPageFromLocalFile(db);
+			createServicePagesFromLocalFile(db);
 		} catch (Exception e) {
 			Log.e(TAG, "Cannot create DB", e);
 			Toast.makeText(context, "Sovelluksen alustus epäonnistui.", Toast.LENGTH_LONG).show();
@@ -109,6 +111,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put("attributeValue", "\"65afc40ef57359e62246b118407d695a\"");
 		db.insert("config", "attributeValue", values);
 	}
+	
+	private void createServicePagesFromLocalFile(SQLiteDatabase db) throws Exception {
+		InputStream is = context.getResources().openRawResource(R.raw.services);
+		String json = StringUtil.convertStreamToString(is);
+		
+		Map<String, String> services = ConfigDAO.parseServicesMapFromJson(context, json);
+		for (Map.Entry<String, String> entry : services.entrySet()) {
+			String attributeName = entry.getKey();
+			String attributeValue = entry.getValue();
+			ContentValues cv = new ContentValues();
+			cv.put("attributeName", attributeName);
+			cv.put("attributeValue", attributeValue);
+			db.insert("config", "attributeValue", cv);
+		}
+	}
+	
 	
 	private void createGigTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS gig");

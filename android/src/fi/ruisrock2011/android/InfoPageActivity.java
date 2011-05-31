@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import fi.ruisrock2011.android.InfoSubPageActivity.InfoSubPageType;
+import android.widget.Toast;
+import fi.ruisrock2011.android.dao.ConfigDAO;
 
 /**
  * InfoPage Activity.
@@ -19,21 +20,21 @@ public class InfoPageActivity extends Activity {
 			Intent intent = new Intent(getBaseContext(), InfoSubPageActivity.class);
 			switch (v.getId()) {
 			case R.id.infoPage_btnGeneralInfo:
-			    intent.putExtra("subPage", InfoSubPageType.GENERAL_INFO);
+			    Toast.makeText(getBaseContext(), "TODO: Implement", Toast.LENGTH_LONG).show();
 				break;
 			case R.id.infoPage_btnServices:
-				intent.putExtra("subPage", InfoSubPageType.SERVICES);
+				intent = new Intent(getBaseContext(), ServicesListActivity.class);
 				break;
 			case R.id.infoPage_btnFoodAndDrink:
-			    intent.putExtra("subPage", InfoSubPageType.FOOD_AND_DRINK);
+			    intent.putExtra("subPageTitle", getString(R.string.FoodAndDrink));
+			    intent.putExtra("subPageContent", ConfigDAO.getPageFoodAndDrink(getBaseContext()));
 				break;
 			case R.id.infoPage_btnTransportation:
-				intent.putExtra("subPage", InfoSubPageType.TRANSPORTATION);
+				intent.putExtra("subPageTitle", getString(R.string.Transportation));
+			    intent.putExtra("subPageContent", ConfigDAO.getPageTransportation(getBaseContext()));
 				break;
 			}
-			if (intent.hasExtra("subPage")) {
-				startActivity(intent);
-			}
+			startActivity(intent);
 		}
 	};
 	

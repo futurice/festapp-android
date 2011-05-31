@@ -2,7 +2,6 @@ package fi.ruisrock2011.android;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * View for Fonecta 02.
+ * 
+ * @author Pyry-Samuli Lahti / Futurice
+ */
 public class FonectaActivity extends Activity {
 	
 	private static final String TAG = "FonectaActivity";

@@ -2,14 +2,17 @@ package fi.ruisrock2011.android;
 
 import java.io.InputStream;
 
-import fi.ruisrock2011.android.util.StringUtil;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
-import android.widget.ImageView;
 import android.widget.TextView;
+import fi.ruisrock2011.android.util.StringUtil;
 
+/**
+ * View for Fonecta prices.
+ * 
+ * @author Pyry-Samuli Lahti / Futurice
+ */
 public class FonectaPricesActivity extends Activity {
 	
 	@Override

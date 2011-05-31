@@ -6,8 +6,9 @@ public class RuisrockConstants {
 	
 	public static final String NEWS_JSON_URL = "http://legotius.futurice.com/ruisrock/cache.php?page=news";
 	public static final String GIGS_JSON_URL = "http://legotius.futurice.com/ruisrock/cache.php?page=bands";
-	//public static final String GIGS_JSON_URL = "http://storage.pyppe.fi/gigs.json";
 	
+	public static final String SERVICES_JSON_URL = "http://legotius.futurice.com/ruisrock/cache.php?page=services";
+	public static final String GENERAL_INFO_JSON_URL = "http://legotius.futurice.com/ruisrock/cache.php?page=general";
 	public static final String TRANSPORTATION_HTML_URL = "http://legotius.futurice.com/ruisrock/cache.php?page=arrival";
 	public static final String FOOD_AND_DRINK_HTML_URL = "http://legotius.futurice.com/ruisrock/cache.php?page=fooddrinks";
 	
@@ -16,7 +17,6 @@ public class RuisrockConstants {
 	
 	public static final long SPLASH_SCREEN_TIMEOUT = 4000L; // milliseconds
 	
-	public static final long SERVICE_FREQUENCY = 1 * 30 * 1000L;
+	public static final long SERVICE_FREQUENCY = 5 * 60 * 1000L;
 	
-
 }

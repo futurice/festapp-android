@@ -15,6 +15,11 @@ import fi.ruisrock2011.android.domain.Gig;
 import fi.ruisrock2011.android.ui.ArtistAdapter;
 import fi.ruisrock2011.android.util.StringUtil;
 
+/**
+ * View for listing Artists.
+ * 
+ * @author Pyry-Samuli Lahti / Futurice
+ */
 public class ArtistListActivity extends Activity {
 	
 	private ListView artistList;

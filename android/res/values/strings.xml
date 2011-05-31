@@ -23,9 +23,6 @@
     <string name="FoodAndDrink">Ruoka &amp; juoma</string>
     <string name="Transportation">Liikkuminen</string>
     
-    <!-- Common phrases -->
-    
-    
     <!-- Activity labels -->
     <string name="activity.label.Artists">Ruisrock » Bändit</string>
     <string name="activity.label.ArtistInfo">Ruisrock » Bändit » Info </string>
@@ -56,5 +53,13 @@
     <string name="fonectaActivity.showPrices.text">Soitto on maksullinen. Katso hintatiedot »</string>
     <string name="fonectaActivity.callError">Soitto epäonnistui. Verkossa voi esiintyä ruuhkaa festivaalialueella.</string>
     
+    <!-- Services -->
+    <string name="service.Cloakroom">Narikka</string>
+    <string name="service.BikePark">Polkupyöräparkki</string>
+    <string name="service.Camping">Leirintä ja majoitus</string>
+    <string name="service.Merchandise">Fanituotteet ja tavarakauppiaat</string>
+    <string name="service.Activities">Aktiviteetit</string>
+    <string name="service.Sponsors">Sponsoreiden pisteet</string>
+    <string name="service.PhoneCharging">Kännykkälataus</string>
     
 </resources>

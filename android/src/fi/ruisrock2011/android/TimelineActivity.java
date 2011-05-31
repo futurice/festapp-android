@@ -61,10 +61,6 @@ public class TimelineActivity extends Activity {
 		}
 	};
 	private Handler handler = new Handler();
-	
-	private Date now = null;
-	
-	
 	private GigTimelineWidget gigWidget;
 	
 	private OnClickListener gigWidgetClickListener = new OnClickListener() {
@@ -83,29 +79,6 @@ public class TimelineActivity extends Activity {
 		}
 	};
 	
-	private OnClickListener starListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			
-			if (v instanceof ImageView) {
-				
-			}
-			
-			/*
-			if (v instanceof GigTimelineWidget) {
-				GigTimelineWidget gl = (GigTimelineWidget) v;
-				Drawable d = gl.getBackground();
-				gl.setBackgroundResource(R.drawable.schedule_gig_hilight);
-				vibrator.vibrate(50l);
-				Intent artistInfo = new Intent(getBaseContext(), ArtistInfoActivity.class);
-				TimelineActivity.this.gl = gl;
-			    artistInfo.putExtra("gig.id", gl.getGig().getId());
-			    startActivityForResult(artistInfo, 0);
-			}
-			*/
-		}
-	};
-	
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -116,8 +89,6 @@ public class TimelineActivity extends Activity {
 			}
 		}
 	}
-	
-	//private static final int PIXELS_PER_MINUTE = 4;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -147,27 +118,17 @@ public class TimelineActivity extends Activity {
 
 	private void updateCurrentTimeline() {
 		findViewById(R.id.timelineNowLine).bringToFront();
-		if (now == null) {
-			this.now = new Date();
-			try {
-				now = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse("2011-07-08 22:00");
-			} catch (Exception e) {
-				
-			}
+		Date now = new Date();
+		// TODO: Remove fixed now-date!
+		try {
+			now = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse("2011-07-08 18:08");
+		} catch (Exception e) {
 			
 		}
 		if (timelineStartMoment == null || daySchedule.getLatestTime() == null) { 
 			return;
 		}
 		if (now.after(timelineStartMoment) && now.before(daySchedule.getLatestTime())) {
-			//LinearLayout timelineNow = (LinearLayout) findViewById(R.id.timelineNow);
-			/*
-			tv = new TextView(this);
-			tv.setMinWidth((CalendarUtil.getMinutesBetweenTwoDates(startTime, now) + magicNumber) * GigTimelineWidget.PIXELS_PER_MINUTE);
-			timelineNow.addView(tv);
-			*/
-			//View parent = inflater.inflate(R.layout.vertical_line, timelineNow);
-			
 			View line = findViewById(R.id.timelineNowLine);
 			line.setVisibility(View.VISIBLE);
 			TextView marginView = (TextView) findViewById(R.id.timelineNowMargin);
@@ -176,12 +137,6 @@ public class TimelineActivity extends Activity {
 			View line = findViewById(R.id.timelineNowLine);
 			line.setVisibility(View.GONE);
 		}
-		/*
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(now);
-		cal.add(Calendar.MINUTE, 1);
-		now = cal.getTime();
-		*/
 	}
 	
 	
@@ -224,10 +179,7 @@ public class TimelineActivity extends Activity {
 				GigTimelineWidget gigWidget = new GigTimelineWidget(this, null, gig, previousTime);
 				llAlso.addView(gigWidget);
 				
-				//gl.getStarIcon().setOnClickListener(starListener);
 				gigWidget.setOnClickListener(gigWidgetClickListener);
-				// TODO: long click
-				//gl.setOnLongClickListener(foo);
 				previousTime = gig.getEndTime();
 			}
 			gigLayout.addView(getGuitarString(row++));
@@ -273,11 +225,6 @@ public class TimelineActivity extends Activity {
 		cal.setTime(timelineStartMoment);
 		
 		int minutes = 60 - cal.get(Calendar.MINUTE);
-		/*
-		if (minutes < TIMELINE_OFFSET) {
-			minutes += 60;
-		}
-		*/
 		TextView tv = new TextView(this);
 		tv.setHeight(ROW_HEIGHT);
 		tv.setWidth(GigTimelineWidget.PIXELS_PER_MINUTE * minutes - TIMELINE_NUMBERS_LEFT_SHIFT);

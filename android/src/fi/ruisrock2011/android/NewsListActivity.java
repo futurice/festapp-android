@@ -1,32 +1,24 @@
 package fi.ruisrock2011.android;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
-import fi.ruisrock2011.android.R;
 import fi.ruisrock2011.android.dao.NewsDAO;
 import fi.ruisrock2011.android.domain.NewsArticle;
-import fi.ruisrock2011.android.rss.RSSItem;
-import fi.ruisrock2011.android.rss.RSSReader;
 import fi.ruisrock2011.android.ui.NewsArticleAdapter;
-import fi.ruisrock2011.android.util.RuisrockConstants;
 import fi.ruisrock2011.android.util.StringUtil;
 import fi.ruisrock2011.android.util.UIUtil;
 
 /**
- * View for showing a list of News-articles (gotten via RSS).
+ * View for showing a list of News-articles.
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
@@ -45,7 +37,6 @@ public class NewsListActivity extends Activity {
 			if (o instanceof NewsArticle) {
 				NewsArticle article = (NewsArticle) o;
 				if (StringUtil.isNotEmpty(article.getUrl())) {
-					//Toast.makeText(getBaseContext(), "TODO: implement", Toast.LENGTH_SHORT).show();
 					Intent i = new Intent(getBaseContext(), NewsContentActivity.class);
 					i.putExtra("news.title", article.getTitle());
 					i.putExtra("news.date", article.getDateString());

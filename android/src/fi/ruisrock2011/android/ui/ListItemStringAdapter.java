@@ -3,23 +3,21 @@ package fi.ruisrock2011.android.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import fi.ruisrock2011.android.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+import fi.ruisrock2011.android.R;
 
-public class ListItemAdapter extends BaseAdapter {
+public class ListItemStringAdapter extends BaseAdapter {
 
 	private Context context;
-	private List<ListItem> items = new ArrayList<ListItem>();
+	private List<String> items = new ArrayList<String>();
 	private LayoutInflater inflater = null;
 
-	public ListItemAdapter(Context context, List<ListItem> items) {
+	public ListItemStringAdapter(Context context, List<String> items) {
 		this.context = context;
 		this.items = items;
 		inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -44,13 +42,10 @@ public class ListItemAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 		if (convertView == null) {
-			view = inflater.inflate(R.layout.main_item, null);
+			view = inflater.inflate(R.layout.list_string_item, null);
 		}
 		TextView text = (TextView) view.findViewById(R.id.text);
-		ImageView image = (ImageView) view.findViewById(R.id.image);
-
-		text.setText(items.get(position).getName());
-		image.setImageDrawable(items.get(position).getDrawable());
+		text.setText(items.get(position));
 		return view;
 	}
 
