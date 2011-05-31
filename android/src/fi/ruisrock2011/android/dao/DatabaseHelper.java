@@ -3,9 +3,6 @@ package fi.ruisrock2011.android.dao;
 import java.io.InputStream;
 import java.util.List;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -25,7 +22,7 @@ import fi.ruisrock2011.android.util.StringUtil;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME = "ruisrock2011_db";
-	private static final int DB_VERSION = 57;
+	private static final int DB_VERSION = 59;
 	private static final String TAG = "DatabaseHelper";
 	
 	private Context context;
@@ -65,8 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private void createGigsFromLocalJson(SQLiteDatabase db) throws Exception {
 		InputStream jsonStream = context.getResources().openRawResource(R.raw.gigs);
-		List<Gig> gigs = new ObjectMapper().readValue(jsonStream, new TypeReference<List<Gig>>() {});
-
+		List<Gig> gigs = GigDAO.parseFromJson(StringUtil.convertStreamToString(jsonStream));
 		for (Gig gig : gigs) {
 			if (GigDAO.isValidGig(gig)) {
 				ContentValues values = GigDAO.convertGigToContentValues(gig);
@@ -124,8 +120,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"startTime DATE, " +
 				"endTime DATE, " +
 				"festivalDay VARCHAR(63), " +
-				"bandImageUrl VARCHAR(511), " +
-				"bandLogoUrl VARCHAR(511), " +
 				"active BOOLEAN, " +
 				"favorite BOOLEAN, " +
 				"alerted BOOLEAN, " +

@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -18,6 +18,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import fi.ruisrock2011.android.domain.Gig;
+import fi.ruisrock2011.android.domain.NewsArticle;
 import fi.ruisrock2011.android.domain.to.DaySchedule;
 import fi.ruisrock2011.android.domain.to.FestivalDay;
 import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
@@ -35,7 +36,7 @@ public class GigDAO {
 	private static final String TAG = "GigDAO";
 	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	private static final String[] GIG_COLUMNS = { "id", "artist", "description",
-		"startTime", "endTime", "stage", "bandImageUrl", "bandLogoUrl", "favorite", "active", "alerted" };
+		"startTime", "endTime", "stage", "favorite", "active", "alerted" };
 	
 	private static Date beginningOfSaturday = null;
 	private static Date endOfSaturday = null;
@@ -105,6 +106,55 @@ public class GigDAO {
 		return gigs;
 	}
 	
+	/*
+{
+
+    description: "<p>Jo kaksikymment&auml; vuotta kalevalaista progemetalliaan tahkonnut, Suomen menestyneimpiin metalliyhtyeisiin lukeutuva <strong>Amorphis</strong> on t&auml;ydess&auml; ter&auml;ss&auml;, kaikin puolin. Nelj&auml;ll&auml; viimeisimm&auml;ll&auml; albumillaan kultaa myyneen yhtyeen kymmenes studioalbumi <em>"The Beginning of Times&rdquo;</em> ilmestyy kes&auml;kuun alussa. Albumi on sek&auml; musiikillisesti ett&auml; lyriikaltaan Amorphiksen haastavin julkaisu, levyn teema nojaa suomalaisen mytologian ikoniin V&auml;in&auml;m&ouml;iseen. Ensimm&auml;isen kosketuksen levyyn yhtye tarjoaa huhtikuussa julkaistava<em>lla "You I need"</em> -singlell&auml;. My&ouml;s Amorphiksen live-kunto on huipussaan viime vuoden juhlakiertueen j&auml;ljilt&auml;. Juhlan kunniaksi yhtye julkaisi viime vuonna my&ouml;s <em>"Magic &amp; Mayhem &ndash; Tales From The Early Years"</em> -levyn, joka sis&auml;lt&auml;&auml; helmi&auml; yhtyeen kolmelta ensimm&auml;iselt&auml; albumilta uudelleen &auml;&auml;nitettyin&auml; versioina Tomi Joutsenen toimiessa laulusolistina. Viime syksyn klubikiertueella kuultiinkin vain vanhoja klassikoita, mutta nyt luvassa on aivan uutta materiaalia ja varmasti my&ouml;s tunnetuimpia hittej&auml;, kuten <em>&rdquo;House of Sleep&rdquo;</em>, <em>&rdquo;Silent Waters&rdquo;</em> ja <em>&rdquo;Silver Bride&rdquo;</em>.</p> <p>&nbsp;</p> <p> <span><a href="http://soundcloud.com/nuclearblastrecords/amorphis-my-enemy">AMORPHIS - My Enemy</a> by <a href="http://soundcloud.com/nuclearblastrecords">NuclearBlastRecords</a></span></p>"
+    start: "2010-07-09T21:45"
+    end: "2010-07-09T22:45"
+    id: "25"
+    name: "Amorphis"
+    stage: null
+
+}
+	 */
+	public static List<Gig> parseFromJson(String json) throws Exception {
+		List<Gig> gigs = new ArrayList<Gig>();
+		JSONArray list = new JSONArray(json);
+		
+		for (int i=0; i < list.length(); i++) {
+			try {
+				JSONObject gigObj = list.getJSONObject(i);
+				Gig gig = new Gig();
+				//Date date = RSS_DATE_FORMATTER.parse(newsObject.getString("pubDate"));
+				gig.setId(gigObj.getString("id"));
+				gig.setArtist(gigObj.getString("name"));
+				gig.setDescription(gigObj.getString("description"));
+				gig.setStartTime(parseJsonDate(gigObj.getString("start")));
+				gig.setEndTime(parseJsonDate(gigObj.getString("end")));
+				gig.setStage(gigObj.getString("stage"));
+				gigs.add(gig);
+			} catch (Exception e) {
+				Log.w(TAG, "Received invalid JSON-structure", e);
+			}
+		}
+		
+		return gigs;
+	}
+	
+	private static Date parseJsonDate(String date) {
+		if (date == null) {
+			return null;
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+		try {
+			return sdf.parse(date);
+		} catch (Exception e) {
+			return null;
+		}
+		
+	}
+	
 	public static DaySchedule findDaySchedule(Context context, FestivalDay festivalDay) {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
@@ -133,9 +183,8 @@ public class GigDAO {
 		}
 		ConfigDAO.setEtagForGigs(context, response.getEtag());
 		
-		List<Gig> gigs = new ObjectMapper().readValue(response.getContent(), new TypeReference<List<Gig>>() {});
-		
-		if (gigs != null && gigs.size() > 1) { // Hackish fail-safe
+		List<Gig> gigs = parseFromJson(response.getContent());
+		if (gigs != null && gigs.size() > 3) { // Hackish fail-safe
 			SQLiteDatabase db = null;
 			Cursor cursor = null;
 			try {
@@ -153,7 +202,7 @@ public class GigDAO {
 							db.update("gig", convertGigToContentValues(gig), "id = ?", new String[] {gig.getId()});
 							updatedGigs++;
 						} else {
-							db.insert("gig", "bandLogoUrl", convertGigToContentValues(gig));
+							db.insert("gig", "stage", convertGigToContentValues(gig));
 							newGigs++;
 						}
 					} else {
@@ -240,17 +289,15 @@ public class GigDAO {
 	}
 	
 	private static Gig convertCursorToGig(Cursor cursor, String id) {
-		return new Gig(cursor.getString(0),
-				cursor.getString(1),
-				cursor.getString(2),
-				parseDate(cursor.getString(3)),
-				parseDate(cursor.getString(4)),
-				cursor.getString(5),
-				cursor.getString(6),
-				cursor.getString(7),
-				cursor.getInt(8) > 0,
-				cursor.getInt(9) > 0,
-				cursor.getInt(10) > 0);
+		return new Gig(cursor.getString(0), // id
+				cursor.getString(1), // artist
+				cursor.getString(2), // description
+				parseDate(cursor.getString(3)), // startTime
+				parseDate(cursor.getString(4)), // endTime
+				cursor.getString(5), // stage
+				cursor.getInt(6) > 0,
+				cursor.getInt(7) > 0,
+				cursor.getInt(8) > 0);
 	}
 	
 	public static ContentValues convertGigToContentValues(Gig gig) {
@@ -259,8 +306,6 @@ public class GigDAO {
 		String endTime = (gig.getEndTime() != null) ? DB_DATE_FORMATTER.format(gig.getEndTime()) : null;
 		values.put("id", gig.getId());
 		values.put("artist", gig.getArtist());
-		values.put("bandImageUrl", gig.getBandImageUrl());
-		values.put("bandLogoUrl", gig.getBandLogoUrl());
 		values.put("description", gig.getDescription());
 		values.put("stage", gig.getStage());
 		values.put("startTime", startTime);

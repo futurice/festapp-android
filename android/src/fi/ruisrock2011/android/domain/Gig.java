@@ -4,20 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonSetter;
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.domain.to.FestivalDay;
 import fi.ruisrock2011.android.util.CalendarUtil;
-import fi.ruisrock2011.android.util.TimezonelessDeserializer;
 
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class Gig implements Parcelable {
 	
 	private static final SimpleDateFormat sdfHoursAndMinutes = new SimpleDateFormat("HH:mm");
@@ -29,8 +22,6 @@ public class Gig implements Parcelable {
 	private Date startTime;
 	private Date endTime;
 	private String stage;
-	private String bandImageUrl;
-	private String bandLogoUrl;
 	
 	private boolean favorite;
 	private boolean active = true;
@@ -41,15 +32,13 @@ public class Gig implements Parcelable {
 	}
 
 	public Gig(String id, String artist, String description, Date startTime, Date endTime, String stage,
-			String bandImageUrl, String bandLogoUrl, boolean favorite, boolean active, boolean alerted) {
+			boolean favorite, boolean active, boolean alerted) {
 		this.id = id;
 		this.artist = artist;
 		this.description = description;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.stage = stage;
-		this.bandImageUrl = bandImageUrl;
-		this.bandLogoUrl = bandLogoUrl;
 		this.favorite = favorite;
 		this.active = active;
 		this.alerted = alerted;
@@ -77,7 +66,6 @@ public class Gig implements Parcelable {
 		return artist;
 	}
 
-	@JsonSetter("name")
 	public void setArtist(String artist) {
 		this.artist = artist;
 	}
@@ -94,8 +82,6 @@ public class Gig implements Parcelable {
 		return startTime;
 	}
 
-	@JsonSetter("start") @JsonDeserialize(using=TimezonelessDeserializer.class)
-	//@JsonIgnore
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
@@ -111,8 +97,6 @@ public class Gig implements Parcelable {
 		return CalendarUtil.getMinutesBetweenTwoDates(startTime, endTime);
 	}
 
-	@JsonSetter("end") @JsonDeserialize(using=TimezonelessDeserializer.class)
-	//@JsonIgnore
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
@@ -139,24 +123,6 @@ public class Gig implements Parcelable {
 
 	public boolean isActive() {
 		return active;
-	}
-
-	public String getBandImageUrl() {
-		return bandImageUrl;
-	}
-
-	@JsonSetter("band_image")
-	public void setBandImageUrl(String bandImageUrl) {
-		this.bandImageUrl = bandImageUrl;
-	}
-
-	public String getBandLogoUrl() {
-		return bandLogoUrl;
-	}
-
-	@JsonSetter("band_logo")
-	public void setBandLogoUrl(String bandLogoUrl) {
-		this.bandLogoUrl = bandLogoUrl;
 	}
 
 	public void setAlerted(boolean alerted) {

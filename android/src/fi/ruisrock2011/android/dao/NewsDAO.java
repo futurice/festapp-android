@@ -8,20 +8,17 @@ import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import fi.ruisrock2011.android.domain.Gig;
-import fi.ruisrock2011.android.domain.NewsArticle;
-import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
-import fi.ruisrock2011.android.util.HTTPUtil;
-import fi.ruisrock2011.android.util.RuisrockConstants;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import fi.ruisrock2011.android.domain.NewsArticle;
+import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
+import fi.ruisrock2011.android.util.HTTPUtil;
+import fi.ruisrock2011.android.util.RuisrockConstants;
 
 public class NewsDAO {
 	
