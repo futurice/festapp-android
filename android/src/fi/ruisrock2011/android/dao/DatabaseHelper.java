@@ -25,7 +25,7 @@ import fi.ruisrock2011.android.util.StringUtil;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME = "ruisrock2011_db";
-	private static final int DB_VERSION = 55;
+	private static final int DB_VERSION = 57;
 	private static final String TAG = "DatabaseHelper";
 	
 	private Context context;
@@ -46,10 +46,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createGigsFromLocalJson(db);
 			createFoodAndDrinkPageFromLocalFile(db);
 			createTransportationPageFromLocalFile(db);
-			initalizeEtagValues(db);
 		} catch (Exception e) {
 			Log.e(TAG, "Cannot create DB", e);
-			Toast.makeText(context, "Sovelluksen alustus epäonnistui.", Toast.LENGTH_LONG);
+			Toast.makeText(context, "Sovelluksen alustus epäonnistui.", Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -82,8 +81,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		List<NewsArticle> articles = NewsDAO.parseFromJson(json);
 
 		for (NewsArticle article : articles) {
-				ContentValues values = NewsDAO.convertNewsArticleToContentValues(article);
-				db.insert("news", "content", values);
+			ContentValues values = NewsDAO.convertNewsArticleToContentValues(article);
+			db.insert("news", "content", values);
 		}
 	}
 	
@@ -94,6 +93,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put("attributeName", ConfigDAO.ATTR_PAGE_FOODANDDRINK);
 		values.put("attributeValue", page);
 		db.insert("config", "attributeValue", values);
+		
+		values = new ContentValues();
+		values.put("attributeName", ConfigDAO.ATTR_ETAG_FOR_FOODANDDRINK);
+		values.put("attributeValue", "\"e527a7b7443e9cddc8801c54cf9fa603\"");
+		db.insert("config", "attributeValue", values);
 	}
 	
 	private void createTransportationPageFromLocalFile(SQLiteDatabase db) throws Exception {
@@ -103,17 +107,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put("attributeName", ConfigDAO.ATTR_PAGE_TRANSPORTATION);
 		values.put("attributeValue", page);
 		db.insert("config", "attributeValue", values);
-	}
-	
-	private void initalizeEtagValues(SQLiteDatabase db) {
-		/*
-		ContentValues values = new ContentValues();
-		values.put("attributeName", ConfigDAO.ATTR_PAGE_FOODANDDRINK);
-		values.put("attributeValue", page);
+		
+		values = new ContentValues();
+		values.put("attributeName", ConfigDAO.ATTR_ETAG_FOR_TRANSPORTATION);
+		values.put("attributeValue", "\"65afc40ef57359e62246b118407d695a\"");
 		db.insert("config", "attributeValue", values);
-		*/
 	}
-	
 	
 	private void createGigTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS gig");

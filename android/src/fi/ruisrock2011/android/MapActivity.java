@@ -120,6 +120,7 @@ public class MapActivity extends Activity {
 		opts.inScaled = false;
 		distanceText = (TextView) findViewById(R.id.mapDistanceText);
 		distanceText.bringToFront();
+		distanceText.setVisibility(View.GONE);
 		gpsLocationListener = new GPSLocationListener(this);
 		mapImageView = (MapImageView) findViewById(R.id.image);
 		zoomInButton = (ImageButton) findViewById(R.id.zoomIn);

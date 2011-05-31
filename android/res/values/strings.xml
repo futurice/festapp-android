@@ -51,4 +51,10 @@
     <string name="mapActivity.gpsActivated">Aloitetaan GPS-paikannus.</string>
     <string name="mapActivity.distanceToMap">Etäisyys juhlapaikasta: %s km</string>
     
+    <!-- Fonecta 02 view -->
+    <string name="fonectaActivity.title">KYSY MITÄ VAAN.</string>
+    <string name="fonectaActivity.showPrices.text">Soitto on maksullinen. Katso hintatiedot »</string>
+    <string name="fonectaActivity.callError">Soitto epäonnistui. Verkossa voi esiintyä ruuhkaa festivaalialueella.</string>
+    
+    
 </resources>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   		android:background="@drawable/background_02"
+  		android:orientation="vertical"
   		android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/relativeLayout1">
   		
 	<TextView  
@@ -10,33 +12,37 @@
 	    android:textSize="34sp"
 	    android:gravity="center_horizontal"
 	    android:textStyle="bold"
+	    android:layout_marginTop="30dip"
+	    android:layout_marginBottom="30dip"
 	    android:textColor="#ffffff"
-	    android:text="KYSY MITÄ VAAN." />
-	    
-	    <!-- 
-	<fi.ruisrock2011.android.ui.AspectRatioImageView
-		android:id="@+id/bgBubbles"
-		android:layout_below="@id/title"
-		android:layout_centerHorizontal="true" android:src="@drawable/ask_anything_bubbles"
-		android:layout_alignParentTop="true" android:layout_height="wrap_content"
-		android:layout_width="fill_parent" android:adjustViewBounds="true" />
-		-->
-	    
+	    android:text="@string/fonectaActivity.title" />
 	
 	<ImageView android:src="@drawable/ask_anything_bubbles"
-		android:layout_below="@id/title"
 		android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:id="@+id/bgBubbles"
+		android:id="@+id/speechBubbles"
 		android:adjustViewBounds="true"
+		android:layout_marginLeft="4dip"
+		android:layout_marginTop="4dip"
 		android:scaleType="fitXY"
 		/>
-
-	<ImageView android:src="@drawable/btn_call_02"
-		android:layout_alignBottom="@id/bgBubbles"
-		android:layout_width="100dip" android:layout_height="89dip" android:id="@+id/call02Button"></ImageView>
+		
+	<RelativeLayout
+		android:gravity="center_horizontal"
+		android:layout_marginTop="-30dip"
+		android:layout_height="wrap_content" android:layout_width="fill_parent">
+		<ImageView android:src="@drawable/btn_call_02"
+			android:layout_marginLeft="20dip"
+			android:layout_width="140dip" android:layout_height="125dip" android:id="@+id/call02Button"></ImageView>
+	</RelativeLayout>
 	
-	    
-	    
-
-	    
-</RelativeLayout>
+	<TextView  
+		android:id="@+id/showPricesText"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:textSize="14sp"
+	    android:gravity="center_horizontal"
+	    android:layout_marginTop="30dip"
+	    android:textColor="#ffffff"
+	    android:text="@string/fonectaActivity.showPrices.text" />
+		
+</LinearLayout>

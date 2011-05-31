@@ -47,7 +47,8 @@ public class RuisrockService extends Service {
 				if (counter % 12 == 0) { // every hour
 					updateGigs();
 					updateNewsArticles();
-					updateInfoPages();
+					updateFoodAndDrinkPage();
+					updateTransportationPage();
 				}
 			} catch (Throwable t) {
 				Log.e(TAG, "Failed execute backend operations", t);
@@ -84,24 +85,43 @@ public class RuisrockService extends Service {
 	
 	private void updateNewsArticles() {
 		try {
-			if (HTTPUtil.hasContentChanged(RuisrockConstants.NEWS_JSON_URL, ConfigDAO.getEtagForNews(this))) {
+			if (HTTPUtil.isContentUpdated(RuisrockConstants.NEWS_JSON_URL, ConfigDAO.getEtagForNews(getBaseContext()))) {
 				NewsDAO.updateNewsOverHttp(getBaseContext());
 			} else {
-				Log.i(TAG, "Gigs were up-to-date.");
+				Log.i(TAG, "News were up-to-date.");
 			}
 		} catch (Exception e) {
-			Log.e(TAG, "Could not update Gigs.", e);
+			Log.e(TAG, "Could not update News.", e);
 		}
 	}
 	
-	private void updateInfoPages() {
-		// TODO Auto-generated method stub
-		
+	private void updateFoodAndDrinkPage() {
+		try {
+			if (HTTPUtil.isContentUpdated(RuisrockConstants.FOOD_AND_DRINK_HTML_URL, ConfigDAO.getEtagForFoodAndDrink(getBaseContext()))) {
+				ConfigDAO.updateFoodAndDrinkPageOverHttp(getBaseContext());
+			} else {
+				Log.i(TAG, "FoodAndDrink-page was up-to-date.");
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "Could not update FoodAndDrink-page.", e);
+		}
+	}
+	
+	private void updateTransportationPage() {
+		try {
+			if (HTTPUtil.isContentUpdated(RuisrockConstants.TRANSPORTATION_HTML_URL, ConfigDAO.getEtagForTransportation(getBaseContext()))) {
+				ConfigDAO.updateTransportationPageOverHttp(getBaseContext());
+			} else {
+				Log.i(TAG, "Transportation-page was up-to-date.");
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "Could not update Transportation-page.", e);
+		}
 	}
 	
 	private void updateGigs() {
 		try {
-			if (HTTPUtil.hasContentChanged(RuisrockConstants.GIGS_JSON_URL, ConfigDAO.getEtagForGigs(this))) {
+			if (HTTPUtil.isContentUpdated(RuisrockConstants.GIGS_JSON_URL, ConfigDAO.getEtagForGigs(getBaseContext()))) {
 				GigDAO.updateGigsOverHttp(getBaseContext());
 			} else {
 				Log.i(TAG, "Gigs were up-to-date.");

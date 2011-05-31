@@ -127,7 +127,7 @@ public class HTTPUtil {
 		return performRequest(null, url, null, null, null, null, HTTPUtil.GET_TYPE);
 	}
 	
-	public static boolean hasContentChanged(String urlString, String previousEtag) throws Exception {
+	public static boolean isContentUpdated(String urlString, String previousEtag) throws Exception {
 		if (previousEtag == null || previousEtag.length() == 0) {
 			return true;
 		}

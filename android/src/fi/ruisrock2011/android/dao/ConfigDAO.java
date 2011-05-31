@@ -8,8 +8,11 @@ import java.util.Date;
 import java.util.List;
 
 import fi.ruisrock2011.android.R;
+import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
 import fi.ruisrock2011.android.domain.to.MapLayerOptions;
 import fi.ruisrock2011.android.domain.to.SelectableOption;
+import fi.ruisrock2011.android.util.HTTPUtil;
+import fi.ruisrock2011.android.util.RuisrockConstants;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -29,10 +32,10 @@ public class ConfigDAO {
 	private static final List<String> MAP_LAYER_OPTIONS = new ArrayList<String>();
 	
 	private static final String ATTR_SELECTED_MAP_LAYERS = "selected_map_layers";
-	private static final String ATTR_ETAG_FOR_GIGS = "etag_gigs";
-	private static final String ATTR_ETAG_FOR_NEWS = "etag_news";
-	private static final String ATTR_ETAG_FOR_FOODANDDRINK = "etag_foodanddrink";
-	private static final String ATTR_ETAG_FOR_TRANSPORTATION = "etag_transportation";
+	public static final String ATTR_ETAG_FOR_GIGS = "etag_gigs";
+	public static final String ATTR_ETAG_FOR_NEWS = "etag_news";
+	public static final String ATTR_ETAG_FOR_FOODANDDRINK = "etag_foodanddrink";
+	public static final String ATTR_ETAG_FOR_TRANSPORTATION = "etag_transportation";
 	
 	public static final String ATTR_PAGE_FOODANDDRINK = "page_foodanddrink";
 	public static final String ATTR_PAGE_TRANSPORTATION = "page_transportation";
@@ -171,7 +174,26 @@ public class ConfigDAO {
 			cursor.close();
 		}
 	}
+
+	public static void updateFoodAndDrinkPageOverHttp(Context context) {
+		HTTPUtil httpUtil = new HTTPUtil();
+		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.FOOD_AND_DRINK_HTML_URL);
+		if (!response.isValid() || response.getContent() == null) {
+			return;
+		}
+		setEtagForFoodAndDrink(context, response.getEtag());
+		setPageFoodAndDrink(context, response.getContent());
+	}
 	
+	public static void updateTransportationPageOverHttp(Context context) {
+		HTTPUtil httpUtil = new HTTPUtil();
+		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.TRANSPORTATION_HTML_URL);
+		if (!response.isValid() || response.getContent() == null) {
+			return;
+		}
+		setEtagForTransportation(context, response.getEtag());
+		setPageTransportation(context, response.getContent());
+	}
 	
 
 }
