@@ -77,7 +77,7 @@ public class GigTimelineWidget extends RelativeLayout {
 		
 		int width = PIXELS_PER_MINUTE * gig.getDuration();
 		params.width = width;
-		int height = (int) getResources().getDimension(R.dimen.timeline_gig_height);
+		int height = (int) getResources().getDimension(R.dimen.timeline_gigHeight);
 		params.height = height;
 		setLayoutParams(params);
 	}

@@ -163,11 +163,15 @@ public class NewsDAO {
 	
 	private static NewsArticle findNewsArticle(SQLiteDatabase db, String url) {
 		Cursor cursor = db.query("news", NEWS_COLUMNS, "url = ?", new String[]{url}, null, null, null);
+		NewsArticle article = null;
 		if (cursor.getCount() == 1) {
 			cursor.moveToFirst();
-			return convertCursorToNewsArticle(cursor);
+			article = convertCursorToNewsArticle(cursor);
 		}
-		return null;
+		if (cursor != null) {
+			cursor.close();
+		}
+		return article;
 	}
 	
 	public static NewsArticle findNewsArticle(Context context, String url) {

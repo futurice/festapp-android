@@ -1,5 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="@dimen/timeline.gig.height"
+	android:layout_height="@dimen/timeline.gigHeight"
 	android:layout_width="wrap_content" android:layout_marginLeft="0px"
 	android:layout_marginTop="0px" android:layout_marginBottom="0px"
 	>

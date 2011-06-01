@@ -95,7 +95,7 @@ public class TimelineActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		inflater = LayoutInflater.from(this);
-		ROW_HEIGHT = (int) getResources().getDimension(R.dimen.timeline_gig_height);
+		ROW_HEIGHT = (int) getResources().getDimension(R.dimen.timeline_gigHeight);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.schedule);
 		setFestivalDay();
@@ -186,7 +186,7 @@ public class TimelineActivity extends Activity {
 	
 	private View getGuitarString(int i) {
 		LinearLayout llAlso = new LinearLayout(this);
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, getResources().getDimensionPixelSize(R.dimen.timeline_guitarStringHeight));
 		llAlso.setLayoutParams(params);
 		llAlso.setOrientation(LinearLayout.HORIZONTAL);
 		

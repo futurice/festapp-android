@@ -41,7 +41,7 @@ public class RuisrockService extends Service {
 				alertGigs();
 				if (counter % 12 == 0) { // every hour
 					Log.i(TAG, "Executing 1-hour operations.");
-					updateGigs();
+					//updateGigs();
 					updateNewsArticles();
 				}
 				if (counter % 12*5 == 0) { // every 5 hour
