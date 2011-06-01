@@ -77,12 +77,16 @@ public class ArtistInfoActivity extends Activity {
 			
 			ImageView artistImage = (ImageView) findViewById(R.id.artistImage);
 			RelativeLayout artistImageContainer = (RelativeLayout) findViewById(R.id.artistImageContainer);
-			int imageId = getResources().getIdentifier(RuisrockConstants.DRAWABLE_ARTIST_LOGO_PREFIX + gig.getId(), "drawable", getPackageName());
-			if (imageId == 0) {
+			Integer imageId = gig.getImageId();
+			if (imageId == null) {
 				artistImageContainer.setVisibility(View.GONE);
 			} else {
-				artistImage.setImageDrawable(getResources().getDrawable(imageId));
-				artistImageContainer.setVisibility(View.VISIBLE);
+				try {
+					artistImage.setImageDrawable(getResources().getDrawable(imageId));
+					artistImageContainer.setVisibility(View.VISIBLE);
+				} catch (Exception e) {
+					artistImageContainer.setVisibility(View.GONE);
+				}
 			}
 			
 			TextView artistDescription = (TextView) findViewById(R.id.artistDescription);

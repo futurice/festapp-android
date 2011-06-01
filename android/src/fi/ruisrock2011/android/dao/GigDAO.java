@@ -17,10 +17,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import fi.ruisrock2011.android.R;
 import fi.ruisrock2011.android.domain.Gig;
 import fi.ruisrock2011.android.domain.to.DaySchedule;
 import fi.ruisrock2011.android.domain.to.FestivalDay;
 import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
+import fi.ruisrock2011.android.util.CalendarUtil;
 import fi.ruisrock2011.android.util.HTTPUtil;
 import fi.ruisrock2011.android.util.JSONUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
@@ -127,15 +129,14 @@ public class GigDAO {
 			try {
 				JSONObject gigObj = list.getJSONObject(i);
 				Gig gig = new Gig();
+				String artist = JSONUtil.getString(gigObj, "name");
 				gig.setId(JSONUtil.getString(gigObj, "id"));
-				gig.setArtist(JSONUtil.getString(gigObj, "name"));
+				gig.setArtist(artist);
 				gig.setDescription(JSONUtil.getString(gigObj, "description"));
 				gig.setStartTime(parseJsonDate(JSONUtil.getString(gigObj, "start")));
 				gig.setEndTime(parseJsonDate(JSONUtil.getString(gigObj, "end")));
 				gig.setStage(JSONUtil.getString(gigObj, "stage"));
-				if (gigObj.has("band_image_id")) {
-					gig.setImageId(JSONUtil.getString(gigObj, "band_image_id"));
-				}
+				gig.setImageId(getImageIdForArtist(artist));
 				gigs.add(gig);
 			} catch (Exception e) {
 				Log.w(TAG, "Received invalid JSON-structure", e);
@@ -241,19 +242,10 @@ public class GigDAO {
 		try {
 			db = (new DatabaseHelper(context)).getWritableDatabase();
 			db.beginTransaction();
-			
-			String timeInFuture = "";
-			String now = "";
-			try {
-				Date d = DB_DATE_FORMATTER.parse("2011-07-08 17:55");
-				timeInFuture = getDateStringWithMinuteDifference(d, 15);
-				now = DB_DATE_FORMATTER.format(d);
-			} catch (Exception e) {
-			}
 
-			// TODO: Use these, and remove from above!
-			//String timeInFuture = getDateStringWithMinuteDifference(new Date(), 15);
-			//String now = DB_DATE_FORMATTER.format(new Date()); 
+			Date nowDate = CalendarUtil.getNow();
+			String timeInFuture = getDateStringWithMinuteDifference(nowDate, 15);
+			String now = DB_DATE_FORMATTER.format(nowDate); 
 			cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND favorite = 1 AND alerted = 0 AND datetime(startTime) <= datetime(?) AND datetime(endTime) > datetime(?)", new String[]{timeInFuture, now}, null, null, "startTime ASC");
 			while (cursor.moveToNext()) {
 		        Gig gig = convertCursorToGig(cursor, cursor.getString(0));
@@ -293,7 +285,7 @@ public class GigDAO {
 	
 	private static Gig convertCursorToGig(Cursor cursor, String id) {
 		return new Gig(cursor.getString(0), // id
-				cursor.getString(1), // imageId
+				parseInteger(cursor.getString(1)), // imageId
 				cursor.getString(2), // artist
 				cursor.getString(3), // description
 				parseDate(cursor.getString(4)), // startTime
@@ -302,6 +294,14 @@ public class GigDAO {
 				cursor.getInt(7) > 0,
 				cursor.getInt(8) > 0,
 				cursor.getInt(9) > 0);
+	}
+	
+	private static Integer parseInteger(String integer) {
+		try {
+			return Integer.valueOf(integer);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 	public static ContentValues convertGigToContentValues(Gig gig) {
@@ -373,6 +373,134 @@ public class GigDAO {
 		if (cursor != null) {
 			cursor.close();
 		}
+	}
+	
+	private static Integer getImageIdForArtist(String artist) {
+		if (StringUtil.isEmpty(artist)) {
+			return null;
+		}
+		artist = artist.toLowerCase().trim();
+		if (artist.startsWith("amorphis")) {
+			return R.drawable.artistimg_amorphis;
+		}
+		if (artist.startsWith("anna calvi")) {
+			return R.drawable.artistimg_anna_calvi;
+		}
+		if (artist.startsWith("apulanta")) {
+			return R.drawable.artistimg_apulanta;
+		}
+		if (artist.startsWith("bob hund")) {
+			return R.drawable.artistimg_bob_hund;
+		}
+		if (artist.startsWith("bring me the horizon")) {
+			return R.drawable.artistimg_bring_me_the_horizon;
+		}
+		if (artist.startsWith("bullet for my valentine")) {
+			return R.drawable.artistimg_bullet_for_my_valentine;
+		}
+		if (artist.startsWith("carpark north")) {
+			return R.drawable.artistimg_carpark_north;
+		}
+		if (artist.startsWith("circle")) {
+			return R.drawable.artistimg_circle;
+		}
+		if (artist.startsWith("elbow")) {
+			return R.drawable.artistimg_elbow;
+		}
+		if (artist.startsWith("fleet foxes")) {
+			return R.drawable.artistimg_fleet_foxes;
+		}
+		if (artist.startsWith("happoradio")) {
+			return R.drawable.artistimg_happoradio;
+		}
+		if (artist.startsWith("hurts")) {
+			return R.drawable.artistimg_hurts;
+		}
+		if (artist.startsWith("isobel campbell")) {
+			return R.drawable.artistimg_isobelc_and_markl;
+		}
+		if (artist.contains("villegalle")) {
+			return R.drawable.artistimg_jare_et_villegalle;
+		}
+		if (artist.startsWith("jätkäjätkät")) {
+			return R.drawable.artistimg_jatkajatkat;
+		}
+		if (artist.startsWith("jenni vartiainen")) {
+			return R.drawable.artistimg_jenni_vartiainen;
+		}
+		if (artist.startsWith("jukka poika")) {
+			return R.drawable.artistimg_jukka_poika;
+		}
+		if (artist.startsWith("kaija koo")) {
+			return R.drawable.artistimg_kaija_koo;
+		}
+		if (artist.startsWith("kotiteollisuus")) {
+			return R.drawable.artistimg_kotiteollisuus;
+		}
+		if (artist.startsWith("magenta skycode")) {
+			return R.drawable.artistimg_magenta_skycode;
+		}
+		if (artist.startsWith("manu chao")) {
+			return R.drawable.artistimg_manu_chao;
+		}
+		if (artist.startsWith("michael monroe")) {
+			return R.drawable.artistimg_michael_monroe;
+		}
+		if (artist.startsWith("paleface")) {
+			return R.drawable.artistimg_paleface;
+		}
+		if (artist.startsWith("paramore")) {
+			return R.drawable.artistimg_paramore;
+		}
+		if (artist.startsWith("pariisin kev")) {
+			return R.drawable.artistimg_pariisin_kevat;
+		}
+		if (artist.startsWith("pertti kurikan nimi")) {
+			return R.drawable.artistimg_pertti_kurikan_np;
+		}
+		if (artist.startsWith("pmmp")) {
+			return R.drawable.artistimg_pmmp;
+		}
+		if (artist.startsWith("primus")) {
+			return R.drawable.artistimg_primus;
+		}
+		if (artist.startsWith("raappana")) {
+			return R.drawable.artistimg_raappana;
+		}
+		if (artist.startsWith("robyn")) {
+			return R.drawable.artistimg_robyn;
+		}
+		if (artist.startsWith("rubik")) {
+			return R.drawable.artistimg_rubik;
+		}
+		if (artist.startsWith("sabaton")) {
+			return R.drawable.artistimg_sabaton;
+		}
+		if (artist.startsWith("scandinavian music group")) {
+			return R.drawable.artistimg_scandinavian_mg;
+		}
+		if (artist.startsWith("stam1na")) {
+			return R.drawable.artistimg_stam1na;
+		}
+		if (artist.startsWith("sweatmaster")) {
+			return R.drawable.artistimg_sweatmaster;
+		}
+		if (artist.startsWith("the capital beat")) {
+			return R.drawable.artistimg_the_capital_beat;
+		}
+		if (artist.startsWith("the national")) {
+			return R.drawable.artistimg_the_national;
+		}
+		if (artist.startsWith("the prodigy")) {
+			return R.drawable.artistimg_the_prodigy;
+		}
+		if (artist.startsWith("uusi fantasia")) {
+			return R.drawable.artistimg_uusi_fantasia;
+		}
+		if (artist.startsWith("von hertzen brothers")) {
+			return R.drawable.artistimg_von_hertzen_brothers;
+		}
+		return null;
 	}
 	
 }

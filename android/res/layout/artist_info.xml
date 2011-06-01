@@ -40,7 +40,7 @@
 				android:layout_height="wrap_content" android:id="@+id/artistImageContainer">
 		
 				<fi.ruisrock2011.android.ui.AspectRatioImageView
-					android:layout_centerHorizontal="true" android:src="@drawable/artist_132"
+					android:layout_centerHorizontal="true" android:src="@drawable/artistimg_anna_calvi"
 					android:id="@+id/artistImage" android:layout_alignParentTop="true"
 					android:layout_height="wrap_content" android:layout_width="fill_parent"
 					android:adjustViewBounds="true" />

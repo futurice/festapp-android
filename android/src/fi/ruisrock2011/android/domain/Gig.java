@@ -20,7 +20,7 @@ public class Gig {
 	private Date startTime;
 	private Date endTime;
 	private String stage;
-	private String imageId;
+	private Integer imageId;
 	
 	private boolean favorite;
 	private boolean active = true;
@@ -30,7 +30,7 @@ public class Gig {
 		
 	}
 
-	public Gig(String id, String imageId, String artist, String description, Date startTime, Date endTime, String stage,
+	public Gig(String id, Integer imageId, String artist, String description, Date startTime, Date endTime, String stage,
 			boolean favorite, boolean active, boolean alerted) {
 		this.id = id;
 		this.imageId = imageId;
@@ -123,11 +123,11 @@ public class Gig {
 		return alerted;
 	}
 	
-	public void setImageId(String imageId) {
+	public void setImageId(Integer imageId) {
 		this.imageId = imageId;
 	}
 
-	public String getImageId() {
+	public Integer getImageId() {
 		return imageId;
 	}
 

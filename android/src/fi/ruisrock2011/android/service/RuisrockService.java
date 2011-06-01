@@ -104,6 +104,7 @@ public class RuisrockService extends Service {
 				List<NewsArticle> newArticles = NewsDAO.updateNewsOverHttp(getBaseContext());
 				if (newArticles != null && newArticles.size() > 0) {
 					for (NewsArticle article : newArticles) {
+						// TODO: Check publish-date for News-article (no notification about old news!)
 						notify(article);
 					}
 				}
