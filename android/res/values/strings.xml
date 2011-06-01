@@ -47,6 +47,8 @@
     <string name="mapActivity.prompt.EnableGPS.message">Jotta oma sijainti voidaan näyttää tarkasti, tulee puhelimen GPS-paikannus aktivoida. Haluatko siirtyä puhelimen asetuksiin ominaisuuden aktivoimiseksi?</string>
     <string name="mapActivity.gpsActivated">Aloitetaan GPS-paikannus.</string>
     <string name="mapActivity.distanceToMap">Etäisyys juhlapaikasta: %s km</string>
+    <string name="mapActivity.gpsAccuracy">Arvioitu GPS-tarkkuus: %s m</string>
+    <string name="mapActivity.gpsWaitingForFix">Odotetaan GPS-sijaintia...</string>
     
     <!-- Fonecta 02 view -->
     <string name="fonectaActivity.title">KYSY MITÄ VAAN.</string>
@@ -61,5 +63,16 @@
     <string name="service.Activities">Aktiviteetit</string>
     <string name="service.Sponsors">Sponsoreiden pisteet</string>
     <string name="service.PhoneCharging">Kännykkälataus</string>
+    
+    <!-- General info -->
+    <string name="generalInfo.FrequentlyAsked">Usein kysyttyä</string>
+    <string name="generalInfo.OpenHours">Aukioloajat</string>
+    <string name="generalInfo.InfoStand">Infopiste</string>
+    <string name="generalInfo.LostAndFound">Löytötavarat</string>
+    <string name="generalInfo.Firstaid">Ensiapu &amp; sairaalahoito</string>
+    <string name="generalInfo.Tickets">Lipunmyynti</string>
+    
+    <!-- Notification -->
+    <string name="notification.news.title">Ruisrock tiedottaa</string>
     
 </resources>

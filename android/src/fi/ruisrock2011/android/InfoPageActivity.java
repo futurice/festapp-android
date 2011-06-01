@@ -20,7 +20,7 @@ public class InfoPageActivity extends Activity {
 			Intent intent = new Intent(getBaseContext(), InfoSubPageActivity.class);
 			switch (v.getId()) {
 			case R.id.infoPage_btnGeneralInfo:
-			    Toast.makeText(getBaseContext(), "TODO: Implement", Toast.LENGTH_LONG).show();
+				intent = new Intent(getBaseContext(), GeneralInfoListActivity.class);
 				break;
 			case R.id.infoPage_btnServices:
 				intent = new Intent(getBaseContext(), ServicesListActivity.class);

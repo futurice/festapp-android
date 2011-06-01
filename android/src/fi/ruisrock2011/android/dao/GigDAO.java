@@ -22,6 +22,7 @@ import fi.ruisrock2011.android.domain.to.DaySchedule;
 import fi.ruisrock2011.android.domain.to.FestivalDay;
 import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
 import fi.ruisrock2011.android.util.HTTPUtil;
+import fi.ruisrock2011.android.util.JSONUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
 import fi.ruisrock2011.android.util.StringUtil;
 
@@ -37,25 +38,38 @@ public class GigDAO {
 	private static final String[] GIG_COLUMNS = { "id", "artist", "description",
 		"startTime", "endTime", "stage", "favorite", "active", "alerted" };
 	
-	private static Date beginningOfSaturday = null;
-	private static Date endOfSaturday = null;
+	private static Date startOfFriday = null;
+	private static Date startOfSaturday = null;
+	private static Date startOfSunday = null;
+	private static Date endOfSunday = null;
 	
 	static {
 		try {
-			beginningOfSaturday = DB_DATE_FORMATTER.parse("2011-07-09 06:00");
-			endOfSaturday = DB_DATE_FORMATTER.parse("2011-07-10 06:00");
+			startOfFriday = DB_DATE_FORMATTER.parse("2011-07-08 06:00");
+			startOfSaturday = DB_DATE_FORMATTER.parse("2011-07-09 06:00");
+			startOfSunday = DB_DATE_FORMATTER.parse("2011-07-10 06:00");
+			endOfSunday = DB_DATE_FORMATTER.parse("2011-07-11 06:00");
 		} catch (ParseException e) {
 			Log.e(TAG, "Error setting festival day intervals.");
 		}
 	}
 	
-	public static Date getBeginningOfSaturday() {
-		return beginningOfSaturday;
+	public static Date getStartOfFriday() {
+		return startOfFriday;
 	}
 	
-	public static Date getEndOfSaturday() {
-		return endOfSaturday;
+	public static Date getStartOfSaturday() {
+		return startOfSaturday;
 	}
+	
+	public static Date getStartOfSunday() {
+		return startOfSunday;
+	}
+	
+	public static Date getEndOfSunday() {
+		return endOfSunday;
+	}
+	
 	
 	public static void setFavorite(Context context, String gigId, boolean favorite) {
 		SQLiteDatabase db = null;
@@ -126,12 +140,12 @@ public class GigDAO {
 				JSONObject gigObj = list.getJSONObject(i);
 				Gig gig = new Gig();
 				//Date date = RSS_DATE_FORMATTER.parse(newsObject.getString("pubDate"));
-				gig.setId(gigObj.getString("id"));
-				gig.setArtist(gigObj.getString("name"));
-				gig.setDescription(gigObj.getString("description"));
-				gig.setStartTime(parseJsonDate(gigObj.getString("start")));
-				gig.setEndTime(parseJsonDate(gigObj.getString("end")));
-				gig.setStage(gigObj.getString("stage"));
+				gig.setId(JSONUtil.getString(gigObj, "id"));
+				gig.setArtist(JSONUtil.getString(gigObj, "name"));
+				gig.setDescription(JSONUtil.getString(gigObj, "description"));
+				gig.setStartTime(parseJsonDate(JSONUtil.getString(gigObj, "start")));
+				gig.setEndTime(parseJsonDate(JSONUtil.getString(gigObj, "end")));
+				gig.setStage(JSONUtil.getString(gigObj, "stage"));
 				gigs.add(gig);
 			} catch (Exception e) {
 				Log.w(TAG, "Received invalid JSON-structure", e);
@@ -340,19 +354,22 @@ public class GigDAO {
 	}
 	
 	public static FestivalDay getFestivalDay(Date startTime) {
-		if (startTime.after(GigDAO.getBeginningOfSaturday()) && startTime.before(GigDAO.getEndOfSaturday())) {
-			return FestivalDay.SATURDAY;
-		}
-		if (startTime.before(GigDAO.getBeginningOfSaturday())) {
+		if (startTime.after(GigDAO.getStartOfFriday()) && startTime.before(GigDAO.getStartOfSaturday())) {
 			return FestivalDay.FRIDAY;
 		}
-		return FestivalDay.SUNDAY;
+		if (startTime.after(GigDAO.getStartOfSaturday()) && startTime.before(GigDAO.getStartOfSunday())) {
+			return FestivalDay.SATURDAY;
+		}
+		if (startTime.after(GigDAO.getStartOfSunday()) && startTime.before(GigDAO.getEndOfSunday())) {
+			return FestivalDay.SUNDAY;
+		}
+		return null;
 	}
 	
 	private static Date parseDate(String date) {
 		try {
 			return DB_DATE_FORMATTER.parse(date);
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}

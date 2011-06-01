@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import fi.ruisrock2011.android.dao.NewsDAO;
+import fi.ruisrock2011.android.domain.NewsArticle;
 import fi.ruisrock2011.android.service.RuisrockService;
 
 /**
@@ -45,13 +47,7 @@ public class RuisrockMainActivity extends Activity {
 		setContentView(R.layout.main);
 		startService(new Intent(this, RuisrockService.class));
 		createMainMenuItems();
-		
-		String alertGigId = getAlertGigId();
-		if (alertGigId != null) {
-			Intent artistInfo = new Intent(getBaseContext(), ArtistInfoActivity.class);
-		    artistInfo.putExtra("gig.id", alertGigId);
-		    startActivity(artistInfo);
-		}
+		handleNotificationEvents();
 	}
 	
 	private void createMainMenuItems() {
@@ -63,15 +59,26 @@ public class RuisrockMainActivity extends Activity {
 		findViewById(R.id.mainGridNews).setOnClickListener(clickListener);
 	}
 	
-	private String getAlertGigId() {
+	private void handleNotificationEvents() {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			String id = (String) extras.get("alert.gig.id");
-			if (id != null) {
-				return id;
+			String alertGigId = extras.getString("alert.gig.id");
+			String newsUrl = extras.getString("alert.newsArticle.url");
+			if (alertGigId != null) {
+				Intent artistInfo = new Intent(getBaseContext(), ArtistInfoActivity.class);
+			    artistInfo.putExtra("gig.id", alertGigId);
+			    startActivity(artistInfo);
+			} else if (newsUrl != null) {
+				NewsArticle article = NewsDAO.findNewsArticle(getBaseContext(), newsUrl);
+				if (article != null) {
+					Intent i = new Intent(getBaseContext(), NewsContentActivity.class);
+					i.putExtra("news.title", article.getTitle());
+					i.putExtra("news.date", article.getDateString());
+					i.putExtra("news.content", article.getContent());
+				    startActivity(i);
+				}
 			}
 		}
-		return null;
 	}
 
 	

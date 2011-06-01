@@ -55,7 +55,7 @@ public class MapActivity extends Activity {
 	private ImageButton zoomInButton;
 	private ImageButton zoomOutButton;
 	private ImageButton menuButton;
-	private TextView distanceText;
+	private TextView gpsStatusText;
 	private LocationManager locationManager;
 	private MapLayerOptions mapLayerOptions;
 	private GPSLocationListener gpsLocationListener;
@@ -120,9 +120,9 @@ public class MapActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 		opts.inScaled = false;
-		distanceText = (TextView) findViewById(R.id.mapDistanceText);
-		distanceText.bringToFront();
-		distanceText.setVisibility(View.GONE);
+		gpsStatusText = (TextView) findViewById(R.id.mapGpsStatusText);
+		gpsStatusText.bringToFront();
+		gpsStatusText.setVisibility(View.GONE);
 		gpsLocationListener = new GPSLocationListener(this);
 		mapImageView = (MapImageView) findViewById(R.id.image);
 		zoomInButton = (ImageButton) findViewById(R.id.zoomIn);
@@ -201,10 +201,11 @@ public class MapActivity extends Activity {
 	}
 	
 	private void activateGpsListener(boolean turnOn) {
-		distanceText.setVisibility(View.GONE);
+		gpsStatusText.setVisibility(View.GONE);
 		if (turnOn) {
 			if (!gpsListenerOnline) {
 				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5 * 1000L, 0f, gpsLocationListener);
+				locationManager.addGpsStatusListener(gpsLocationListener);
 				Toast.makeText(this, getString(R.string.mapActivity_gpsActivated), Toast.LENGTH_LONG).show();
 			}
 			gpsListenerOnline = true;
@@ -212,6 +213,7 @@ public class MapActivity extends Activity {
 		} else {
 			if (gpsListenerOnline) {
 				locationManager.removeUpdates(gpsLocationListener);
+				locationManager.removeGpsStatusListener(gpsLocationListener);
 			}
 			gpsListenerOnline = false;
 			currentPositionImage.setVisibility(View.GONE);
@@ -482,24 +484,37 @@ public class MapActivity extends Activity {
 
 		updateDisplay();
 	}
+	
+	public void setGpsStatusText(String text) {
+		if (text == null) {
+			gpsStatusText.setText("");
+			gpsStatusText.setVisibility(View.GONE);
+		} else {
+			gpsStatusText.setText(text);
+			gpsStatusText.setVisibility(View.VISIBLE);
+		}
+	}
 
 	public void updateGpsLocation(Location location) {
-		Toast.makeText(this, "" + location.getTime() + "\nLAT: " + location.getLatitude()+ "\nLONG: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "" + location.getTime() + "\nLAT: " + location.getLatitude()+ "\nLONG: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
 		this.location = location;
 		calculateNewPixelsFromLocation();
 		drawCurrentLocation();
 		
-		// Show distance to festival area
-		if (currentPositionImage.getVisibility() == View.GONE && location != null) {
-			try {
-				float distance = location.distanceTo(referenceLocation) / 1000; // in kilometers
-				distanceText.setText(getString(R.string.mapActivity_distanceToMap, new DecimalFormat("#.0").format(distance)));
-				distanceText.setVisibility(View.VISIBLE);
-			} catch (Exception e) {
-				distanceText.setVisibility(View.GONE);
+		// Show GPS-status text
+		if (currentPositionImage.getVisibility() == View.GONE) {
+			if (location != null) {
+				try {
+					float distance = location.distanceTo(referenceLocation) / 1000; // in kilometers
+					setGpsStatusText(getString(R.string.mapActivity_distanceToMap, new DecimalFormat("#.0").format(distance)));
+				} catch (Exception e) {
+					gpsStatusText.setVisibility(View.GONE);
+				}
 			}
+		} else if (location != null && location.hasAccuracy() && location.getAccuracy() > 0) {
+			setGpsStatusText(getString(R.string.mapActivity_gpsAccuracy, new DecimalFormat("#.0").format(location.getAccuracy())));
 		} else {
-			distanceText.setVisibility(View.GONE);
+			gpsStatusText.setVisibility(View.GONE);
 		}
 	}
 	

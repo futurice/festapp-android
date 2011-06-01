@@ -14,7 +14,9 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.domain.Gig;
+import fi.ruisrock2011.android.domain.to.FestivalDay;
 import fi.ruisrock2011.android.util.RuisrockConstants;
+import fi.ruisrock2011.android.util.StringUtil;
 import fi.ruisrock2011.android.util.UIUtil;
 
 /**
@@ -51,6 +53,7 @@ public class ArtistInfoActivity extends Activity {
 		
 		artistInfoView = (RelativeLayout) findViewById(R.id.artistInfoView);
 		gig = getGig();
+		FestivalDay day = gig.getFestivalDay();
 		populateViewValues();
 	}
 	
@@ -64,16 +67,13 @@ public class ArtistInfoActivity extends Activity {
 			artistName.setText(gig.getArtist());
 			
 			TableLayout infoTable = (TableLayout) findViewById(R.id.artistInfoTable);
-			if (gig.getStage() != null && gig.getStartTime() != null && gig.getEndTime() != null) {
-				infoTable.setVisibility(View.VISIBLE);
-				((TextView) findViewById(R.id.artistInfoStage)).setText(gig.getStage());
-				((TextView) findViewById(R.id.artistInfoLiveTime)).setText(gig.getTime());
-				ToggleButton favoriteButton = (ToggleButton) findViewById(R.id.artistInfoFavorite);
-				favoriteButton.setChecked(gig.isFavorite());
-				favoriteButton.setOnClickListener(favoriteListener);
-			} else {
-				infoTable.setVisibility(View.GONE);
-			}
+			infoTable.setVisibility(View.VISIBLE);
+			String stage = (gig.getStage() != null) ? gig.getStage() : "";
+			((TextView) findViewById(R.id.artistInfoStage)).setText(stage);
+			((TextView) findViewById(R.id.artistInfoLiveTime)).setText(gig.getTime());
+			ToggleButton favoriteButton = (ToggleButton) findViewById(R.id.artistInfoFavorite);
+			favoriteButton.setChecked(gig.isFavorite());
+			favoriteButton.setOnClickListener(favoriteListener);
 			infoTable.bringToFront();
 			
 			ImageView artistImage = (ImageView) findViewById(R.id.artistImage);

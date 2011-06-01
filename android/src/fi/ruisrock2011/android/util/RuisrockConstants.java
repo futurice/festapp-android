@@ -18,5 +18,15 @@ public class RuisrockConstants {
 	public static final long SPLASH_SCREEN_TIMEOUT = 4000L; // milliseconds
 	
 	public static final long SERVICE_FREQUENCY = 5 * 60 * 1000L;
+	public static final long SERVICE_INITIAL_WAIT_TIME = 5 * 1000L;
+	
+	// INITIAL ETAG VALUES
+	public static final String ETAG_GIGS = "315f1aa7b7ae50f683ea1ef5b8b4c302";
+	public static final String ETAG_TRANSPORTATION = "65afc40ef57359e62246b118407d695a";
+	//public static final String ETAG_NEWS = "d8d3ef527e862d0df58272d53a6c2ab8";
+	public static final String ETAG_NEWS = null;
+	public static final String ETAG_FOOD_AND_DRINK = "e527a7b7443e9cddc8801c54cf9fa603";
+	public static final String ETAG_SERVICES = "e8ba445475e27ba04e8d3012b05ed29e";
+	public static final String ETAG_GENERAL_INFO = "51dfa3c9e4b7d04434279bfcf6a54fe4";
 	
 }

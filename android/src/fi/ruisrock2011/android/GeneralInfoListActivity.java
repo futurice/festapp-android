@@ -11,11 +11,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
-public class ServicesListActivity extends Activity {
+public class GeneralInfoListActivity extends Activity {
 	
 	private ListView list;
 	private ListItemStringAdapter adapter;
@@ -26,34 +26,32 @@ public class ServicesListActivity extends Activity {
 			if (o instanceof String) {
 				String selected = (String) o;
 				Intent intent = new Intent(getBaseContext(), InfoSubPageActivity.class);
-				if (selected.equals(getString(R.string.service_Activities))) {
-					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_SERVICES_ACTIVITIES, getBaseContext()));
+				if (selected.equals(getString(R.string.generalInfo_Firstaid))) {
+					//intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_SERVICES_ACTIVITIES, getBaseContext()));
 				} else if (selected.equals(getString(R.string.service_BikePark))) {
-					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_SERVICES_BIKE_PARK, getBaseContext()));
-				} else if (selected.equals(getString(R.string.service_Camping))) {
-					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_SERVICES_CAMPING, getBaseContext()));
-				} else if (selected.equals(getString(R.string.service_Cloakroom))) {
-					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_SERVICES_CLOAKROOM, getBaseContext()));
-				} else if (selected.equals(getString(R.string.service_Merchandise))) {
-					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_SERVICES_MERCHANDISE, getBaseContext()));
-				} else if (selected.equals(getString(R.string.service_PhoneCharging))) {
-					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_SERVICES_PHONE_CHARGING, getBaseContext()));
-				} else if (selected.equals(getString(R.string.service_Sponsors))) {
-					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_SERVICES_SPONSORS, getBaseContext()));
+					
 				}
 				
 				intent.putExtra("subPageTitle", selected);
 				startActivity(intent);
 			}
+			/*
+    <string name="generalInfo.FrequentlyAsked">Usein kysyttyä</string>
+    <string name="generalInfo.OpenHours">Aukioloajat</string>
+    <string name="generalInfo.InfoStand">Infopiste</string>
+    <string name="generalInfo.LostAndFound">Löytötavarat</string>
+    <string name="generalInfo.FirstAid">Ensiapu &amp; sairaalahoito</string>
+    <string name="generalInfo.Tickets">Lipunmyynti</string>
+			 */
 		}
 	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list_string);
-		((TextView) findViewById(R.id.whiteTitle)).setText(R.string.Services);
 		
+		setContentView(R.layout.list_string);
+		((TextView) findViewById(R.id.whiteTitle)).setText(R.string.GeneralInfo);
 		list = (ListView) findViewById(R.id.list);
 		populateListItems();
 	}
@@ -72,5 +70,5 @@ public class ServicesListActivity extends Activity {
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(listItemClickListener);
 	}
-	
+
 }

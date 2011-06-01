@@ -17,6 +17,7 @@ import fi.ruisrock2011.android.dao.ConfigDAO;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.dao.NewsDAO;
 import fi.ruisrock2011.android.domain.Gig;
+import fi.ruisrock2011.android.domain.NewsArticle;
 import fi.ruisrock2011.android.util.HTTPUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
 
@@ -29,7 +30,7 @@ public class RuisrockService extends Service {
 	
 	private static final String TAG = RuisrockService.class.getSimpleName();
 	private Timer timer;
-	private int counter = 0;
+	private int counter = -1;
 	
 	private TimerTask backendTask = new TimerTask() {
 		@Override
@@ -67,25 +68,45 @@ public class RuisrockService extends Service {
 	}
 	
 	private void notify(Gig gig) {
-		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		
 	    Intent contentIntent = new Intent(getBaseContext(), RuisrockMainActivity.class);
 	    contentIntent.putExtra("alert.gig.id", gig.getId());
 	    int uniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
 	    PendingIntent pending = PendingIntent.getActivity(getBaseContext(), uniqueId, contentIntent, 0);
-
-	    Notification notification = new Notification(R.drawable.notification, gig.getArtist() + ": " + gig.getStageAndTime(), System.currentTimeMillis());
+	    
+	    String tickerText = gig.getArtist() + ": " + gig.getStageAndTime();
+	    notify(pending, gig.getId(), tickerText, gig.getArtist(), gig.getStageAndTime());
+	}
+	
+	private void notify(NewsArticle article) {
+	    Intent contentIntent = new Intent(getBaseContext(), RuisrockMainActivity.class);
+	    contentIntent.putExtra("alert.newsArticle.url", article.getUrl());
+	    int uniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
+	    PendingIntent pending = PendingIntent.getActivity(getBaseContext(), uniqueId, contentIntent, 0);
+	    
+	    String title = article.getTitle();
+	    notify(pending, article.getUrl(), title, getString(R.string.notification_news_title), title);
+	}
+	
+	private void notify(PendingIntent pending, String tagId, String tickerText, String contentTitle, String contentText) {
+		Notification notification = new Notification(R.drawable.notification, tickerText, System.currentTimeMillis());
 	    notification.flags |= Notification.FLAG_AUTO_CANCEL;
 	    notification.defaults |= Notification.DEFAULT_SOUND;
 	    notification.defaults |= Notification.DEFAULT_VIBRATE;
-	    notification.setLatestEventInfo(getBaseContext(), gig.getArtist(), gig.getStageAndTime(), pending);
-	    notificationManager.notify(gig.getId(), 0, notification);
+	    notification.setLatestEventInfo(getBaseContext(), contentTitle, contentText, pending);
+	    
+	    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+	    notificationManager.notify(tagId, 0, notification);
 	}
 	
 	private void updateNewsArticles() {
 		try {
 			if (HTTPUtil.isContentUpdated(RuisrockConstants.NEWS_JSON_URL, ConfigDAO.getEtagForNews(getBaseContext()))) {
-				NewsDAO.updateNewsOverHttp(getBaseContext());
+				List<NewsArticle> newArticles = NewsDAO.updateNewsOverHttp(getBaseContext());
+				if (newArticles != null && newArticles.size() > 0) {
+					for (NewsArticle article : newArticles) {
+						notify(article);
+					}
+				}
 			} else {
 				Log.i(TAG, "News were up-to-date.");
 			}
@@ -148,7 +169,7 @@ public class RuisrockService extends Service {
 		Log.i(TAG, "Creating service");
 		
 		timer = new Timer("RuisrockTimer");
-		timer.schedule(backendTask, 1000L, RuisrockConstants.SERVICE_FREQUENCY);
+		timer.schedule(backendTask, RuisrockConstants.SERVICE_INITIAL_WAIT_TIME, RuisrockConstants.SERVICE_FREQUENCY);
 	}
 
 	@Override

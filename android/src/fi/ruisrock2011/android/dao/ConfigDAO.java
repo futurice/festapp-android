@@ -17,6 +17,7 @@ import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
 import fi.ruisrock2011.android.domain.to.MapLayerOptions;
 import fi.ruisrock2011.android.domain.to.SelectableOption;
 import fi.ruisrock2011.android.util.HTTPUtil;
+import fi.ruisrock2011.android.util.JSONUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
 
 import android.content.ContentValues;
@@ -42,6 +43,7 @@ public class ConfigDAO {
 	public static final String ATTR_ETAG_FOR_FOODANDDRINK = "etag_foodanddrink";
 	public static final String ATTR_ETAG_FOR_TRANSPORTATION = "etag_transportation";
 	public static final String ATTR_ETAG_FOR_SERVICES = "etag_services";
+	public static final String ATTR_ETAG_FOR_GENERAL_INFO = "etag_generalinfo";
 	
 	public static final String ATTR_PAGE_FOODANDDRINK = "page_foodanddrink";
 	public static final String ATTR_PAGE_TRANSPORTATION = "page_transportation";
@@ -54,6 +56,12 @@ public class ConfigDAO {
 	public static final String ATTR_PAGE_SERVICES_PHONE_CHARGING = "page_phone_charging";
 	public static final String ATTR_PAGE_SERVICES_SPONSORS = "page_sponsors";
 	
+	public static final String ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED = "page_frequently_asked";
+	public static final String ATTR_PAGE_GENERALINFO_OPEN_HOURS = "page_open_hours";
+	public static final String ATTR_PAGE_GENERALINFO_INFO_STAND = "page_info_stand";
+	public static final String ATTR_PAGE_GENERALINFO_LOST_AND_FOUND = "page_lost_and_found";
+	public static final String ATTR_PAGE_GENERALINFO_FIRSTAID = "page_firstaid";
+	public static final String ATTR_PAGE_GENERALINFO_TICKETS = "page_tickets";
 	
 	public static MapLayerOptions findMapLayers(Context context) {
 		String values = getAttributeValue(ATTR_SELECTED_MAP_LAYERS, context);
@@ -152,13 +160,12 @@ public class ConfigDAO {
 			db = (new DatabaseHelper(context)).getWritableDatabase();
 			db.beginTransaction();
 			cursor = db.rawQuery("SELECT attributeName, attributeValue FROM config WHERE attributeName = ?", new String[]{attributeName});
-			ContentValues cv = createContentValues(attributeName, attributeValue);
+			ContentValues cv = createConfigContentValues(attributeName, attributeValue);
 			if (cursor.getCount() == 1) {
 				db.update("config", cv, "attributeName = ?", new String[]{attributeName});
 			} else {
 				db.insert("config", "attributeValue", cv);
 			}
-			Log.i(TAG, String.format("Set %s ==> %s", attributeName, attributeValue));
 			db.setTransactionSuccessful();
 		} finally {
 			db.endTransaction();
@@ -178,13 +185,12 @@ public class ConfigDAO {
 				String attributeValue = entry.getValue();
 				
 				cursor = db.rawQuery("SELECT attributeName, attributeValue FROM config WHERE attributeName = ?", new String[]{attributeName});
-				ContentValues cv = createContentValues(attributeName, attributeValue);
+				ContentValues cv = createConfigContentValues(attributeName, attributeValue);
 				if (cursor.getCount() == 1) {
 					db.update("config", cv, "attributeName = ?", new String[]{attributeName});
 				} else {
 					db.insert("config", "attributeValue", cv);
 				}
-				Log.i(TAG, String.format("Set %s ==> %s", attributeName, attributeValue));
 			}
 			db.setTransactionSuccessful();
 		} finally {
@@ -193,7 +199,7 @@ public class ConfigDAO {
 		}
 	}
 	
-	private static ContentValues createContentValues(String attributeName, String attributeValue) {
+	public static ContentValues createConfigContentValues(String attributeName, String attributeValue) {
 		ContentValues cv = new ContentValues();
 		cv.put("attributeName", attributeName);
 		cv.put("attributeValue", attributeValue);
@@ -259,17 +265,44 @@ public class ConfigDAO {
 		}
 	}
 	
+	public static void updateGeneralInfoPagesOverHttp(Context context) {
+		HTTPUtil httpUtil = new HTTPUtil();
+		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.GENERAL_INFO_JSON_URL);
+		if (!response.isValid() || response.getContent() == null) {
+			return;
+		}
+		setAttributeValue(ATTR_ETAG_FOR_GENERAL_INFO, response.getEtag(), context);
+		try {
+			setAttributeValues(parseGeneralInfoMapFromJson(context, response.getContent()), context);
+		} catch (Exception e) {
+			Log.e(TAG, "Error parsing GeneralInfo JSON.", e);
+		}
+	}
+	
 	public static Map<String,String> parseServicesMapFromJson(Context context, String json) throws Exception {
 		JSONObject servicesObj = new JSONObject(json);
 		
 		Map<String, String> map = new HashMap<String, String>();
-		map.put(ATTR_PAGE_SERVICES_ACTIVITIES, servicesObj.getString(context.getString(R.string.service_Activities)));
-		map.put(ATTR_PAGE_SERVICES_BIKE_PARK, servicesObj.getString(context.getString(R.string.service_BikePark)));
-		map.put(ATTR_PAGE_SERVICES_CAMPING, servicesObj.getString(context.getString(R.string.service_Camping)));
-		map.put(ATTR_PAGE_SERVICES_CLOAKROOM, servicesObj.getString(context.getString(R.string.service_Cloakroom)));
-		map.put(ATTR_PAGE_SERVICES_MERCHANDISE, servicesObj.getString(context.getString(R.string.service_Merchandise)));
-		map.put(ATTR_PAGE_SERVICES_PHONE_CHARGING, servicesObj.getString(context.getString(R.string.service_PhoneCharging)));
-		map.put(ATTR_PAGE_SERVICES_SPONSORS, servicesObj.getString(context.getString(R.string.service_Sponsors)));
+		map.put(ATTR_PAGE_SERVICES_ACTIVITIES, JSONUtil.getString(servicesObj, context.getString(R.string.service_Activities)));
+		map.put(ATTR_PAGE_SERVICES_BIKE_PARK, JSONUtil.getString(servicesObj, context.getString(R.string.service_BikePark)));
+		map.put(ATTR_PAGE_SERVICES_CAMPING, JSONUtil.getString(servicesObj, context.getString(R.string.service_Camping)));
+		map.put(ATTR_PAGE_SERVICES_CLOAKROOM, JSONUtil.getString(servicesObj, context.getString(R.string.service_Cloakroom)));
+		map.put(ATTR_PAGE_SERVICES_MERCHANDISE, JSONUtil.getString(servicesObj, context.getString(R.string.service_Merchandise)));
+		map.put(ATTR_PAGE_SERVICES_PHONE_CHARGING, JSONUtil.getString(servicesObj, context.getString(R.string.service_PhoneCharging)));
+		map.put(ATTR_PAGE_SERVICES_SPONSORS, JSONUtil.getString(servicesObj, context.getString(R.string.service_Sponsors)));
+		return map;
+	}
+	
+	public static Map<String,String> parseGeneralInfoMapFromJson(Context context, String json) throws Exception {
+		JSONObject servicesObj = new JSONObject(json);
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(ATTR_PAGE_GENERALINFO_FIRSTAID, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_Firstaid)));
+		map.put(ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_FrequentlyAsked)));
+		map.put(ATTR_PAGE_GENERALINFO_INFO_STAND, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_InfoStand)));
+		map.put(ATTR_PAGE_GENERALINFO_LOST_AND_FOUND, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_LostAndFound)));
+		map.put(ATTR_PAGE_GENERALINFO_OPEN_HOURS, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_OpenHours)));
+		map.put(ATTR_PAGE_GENERALINFO_TICKETS, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_Tickets)));
 		return map;
 	}
 	

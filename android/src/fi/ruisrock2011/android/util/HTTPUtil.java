@@ -152,7 +152,7 @@ public class HTTPUtil {
             while ((line = reader.readLine()) != null) {
                 String etag = "ETag: ";
                 if (line.startsWith(etag)) {
-                	String newEtag = line.replaceFirst(etag, "");
+                	String newEtag = line.replaceFirst(etag, "").replace("\"", "");
                 	if (newEtag.equals(previousEtag)) {
                 		contentChanged = false;
                 		break;
@@ -284,7 +284,11 @@ public class HTTPUtil {
 				return httpBackendResponse;
 			}
 			httpBackendResponse.setContent(StringUtil.convertStreamToString(httpResponse.getEntity().getContent()));
-			httpBackendResponse.setEtag(httpResponse.getHeaders("ETag")[0].getValue());
+			String etag = httpResponse.getHeaders("ETag")[0].getValue();
+			if (etag != null) {
+				etag = etag.replace("\"", "");
+			}
+			httpBackendResponse.setEtag(etag);
 			httpBackendResponse.setValid(true);
 			httpResponse.getEntity().consumeContent();
 		} catch (Exception e) {

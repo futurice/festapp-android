@@ -1,17 +1,18 @@
 package fi.ruisrock2011.android.gps;
 
-import fi.ruisrock2011.android.MapActivity;
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.GpsStatus.Listener;
 import android.os.Bundle;
+import fi.ruisrock2011.android.MapActivity;
+import fi.ruisrock2011.android.R;
 
 /**
  * GPS Location Listener.
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class GPSLocationListener implements LocationListener {
+public class GPSLocationListener implements LocationListener, GpsStatus.Listener {
 	
 	private MapActivity mapActivity;
 	
@@ -37,6 +38,14 @@ public class GPSLocationListener implements LocationListener {
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		
+	}
+
+	@Override
+	public void onGpsStatusChanged(int event) {
+		if (event == GpsStatus.GPS_EVENT_STARTED) {
+			String statusText = mapActivity.getString(R.string.mapActivity_gpsWaitingForFix);
+			mapActivity.setGpsStatusText(statusText);
+		}
 	}
 	
 	

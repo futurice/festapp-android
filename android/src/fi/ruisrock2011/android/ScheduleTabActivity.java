@@ -35,7 +35,11 @@ public class ScheduleTabActivity extends TabActivity {
 		addTabSpec(FestivalDay.FRIDAY);
 		addTabSpec(FestivalDay.SATURDAY);
 		addTabSpec(FestivalDay.SUNDAY);
-		tabHost.setCurrentTabByTag(GigDAO.getFestivalDay(new Date()).name());
+		FestivalDay day = GigDAO.getFestivalDay(new Date());
+		if (day == null) {
+			day = FestivalDay.FRIDAY;
+		}
+		tabHost.setCurrentTabByTag(day.name());
 	}
 	
 	private void addTabSpec(FestivalDay festivalDay) {

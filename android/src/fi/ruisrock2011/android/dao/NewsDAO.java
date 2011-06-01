@@ -15,9 +15,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import fi.ruisrock2011.android.R;
+import fi.ruisrock2011.android.domain.Gig;
 import fi.ruisrock2011.android.domain.NewsArticle;
 import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
 import fi.ruisrock2011.android.util.HTTPUtil;
+import fi.ruisrock2011.android.util.JSONUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
 
 /**
@@ -30,7 +33,7 @@ public class NewsDAO {
 	private static DateFormat RSS_DATE_FORMATTER = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
 	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	private static final String TAG = "NewsDAO";
-	private static final String[] NEWS_COLUMNS = { "url", "title", "date", "content" };
+	private static final String[] NEWS_COLUMNS = { "url", "title", "newsDate", "content" };
 	
 	public static List<NewsArticle> findAll(Context context) {
 		List<NewsArticle> articles = new ArrayList<NewsArticle>();
@@ -107,17 +110,17 @@ public class NewsDAO {
 	private static Date getDate(String date) {
 		try {
 			return DB_DATE_FORMATTER.parse(date);
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			Log.e(TAG, "Unable to parse date from " + date);
 		}
 		return null;
 	}
 
-	public static void updateNewsOverHttp(Context context) {
+	public static List<NewsArticle> updateNewsOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.NEWS_JSON_URL);
 		if (!response.isValid() || response.getContent() == null) {
-			return;
+			return null;
 		}
 		ConfigDAO.setEtagForGigs(context, response.getEtag());
 		try {
@@ -126,6 +129,7 @@ public class NewsDAO {
 			if (articles != null && articles.size() > 0) { // Hackish fail-safe
 				SQLiteDatabase db = null;
 				Cursor cursor = null;
+				List<NewsArticle> newArticles = new ArrayList<NewsArticle>();
 				try {
 					db = (new DatabaseHelper(context)).getWritableDatabase();
 					db.beginTransaction();
@@ -137,8 +141,9 @@ public class NewsDAO {
 							db.update("news", convertNewsArticleToContentValues(article), "url = ?", new String[] {article.getUrl()});
 							updated++;
 						} else {
-							db.insert("gig", "content", convertNewsArticleToContentValues(article));
+							db.insert("news", "content", convertNewsArticleToContentValues(article));
 							inserted++;
+							newArticles.add(article);
 						}
 					}
 					db.setTransactionSuccessful();
@@ -147,20 +152,33 @@ public class NewsDAO {
 					db.endTransaction();
 					closeDb(db, cursor);
 				}
+				return newArticles;
 			}
 			
 		} catch (Exception e) {
 			Log.w(TAG, "Received invalid JSON-structure", e);
 		}
+		return null;
 	}
 	
 	private static NewsArticle findNewsArticle(SQLiteDatabase db, String url) {
-		Cursor cursor = db.query("news", NEWS_COLUMNS, "url = " + url, null, null, null, null);
+		Cursor cursor = db.query("news", NEWS_COLUMNS, "url = ?", new String[]{url}, null, null, null);
 		if (cursor.getCount() == 1) {
 			cursor.moveToFirst();
 			return convertCursorToNewsArticle(cursor);
 		}
 		return null;
+	}
+	
+	public static NewsArticle findNewsArticle(Context context, String url) {
+		SQLiteDatabase db = null;
+		Cursor cursor = null;
+		try {
+			db = (new DatabaseHelper(context)).getReadableDatabase();
+			return findNewsArticle(db, url);
+		} finally {
+			closeDb(db, cursor);
+		}
 	}
 	
 	private static NewsArticle convertCursorToNewsArticle(Cursor cursor) {
@@ -177,8 +195,8 @@ public class NewsDAO {
 		for (int i=0; i < list.length(); i++) {
 			try {
 				JSONObject newsObject = list.getJSONObject(i);
-				Date date = RSS_DATE_FORMATTER.parse(newsObject.getString("pubDate"));
-				NewsArticle article = new NewsArticle(newsObject.getString("link"), newsObject.getString("title"), date, newsObject.getString("content"));
+				Date date = RSS_DATE_FORMATTER.parse(JSONUtil.getString(newsObject, "pubDate"));
+				NewsArticle article = new NewsArticle(JSONUtil.getString(newsObject, "link"), JSONUtil.getString(newsObject, "title"), date, JSONUtil.getString(newsObject, "content"));
 				articles.add(article);
 			} catch (Exception e) {
 				Log.w(TAG, "Received invalid JSON-structure", e);

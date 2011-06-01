@@ -10,6 +10,7 @@ import android.os.Parcelable;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.domain.to.FestivalDay;
 import fi.ruisrock2011.android.util.CalendarUtil;
+import fi.ruisrock2011.android.util.StringUtil;
 
 public class Gig implements Parcelable {
 	
@@ -140,7 +141,16 @@ public class Gig implements Parcelable {
 	
 	public String getStageAndTime() {
 		String stage = (this.stage != null) ? this.stage : "";
-		return String.format("%s, %s", stage, getTime());
+		String time = getTime();
+		
+		if (StringUtil.isNotEmpty(stage) && StringUtil.isNotEmpty(time)) {
+			return String.format("%s, %s", stage, time);
+		} else if (StringUtil.isNotEmpty(stage)) {
+			return stage;
+		} else if (StringUtil.isNotEmpty(time)) {
+			return time;
+		}
+		return "";
 	}
 	
 	public String getTime() {
