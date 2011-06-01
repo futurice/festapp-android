@@ -27,22 +27,22 @@ public class GeneralInfoListActivity extends Activity {
 				String selected = (String) o;
 				Intent intent = new Intent(getBaseContext(), InfoSubPageActivity.class);
 				if (selected.equals(getString(R.string.generalInfo_Firstaid))) {
-					//intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_SERVICES_ACTIVITIES, getBaseContext()));
-				} else if (selected.equals(getString(R.string.service_BikePark))) {
-					
+					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_FIRSTAID, getBaseContext()));
+				} else if (selected.equals(getString(R.string.generalInfo_FrequentlyAsked))) {
+					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, getBaseContext()));
+				} else if (selected.equals(getString(R.string.generalInfo_InfoStand))) {
+					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_INFO_STAND, getBaseContext()));
+				} else if (selected.equals(getString(R.string.generalInfo_LostAndFound))) {
+					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_LOST_AND_FOUND, getBaseContext()));
+				} else if (selected.equals(getString(R.string.generalInfo_OpenHours))) {
+					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_OPEN_HOURS, getBaseContext()));
+				} else if (selected.equals(getString(R.string.generalInfo_Tickets))) {
+					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_TICKETS, getBaseContext()));
 				}
 				
 				intent.putExtra("subPageTitle", selected);
 				startActivity(intent);
 			}
-			/*
-    <string name="generalInfo.FrequentlyAsked">Usein kysyttyä</string>
-    <string name="generalInfo.OpenHours">Aukioloajat</string>
-    <string name="generalInfo.InfoStand">Infopiste</string>
-    <string name="generalInfo.LostAndFound">Löytötavarat</string>
-    <string name="generalInfo.FirstAid">Ensiapu &amp; sairaalahoito</string>
-    <string name="generalInfo.Tickets">Lipunmyynti</string>
-			 */
 		}
 	};
 	
@@ -58,13 +58,12 @@ public class GeneralInfoListActivity extends Activity {
 	
 	private void populateListItems() {
 		List<String> items = new ArrayList<String>();
-		items.add(getString(R.string.service_Activities));
-		items.add(getString(R.string.service_BikePark));
-		items.add(getString(R.string.service_Camping));
-		items.add(getString(R.string.service_Cloakroom));
-		items.add(getString(R.string.service_Merchandise));
-		items.add(getString(R.string.service_PhoneCharging));
-		items.add(getString(R.string.service_Sponsors));
+		items.add(getString(R.string.generalInfo_Firstaid));
+		items.add(getString(R.string.generalInfo_FrequentlyAsked));
+		items.add(getString(R.string.generalInfo_InfoStand));
+		items.add(getString(R.string.generalInfo_LostAndFound));
+		items.add(getString(R.string.generalInfo_OpenHours));
+		items.add(getString(R.string.generalInfo_Tickets));
 		Collections.sort(items);
 		adapter = new ListItemStringAdapter(this, items);
 		list.setAdapter(adapter);

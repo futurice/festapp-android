@@ -53,7 +53,6 @@ public class ArtistInfoActivity extends Activity {
 		
 		artistInfoView = (RelativeLayout) findViewById(R.id.artistInfoView);
 		gig = getGig();
-		FestivalDay day = gig.getFestivalDay();
 		populateViewValues();
 	}
 	

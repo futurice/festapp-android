@@ -24,7 +24,7 @@ import fi.ruisrock2011.android.util.StringUtil;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME = "ruisrock2011_db";
-	private static final int DB_VERSION = 77;
+	private static final int DB_VERSION = 78;
 	private static final String TAG = "DatabaseHelper";
 	
 	private Context context;
@@ -140,8 +140,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private void createGigTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS gig");
 		String sql = "CREATE TABLE IF NOT EXISTS gig (" +
-				//"_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				"id TEXT PRIMARY KEY, " +
+				"imageId TEXT, " +
 				"artist TEXT, " +
 				"description TEXT, " +
 				"startTime DATE, " +

@@ -4,15 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.domain.to.FestivalDay;
 import fi.ruisrock2011.android.util.CalendarUtil;
 import fi.ruisrock2011.android.util.StringUtil;
 
-public class Gig implements Parcelable {
+public class Gig {
 	
 	private static final SimpleDateFormat sdfHoursAndMinutes = new SimpleDateFormat("HH:mm");
 	private static final SimpleDateFormat parcelableDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -23,6 +20,7 @@ public class Gig implements Parcelable {
 	private Date startTime;
 	private Date endTime;
 	private String stage;
+	private String imageId;
 	
 	private boolean favorite;
 	private boolean active = true;
@@ -32,9 +30,10 @@ public class Gig implements Parcelable {
 		
 	}
 
-	public Gig(String id, String artist, String description, Date startTime, Date endTime, String stage,
+	public Gig(String id, String imageId, String artist, String description, Date startTime, Date endTime, String stage,
 			boolean favorite, boolean active, boolean alerted) {
 		this.id = id;
+		this.imageId = imageId;
 		this.artist = artist;
 		this.description = description;
 		this.startTime = startTime;
@@ -43,16 +42,6 @@ public class Gig implements Parcelable {
 		this.favorite = favorite;
 		this.active = active;
 		this.alerted = alerted;
-	}
-
-	public Gig(Parcel in) {
-		String[] data = new String[3];
-		in.readStringArray(data);
-		this.id = data[0];
-		this.artist = data[1];
-		this.stage = data[2];
-		this.startTime = getDateFromParcelable(data[3]);
-		this.endTime = getDateFromParcelable(data[4]);
 	}
 
 	public void setId(String id) {
@@ -133,6 +122,14 @@ public class Gig implements Parcelable {
 	public boolean isAlerted() {
 		return alerted;
 	}
+	
+	public void setImageId(String imageId) {
+		this.imageId = imageId;
+	}
+
+	public String getImageId() {
+		return imageId;
+	}
 
 	@Override
 	public String toString() {
@@ -169,44 +166,5 @@ public class Gig implements Parcelable {
 		}
 		return GigDAO.getFestivalDay(startTime);
 	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeStringArray(new String[] {this.id, this.artist, this.stage, getParcelableDateString(startTime), getParcelableDateString(endTime)});
-	}
-	
-	private String getParcelableDateString(Date date) {
-		try {
-			return parcelableDateFormat.format(date);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-	
-	private Date getDateFromParcelable(String str) {
-		try {
-			return parcelableDateFormat.parse(str);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-	
-	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-
-		public Gig createFromParcel(Parcel in) {
-			return new Gig(in);
-		}
-
-		public Gig[] newArray(int size) {
-			return new Gig[size];
-		}
-
-	};
-	
 
 }

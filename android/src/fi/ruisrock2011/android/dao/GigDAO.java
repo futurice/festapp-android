@@ -35,7 +35,7 @@ public class GigDAO {
 	
 	private static final String TAG = "GigDAO";
 	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	private static final String[] GIG_COLUMNS = { "id", "artist", "description",
+	private static final String[] GIG_COLUMNS = { "id", "imageId", "artist", "description",
 		"startTime", "endTime", "stage", "favorite", "active", "alerted" };
 	
 	private static Date startOfFriday = null;
@@ -119,18 +119,6 @@ public class GigDAO {
 		return gigs;
 	}
 	
-	/*
-{
-
-    description: "<p>Jo kaksikymment&auml; vuotta kalevalaista progemetalliaan tahkonnut, Suomen menestyneimpiin metalliyhtyeisiin lukeutuva <strong>Amorphis</strong> on t&auml;ydess&auml; ter&auml;ss&auml;, kaikin puolin. Nelj&auml;ll&auml; viimeisimm&auml;ll&auml; albumillaan kultaa myyneen yhtyeen kymmenes studioalbumi <em>"The Beginning of Times&rdquo;</em> ilmestyy kes&auml;kuun alussa. Albumi on sek&auml; musiikillisesti ett&auml; lyriikaltaan Amorphiksen haastavin julkaisu, levyn teema nojaa suomalaisen mytologian ikoniin V&auml;in&auml;m&ouml;iseen. Ensimm&auml;isen kosketuksen levyyn yhtye tarjoaa huhtikuussa julkaistava<em>lla "You I need"</em> -singlell&auml;. My&ouml;s Amorphiksen live-kunto on huipussaan viime vuoden juhlakiertueen j&auml;ljilt&auml;. Juhlan kunniaksi yhtye julkaisi viime vuonna my&ouml;s <em>"Magic &amp; Mayhem &ndash; Tales From The Early Years"</em> -levyn, joka sis&auml;lt&auml;&auml; helmi&auml; yhtyeen kolmelta ensimm&auml;iselt&auml; albumilta uudelleen &auml;&auml;nitettyin&auml; versioina Tomi Joutsenen toimiessa laulusolistina. Viime syksyn klubikiertueella kuultiinkin vain vanhoja klassikoita, mutta nyt luvassa on aivan uutta materiaalia ja varmasti my&ouml;s tunnetuimpia hittej&auml;, kuten <em>&rdquo;House of Sleep&rdquo;</em>, <em>&rdquo;Silent Waters&rdquo;</em> ja <em>&rdquo;Silver Bride&rdquo;</em>.</p> <p>&nbsp;</p> <p> <span><a href="http://soundcloud.com/nuclearblastrecords/amorphis-my-enemy">AMORPHIS - My Enemy</a> by <a href="http://soundcloud.com/nuclearblastrecords">NuclearBlastRecords</a></span></p>"
-    start: "2010-07-09T21:45"
-    end: "2010-07-09T22:45"
-    id: "25"
-    name: "Amorphis"
-    stage: null
-
-}
-	 */
 	public static List<Gig> parseFromJson(String json) throws Exception {
 		List<Gig> gigs = new ArrayList<Gig>();
 		JSONArray list = new JSONArray(json);
@@ -139,13 +127,15 @@ public class GigDAO {
 			try {
 				JSONObject gigObj = list.getJSONObject(i);
 				Gig gig = new Gig();
-				//Date date = RSS_DATE_FORMATTER.parse(newsObject.getString("pubDate"));
 				gig.setId(JSONUtil.getString(gigObj, "id"));
 				gig.setArtist(JSONUtil.getString(gigObj, "name"));
 				gig.setDescription(JSONUtil.getString(gigObj, "description"));
 				gig.setStartTime(parseJsonDate(JSONUtil.getString(gigObj, "start")));
 				gig.setEndTime(parseJsonDate(JSONUtil.getString(gigObj, "end")));
 				gig.setStage(JSONUtil.getString(gigObj, "stage"));
+				if (gigObj.has("imageId")) {
+					gig.setImageId(JSONUtil.getString(gigObj, "imageId"));
+				}
 				gigs.add(gig);
 			} catch (Exception e) {
 				Log.w(TAG, "Received invalid JSON-structure", e);
@@ -303,14 +293,15 @@ public class GigDAO {
 	
 	private static Gig convertCursorToGig(Cursor cursor, String id) {
 		return new Gig(cursor.getString(0), // id
-				cursor.getString(1), // artist
-				cursor.getString(2), // description
-				parseDate(cursor.getString(3)), // startTime
-				parseDate(cursor.getString(4)), // endTime
-				cursor.getString(5), // stage
-				cursor.getInt(6) > 0,
+				cursor.getString(1), // imageId
+				cursor.getString(2), // artist
+				cursor.getString(3), // description
+				parseDate(cursor.getString(4)), // startTime
+				parseDate(cursor.getString(5)), // endTime
+				cursor.getString(6), // stage
 				cursor.getInt(7) > 0,
-				cursor.getInt(8) > 0);
+				cursor.getInt(8) > 0,
+				cursor.getInt(9) > 0);
 	}
 	
 	public static ContentValues convertGigToContentValues(Gig gig) {
@@ -318,6 +309,7 @@ public class GigDAO {
 		String startTime = (gig.getStartTime() != null) ? DB_DATE_FORMATTER.format(gig.getStartTime()) : null;
 		String endTime = (gig.getEndTime() != null) ? DB_DATE_FORMATTER.format(gig.getEndTime()) : null;
 		values.put("id", gig.getId());
+		values.put("imageId", gig.getImageId());
 		values.put("artist", gig.getArtist());
 		values.put("description", gig.getDescription());
 		values.put("stage", gig.getStage());

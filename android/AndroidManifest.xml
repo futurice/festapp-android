@@ -40,6 +40,7 @@
 		<activity android:name=".FonectaActivity" android:label="@string/app_name" android:theme="@style/RuisrockTheme" android:screenOrientation="portrait" />
 		<activity android:name=".FonectaPricesActivity" android:label="@string/app_name" android:theme="@style/RuisrockTheme" android:screenOrientation="portrait" />
 		<activity android:name=".ServicesListActivity" android:label="@string/app_name" android:theme="@style/RuisrockTheme" android:screenOrientation="portrait" />
+		<activity android:name=".GeneralInfoListActivity" android:label="@string/app_name" android:theme="@style/RuisrockTheme" android:screenOrientation="portrait" />
 		
 		<!-- Services -->
 		<service android:enabled="true" android:name=".service.RuisrockService" />
