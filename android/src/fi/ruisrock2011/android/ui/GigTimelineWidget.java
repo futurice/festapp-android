@@ -24,7 +24,7 @@ import fi.ruisrock2011.android.util.CalendarUtil;
 
 public class GigTimelineWidget extends RelativeLayout {
 	
-	public static final int PIXELS_PER_MINUTE = 7;
+	public static final int PIXELS_PER_MINUTE = 5;
 	private Gig gig;
 	private ToggleButton starIcon;
 	private TextView artistLabel;

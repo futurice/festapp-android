@@ -118,13 +118,7 @@ public class TimelineActivity extends Activity {
 
 	private void updateCurrentTimeline() {
 		findViewById(R.id.timelineNowLine).bringToFront();
-		Date now = new Date();
-		// TODO: Remove fixed now-date!
-		try {
-			now = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse("2011-07-08 18:08");
-		} catch (Exception e) {
-			
-		}
+		Date now = CalendarUtil.getNow();
 		if (timelineStartMoment == null || daySchedule.getLatestTime() == null) { 
 			return;
 		}

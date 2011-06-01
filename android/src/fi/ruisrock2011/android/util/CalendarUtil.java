@@ -1,5 +1,6 @@
 package fi.ruisrock2011.android.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +31,17 @@ public class CalendarUtil {
 	public static int getMinutesBetweenTwoDates(Date start, Date end) {
 		long diff = Math.abs(end.getTime() - start.getTime());
 		return (int) (diff / 1000 / 60);
+	}
+	
+	public static Date getNow() {
+		// TODO: return now
+		//return new Date();
+		
+		try {
+			return new SimpleDateFormat("yyyy-MM-dd HH:mm").parse("2011-07-08 18:08");
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 }

@@ -133,8 +133,8 @@ public class GigDAO {
 				gig.setStartTime(parseJsonDate(JSONUtil.getString(gigObj, "start")));
 				gig.setEndTime(parseJsonDate(JSONUtil.getString(gigObj, "end")));
 				gig.setStage(JSONUtil.getString(gigObj, "stage"));
-				if (gigObj.has("imageId")) {
-					gig.setImageId(JSONUtil.getString(gigObj, "imageId"));
+				if (gigObj.has("band_image_id")) {
+					gig.setImageId(JSONUtil.getString(gigObj, "band_image_id"));
 				}
 				gigs.add(gig);
 			} catch (Exception e) {
