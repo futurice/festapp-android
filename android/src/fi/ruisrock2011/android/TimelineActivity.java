@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.MarginLayoutParams;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -46,9 +47,11 @@ public class TimelineActivity extends Activity {
 	private DaySchedule daySchedule;
 	private LinearLayout stageLayout;
 	private LinearLayout gigLayout;
+	private HorizontalScrollView scrollView;
 	private Vibrator vibrator;
 	private LayoutInflater inflater;
 	private Date timelineStartMoment;
+	private Integer initialScrollTo;
 	
 	private static final int HOUR_MARKER_WIDTH = 24;
 	private static int ROW_HEIGHT = 66;
@@ -68,7 +71,6 @@ public class TimelineActivity extends Activity {
 		public void onClick(View v) {
 			if (v instanceof GigTimelineWidget) {
 				GigTimelineWidget gigWidget = (GigTimelineWidget) v;
-				Drawable d = gigWidget.getBackground();
 				gigWidget.setBackgroundResource(R.drawable.schedule_gig_hilight);
 				vibrator.vibrate(50l);
 				Intent artistInfo = new Intent(getBaseContext(), ArtistInfoActivity.class);
@@ -101,8 +103,20 @@ public class TimelineActivity extends Activity {
 		setFestivalDay();
 		daySchedule = GigDAO.findDaySchedule(this, festivalDay);
 		findViewById(R.id.timelineNowLine).setVisibility(View.GONE);
+		scrollView = (HorizontalScrollView) findViewById(R.id.timelineScrollView);
 		setTimelineStartMoment();
 		constructUiElements();
+		if (initialScrollTo != null && initialScrollTo > 0) {
+			new Thread(new Runnable() {
+				public void run() {
+					scrollView.post(new Runnable() {
+						public void run() {
+							scrollView.smoothScrollTo(initialScrollTo, 0);
+						}
+					});
+				}
+			}).start();
+		}
 		
 		handler.postDelayed(runnable, NOW_MARKER_FREQUENCY);
 	}
@@ -126,7 +140,9 @@ public class TimelineActivity extends Activity {
 			View line = findViewById(R.id.timelineNowLine);
 			line.setVisibility(View.VISIBLE);
 			TextView marginView = (TextView) findViewById(R.id.timelineNowMargin);
-			marginView.setWidth(CalendarUtil.getMinutesBetweenTwoDates(timelineStartMoment, now) * GigTimelineWidget.PIXELS_PER_MINUTE - HOUR_MARKER_WIDTH/2 - 3);
+			int leftMargin = CalendarUtil.getMinutesBetweenTwoDates(timelineStartMoment, now) * GigTimelineWidget.PIXELS_PER_MINUTE - HOUR_MARKER_WIDTH/2 - 3;
+			initialScrollTo = leftMargin - TIMELINE_NUMBERS_LEFT_SHIFT;
+			marginView.setWidth(leftMargin);
 		} else {
 			View line = findViewById(R.id.timelineNowLine);
 			line.setVisibility(View.GONE);

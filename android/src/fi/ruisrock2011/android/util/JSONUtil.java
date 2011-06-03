@@ -6,7 +6,7 @@ import org.json.JSONObject;
 public class JSONUtil {
 	
 	public static String getString(JSONObject j, String name) throws JSONException {
-		if (j.isNull(name)) {
+		if (!j.has(name) || j.isNull(name)) {
 			return null;
 		}
 		return j.getString(name);

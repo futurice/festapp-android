@@ -38,8 +38,6 @@ public class ServicesListActivity extends Activity {
 					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_SERVICES_MERCHANDISE, getBaseContext()));
 				} else if (selected.equals(getString(R.string.service_PhoneCharging))) {
 					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_SERVICES_PHONE_CHARGING, getBaseContext()));
-				} else if (selected.equals(getString(R.string.service_Sponsors))) {
-					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_SERVICES_SPONSORS, getBaseContext()));
 				}
 				
 				intent.putExtra("subPageTitle", selected);
@@ -66,7 +64,6 @@ public class ServicesListActivity extends Activity {
 		items.add(getString(R.string.service_Cloakroom));
 		items.add(getString(R.string.service_Merchandise));
 		items.add(getString(R.string.service_PhoneCharging));
-		items.add(getString(R.string.service_Sponsors));
 		Collections.sort(items);
 		adapter = new ListItemStringAdapter(this, items);
 		list.setAdapter(adapter);

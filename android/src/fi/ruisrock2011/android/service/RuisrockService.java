@@ -1,5 +1,6 @@
 package fi.ruisrock2011.android.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,6 +19,7 @@ import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.dao.NewsDAO;
 import fi.ruisrock2011.android.domain.Gig;
 import fi.ruisrock2011.android.domain.NewsArticle;
+import fi.ruisrock2011.android.util.CalendarUtil;
 import fi.ruisrock2011.android.util.HTTPUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
 
@@ -44,7 +46,7 @@ public class RuisrockService extends Service {
 					//updateGigs();
 					updateNewsArticles();
 				}
-				if (counter % 12*5 == 0) { // every 5 hour
+				if (counter % 12*5 == 0) { // every 5 hours
 					Log.i(TAG, "Executing 5-hour operations.");
 					updateFoodAndDrinkPage();
 					updateTransportationPage();
@@ -104,8 +106,10 @@ public class RuisrockService extends Service {
 				List<NewsArticle> newArticles = NewsDAO.updateNewsOverHttp(getBaseContext());
 				if (newArticles != null && newArticles.size() > 0) {
 					for (NewsArticle article : newArticles) {
-						// TODO: Check publish-date for News-article (no notification about old news!)
-						notify(article);
+						if (article.getDate() != null && 
+								CalendarUtil.getMinutesBetweenTwoDates(article.getDate(), new Date()) < RuisrockConstants.SERVICE_NEWS_ALERT_THRESHOLD_IN_MINUTES) {
+							notify(article);
+						}
 					}
 				}
 			} else {

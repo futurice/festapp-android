@@ -54,7 +54,6 @@ public class ConfigDAO {
 	public static final String ATTR_PAGE_SERVICES_MERCHANDISE = "page_merchandise";
 	public static final String ATTR_PAGE_SERVICES_ACTIVITIES = "page_activities";
 	public static final String ATTR_PAGE_SERVICES_PHONE_CHARGING = "page_phone_charging";
-	public static final String ATTR_PAGE_SERVICES_SPONSORS = "page_sponsors";
 	
 	public static final String ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED = "page_frequently_asked";
 	public static final String ATTR_PAGE_GENERALINFO_OPEN_HOURS = "page_open_hours";
@@ -289,7 +288,6 @@ public class ConfigDAO {
 		map.put(ATTR_PAGE_SERVICES_CLOAKROOM, JSONUtil.getString(servicesObj, context.getString(R.string.service_Cloakroom)));
 		map.put(ATTR_PAGE_SERVICES_MERCHANDISE, JSONUtil.getString(servicesObj, context.getString(R.string.service_Merchandise)));
 		map.put(ATTR_PAGE_SERVICES_PHONE_CHARGING, JSONUtil.getString(servicesObj, context.getString(R.string.service_PhoneCharging)));
-		map.put(ATTR_PAGE_SERVICES_SPONSORS, JSONUtil.getString(servicesObj, context.getString(R.string.service_Sponsors)));
 		return map;
 	}
 	

@@ -26,6 +26,7 @@
 	</LinearLayout>
 	
 	<HorizontalScrollView
+		android:id="@+id/timelineScrollView"
 		android:layout_width="fill_parent" android:layout_height="fill_parent" android:fadingEdge="none">
 		<RelativeLayout 
 			android:id="@+id/timeGridContainer"

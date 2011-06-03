@@ -188,7 +188,7 @@ public class GigDAO {
 		ConfigDAO.setEtagForGigs(context, response.getEtag());
 		
 		List<Gig> gigs = parseFromJson(response.getContent());
-		if (gigs != null && gigs.size() > 3) { // Hackish fail-safe
+		if (gigs != null && gigs.size() >= 2) { // Hackish fail-safe
 			SQLiteDatabase db = null;
 			Cursor cursor = null;
 			try {

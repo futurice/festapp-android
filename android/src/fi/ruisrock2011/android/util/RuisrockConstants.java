@@ -19,6 +19,7 @@ public class RuisrockConstants {
 	
 	public static final long SERVICE_FREQUENCY = 5 * 60 * 1000L;
 	public static final long SERVICE_INITIAL_WAIT_TIME = 5 * 1000L;
+	public static final int SERVICE_NEWS_ALERT_THRESHOLD_IN_MINUTES = 5 * 60;
 	
 	// INITIAL ETAG VALUES
 	public static final String ETAG_GIGS = "315f1aa7b7ae50f683ea1ef5b8b4c302";
