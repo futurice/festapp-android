@@ -42,10 +42,7 @@ public class GPSLocationListener implements LocationListener, GpsStatus.Listener
 
 	@Override
 	public void onGpsStatusChanged(int event) {
-		if (event == GpsStatus.GPS_EVENT_STARTED) {
-			String statusText = mapActivity.getString(R.string.mapActivity_gpsWaitingForFix);
-			mapActivity.setGpsStatusText(statusText);
-		}
+		mapActivity.gpsStatusChanged(event);
 	}
 	
 	

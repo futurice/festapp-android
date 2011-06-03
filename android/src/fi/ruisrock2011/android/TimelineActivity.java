@@ -13,11 +13,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -27,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import fi.ruisrock2011.android.R;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.domain.Gig;
@@ -55,6 +61,13 @@ public class TimelineActivity extends Activity {
 	
 	private static final int HOUR_MARKER_WIDTH = 24;
 	private static int ROW_HEIGHT = 66;
+	
+	// GESTURES
+	private static final int SWIPE_MIN_DISTANCE = 300;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    private GestureDetector gestureDetector;
+    View.OnTouchListener gestureListener;
+
 	
 	private Runnable runnable = new Runnable() {
 		@Override
@@ -119,6 +132,18 @@ public class TimelineActivity extends Activity {
 		}
 		
 		handler.postDelayed(runnable, NOW_MARKER_FREQUENCY);
+		
+		// Gestures
+        gestureDetector = new GestureDetector(new GuitarSwipeListener());
+        gestureListener = new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                if (gestureDetector.onTouchEvent(event)) {
+                    return true;
+                }
+                return false;
+            }
+        };
+        scrollView.setOnTouchListener(gestureListener);
 	}
 	
 	private void setTimelineStartMoment() {
@@ -298,5 +323,25 @@ public class TimelineActivity extends Activity {
 		}
 	}
 	
+	class GuitarSwipeListener extends SimpleOnGestureListener {
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            try {
+            	if(Math.abs(e1.getY() - e2.getY()) > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+            		MediaPlayer mp = MediaPlayer.create(getBaseContext(), R.raw.guitar);
+            		mp.start();
+            		mp.setOnCompletionListener(new OnCompletionListener() {
+            			@Override
+            			public void onCompletion(MediaPlayer mp) {
+            				mp.release();
+            			}
+            		});
+            	}
+            } catch (Exception e) {
+                // nothing
+            }
+            return false;
+        }
+    }
 
 }

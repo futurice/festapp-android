@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.RectF;
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -204,7 +205,7 @@ public class MapActivity extends Activity {
 		gpsStatusText.setVisibility(View.GONE);
 		if (turnOn) {
 			if (!gpsListenerOnline) {
-				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5 * 1000L, 0f, gpsLocationListener);
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5 * 1000L, 2f, gpsLocationListener);
 				locationManager.addGpsStatusListener(gpsLocationListener);
 				Toast.makeText(this, getString(R.string.mapActivity_gpsActivated), Toast.LENGTH_LONG).show();
 			}
@@ -502,17 +503,17 @@ public class MapActivity extends Activity {
 		drawCurrentLocation();
 		
 		// Show GPS-status text
-		if (currentPositionImage.getVisibility() == View.GONE) {
+		if (!isCurrentLocationWithinMap()) {
 			if (location != null) {
 				try {
 					float distance = location.distanceTo(referenceLocation) / 1000; // in kilometers
-					setGpsStatusText(getString(R.string.mapActivity_distanceToMap, new DecimalFormat("#.0").format(distance)));
+					setGpsStatusText(getString(R.string.mapActivity_distanceToMap, new DecimalFormat("0.0").format(distance)));
 				} catch (Exception e) {
 					gpsStatusText.setVisibility(View.GONE);
 				}
 			}
 		} else if (location != null && location.hasAccuracy() && location.getAccuracy() > 0) {
-			setGpsStatusText(getString(R.string.mapActivity_gpsAccuracy, new DecimalFormat("#.0").format(location.getAccuracy())));
+			setGpsStatusText(getString(R.string.mapActivity_gpsAccuracy, new DecimalFormat("0.0").format(location.getAccuracy())));
 		} else {
 			gpsStatusText.setVisibility(View.GONE);
 		}
@@ -553,6 +554,16 @@ public class MapActivity extends Activity {
 	    
 	    locationX = (int) (referenceX + changeInX);
 	    locationY = (int) (referenceY + changeInY);
+	}
+	
+	private boolean isCurrentLocationWithinMap() {
+		if (locationY < 0 || locationY >= imageSizeY) {
+			return false;
+		}
+		if (locationX < 0 || locationX >= imageSizeX) {
+			return false;
+		}
+		return true;
 	}
 	
 	private void drawCurrentLocation() {
@@ -596,6 +607,15 @@ public class MapActivity extends Activity {
 			
 		}
 		
+	}
+
+	public void gpsStatusChanged(int event) {
+		if (event == GpsStatus.GPS_EVENT_STARTED) {
+			if (location == null) {
+				String statusText = getString(R.string.mapActivity_gpsWaitingForFix);
+				setGpsStatusText(statusText);
+			}
+		}
 	}
 	
 }
