@@ -153,35 +153,14 @@ public class TimelineActivity extends Activity {
 	}
 	
 	private void showInitialInfoToast() {
-		SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
-		final String key = "showInitialTimelineInfo";
-		
-		
-		// TODO: Start DEBUG
-		Editor ed = pref.edit();
-		ed.putBoolean(key, true);
-		ed.commit();
-		// END DEBUG
+		SharedPreferences pref = getSharedPreferences(RuisrockConstants.GLOBAL_PREFERENCE, Context.MODE_PRIVATE);
+		final String key = "showFavoriteInfo";
 		
 		if (pref.getBoolean(key, true)) {
 			Editor editor = pref.edit();
 			editor.putBoolean(key, false);
 			editor.commit();
-			//UIUtil.showDialog(getString(R.string.timelineActivity_initialInfo_title), getString(R.string.timelineActivity_initialInfo_msg), this);
-			
-			final Dialog d = new Dialog(this,R.style.Dialog);
-			d.setContentView(R.layout.dialog);
-			d.show();
-
-			Button close_btn = (Button) d.findViewById(R.id.positiveButton);
-			close_btn.setOnClickListener(new View.OnClickListener() {
-			    public void onClick(View v) {
-			        d.dismiss();
-			    }
-			});
-
-
-			
+			UIUtil.showDialog(getString(R.string.timelineActivity_initialInfo_title), getString(R.string.timelineActivity_initialInfo_msg), this);
 		}
 	}
 	

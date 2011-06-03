@@ -53,7 +53,7 @@
     
     <!-- Timeline view -->
     <string name="timelineActivity.initialInfo.title">Oma aikataulu</string>
-    <string name="timelineActivity.initialInfo.msg">Voit luoda oman aikataulun painamalla tähteä ja merkitsemällä keikat suosikiksi. Merkityistä keikoista tulee hälytys 15 minuuttia ennen alkua.</string>
+    <string name="timelineActivity.initialInfo.msg">Voit luoda oman aikataulun merkitsemällä suosikkibändisi tähdellä. Suosikkibändin keikasta annetaan hälytys 15 minuuttia ennen sen alkua.</string>
     
     <!-- Fonecta 02 view -->
     <string name="fonectaActivity.title">KYSY MITÄ VAAN.</string>

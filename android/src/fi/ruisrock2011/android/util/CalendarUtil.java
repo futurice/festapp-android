@@ -38,7 +38,7 @@ public class CalendarUtil {
 		//return new Date();
 		
 		try {
-			return new SimpleDateFormat("yyyy-MM-dd HH:mm").parse("2011-07-10 19:10");
+			return new SimpleDateFormat("yyyy-MM-dd HH:mm").parse("2011-07-08 19:10");
 		} catch (Exception e) {
 			return null;
 		}

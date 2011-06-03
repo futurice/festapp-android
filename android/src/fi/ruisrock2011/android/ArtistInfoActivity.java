@@ -1,6 +1,9 @@
 package fi.ruisrock2011.android;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -37,7 +40,7 @@ public class ArtistInfoActivity extends Activity {
 				GigDAO.setFavorite(ArtistInfoActivity.this, gig.getId(), isFavorite);
 				gig.setFavorite(isFavorite);
 				if (isFavorite) {
-					Toast.makeText(getApplicationContext(), getString(R.string.artistInfoActivity_favoriteOn), Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), getString(R.string.artistInfoActivity_favoriteOn), Toast.LENGTH_SHORT).show();
 				} else {
 					Toast.makeText(getApplicationContext(), getString(R.string.artistInfoActivity_favoriteOff), Toast.LENGTH_SHORT).show();
 				}
@@ -54,6 +57,19 @@ public class ArtistInfoActivity extends Activity {
 		artistInfoView = (RelativeLayout) findViewById(R.id.artistInfoView);
 		gig = getGig();
 		populateViewValues();
+		showInitialInfoToast();
+	}
+	
+	private void showInitialInfoToast() {
+		SharedPreferences pref = getSharedPreferences(RuisrockConstants.GLOBAL_PREFERENCE, Context.MODE_PRIVATE);
+		final String key = "showFavoriteInfo";
+		
+		if (pref.getBoolean(key, true)) {
+			Editor editor = pref.edit();
+			editor.putBoolean(key, false);
+			editor.commit();
+			UIUtil.showDialog(getString(R.string.timelineActivity_initialInfo_title), getString(R.string.timelineActivity_initialInfo_msg), this);
+		}
 	}
 	
 	private void populateViewValues() {

@@ -3,8 +3,6 @@
 	<color name="red">#ff0000</color>
 	<color name="green">#00ff00</color>
 	<color name="blue">#0000ff</color>
-	
 	<color name="timeline_brown">#a95800</color>
-	
-	<color name="dialog_bg">#99000000</color>
+	<color name="fully_transparent">#00000000</color>
 </resources>

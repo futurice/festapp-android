@@ -2,6 +2,7 @@ package fi.ruisrock2011.android;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +28,7 @@ public class FonectaActivity extends Activity {
 				try {
 					Intent intent = new Intent(Intent.ACTION_CALL);
 					// TODO: enable phone-number
-					//intent.setData(Uri.parse("tel:+35820202"));
+					intent.setData(Uri.parse("tel:+35820202"));
 					startActivity(intent);
 				} catch (Exception e) {
 					Log.e(TAG, "Failed to invoke call", e);
