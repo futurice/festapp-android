@@ -6,28 +6,26 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class UIUtil {
 	
-	public static void showErrorDialog(String title, String message, Context context) {
-		AlertDialog alertDialog = generateAlertDialog(R.drawable.icon_error, title, message, context);
+	public static void showDialog(String title, String message, Context context) {
+		AlertDialog alertDialog = generateDialog(title, message, context);
 		alertDialog.show();
 	}
 	
-	private static AlertDialog generateAlertDialog(int iconId, String title, String message, Context context) {
+	private static AlertDialog generateDialog(String title, String message, Context context) {
 		AlertDialog.Builder builder;
 		AlertDialog alertDialog;
 
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View layout = inflater.inflate(R.layout.message_dialog, null);
 
-		TextView text = (TextView) layout.findViewById(R.id.message);
+		TextView text = (TextView) layout.findViewById(R.id.messageContent);
 		text.setText(message);
-
-		ImageView image = (ImageView) layout.findViewById(R.id.image);
-		image.setImageResource(iconId);
 
 		builder = new AlertDialog.Builder(context);
 		builder.setView(layout);

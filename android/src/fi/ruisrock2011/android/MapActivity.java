@@ -604,9 +604,7 @@ public class MapActivity extends Activity {
 				currentPositionImage.setVisibility(View.VISIBLE);
 				currentPositionImage.bringToFront();
 			}
-			
 		}
-		
 	}
 
 	public void gpsStatusChanged(int event) {

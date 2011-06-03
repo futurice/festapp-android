@@ -58,9 +58,6 @@ public class NewsListActivity extends Activity {
 		createNewsList();
 	}
 	
-	private void showErrorDialog(String title, String message) {
-		UIUtil.showErrorDialog(title, message, this);
-	}
 	
 	/*
 	private boolean updateNewsArticlesViaRSS() {

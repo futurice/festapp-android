@@ -9,8 +9,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -27,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.MarginLayoutParams;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,6 +45,7 @@ import fi.ruisrock2011.android.domain.to.FestivalDay;
 import fi.ruisrock2011.android.ui.GigTimelineWidget;
 import fi.ruisrock2011.android.util.CalendarUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
+import fi.ruisrock2011.android.util.UIUtil;
 
 public class TimelineActivity extends Activity {
 	
@@ -144,6 +149,40 @@ public class TimelineActivity extends Activity {
             }
         };
         scrollView.setOnTouchListener(gestureListener);
+        showInitialInfoToast();
+	}
+	
+	private void showInitialInfoToast() {
+		SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+		final String key = "showInitialTimelineInfo";
+		
+		
+		// TODO: Start DEBUG
+		Editor ed = pref.edit();
+		ed.putBoolean(key, true);
+		ed.commit();
+		// END DEBUG
+		
+		if (pref.getBoolean(key, true)) {
+			Editor editor = pref.edit();
+			editor.putBoolean(key, false);
+			editor.commit();
+			//UIUtil.showDialog(getString(R.string.timelineActivity_initialInfo_title), getString(R.string.timelineActivity_initialInfo_msg), this);
+			
+			final Dialog d = new Dialog(this,R.style.Dialog);
+			d.setContentView(R.layout.dialog);
+			d.show();
+
+			Button close_btn = (Button) d.findViewById(R.id.positiveButton);
+			close_btn.setOnClickListener(new View.OnClickListener() {
+			    public void onClick(View v) {
+			        d.dismiss();
+			    }
+			});
+
+
+			
+		}
 	}
 	
 	private void setTimelineStartMoment() {

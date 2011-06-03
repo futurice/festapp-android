@@ -10,6 +10,7 @@
     <string name="Map">Kartta</string>
     <string name="Save">Tallenna</string>
     <string name="Cancel">Peruuta</string>
+    <string name="Close">Sulje</string>
     <string name="Friday">Perjantai</string>
     <string name="Saturday">Lauantai</string>
     <string name="Sunday">Sunnuntai</string>
@@ -49,6 +50,10 @@
     <string name="mapActivity.distanceToMap">Etäisyys juhlapaikasta: %s km</string>
     <string name="mapActivity.gpsAccuracy">Arvioitu GPS-tarkkuus: %s m</string>
     <string name="mapActivity.gpsWaitingForFix">Odotetaan GPS-sijaintia...</string>
+    
+    <!-- Timeline view -->
+    <string name="timelineActivity.initialInfo.title">Oma aikataulu</string>
+    <string name="timelineActivity.initialInfo.msg">Voit luoda oman aikataulun painamalla tähteä ja merkitsemällä keikat suosikiksi. Merkityistä keikoista tulee hälytys 15 minuuttia ennen alkua.</string>
     
     <!-- Fonecta 02 view -->
     <string name="fonectaActivity.title">KYSY MITÄ VAAN.</string>

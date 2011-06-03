@@ -5,4 +5,6 @@
 	<color name="blue">#0000ff</color>
 	
 	<color name="timeline_brown">#a95800</color>
+	
+	<color name="dialog_bg">#99000000</color>
 </resources>

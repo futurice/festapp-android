@@ -59,7 +59,7 @@ public class ArtistInfoActivity extends Activity {
 	private void populateViewValues() {
 		if (gig == null) {
 			artistInfoView.setVisibility(View.GONE);
-			UIUtil.showErrorDialog(getString(R.string.Error), getString(R.string.artistInfoActivity_invalidId), this);
+			UIUtil.showDialog(getString(R.string.Error), getString(R.string.artistInfoActivity_invalidId), this);
 		} else {
 			artistInfoView.setVisibility(View.VISIBLE);
 			TextView artistName = (TextView) findViewById(R.id.artistName);
