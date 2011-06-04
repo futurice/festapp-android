@@ -254,7 +254,7 @@ public class GigDAO {
 			
 			for (Gig gig : gigs) {
 				// TODO: Uncomment
-				//db.execSQL("UPDATE gig SET alerted = 1 where id = ?", new Object[]{gig.getId()});
+				db.execSQL("UPDATE gig SET alerted = 1 where id = ?", new Object[]{gig.getId()});
 			}
 			
 			Log.i(TAG, String.format("Successfully found and marked %d Gigs as alerted.", gigs.size()));

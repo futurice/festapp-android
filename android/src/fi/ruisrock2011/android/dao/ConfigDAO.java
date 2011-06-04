@@ -110,6 +110,14 @@ public class ConfigDAO {
 		setAttributeValue(ATTR_ETAG_FOR_SERVICES, etag, context);
 	}
 	
+	public static String getEtagForGeneralInfo(Context context) {
+		return getAttributeValue(ATTR_ETAG_FOR_GENERAL_INFO, context);
+	}
+	
+	public static void setEtagForGeneralInfo(Context context, String etag) {
+		setAttributeValue(ATTR_ETAG_FOR_GENERAL_INFO, etag, context);
+	}
+	
 	public static String getPageFoodAndDrink(Context context) {
 		return getAttributeValue(ATTR_PAGE_FOODANDDRINK, context);
 	}

@@ -57,20 +57,9 @@ public class ArtistInfoActivity extends Activity {
 		artistInfoView = (RelativeLayout) findViewById(R.id.artistInfoView);
 		gig = getGig();
 		populateViewValues();
-		showInitialInfoToast();
+		UIUtil.showInitialFavoriteInfoOnFirstVisit(this);
 	}
 	
-	private void showInitialInfoToast() {
-		SharedPreferences pref = getSharedPreferences(RuisrockConstants.GLOBAL_PREFERENCE, Context.MODE_PRIVATE);
-		final String key = "showFavoriteInfo";
-		
-		if (pref.getBoolean(key, true)) {
-			Editor editor = pref.edit();
-			editor.putBoolean(key, false);
-			editor.commit();
-			UIUtil.showDialog(getString(R.string.timelineActivity_initialInfo_title), getString(R.string.timelineActivity_initialInfo_msg), this);
-		}
-	}
 	
 	private void populateViewValues() {
 		if (gig == null) {

@@ -18,6 +18,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -124,17 +125,6 @@ public class TimelineActivity extends Activity {
 		scrollView = (HorizontalScrollView) findViewById(R.id.timelineScrollView);
 		setTimelineStartMoment();
 		constructUiElements();
-		if (initialScrollTo != null && initialScrollTo > 0) {
-			new Thread(new Runnable() {
-				public void run() {
-					scrollView.post(new Runnable() {
-						public void run() {
-							scrollView.smoothScrollTo(initialScrollTo, 0);
-						}
-					});
-				}
-			}).start();
-		}
 		
 		handler.postDelayed(runnable, NOW_MARKER_FREQUENCY);
 		
@@ -149,18 +139,14 @@ public class TimelineActivity extends Activity {
             }
         };
         scrollView.setOnTouchListener(gestureListener);
-        showInitialInfoToast();
-	}
-	
-	private void showInitialInfoToast() {
-		SharedPreferences pref = getSharedPreferences(RuisrockConstants.GLOBAL_PREFERENCE, Context.MODE_PRIVATE);
-		final String key = "showFavoriteInfo";
-		
-		if (pref.getBoolean(key, true)) {
-			Editor editor = pref.edit();
-			editor.putBoolean(key, false);
-			editor.commit();
-			UIUtil.showDialog(getString(R.string.timelineActivity_initialInfo_title), getString(R.string.timelineActivity_initialInfo_msg), this);
+        UIUtil.showInitialFavoriteInfoOnFirstVisit(this);
+        
+		if (initialScrollTo != null && initialScrollTo > 0) {
+			scrollView.post(new Runnable() {
+				public void run() {
+					scrollView.smoothScrollTo(initialScrollTo, 0);
+				}
+			});
 		}
 	}
 	
@@ -184,7 +170,7 @@ public class TimelineActivity extends Activity {
 			line.setVisibility(View.VISIBLE);
 			TextView marginView = (TextView) findViewById(R.id.timelineNowMargin);
 			int leftMargin = CalendarUtil.getMinutesBetweenTwoDates(timelineStartMoment, now) * GigTimelineWidget.PIXELS_PER_MINUTE - HOUR_MARKER_WIDTH/2 - 3;
-			initialScrollTo = leftMargin - TIMELINE_NUMBERS_LEFT_SHIFT;
+			initialScrollTo = leftMargin - getWindowManager().getDefaultDisplay().getWidth()/2;
 			marginView.setWidth(leftMargin);
 		} else {
 			View line = findViewById(R.id.timelineNowLine);

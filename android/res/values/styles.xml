@@ -32,7 +32,7 @@
 		<item name="android:windowBackground">@color/fully_transparent</item>
 		<item name="android:colorBackground">@color/fully_transparent</item>
 		<item name="android:windowContentOverlay">@null</item>
-		<item name="android:windowIsFloating">true</item>
+		<item name="android:windowIsFloating">false</item>
 		<item name="android:backgroundDimEnabled">true</item>
 		<item name="android:windowIsTranslucent">true</item>
 		<item name="android:windowNoTitle">true</item>

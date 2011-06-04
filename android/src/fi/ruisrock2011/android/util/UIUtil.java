@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +17,6 @@ import android.widget.TextView;
 public class UIUtil {
 	
 	public static void showDialog(String title, String message, Context context) {
-		/*
-		AlertDialog alertDialog = generateDialog(title, message, context);
-		alertDialog.show();
-		*/
-		
 		final Dialog dialog = new Dialog(context, R.style.Dialog);
 		dialog.setContentView(R.layout.dialog);
 		((TextView) dialog.findViewById(R.id.title)).setText(title);
@@ -35,26 +32,24 @@ public class UIUtil {
 		dialog.show();
 	}
 	
-	private static AlertDialog generateDialog(String title, String message, Context context) {
-		AlertDialog.Builder builder;
-		AlertDialog alertDialog;
-
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View layout = inflater.inflate(R.layout.message_dialog, null);
-
-		TextView text = (TextView) layout.findViewById(R.id.messageContent);
-		text.setText(message);
-
-		builder = new AlertDialog.Builder(context);
-		builder.setView(layout);
-		alertDialog = builder.create();
-		alertDialog.setTitle(title);
-		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				return;
-			}
-		});
-		return alertDialog;
+	public static void showInitialFavoriteInfoOnFirstVisit(Context context) {
+		SharedPreferences pref = context.getSharedPreferences(RuisrockConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
+		final String key = "showFavoriteInfo";
+		
+		// TODO: Start DEBUG
+		/*
+		Editor ed = pref.edit();
+		ed.putBoolean(key, true);
+		ed.commit();
+		*/
+		// END DEBUG
+		
+		if (pref.getBoolean(key, true)) {
+			Editor editor = pref.edit();
+			editor.putBoolean(key, false);
+			editor.commit();
+			UIUtil.showDialog(context.getString(R.string.timelineActivity_initialInfo_title), context.getString(R.string.timelineActivity_initialInfo_msg), context);
+		}
 	}
 
 }

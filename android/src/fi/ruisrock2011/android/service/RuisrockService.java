@@ -41,6 +41,7 @@ public class RuisrockService extends Service {
 			counter++;
 			try {
 				alertGigs();
+				// TODO: Enable all!
 				if (counter % 12 == 0) { // every hour
 					Log.i(TAG, "Executing 1-hour operations.");
 					//updateGigs();
@@ -51,6 +52,7 @@ public class RuisrockService extends Service {
 					updateFoodAndDrinkPage();
 					updateTransportationPage();
 					updateServicesPageData();
+					updateGeneralInfoPageData();
 				}
 			} catch (Throwable t) {
 				Log.e(TAG, "Failed execute backend operations", t);
@@ -112,6 +114,7 @@ public class RuisrockService extends Service {
 						}
 					}
 				}
+				Log.i(TAG, "Successfully updated data for News.");
 			} else {
 				Log.i(TAG, "News were up-to-date.");
 			}
@@ -124,6 +127,7 @@ public class RuisrockService extends Service {
 		try {
 			if (HTTPUtil.isContentUpdated(RuisrockConstants.SERVICES_JSON_URL, ConfigDAO.getEtagForServices(getBaseContext()))) {
 				ConfigDAO.updateServicePagesOverHttp(getBaseContext());
+				Log.i(TAG, "Successfully updated data for Services.");
 			} else {
 				Log.i(TAG, "Services data was up-to-date.");
 			}
@@ -132,10 +136,24 @@ public class RuisrockService extends Service {
 		}
 	}
 	
+	private void updateGeneralInfoPageData() {
+		try {
+			if (HTTPUtil.isContentUpdated(RuisrockConstants.GENERAL_INFO_JSON_URL, ConfigDAO.getEtagForGeneralInfo(getBaseContext()))) {
+				ConfigDAO.updateGeneralInfoPagesOverHttp(getBaseContext());
+				Log.i(TAG, "Successfully updated data for GeneralInfo.");
+			} else {
+				Log.i(TAG, "GeneralInfo data was up-to-date.");
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "Could not update GeneralInfo data.", e);
+		}
+	}
+	
 	private void updateFoodAndDrinkPage() {
 		try {
 			if (HTTPUtil.isContentUpdated(RuisrockConstants.FOOD_AND_DRINK_HTML_URL, ConfigDAO.getEtagForFoodAndDrink(getBaseContext()))) {
 				ConfigDAO.updateFoodAndDrinkPageOverHttp(getBaseContext());
+				Log.i(TAG, "Successfully updated data for FoodAndDrink.");
 			} else {
 				Log.i(TAG, "FoodAndDrink-page was up-to-date.");
 			}
@@ -148,6 +166,7 @@ public class RuisrockService extends Service {
 		try {
 			if (HTTPUtil.isContentUpdated(RuisrockConstants.TRANSPORTATION_HTML_URL, ConfigDAO.getEtagForTransportation(getBaseContext()))) {
 				ConfigDAO.updateTransportationPageOverHttp(getBaseContext());
+				Log.i(TAG, "Successfully updated data for Transportation.");
 			} else {
 				Log.i(TAG, "Transportation-page was up-to-date.");
 			}
@@ -160,6 +179,7 @@ public class RuisrockService extends Service {
 		try {
 			if (HTTPUtil.isContentUpdated(RuisrockConstants.GIGS_JSON_URL, ConfigDAO.getEtagForGigs(getBaseContext()))) {
 				GigDAO.updateGigsOverHttp(getBaseContext());
+				Log.i(TAG, "Successfully updated Gigs.");
 			} else {
 				Log.i(TAG, "Gigs were up-to-date.");
 			}
