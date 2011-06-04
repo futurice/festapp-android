@@ -8,5 +8,5 @@
 	android:layout_gravity="top"
 	android:layout_alignParentTop="true"
 	android:adjustViewBounds="true"
-	android:tag="verticalLine"
+	android:tag="verticalHourLine"
 />

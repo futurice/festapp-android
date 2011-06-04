@@ -8,7 +8,9 @@
 	    	android:id="@+id/scheduleTopImage"
 	    	android:layout_width="wrap_content" android:layout_height="wrap_content"
 	    	android:layout_alignParentTop="true" 
-	    	android:src="@drawable/ruisrock_logo" />	
+			android:layout_centerHorizontal="true" 
+	    	android:src="@drawable/ruisrock_logo" />
+			
 		<TabWidget android:id="@android:id/tabs"
 			android:layout_marginTop="-30px"
 			android:layout_below="@id/scheduleTopImage"

@@ -135,15 +135,21 @@ public class GigDAO {
 				gig.setDescription(JSONUtil.getString(gigObj, "description"));
 				gig.setStartTime(parseJsonDate(JSONUtil.getString(gigObj, "start")));
 				gig.setEndTime(parseJsonDate(JSONUtil.getString(gigObj, "end")));
-				gig.setStage(JSONUtil.getString(gigObj, "stage"));
+				gig.setStage(truncateStageName(JSONUtil.getString(gigObj, "stage")));
 				gig.setImageId(getImageIdForArtist(artist));
 				gigs.add(gig);
 			} catch (Exception e) {
 				Log.w(TAG, "Received invalid JSON-structure", e);
 			}
 		}
-		
 		return gigs;
+	}
+	
+	private static String truncateStageName(String stage) {
+		if (stage == null) {
+			return null;
+		}
+		return stage.replaceAll("(?i)[- ]?(lava|stage)$", "");
 	}
 	
 	private static Date parseJsonDate(String date) {

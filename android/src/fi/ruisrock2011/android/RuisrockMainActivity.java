@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.dao.NewsDAO;
 import fi.ruisrock2011.android.domain.NewsArticle;
 import fi.ruisrock2011.android.service.RuisrockService;
+import fi.ruisrock2011.android.util.CalendarUtil;
 
 /**
  * Main activity.
@@ -45,7 +47,9 @@ public class RuisrockMainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		startService(new Intent(this, RuisrockService.class));
+		if (CalendarUtil.getNow().before(GigDAO.getEndOfSunday())) {
+			startService(new Intent(this, RuisrockService.class));
+		}
 		createMainMenuItems();
 		handleNotificationEvents();
 	}

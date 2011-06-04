@@ -4,9 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     
-    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" 
-    	android:src="@drawable/ruisrock_logo" android:layout_gravity="center"></ImageView>
-    
+	<include layout="@layout/ruisrock_logo" android:id="@+id/logo" />
          
    	<RelativeLayout android:layout_marginTop="-20px" android:background="@drawable/content_area_bg" android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/relativeLayout1">
 	<TextView  

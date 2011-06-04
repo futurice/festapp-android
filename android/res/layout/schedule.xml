@@ -5,22 +5,25 @@
 	
 	<ImageView
 		android:id="@+id/timelineVerticalBg"
-		android:layout_centerHorizontal="true" android:src="@drawable/timeline_vertical_bg"
+		android:scaleType="fitXY"
+		android:adjustViewBounds="true"
+		android:src="@drawable/timeline_vertical_bg"
 		android:layout_height="wrap_content" android:layout_width="fill_parent"/>
 		
+	<!-- android:layout_marginBottom="@dimen/timeline.backgroundBottomMargin" -->
 	<ImageView
 		android:layout_below="@id/timelineVerticalBg"
 		android:scaleType="fitXY"
 		android:id="@+id/timelineWoodenBg"
-		android:layout_centerHorizontal="true" android:src="@drawable/timeline_wooden_bg"
-		android:layout_height="wrap_content" android:layout_width="fill_parent" />
+		android:src="@drawable/timeline_wooden_bg"
+		android:layout_height="@dimen/timeline.verticalLine.height" android:layout_width="fill_parent" />
 		
-	<LinearLayout 
-		android:layout_marginTop="40dip"
+	<LinearLayout
+		android:id="@+id/stageLayout" 
+		android:layout_marginTop="35dip"
 		android:gravity="top"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:id="@+id/stageLayout"
 		android:layout_below="@id/timelineVerticalBg"
 		android:orientation="vertical">
 	</LinearLayout>
@@ -36,8 +39,9 @@
 			<!-- Time/hour -lines -->
 	        <RelativeLayout android:id="@+id/RelativeLayout1"
 	        	android:layout_height="fill_parent" android:layout_width="fill_parent"
-	        	android:layout_marginTop="20dip">
+	        	android:layout_marginTop="@dimen/timeline.verticalLine.marginTop">
 				<LinearLayout android:layout_width="fill_parent"
+					android:layout_marginTop="-2dip"
 					android:orientation="horizontal" android:layout_height="fill_parent"
 					
 					style="@style/TimelineFont"
@@ -63,7 +67,7 @@
 	        </RelativeLayout>
 
 	        <RelativeLayout android:id="@+id/RelativeLayout2" 
-	        	android:layout_marginTop="40dip"
+	        	android:layout_marginTop="@dimen/timeline.gigContainerTopMargin"
 	        	android:layout_width="fill_parent"
 	        	android:layout_height="wrap_content">
 				<LinearLayout android:layout_width="fill_parent"

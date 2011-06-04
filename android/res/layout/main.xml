@@ -3,18 +3,10 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    
-    <!-- 
-	<TextView  
-		style="@style/Header1"
-	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content" 
-	    android:text="@string/app_name" android:layout_alignParentTop="true" />
-	    -->
 	    
-    <ImageView android:id="@+id/imageView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ruisrock_logo" android:layout_gravity="center"></ImageView>
+    <include layout="@layout/ruisrock_logo" android:id="@+id/logo" />
 	    
-	<TableLayout android:layout_marginTop="-30px" android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/tableLayout1" android:layout_below="@id/imageView1">
+	<TableLayout android:layout_marginTop="-30px" android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/tableLayout1" android:layout_below="@id/logo">
 		<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_horizontal">
 			<ImageView android:src="@drawable/btn_main_schedule" android:layout_width="wrap_content" android:id="@+id/mainGridSchedule" android:layout_height="wrap_content"></ImageView>
 			<ImageView android:src="@drawable/btn_main_artists" android:layout_width="wrap_content" android:id="@+id/mainGridArtists" android:layout_height="wrap_content"></ImageView>

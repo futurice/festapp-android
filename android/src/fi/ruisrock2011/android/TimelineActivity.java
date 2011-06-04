@@ -52,7 +52,6 @@ public class TimelineActivity extends Activity {
 	
 	private static final String TAG = "TimelineActivity";
 	
-	private static final int TIMELINE_NUMBERS_LEFT_SHIFT = 30;
 	private static final long NOW_MARKER_FREQUENCY = 60 * 1000L;
 	
 	private FestivalDay festivalDay;
@@ -84,6 +83,7 @@ public class TimelineActivity extends Activity {
 	};
 	private Handler handler = new Handler();
 	private GigTimelineWidget gigWidget;
+	private int woodenBgHeight;
 	
 	private OnClickListener gigWidgetClickListener = new OnClickListener() {
 		@Override
@@ -160,20 +160,19 @@ public class TimelineActivity extends Activity {
 	}
 
 	private void updateCurrentTimeline() {
-		findViewById(R.id.timelineNowLine).bringToFront();
 		Date now = CalendarUtil.getNow();
 		if (timelineStartMoment == null || daySchedule.getLatestTime() == null) { 
 			return;
 		}
+		View line = findViewById(R.id.timelineNowLine);
+		line.bringToFront();
 		if (now.after(timelineStartMoment) && now.before(daySchedule.getLatestTime())) {
-			View line = findViewById(R.id.timelineNowLine);
 			line.setVisibility(View.VISIBLE);
 			TextView marginView = (TextView) findViewById(R.id.timelineNowMargin);
 			int leftMargin = CalendarUtil.getMinutesBetweenTwoDates(timelineStartMoment, now) * GigTimelineWidget.PIXELS_PER_MINUTE - HOUR_MARKER_WIDTH/2 - 3;
 			initialScrollTo = leftMargin - getWindowManager().getDefaultDisplay().getWidth()/2;
 			marginView.setWidth(leftMargin);
 		} else {
-			View line = findViewById(R.id.timelineNowLine);
 			line.setVisibility(View.GONE);
 		}
 	}
@@ -184,6 +183,7 @@ public class TimelineActivity extends Activity {
 		stageLayout.removeAllViews();
 		addStages();
 		
+		woodenBgHeight = findViewById(R.id.timelineWoodenBg).getHeight();
 		gigLayout = (LinearLayout) findViewById(R.id.gigLayout);
 		addTimeline();
 		addGigs();
@@ -266,7 +266,7 @@ public class TimelineActivity extends Activity {
 		int minutes = 60 - cal.get(Calendar.MINUTE);
 		TextView tv = new TextView(this);
 		tv.setHeight(ROW_HEIGHT);
-		tv.setWidth(GigTimelineWidget.PIXELS_PER_MINUTE * minutes - TIMELINE_NUMBERS_LEFT_SHIFT);
+		tv.setWidth(GigTimelineWidget.PIXELS_PER_MINUTE * minutes - getResources().getDimensionPixelSize(R.dimen.timeline_hourText_offset));
 		numbersLayout.addView(tv);
 		
 		tv = new TextView(this);
@@ -288,6 +288,13 @@ public class TimelineActivity extends Activity {
 			numbersLayout.addView(tv);
 			
 			inflater.inflate(R.layout.timeline_hour_marker, timelineVerticalLines);
+			/*
+			View hourMarker = inflater.inflate(R.layout.timeline_hour_marker, null);
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(24, woodenBgHeight);
+			hourMarker.setLayoutParams(params);
+			timelineVerticalLines.addView(hourMarker);
+			*/
+			
 			tv = new TextView(this);
 			tv.setText("");
 			int width = GigTimelineWidget.PIXELS_PER_MINUTE * minutes - (HOUR_MARKER_WIDTH);

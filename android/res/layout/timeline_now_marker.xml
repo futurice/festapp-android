@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/timelineNowLine"
     android:layout_height="@dimen/timeline.verticalLine.height"
-    android:layout_marginTop="30px"
-	android:layout_width="wrap_content" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_marginTop="@dimen/timeline.verticalLine.marginTop"
+	android:layout_width="wrap_content">
     	
 	<View 
 	    android:layout_width="1px"
 	    android:layout_height="fill_parent"
-	    android:background="#66ffffff"
+	    android:background="#aaff0000"
 		android:layout_centerHorizontal="true"
 		android:layout_alignParentTop="true"
 		android:adjustViewBounds="true"
