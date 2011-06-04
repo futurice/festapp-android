@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<dimen name="timeline.verticalLine.height">330dip</dimen> <!-- 520px -->
-	<dimen name="timeline.verticalLine.marginTop">16dip</dimen>
+	<dimen name="timeline.nowMarkerHeight">320dip</dimen>
+	<dimen name="timeline.verticalLine.marginTop">30dip</dimen>
 	
 	<dimen name="map.currentPosition.size">36px</dimen>
 	

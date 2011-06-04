@@ -3,7 +3,6 @@
     android:layout_width="24px"
     android:layout_height="@dimen/timeline.verticalLine.height"
     android:background="@drawable/timeline_hour_marker"
-    android:layout_marginTop="@dimen/timeline.verticalLine.marginTop"
 	android:layout_centerHorizontal="true"
 	android:layout_gravity="top"
 	android:layout_alignParentTop="true"
