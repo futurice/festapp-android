@@ -1,44 +1,27 @@
 package fi.ruisrock2011.android;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.MarginLayoutParams;
-import android.widget.Button;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-import fi.ruisrock2011.android.R;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.domain.Gig;
 import fi.ruisrock2011.android.domain.to.DaySchedule;
@@ -48,6 +31,11 @@ import fi.ruisrock2011.android.util.CalendarUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
 import fi.ruisrock2011.android.util.UIUtil;
 
+/**
+ * View for showing the Schedule.
+ * 
+ * @author Pyry-Samuli Lahti / Futurice
+ */
 public class TimelineActivity extends Activity {
 	
 	private static final String TAG = "TimelineActivity";
@@ -62,8 +50,10 @@ public class TimelineActivity extends Activity {
 	private Vibrator vibrator;
 	private LayoutInflater inflater;
 	private Date timelineStartMoment;
+	private Date timelineEndMoment;
 	private Integer initialScrollTo;
 	
+	private static final int TIMELINE_END_OFFSET = 30;
 	private static final int HOUR_MARKER_WIDTH = 24;
 	private static int ROW_HEIGHT = 66;
 	
@@ -83,7 +73,6 @@ public class TimelineActivity extends Activity {
 	};
 	private Handler handler = new Handler();
 	private GigTimelineWidget gigWidget;
-	private int woodenBgHeight;
 	
 	private OnClickListener gigWidgetClickListener = new OnClickListener() {
 		@Override
@@ -123,7 +112,7 @@ public class TimelineActivity extends Activity {
 		daySchedule = GigDAO.findDaySchedule(this, festivalDay);
 		findViewById(R.id.timelineNowLine).setVisibility(View.GONE);
 		scrollView = (HorizontalScrollView) findViewById(R.id.timelineScrollView);
-		setTimelineStartMoment();
+		setTimelineStartAndEndMoments();
 		constructUiElements();
 		
 		handler.postDelayed(runnable, NOW_MARKER_FREQUENCY);
@@ -150,23 +139,28 @@ public class TimelineActivity extends Activity {
 		}
 	}
 	
-	private void setTimelineStartMoment() {
+	private void setTimelineStartAndEndMoments() {
 		Calendar cal = Calendar.getInstance();
 		if (daySchedule.getEarliestTime() != null) {
 			cal.setTime(daySchedule.getEarliestTime());
-			cal.add(Calendar.MINUTE, -15);
+			cal.add(Calendar.MINUTE, -30);
 			this.timelineStartMoment = cal.getTime();
+		}
+		if (daySchedule.getLatestTime() != null) {
+			cal.setTime(daySchedule.getLatestTime());
+			cal.add(Calendar.MINUTE, TIMELINE_END_OFFSET);
+			this.timelineEndMoment = cal.getTime();
 		}
 	}
 
 	private void updateCurrentTimeline() {
 		Date now = CalendarUtil.getNow();
-		if (timelineStartMoment == null || daySchedule.getLatestTime() == null) { 
+		if (timelineStartMoment == null || timelineEndMoment == null) { 
 			return;
 		}
 		View line = findViewById(R.id.timelineNowLine);
 		line.bringToFront();
-		if (now.after(timelineStartMoment) && now.before(daySchedule.getLatestTime())) {
+		if (now.after(timelineStartMoment) && now.before(timelineEndMoment)) {
 			line.setVisibility(View.VISIBLE);
 			TextView marginView = (TextView) findViewById(R.id.timelineNowMargin);
 			int leftMargin = CalendarUtil.getMinutesBetweenTwoDates(timelineStartMoment, now) * GigTimelineWidget.PIXELS_PER_MINUTE - HOUR_MARKER_WIDTH/2 - 3;
@@ -183,7 +177,6 @@ public class TimelineActivity extends Activity {
 		stageLayout.removeAllViews();
 		addStages();
 		
-		woodenBgHeight = findViewById(R.id.timelineWoodenBg).getHeight();
 		gigLayout = (LinearLayout) findViewById(R.id.gigLayout);
 		addTimeline();
 		addGigs();
@@ -199,11 +192,11 @@ public class TimelineActivity extends Activity {
 		gigLayout.addView(textView);
 		int row = 1;
 		for (String stage : stageGigs.keySet()) {
-			LinearLayout llAlso = new LinearLayout(this);
+			LinearLayout stageRow = new LinearLayout(this);
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			params.setMargins(0, 2, 0, 2);
-			llAlso.setLayoutParams(params);
-			llAlso.setOrientation(LinearLayout.HORIZONTAL);
+			stageRow.setLayoutParams(params);
+			stageRow.setOrientation(LinearLayout.HORIZONTAL);
 
 			Date previousTime = timelineStartMoment;
 			for (Gig gig : stageGigs.get(stage)) {
@@ -212,17 +205,24 @@ public class TimelineActivity extends Activity {
 					TextView tv = new TextView(this);
 					tv.setHeight(ROW_HEIGHT);
 					tv.setWidth(margin);
-					llAlso.addView(tv);
+					stageRow.addView(tv);
 				}
 				
 				GigTimelineWidget gigWidget = new GigTimelineWidget(this, null, gig, previousTime);
-				llAlso.addView(gigWidget);
+				stageRow.addView(gigWidget);
+				if (gig.getEndTime().equals(daySchedule.getLatestTime())) {
+					int margin = GigTimelineWidget.PIXELS_PER_MINUTE * TIMELINE_END_OFFSET;
+					TextView tv = new TextView(this);
+					tv.setHeight(ROW_HEIGHT);
+					tv.setWidth(margin);
+					stageRow.addView(tv);
+				}
 				
 				gigWidget.setOnClickListener(gigWidgetClickListener);
 				previousTime = gig.getEndTime();
 			}
 			gigLayout.addView(getGuitarString(row++));
-			gigLayout.addView(llAlso);
+			gigLayout.addView(stageRow);
 		}
 		if (row > 1) {
 			gigLayout.addView(getGuitarString(row++));
@@ -250,10 +250,7 @@ public class TimelineActivity extends Activity {
 
 	
 	private void addTimeline() {
-		Date startTime = daySchedule.getEarliestTime();
-		Date endTime = daySchedule.getLatestTime();
-		
-		if (startTime == null || endTime == null) {
+		if (timelineStartMoment == null || timelineEndMoment == null) {
 			return;
 		}
 		
@@ -274,7 +271,7 @@ public class TimelineActivity extends Activity {
 		timelineVerticalLines.addView(tv);
 		cal.add(Calendar.MINUTE, minutes);
 		
-		while (cal.getTime().before(endTime)) {
+		while (cal.getTime().before(timelineEndMoment)) {
 			tv = new TextView(this);
 			String hour = cal.get(Calendar.HOUR_OF_DAY) + ":00";
 			if (hour.startsWith("0")) {
@@ -282,18 +279,12 @@ public class TimelineActivity extends Activity {
 			}
 			tv.setText(hour);
 			tv.setMinHeight(ROW_HEIGHT);
-			minutes = CalendarUtil.getMinutesBetweenTwoDates(cal.getTime(), endTime);
+			minutes = CalendarUtil.getMinutesBetweenTwoDates(cal.getTime(), timelineEndMoment);
 			minutes = (minutes < 60) ? minutes : 60;
 			tv.setMinWidth(GigTimelineWidget.PIXELS_PER_MINUTE * minutes);
 			numbersLayout.addView(tv);
 			
 			inflater.inflate(R.layout.timeline_hour_marker, timelineVerticalLines);
-			/*
-			View hourMarker = inflater.inflate(R.layout.timeline_hour_marker, null);
-			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(24, woodenBgHeight);
-			hourMarker.setLayoutParams(params);
-			timelineVerticalLines.addView(hourMarker);
-			*/
 			
 			tv = new TextView(this);
 			tv.setText("");
@@ -312,7 +303,7 @@ public class TimelineActivity extends Activity {
 		List<String> stages = daySchedule.getStages();
 		if (stages != null && !stages.isEmpty()) {
 			for (int i = 0; i < stages.size(); i++) {
-				addStageName(stages.get(i));
+				addStageName(GigDAO.truncateStageName(stages.get(i)));
 			}
 		}
 		stageLayout.bringToFront();

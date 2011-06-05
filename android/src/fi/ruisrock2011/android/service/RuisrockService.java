@@ -40,19 +40,24 @@ public class RuisrockService extends Service {
 			Log.i(TAG, "Starting backend operations");
 			counter++;
 			try {
-				alertGigs();
-				// TODO: Enable all!
-				if (counter % 12 == 0) { // every hour
-					Log.i(TAG, "Executing 1-hour operations.");
-					//updateGigs();
-					updateNewsArticles();
-				}
-				if (counter % 12*5 == 0) { // every 5 hours
-					Log.i(TAG, "Executing 5-hour operations.");
-					updateFoodAndDrinkPage();
-					updateTransportationPage();
-					updateServicesPageData();
-					updateGeneralInfoPageData();
+				if (CalendarUtil.getNow().before(GigDAO.getEndOfSunday())) {
+					alertGigs();
+					// TODO: Enable all!
+					if (counter % 12 == 0) { // every hour
+						Log.i(TAG, "Executing 1-hour operations.");
+						//updateGigs();
+						updateNewsArticles();
+					}
+					if (counter % 12*5 == 0) { // every 5 hours
+						Log.i(TAG, "Executing 5-hour operations.");
+						updateFoodAndDrinkPage();
+						updateTransportationPage();
+						updateServicesPageData();
+						updateGeneralInfoPageData();
+					}
+				} else {
+					Log.i(TAG, "Stopping service due to date constraint.");
+					stopSelf();
 				}
 			} catch (Throwable t) {
 				Log.e(TAG, "Failed execute backend operations", t);
@@ -88,7 +93,7 @@ public class RuisrockService extends Service {
 	    PendingIntent pending = PendingIntent.getActivity(getBaseContext(), uniqueId, contentIntent, 0);
 	    
 	    String title = article.getTitle();
-	    notify(pending, article.getUrl(), title, getString(R.string.notification_news_title), title);
+	    notify(pending, article.getUrl(), title, article.getDateString(), title);
 	}
 	
 	private void notify(PendingIntent pending, String tagId, String tickerText, String contentTitle, String contentText) {

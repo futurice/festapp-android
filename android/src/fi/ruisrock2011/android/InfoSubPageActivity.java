@@ -26,12 +26,13 @@ public class InfoSubPageActivity extends Activity {
 		setContentView(R.layout.info_sub_page);
 		setExtras();
 		
-		TextView textView = (TextView) findViewById(R.id.infoSubPageTitle);
-		WebView contentView = (WebView) findViewById(R.id.infoPageWebView);
-		textView.setText(pageTitle);
+		TextView titleView = (TextView) findViewById(R.id.infoSubPageTitle);
+		titleView.setText(pageTitle);
 		if (getString(R.string.service_BikePark).equals(pageTitle)) {
-			textView.setText("Polkupyörä-parkki");
+			titleView.setText("Polkupyörä-parkki");
 		}
+		
+		WebView contentView = (WebView) findViewById(R.id.infoPageWebView);
 		contentView.loadDataWithBaseURL(RuisrockConstants.RUISROCK_BASE_URL, pageContent, "text/html", "utf-8", null);
 	}
 	

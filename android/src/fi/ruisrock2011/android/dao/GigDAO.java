@@ -86,23 +86,6 @@ public class GigDAO {
 		}
 	}
 	
-	public static List<String> findDistinctStages(Context context) {
-		List<String> stages = new ArrayList<String>();
-
-		SQLiteDatabase db = null;
-		Cursor cursor = null;
-		try {
-			db = (new DatabaseHelper(context)).getReadableDatabase();
-			cursor = db.query(true, "gig", new String[] {"stage"}, "active = 1", null, null, null, "stage ASC", null);
-			while (cursor.moveToNext()) {
-				stages.add(cursor.getString(0));
-			}
-		} finally {
-			closeDb(db, cursor);
-		}
-		return stages;
-	}
-	
 	
 	public static List<Gig> findAllActive(Context context) {
 		List<Gig> gigs = new ArrayList<Gig>();
@@ -135,7 +118,7 @@ public class GigDAO {
 				gig.setDescription(JSONUtil.getString(gigObj, "description"));
 				gig.setStartTime(parseJsonDate(JSONUtil.getString(gigObj, "start")));
 				gig.setEndTime(parseJsonDate(JSONUtil.getString(gigObj, "end")));
-				gig.setStage(truncateStageName(JSONUtil.getString(gigObj, "stage")));
+				gig.setStage(JSONUtil.getString(gigObj, "stage"));
 				gig.setImageId(getImageIdForArtist(artist));
 				gigs.add(gig);
 			} catch (Exception e) {
@@ -145,7 +128,7 @@ public class GigDAO {
 		return gigs;
 	}
 	
-	private static String truncateStageName(String stage) {
+	public static String truncateStageName(String stage) {
 		if (stage == null) {
 			return null;
 		}
@@ -250,7 +233,7 @@ public class GigDAO {
 			db.beginTransaction();
 
 			Date nowDate = CalendarUtil.getNow();
-			String timeInFuture = getDateStringWithMinuteDifference(nowDate, 15);
+			String timeInFuture = getDateStringWithMinuteDifference(nowDate, 18);
 			String now = DB_DATE_FORMATTER.format(nowDate); 
 			cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND favorite = 1 AND alerted = 0 AND datetime(startTime) <= datetime(?) AND datetime(endTime) > datetime(?)", new String[]{timeInFuture, now}, null, null, "startTime ASC");
 			while (cursor.moveToNext()) {
