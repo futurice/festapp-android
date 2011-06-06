@@ -175,6 +175,8 @@ public class MapActivity extends Activity {
 		mapImageView.setImageBitmap(bitmap);
 		mapImageView.getDrawable().setFilterBitmap(true);
 		mapImageView.setImageMatrix(matrix);
+		
+		//updateGpsLocation(null); // TODO: <- Remove this
 	}
 	
 	@Override
@@ -498,9 +500,25 @@ public class MapActivity extends Activity {
 
 	public void updateGpsLocation(Location location) {
 		//Toast.makeText(this, "" + location.getTime() + "\nLAT: " + location.getLatitude()+ "\nLONG: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
+		boolean isCurrentLocationWithinMap = isCurrentLocationWithinMap();
 		this.location = location;
+		// TODO: Start debug
+		/*
+		Location l = new Location("foo");
+		l.setLatitude(60.43284284213935);
+		l.setLongitude(22.180009906417748);
+		this.location = l;
+		*/
+		// End debug
+		
 		calculateNewPixelsFromLocation();
 		drawCurrentLocation();
+		
+		if (!isCurrentLocationWithinMap && isCurrentLocationWithinMap()) {
+			this.current_centerX = locationX;
+			this.current_centerY = locationY;
+			updateDisplay();
+		}
 		
 		// Show GPS-status text
 		if (!isCurrentLocationWithinMap()) {

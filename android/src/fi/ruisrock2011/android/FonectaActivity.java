@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +50,20 @@ public class FonectaActivity extends Activity {
 		}
 	};
 	
+	private ImageView callGlow;
+	private Animation animation1;
+	private Animation animation2;
+	/*
+	private Runnable currentPositionRunnable = new Runnable() {
+		@Override
+		public void run() {
+			
+			//currentPositionHandler.postDelayed(this, CURRENT_POSITION_ANIM_FREQ);
+		}
+	};
+	private Handler currentPositionHandler = new Handler();
+	*/
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +75,60 @@ public class FonectaActivity extends Activity {
 		
 		showPricesText = (TextView) findViewById(R.id.showPricesText);
 		showPricesText.setOnClickListener(showPricesClickListener);
+		
+		callGlow = (ImageView) findViewById(R.id.call02Glow);
+		
+		animation1 = AnimationUtils.loadAnimation(this, R.anim.glow1);
+		animation1.setAnimationListener(new LocalAnimationListener());
+		//animation1.setRepeatMode(Animation.INFINITE);
+		animation2 = AnimationUtils.loadAnimation(this, R.anim.glow2);
+		animation2.setAnimationListener(new LocalAnimationListener2());
+		
+		callGlow.startAnimation(animation1);
+	}
+	
+	class LocalAnimationListener implements AnimationListener {
+		/*
+		private Animation startAnimation;
+		public LocalAnimationListener(Animation startAnimation) {
+			this.startAnimation = startAnimation;
+		}
+		*/
+		
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			callGlow.startAnimation(animation2);
+		}
+	}
+	
+	class LocalAnimationListener2 implements AnimationListener {
+		/*
+		private Animation startAnimation;
+		public LocalAnimationListener(Animation startAnimation) {
+			this.startAnimation = startAnimation;
+		}
+		*/
+		
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			callGlow.startAnimation(animation1);
+		}
 	}
 
 }

@@ -21,4 +21,6 @@
 		</TableRow>
 	</TableLayout>
 	
+	<include layout="@layout/fonecta_powered_by" />
+	
 </RelativeLayout>

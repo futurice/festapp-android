@@ -24,7 +24,7 @@ public class RuisrockConstants {
 	public static final String PREFERENCE_GLOBAL = "fi.ruisrock2011.android.globalPreference";
 	
 	// INITIAL ETAG VALUES
-	public static final String ETAG_GIGS = "315f1aa7b7ae50f683ea1ef5b8b4c302";
+	public static final String ETAG_GIGS = "b8c56cde125471f275582e8bf8c7e8ed";
 	public static final String ETAG_TRANSPORTATION = "65afc40ef57359e62246b118407d695a";
 	//public static final String ETAG_NEWS = "d8d3ef527e862d0df58272d53a6c2ab8";
 	public static final String ETAG_NEWS = null;
