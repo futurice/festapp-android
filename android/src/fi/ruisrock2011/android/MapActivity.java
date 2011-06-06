@@ -28,12 +28,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import fi.ruisrock2011.android.dao.ConfigDAO;
+import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.domain.to.MapLayerOptions;
+import fi.ruisrock2011.android.domain.to.StageType;
 import fi.ruisrock2011.android.gps.GPSLocationListener;
 import fi.ruisrock2011.android.ui.map.Animation;
 import fi.ruisrock2011.android.ui.map.AnimationCallback;
 import fi.ruisrock2011.android.ui.map.MapImageView;
 import fi.ruisrock2011.android.ui.map.SizeCallback;
+import fi.ruisrock2011.android.util.UIUtil;
 
 /**
  * View for festival Map.
@@ -163,7 +166,7 @@ public class MapActivity extends Activity {
 		animation.setCallBack(animationCallBack);
 		timer.scheduleAtFixedRate(animation, 200, 30);
 
-		mapImageView.setOnTouchListener(metroListener);
+		mapImageView.setOnTouchListener(mapTouchListener);
 		zoomInButton.setOnClickListener(zoomInListener);
 		zoomOutButton.setOnClickListener(zoomOutListener);
 		menuButton.setOnClickListener(menuListener);
@@ -245,9 +248,12 @@ public class MapActivity extends Activity {
 		super.onDestroy();
 	}
 
-	private OnTouchListener metroListener = new OnTouchListener() {
+	private OnTouchListener mapTouchListener = new OnTouchListener() {
 		public boolean onTouch(View v, MotionEvent event) {
-
+			long downUpTime = event.getEventTime() - downTimer;
+			if (event.getAction() == MotionEvent.ACTION_UP && downUpTime < 150) {
+				handleMapOnClick(event.getX(), event.getY());
+			}
 			if ((event.getAction() == MotionEvent.ACTION_MOVE)) {
 
 				moveHistorySize++;
@@ -287,6 +293,62 @@ public class MapActivity extends Activity {
 			return true;
 		}
 	};
+	
+	private void handleMapOnClick(float displayX, float displayY) {
+		RectF rect = sourceRect;
+		
+		float left = (rect.left > 0) ? rect.left : 0;
+		float right = (rect.right > 0) ? rect.right : imageSizeX;
+		float top = (rect.top > 0) ? rect.top : 0;
+		float bottom = (rect.bottom > 0) ? rect.bottom : imageSizeY;
+		
+		int screenWidth = mapImageView.getWidth();
+		int screenHeight = mapImageView.getHeight();
+		
+		float xRatio = displayX / screenWidth;
+		float yRatio = displayY / screenHeight;
+		
+		float x = left + (right-left)*xRatio;
+		float y = top + (bottom-top)*yRatio;
+		
+		final int toastLength = Toast.LENGTH_LONG;
+		String toastMessage = null;
+		// Telttalava
+		if (x > 744 && x < 920 &&
+				y > 420 && y < 515) {
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.TELTTA, getBaseContext());
+		}
+		
+		// Converse
+		if (x > 1280 && x < 1370 &&
+				y > 552 && y < 620) {
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.CONVERSE, getBaseContext());
+		}
+		
+		// Niitty
+		if (x > 900 && x < 1015 &&
+				y > 837 && y < 920) {
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.NIITTY, getBaseContext());
+		}
+		
+		// Ranta
+		if (x > 1355 && x < 1465 &&
+				y > 1146 && y < 1225) {
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.RANTA, getBaseContext());
+		}
+		
+		// Pikku
+		if (x > 1640 && x < 1761 &&
+				y > 765 && y < 830) {
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.PIKKU, getBaseContext());
+		}
+		
+		// Show message if applicable
+		if (toastMessage != null) {
+			Toast.makeText(getBaseContext(), toastMessage, toastLength).show();
+		}
+		
+	}
 	
 	private void handleMapLayerSelection(MapLayerOptions mapLayerOptions) {
 		if (isGpsLayerSelected() && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {

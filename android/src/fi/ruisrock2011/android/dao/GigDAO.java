@@ -22,6 +22,7 @@ import fi.ruisrock2011.android.domain.Gig;
 import fi.ruisrock2011.android.domain.to.DaySchedule;
 import fi.ruisrock2011.android.domain.to.FestivalDay;
 import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
+import fi.ruisrock2011.android.domain.to.StageType;
 import fi.ruisrock2011.android.util.CalendarUtil;
 import fi.ruisrock2011.android.util.HTTPUtil;
 import fi.ruisrock2011.android.util.JSONUtil;
@@ -120,7 +121,9 @@ public class GigDAO {
 				gig.setEndTime(parseJsonDate(JSONUtil.getString(gigObj, "end")));
 				gig.setStage(JSONUtil.getString(gigObj, "stage"));
 				gig.setImageId(getImageIdForArtist(artist));
-				gigs.add(gig);
+				if (isValidGig(gig)) {
+					gigs.add(gig);
+				}
 			} catch (Exception e) {
 				Log.w(TAG, "Received invalid JSON-structure", e);
 			}
@@ -234,7 +237,7 @@ public class GigDAO {
 
 			Date nowDate = CalendarUtil.getNow();
 			String timeInFuture = getDateStringWithMinuteDifference(nowDate, 18);
-			String now = DB_DATE_FORMATTER.format(nowDate); 
+			String now = DB_DATE_FORMATTER.format(nowDate);
 			cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND favorite = 1 AND alerted = 0 AND datetime(startTime) <= datetime(?) AND datetime(endTime) > datetime(?)", new String[]{timeInFuture, now}, null, null, "startTime ASC");
 			while (cursor.moveToNext()) {
 		        Gig gig = convertCursorToGig(cursor, cursor.getString(0));
@@ -332,6 +335,68 @@ public class GigDAO {
 		} finally {
 			closeDb(db, cursor);
 		}
+	}
+	
+	public static String findNextArtistOnStageMessage(StageType stage, Context context) {
+		if (stage == null) {
+			return null;
+		}
+		SQLiteDatabase db = null;
+		Cursor cursor = null;
+		try {
+			db = (new DatabaseHelper(context)).getReadableDatabase();
+			String now = DB_DATE_FORMATTER.format(CalendarUtil.getNow());
+			cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND stage IS NOT NULL AND startTime IS NOT NULL AND datetime(endTime) > datetime(?)", new String[]{now}, null, null, "startTime ASC");
+			while (cursor.moveToNext()) {
+		        Gig gig = convertCursorToGig(cursor, cursor.getString(0));
+		        String artistOnStage = getArtistOnStageMessage(gig, stage, context);
+		        if (artistOnStage != null) {
+		        	return artistOnStage;
+		        }
+			}
+		} finally {
+			closeDb(db, cursor);
+		}
+		
+		return null;
+	}
+	
+	private static String getArtistOnStageMessage(Gig gig, StageType stageType, Context context) {
+		String stage = gig.getStage();
+		if (stage == null) {
+			return null;
+		}
+		stage = stage.toLowerCase().trim();
+		String matchedStage = null;
+		switch (stageType) {
+		case CONVERSE:
+			if (stage.startsWith("converse")) {
+				matchedStage = "Conversella";
+			}
+			break;
+		case NIITTY:
+			if (stage.startsWith("niitty")) {
+				matchedStage = "Niittylavalla";
+			}
+			break;
+		case PIKKU:
+			if (stage.startsWith("pikku")) {
+				matchedStage = "Pikkulavalla";
+			}
+			break;
+		case RANTA:
+			if (stage.startsWith("ranta")) {
+				matchedStage = "Rantalavalla";
+			}
+			break;
+		case TELTTA:
+			if (stage.startsWith("teltta")) {
+				matchedStage = "Teltalla";
+			}
+			break;
+		}
+		
+		return (matchedStage != null) ? context.getString(R.string.mapActivity_nextOnStage, matchedStage, gig.getTime(), "\n" + gig.getArtist()) : null;
 	}
 	
 	public static FestivalDay getFestivalDay(Date startTime) {
