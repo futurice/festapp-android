@@ -1,8 +1,6 @@
 package fi.ruisrock2011.android.rss;
 
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.xml.parsers.SAXParser;
@@ -19,8 +17,6 @@ import android.util.Log;
  * @author Pyry-Samuli Lahti / Futurice
  */
 public class RSSReader {
-	
-	public static DateFormat RSS_DATE_FORMATTER = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
 
 	public List<RSSItem> loadRSSFeed(String rssFeedUrl) {
 		try {
