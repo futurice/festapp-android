@@ -32,7 +32,7 @@ public class FonectaActivity extends Activity {
 				try {
 					Intent intent = new Intent(Intent.ACTION_CALL);
 					// TODO: enable phone-number
-					intent.setData(Uri.parse("tel:+35820202"));
+					intent.setData(Uri.parse("tel:020202"));
 					startActivity(intent);
 				} catch (Exception e) {
 					Log.e(TAG, "Failed to invoke call", e);
@@ -53,17 +53,6 @@ public class FonectaActivity extends Activity {
 	private ImageView callGlow;
 	private Animation animation1;
 	private Animation animation2;
-	/*
-	private Runnable currentPositionRunnable = new Runnable() {
-		@Override
-		public void run() {
-			
-			//currentPositionHandler.postDelayed(this, CURRENT_POSITION_ANIM_FREQ);
-		}
-	};
-	private Handler currentPositionHandler = new Handler();
-	*/
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,22 +68,14 @@ public class FonectaActivity extends Activity {
 		callGlow = (ImageView) findViewById(R.id.call02Glow);
 		
 		animation1 = AnimationUtils.loadAnimation(this, R.anim.glow1);
-		animation1.setAnimationListener(new LocalAnimationListener());
-		//animation1.setRepeatMode(Animation.INFINITE);
+		animation1.setAnimationListener(new GlowAnimationListener());
 		animation2 = AnimationUtils.loadAnimation(this, R.anim.glow2);
-		animation2.setAnimationListener(new LocalAnimationListener2());
+		animation2.setAnimationListener(new GlowAnimationListener2());
 		
 		callGlow.startAnimation(animation1);
 	}
 	
-	class LocalAnimationListener implements AnimationListener {
-		/*
-		private Animation startAnimation;
-		public LocalAnimationListener(Animation startAnimation) {
-			this.startAnimation = startAnimation;
-		}
-		*/
-		
+	class GlowAnimationListener implements AnimationListener {
 		@Override
 		public void onAnimationRepeat(Animation animation) {
 		}
@@ -109,14 +90,7 @@ public class FonectaActivity extends Activity {
 		}
 	}
 	
-	class LocalAnimationListener2 implements AnimationListener {
-		/*
-		private Animation startAnimation;
-		public LocalAnimationListener(Animation startAnimation) {
-			this.startAnimation = startAnimation;
-		}
-		*/
-		
+	class GlowAnimationListener2 implements AnimationListener {
 		@Override
 		public void onAnimationRepeat(Animation animation) {
 		}

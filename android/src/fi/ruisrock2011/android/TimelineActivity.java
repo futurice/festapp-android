@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import android.app.Activity;
 import android.content.Context;
@@ -58,11 +59,10 @@ public class TimelineActivity extends Activity {
 	private static int ROW_HEIGHT = 66;
 	
 	// GESTURES
-	private static final int SWIPE_MIN_DISTANCE = 300;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+	private static final int SWIPE_MIN_DISTANCE = 100;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 100;
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
-
 	
 	private Runnable runnable = new Runnable() {
 		@Override
@@ -330,7 +330,14 @@ public class TimelineActivity extends Activity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             try {
             	if(Math.abs(e1.getY() - e2.getY()) > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-            		MediaPlayer mp = MediaPlayer.create(getBaseContext(), R.raw.guitar);
+            		Random random = new Random();
+            		MediaPlayer mp = null;
+            		if (random.nextBoolean()) {
+            			mp = MediaPlayer.create(getBaseContext(), R.raw.guitar1);
+            		} else {
+            			mp = MediaPlayer.create(getBaseContext(), R.raw.guitar2);
+            		}
+            		vibrator.vibrate(150l);
             		mp.start();
             		mp.setOnCompletionListener(new OnCompletionListener() {
             			@Override
