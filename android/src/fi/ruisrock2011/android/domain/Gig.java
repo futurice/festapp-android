@@ -138,7 +138,7 @@ public class Gig {
 	
 	public String getStageAndTime() {
 		String stage = (this.stage != null) ? this.stage : "";
-		String time = getTime();
+		String time = getDayAndTime();
 		
 		if (StringUtil.isNotEmpty(stage) && StringUtil.isNotEmpty(time)) {
 			return String.format("%s, %s", stage, time);
@@ -150,8 +150,12 @@ public class Gig {
 		return "";
 	}
 	
+	public String getDayAndTime() {
+		return (startTime != null && endTime != null) ? getStartDay().substring(0, 2).toLowerCase() + " " + getTime() : "";
+	}
+	
 	public String getTime() {
-		return (startTime != null && endTime != null) ? getStartDay().substring(0, 2).toLowerCase() + " klo " + sdfHoursAndMinutes.format(startTime) + " - " + sdfHoursAndMinutes.format(endTime) : "";
+		return (startTime != null && endTime != null) ? "klo " + sdfHoursAndMinutes.format(startTime) + " - " + sdfHoursAndMinutes.format(endTime) : "";
 	}
 	
 	public String getStartDay() {

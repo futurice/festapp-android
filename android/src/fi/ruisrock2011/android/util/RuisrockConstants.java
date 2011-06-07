@@ -24,12 +24,20 @@ public class RuisrockConstants {
 	public static final String PREFERENCE_GLOBAL = "fi.ruisrock2011.android.globalPreference";
 	
 	// INITIAL ETAG VALUES
-	public static final String ETAG_GIGS = "b8c56cde125471f275582e8bf8c7e8ed";
+	/*
+	public static final String ETAG_GIGS = "5f1b28578706b53a4850ec76c1d77332";
 	public static final String ETAG_TRANSPORTATION = "65afc40ef57359e62246b118407d695a";
-	//public static final String ETAG_NEWS = "d8d3ef527e862d0df58272d53a6c2ab8";
+	public static final String ETAG_NEWS = "ab4f962aeb683cb81c9006aa7ab71eb6";
+	public static final String ETAG_FOOD_AND_DRINK = "077fadec446efd20f8d15337989cc410";
+	public static final String ETAG_SERVICES = "369d5f3abd8c9106f2f17e9bc4741e67";
+	public static final String ETAG_GENERAL_INFO = "38b9ba53c1b6edb0c5835cd31084f247";
+	*/
+	
+	public static final String ETAG_GIGS = null;
+	public static final String ETAG_TRANSPORTATION = null;
 	public static final String ETAG_NEWS = null;
-	public static final String ETAG_FOOD_AND_DRINK = "e527a7b7443e9cddc8801c54cf9fa603";
-	public static final String ETAG_SERVICES = "e8ba445475e27ba04e8d3012b05ed29e";
-	public static final String ETAG_GENERAL_INFO = "51dfa3c9e4b7d04434279bfcf6a54fe4";
+	public static final String ETAG_FOOD_AND_DRINK = null;
+	public static final String ETAG_SERVICES = null;
+	public static final String ETAG_GENERAL_INFO = null;
 	
 }

@@ -4,11 +4,7 @@ import android.content.Context;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class MapImageView extends ImageView {
 	private SizeCallback callBack;
@@ -58,16 +54,5 @@ public class MapImageView extends ImageView {
 	public void setHandle(Handler h) {
 		handle = h;
 	}
-
-	/*
-	@Override
-	public boolean onTouch(View view, MotionEvent event) {
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			Toast.makeText(getContext(), event.getX() + ", " + event.getY(), Toast.LENGTH_SHORT);
-		}
-		// TODO Auto-generated method stub
-		return false;
-	}
-	*/
 	
 }

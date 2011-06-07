@@ -18,6 +18,12 @@
 	    android:layout_height="fill_parent">
 	    
 		<ImageView android:layout_width="wrap_content" android:src="@drawable/ic_maps_indicator_current_position_anim" android:id="@+id/currentPosition" android:layout_height="wrap_content"></ImageView>
+		<TextView android:background="@drawable/map_bubble"
+			android:id="@+id/mapBubble"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="50dip"
+			android:text="Olet tässä" android:textColor="#ffffff" />
 	</RelativeLayout>
 	
 	    

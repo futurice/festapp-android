@@ -50,7 +50,7 @@
     <string name="mapActivity.distanceToMap">Etäisyys juhlapaikasta: %s km</string>
     <string name="mapActivity.gpsAccuracy">Arvioitu GPS-tarkkuus: %s m</string>
     <string name="mapActivity.gpsWaitingForFix">Odotetaan GPS-sijaintia...</string>
-    <string name="mapActivity.nextOnStage">%1$s esiintyy %2$s %3$s</string>
+    <string name="mapActivity.nextOnStage">%1$s esiintyy %2$s:\n%3$s</string>
     
     <!-- Timeline view -->
     <string name="timelineActivity.initialInfo.title">Oma aikataulu</string>

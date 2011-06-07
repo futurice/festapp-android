@@ -4,9 +4,9 @@ import java.util.TimerTask;
 
 import android.os.Handler;
 
-public class Animation extends TimerTask {
+public class MapAnimation extends TimerTask {
 
-	private AnimationCallback callBack;
+	private MapAnimationCallback callBack;
 	private Handler handle;
 	private Runnable cbkAction;
 	private float speedX;
@@ -22,7 +22,7 @@ public class Animation extends TimerTask {
 	private static final float END_SPEED_THRESHOLD = (float) 4;
 	private static final float SPEED_STEP = (float) 1.1;
 
-	public Animation(Handler handle, int current_centerX, int current_centerY, float currentScale) {
+	public MapAnimation(Handler handle, int current_centerX, int current_centerY, float currentScale) {
 		super();
 		speedX = 0;
 		speedY = 0;
@@ -79,7 +79,7 @@ public class Animation extends TimerTask {
 		}
 	}
 
-	public void setCallBack(AnimationCallback cbk) {
+	public void setCallBack(MapAnimationCallback cbk) {
 		callBack = cbk;
 	}
 

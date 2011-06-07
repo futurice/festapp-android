@@ -27,12 +27,10 @@ public class GPSLocationListener implements LocationListener, GpsStatus.Listener
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		// TODO: Should we do something?
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		// TODO: Should we do something?
 	}
 
 	@Override
@@ -44,7 +42,5 @@ public class GPSLocationListener implements LocationListener, GpsStatus.Listener
 	public void onGpsStatusChanged(int event) {
 		mapActivity.gpsStatusChanged(event);
 	}
-	
-	
 
 }

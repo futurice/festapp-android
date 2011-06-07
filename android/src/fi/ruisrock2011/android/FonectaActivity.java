@@ -31,7 +31,6 @@ public class FonectaActivity extends Activity {
 			if (v.getId() == R.id.call02Button) {
 				try {
 					Intent intent = new Intent(Intent.ACTION_CALL);
-					// TODO: enable phone-number
 					intent.setData(Uri.parse("tel:020202"));
 					startActivity(intent);
 				} catch (Exception e) {

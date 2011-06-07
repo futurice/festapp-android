@@ -74,7 +74,7 @@ public class ArtistInfoActivity extends Activity {
 			infoTable.setVisibility(View.VISIBLE);
 			String stage = (gig.getStage() != null) ? gig.getStage() : "";
 			((TextView) findViewById(R.id.artistInfoStage)).setText(stage);
-			((TextView) findViewById(R.id.artistInfoLiveTime)).setText(gig.getTime());
+			((TextView) findViewById(R.id.artistInfoLiveTime)).setText(gig.getDayAndTime());
 			ToggleButton favoriteButton = (ToggleButton) findViewById(R.id.artistInfoFavorite);
 			favoriteButton.setChecked(gig.isFavorite());
 			favoriteButton.setOnClickListener(favoriteListener);

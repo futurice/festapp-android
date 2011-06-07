@@ -245,7 +245,6 @@ public class GigDAO {
 			}
 			
 			for (Gig gig : gigs) {
-				// TODO: Uncomment
 				db.execSQL("UPDATE gig SET alerted = 1 where id = ?", new Object[]{gig.getId()});
 			}
 			
@@ -371,7 +370,7 @@ public class GigDAO {
 		switch (stageType) {
 		case CONVERSE:
 			if (stage.startsWith("converse")) {
-				matchedStage = "Conversella";
+				matchedStage = "Converse-lavalla";
 			}
 			break;
 		case NIITTY:
@@ -391,12 +390,12 @@ public class GigDAO {
 			break;
 		case TELTTA:
 			if (stage.startsWith("teltta")) {
-				matchedStage = "Teltalla";
+				matchedStage = "Teltassa";
 			}
 			break;
 		}
 		
-		return (matchedStage != null) ? context.getString(R.string.mapActivity_nextOnStage, matchedStage, gig.getTime(), "\n" + gig.getArtist()) : null;
+		return (matchedStage != null) ? context.getString(R.string.mapActivity_nextOnStage, matchedStage, gig.getDayAndTime(), gig.getArtist()) : null;
 	}
 	
 	public static FestivalDay getFestivalDay(Date startTime) {

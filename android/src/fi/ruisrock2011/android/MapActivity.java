@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.PointF;
 import android.graphics.RectF;
 import android.location.GpsStatus;
 import android.location.Location;
@@ -22,6 +23,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -32,11 +36,10 @@ import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.domain.to.MapLayerOptions;
 import fi.ruisrock2011.android.domain.to.StageType;
 import fi.ruisrock2011.android.gps.GPSLocationListener;
-import fi.ruisrock2011.android.ui.map.Animation;
-import fi.ruisrock2011.android.ui.map.AnimationCallback;
+import fi.ruisrock2011.android.ui.map.MapAnimation;
+import fi.ruisrock2011.android.ui.map.MapAnimationCallback;
 import fi.ruisrock2011.android.ui.map.MapImageView;
 import fi.ruisrock2011.android.ui.map.SizeCallback;
-import fi.ruisrock2011.android.util.UIUtil;
 
 /**
  * View for festival Map.
@@ -65,12 +68,13 @@ public class MapActivity extends Activity {
 	private GPSLocationListener gpsLocationListener;
 	private ImageView currentPositionImage;
 	private boolean gpsListenerOnline;
+	private TextView mapBubble;
 	private Matrix matrix;
 	private RectF sourceRect;
 	private RectF destinationRect;
 	private Bitmap bitmap;
 	private Timer timer;
-	private Animation animation;
+	private MapAnimation animation;
 	private Location location;
 	private int locationX = -1;
 	private int locationY = -1;
@@ -136,6 +140,8 @@ public class MapActivity extends Activity {
 		mapLayerOptions = ConfigDAO.findMapLayers(MapActivity.this);
 		currentPositionImage = (ImageView) findViewById(R.id.currentPosition);
 		currentPositionImage.setVisibility(View.GONE);
+		mapBubble = (TextView) findViewById(R.id.mapBubble);
+		mapBubble.setVisibility(View.GONE);
 		
 		if (isGpsLayerSelected() && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 			activateGpsListener(true);
@@ -157,7 +163,7 @@ public class MapActivity extends Activity {
 		}
 
 		timer = new Timer();
-		animation = new Animation(handle, current_centerX, current_centerY, current_scale);
+		animation = new MapAnimation(handle, current_centerX, current_centerY, current_scale);
 
 		mapImageView.setHandle(handle);
 		mapImageView.setCallBack(sizeCallback);
@@ -469,7 +475,7 @@ public class MapActivity extends Activity {
 		}
 	};
 
-	private AnimationCallback animationCallBack = new AnimationCallback() {
+	private MapAnimationCallback animationCallBack = new MapAnimationCallback() {
 		public void onTimer(int centerX, int centerY, float scale) {
 			current_centerX = centerX;
 			current_centerY = centerY;
@@ -567,8 +573,9 @@ public class MapActivity extends Activity {
 		// TODO: Start debug
 		/*
 		Location l = new Location("foo");
-		l.setLatitude(60.43284284213935);
-		l.setLongitude(22.180009906417748);
+		// http://www.bing.com/maps/?v=2&cp=60.433029122774265~22.180173870392224&lvl=19&dir=0&sty=h&where1=turku%2C%20finland&q=ruissalo%20turku%2C%20finland&ss=yp.ruissalo~pg.1&form=LMLTCC
+		l.setLatitude(60.433029122774265);
+		l.setLongitude(22.180173870392224);
 		this.location = l;
 		*/
 		// End debug
@@ -579,6 +586,13 @@ public class MapActivity extends Activity {
 		if (!isCurrentLocationWithinMap && isCurrentLocationWithinMap()) {
 			this.current_centerX = locationX;
 			this.current_centerY = locationY;
+			mapBubble.setVisibility(View.VISIBLE);
+			mapImageView.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					startMapBubbleFadeOut();
+				}
+			}, 2000L);
 			updateDisplay();
 		}
 		
@@ -651,26 +665,13 @@ public class MapActivity extends Activity {
 			currentPositionImage.setVisibility(View.GONE);
 			return;
 		}
-		RectF rect = sourceRect;
 		
-		float left = (rect.left > 0) ? rect.left : 0;
-		float right = (rect.right > 0) ? rect.right : imageSizeX;
-		float top = (rect.top > 0) ? rect.top : 0;
-		float bottom = (rect.bottom > 0) ? rect.bottom : imageSizeY;
-		
-		boolean tooLeft = locationX < left;
-		boolean tooRight = locationX > right;
-		boolean tooTop = locationY < top;
-		boolean tooBottom = locationY > bottom;
-		
-		if (tooLeft || tooRight || tooTop || tooBottom) {
+		PointF displayPoint = convertMapPointToDisplayPoint(locationX, locationY);
+		if (displayPoint == null) {
 			currentPositionImage.setVisibility(View.GONE);
 		} else {
-			float xRatio = (locationX-left)/(right-left);
-			float yRatio = (locationY-top)/(bottom-top);
-			
-			float xOnDisplay = xRatio * mapImageView.getWidth();
-			float yOnDisplay = yRatio * mapImageView.getHeight();
+			float xOnDisplay = displayPoint.x;
+			float yOnDisplay = displayPoint.y;
 			
 			int currentPosSize = getResources().getDimensionPixelSize(R.dimen.map_currentPosition_size);
 			int margin = currentPosSize / 2;
@@ -683,8 +684,46 @@ public class MapActivity extends Activity {
 				currentPositionImage.setLayoutParams(lp);
 				currentPositionImage.setVisibility(View.VISIBLE);
 				currentPositionImage.bringToFront();
+				drawCurrentPositionMapBubble();
 			}
 		}
+	}
+	
+	private PointF convertMapPointToDisplayPoint(float mapX, float mapY) {
+		RectF rect = sourceRect;
+		
+		float left = (rect.left > 0) ? rect.left : 0;
+		float right = (rect.right > 0) ? rect.right : imageSizeX;
+		float top = (rect.top > 0) ? rect.top : 0;
+		float bottom = (rect.bottom > 0) ? rect.bottom : imageSizeY;
+		
+		boolean tooLeft = mapX < left;
+		boolean tooRight = mapX > right;
+		boolean tooTop = mapY < top;
+		boolean tooBottom = mapY > bottom;
+		
+		if (tooLeft || tooRight || tooTop || tooBottom) {
+			return null;
+		} else {
+			float xRatio = (mapX-left)/(right-left);
+			float yRatio = (mapY-top)/(bottom-top);
+			
+			float xOnDisplay = xRatio * mapImageView.getWidth();
+			float yOnDisplay = yRatio * mapImageView.getHeight();
+			return new PointF(xOnDisplay, yOnDisplay);
+		}
+	}
+	
+	private void drawCurrentPositionMapBubble() {
+		if (mapBubble.getVisibility() == View.VISIBLE) {
+			
+		}
+	}
+
+	private void startMapBubbleFadeOut() {
+		Animation fadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_to_invisible);
+		fadeOutAnimation.setAnimationListener(new MapBubbleFadeOutListener());
+		mapBubble.startAnimation(fadeOutAnimation);
 	}
 
 	public void gpsStatusChanged(int event) {
@@ -695,5 +734,22 @@ public class MapActivity extends Activity {
 			}
 		}
 	}
+	
+	class MapBubbleFadeOutListener implements AnimationListener {
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			mapBubble.setVisibility(View.GONE);
+		}
+	}
+	
+	
 	
 }

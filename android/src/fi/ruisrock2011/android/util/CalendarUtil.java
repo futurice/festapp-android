@@ -35,13 +35,14 @@ public class CalendarUtil {
 	
 	public static Date getNow() {
 		// TODO: return now
-		//return new Date();
-		
+		return new Date();
+		/*
 		try {
 			return new SimpleDateFormat("yyyy-MM-dd HH:mm").parse("2011-07-08 18:25");
 		} catch (Exception e) {
 			return null;
 		}
+		*/
 	}
 	
 }
