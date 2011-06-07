@@ -274,7 +274,7 @@ public class TimelineActivity extends Activity {
 		while (cal.getTime().before(timelineEndMoment)) {
 			tv = new TextView(this);
 			String hour = cal.get(Calendar.HOUR_OF_DAY) + ":00";
-			if (hour.startsWith("0")) {
+			if (hour.length() == 4) {
 				hour = "0" + hour;
 			}
 			tv.setText(hour);
