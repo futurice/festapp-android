@@ -4,6 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     
+    <include layout="@layout/fonecta_powered_by" />
+    
 	<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/linearLayout1" android:orientation="vertical">
 	
 	    <include layout="@layout/ruisrock_logo" android:id="@+id/logo" />
@@ -29,7 +31,5 @@
 	    	android:src="@drawable/btn_infopage_transportation" android:layout_gravity="center" />
 	    	
 	</LinearLayout>
-	
-	<include layout="@layout/fonecta_powered_by" />
 	
 </RelativeLayout>

@@ -5,6 +5,8 @@
     android:layout_height="fill_parent">
 	    
     <include layout="@layout/ruisrock_logo" android:id="@+id/logo" />
+    
+    <include layout="@layout/fonecta_powered_by" />
 	    
 	<TableLayout android:layout_marginTop="-30px" android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/tableLayout1" android:layout_below="@id/logo">
 		<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_horizontal">
@@ -20,7 +22,5 @@
 			<ImageView android:src="@drawable/btn_main_02" android:layout_width="wrap_content" android:id="@+id/mainGridFonecta" android:layout_height="wrap_content"></ImageView>
 		</TableRow>
 	</TableLayout>
-	
-	<include layout="@layout/fonecta_powered_by" />
 	
 </RelativeLayout>

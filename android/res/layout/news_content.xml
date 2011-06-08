@@ -13,16 +13,18 @@
 		    android:layout_width="fill_parent" 
 		    android:layout_height="wrap_content" 
 		    android:text="1.1.2011 15:15" />
-		<TextView 
-			style="@style/Header1"
-			android:textSize="20sp"
-			android:gravity="left"
-			android:id="@+id/newsTitle"
-		    android:layout_width="fill_parent" 
-		    android:layout_height="wrap_content" 
-		    android:text="Foo" />
-	    <ScrollView android:layout_height="fill_parent" android:id="@+id/scrollView1" android:layout_width="fill_parent" android:layout_below="@id/newsTitle">
-			<WebView android:id="@+id/newsContent" android:layout_width="fill_parent" android:layout_height="fill_parent"></WebView>
+	    <ScrollView android:layout_height="fill_parent" android:id="@+id/scrollView1" android:layout_width="fill_parent">
+   			<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+				<TextView 
+					style="@style/Header1"
+					android:textSize="20sp"
+					android:gravity="left"
+					android:id="@+id/newsTitle"
+				    android:layout_width="fill_parent" 
+				    android:layout_height="wrap_content" 
+				    android:text="Foo" />
+				<WebView android:id="@+id/newsContent" android:layout_width="fill_parent" android:layout_height="fill_parent"></WebView>
+			</LinearLayout>
 	    </ScrollView>
    	</LinearLayout>
     	
