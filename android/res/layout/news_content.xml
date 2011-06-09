@@ -18,11 +18,11 @@
 				<TextView 
 					style="@style/Header1"
 					android:textSize="20sp"
-					android:gravity="left"
+					android:gravity="center_horizontal"
 					android:id="@+id/newsTitle"
 				    android:layout_width="fill_parent" 
 				    android:layout_height="wrap_content" 
-				    android:text="Foo" />
+				    android:text="" />
 				<WebView android:id="@+id/newsContent" android:layout_width="fill_parent" android:layout_height="fill_parent"></WebView>
 			</LinearLayout>
 	    </ScrollView>

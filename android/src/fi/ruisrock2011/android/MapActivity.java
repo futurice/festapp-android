@@ -8,6 +8,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -23,6 +25,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -40,6 +43,8 @@ import fi.ruisrock2011.android.ui.map.MapAnimation;
 import fi.ruisrock2011.android.ui.map.MapAnimationCallback;
 import fi.ruisrock2011.android.ui.map.MapImageView;
 import fi.ruisrock2011.android.ui.map.SizeCallback;
+import fi.ruisrock2011.android.util.RuisrockConstants;
+import fi.ruisrock2011.android.util.UIUtil;
 
 /**
  * View for festival Map.
@@ -69,6 +74,9 @@ public class MapActivity extends Activity {
 	private ImageView currentPositionImage;
 	private boolean gpsListenerOnline;
 	private TextView mapBubble;
+	private boolean mapBubbleIsWithinMapArea;
+	private boolean mapBubbleAnimationInProgress = false;
+	private boolean lockMap = false;
 	private Matrix matrix;
 	private RectF sourceRect;
 	private RectF destinationRect;
@@ -78,6 +86,7 @@ public class MapActivity extends Activity {
 	private Location location;
 	private int locationX = -1;
 	private int locationY = -1;
+	private Toast mapToast;
 	private Handler handle = new Handler();
 
 	private int imageSizeX = 2953;
@@ -185,7 +194,7 @@ public class MapActivity extends Activity {
 		mapImageView.getDrawable().setFilterBitmap(true);
 		mapImageView.setImageMatrix(matrix);
 		
-		//updateGpsLocation(null); // TODO: <- Remove this
+		showInitialInfoDialog();
 	}
 	
 	@Override
@@ -214,11 +223,12 @@ public class MapActivity extends Activity {
 	
 	private void activateGpsListener(boolean turnOn) {
 		gpsStatusText.setVisibility(View.GONE);
+		hideMapBubble();
 		if (turnOn) {
 			if (!gpsListenerOnline) {
 				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5 * 1000L, 2f, gpsLocationListener);
 				locationManager.addGpsStatusListener(gpsLocationListener);
-				Toast.makeText(this, getString(R.string.mapActivity_gpsActivated), Toast.LENGTH_LONG).show();
+				showToast(getString(R.string.mapActivity_gpsActivated));
 			}
 			gpsListenerOnline = true;
 			currentPositionHandler.post(currentPositionRunnable);
@@ -259,6 +269,18 @@ public class MapActivity extends Activity {
 			long downUpTime = event.getEventTime() - downTimer;
 			if (event.getAction() == MotionEvent.ACTION_UP && downUpTime < 150) {
 				handleMapOnClick(event.getX(), event.getY());
+				return true;
+			}
+			if (lockMap) {
+				if (!mapBubbleAnimationInProgress) {
+					mapImageView.postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							startMapBubbleFadeOut();
+						}
+					}, 1);
+				}
+				return true;
 			}
 			if ((event.getAction() == MotionEvent.ACTION_MOVE)) {
 
@@ -317,7 +339,6 @@ public class MapActivity extends Activity {
 		float x = left + (right-left)*xRatio;
 		float y = top + (bottom-top)*yRatio;
 		
-		final int toastLength = Toast.LENGTH_LONG;
 		String toastMessage = null;
 		// Telttalava
 		if (x > 744 && x < 920 &&
@@ -351,7 +372,7 @@ public class MapActivity extends Activity {
 		
 		// Show message if applicable
 		if (toastMessage != null) {
-			Toast.makeText(getBaseContext(), toastMessage, toastLength).show();
+			showToast(toastMessage);
 		}
 		
 	}
@@ -362,6 +383,16 @@ public class MapActivity extends Activity {
 		} else {
 			updateMapLayers();
 		}
+	}
+	
+	private void showToast(String msg) {
+		if (mapToast == null) {
+			mapToast = Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG);
+		} else {
+			mapToast.cancel();
+		}
+		mapToast.setText(msg);
+		mapToast.show();
 	}
 	
 	private OnClickListener menuListener = new OnClickListener() {
@@ -429,22 +460,6 @@ public class MapActivity extends Activity {
 	private void updateMapLayers() {
 		ConfigDAO.updateMapLayers(this, mapLayerOptions);
 		activateGpsListener(isGpsLayerSelected());
-		showVisibleMapLayers();
-	}
-	
-	private void showVisibleMapLayers() {
-		/*
-		BitmapFactory.Options opts = new BitmapFactory.Options();
-		opts.inScaled = false;
-		bitmap.recycle();
-		
-		Bitmap bmp = Bitmap.createBitmap(imageSizeX, imageSizeY, Bitmap.Config.ARGB_8888);
-		Canvas comboImage = new Canvas(bmp);
-		comboImage.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.map_base, opts), 0f, 0f, null);
-		mapImageView.setImageBitmap(bmp);
-		mapImageView.getDrawable().setFilterBitmap(true);
-		mapImageView.setImageMatrix(matrix);
-		*/
 	}
 
 	private boolean isGpsLayerSelected() {
@@ -567,18 +582,8 @@ public class MapActivity extends Activity {
 	}
 
 	public void updateGpsLocation(Location location) {
-		//Toast.makeText(this, "" + location.getTime() + "\nLAT: " + location.getLatitude()+ "\nLONG: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
 		boolean isCurrentLocationWithinMap = isCurrentLocationWithinMap();
 		this.location = location;
-		// TODO: Start debug
-		/*
-		Location l = new Location("foo");
-		// http://www.bing.com/maps/?v=2&cp=60.433029122774265~22.180173870392224&lvl=19&dir=0&sty=h&where1=turku%2C%20finland&q=ruissalo%20turku%2C%20finland&ss=yp.ruissalo~pg.1&form=LMLTCC
-		l.setLatitude(60.433029122774265);
-		l.setLongitude(22.180173870392224);
-		this.location = l;
-		*/
-		// End debug
 		
 		calculateNewPixelsFromLocation();
 		drawCurrentLocation();
@@ -586,13 +591,11 @@ public class MapActivity extends Activity {
 		if (!isCurrentLocationWithinMap && isCurrentLocationWithinMap()) {
 			this.current_centerX = locationX;
 			this.current_centerY = locationY;
+			animation.setCenter(locationX, locationY);
+			mapBubbleIsWithinMapArea = true;
+			lockMap = true;
+			mapBubbleAnimationInProgress = false;
 			mapBubble.setVisibility(View.VISIBLE);
-			mapImageView.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					startMapBubbleFadeOut();
-				}
-			}, 2000L);
 			updateDisplay();
 		}
 		
@@ -611,6 +614,13 @@ public class MapActivity extends Activity {
 		} else {
 			gpsStatusText.setVisibility(View.GONE);
 		}
+	}
+	
+	private void hideMapBubble() {
+		mapBubble.setVisibility(View.GONE);
+		mapBubbleAnimationInProgress = false;
+		mapBubbleIsWithinMapArea = false;
+		lockMap = false;
 	}
 	
 	private void calculateNewPixelsFromLocation() {
@@ -673,20 +683,27 @@ public class MapActivity extends Activity {
 			float xOnDisplay = displayPoint.x;
 			float yOnDisplay = displayPoint.y;
 			
-			int currentPosSize = getResources().getDimensionPixelSize(R.dimen.map_currentPosition_size);
+			int currentPosSize = getCurrentPositionSize();
 			int margin = currentPosSize / 2;
-			if (xOnDisplay < margin || yOnDisplay < margin) {
+			
+			int leftMargin = (int) xOnDisplay - margin;
+			int topMargin = (int) yOnDisplay - margin;
+			if (leftMargin > (mapImageView.getWidth() - currentPosSize) || topMargin > (mapImageView.getHeight() - currentPosSize)) {
 				currentPositionImage.setVisibility(View.GONE);
 			} else {
 				RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(currentPosSize, currentPosSize);
-				lp.leftMargin = (int) xOnDisplay - margin;
-				lp.topMargin = (int) yOnDisplay - margin;
+				lp.leftMargin = leftMargin;
+				lp.topMargin = topMargin;
 				currentPositionImage.setLayoutParams(lp);
 				currentPositionImage.setVisibility(View.VISIBLE);
 				currentPositionImage.bringToFront();
-				drawCurrentPositionMapBubble();
 			}
 		}
+		drawCurrentPositionMapBubble();
+	}
+	
+	private int getCurrentPositionSize() {
+		return getResources().getDimensionPixelSize(R.dimen.map_currentPosition_size);
 	}
 	
 	private PointF convertMapPointToDisplayPoint(float mapX, float mapY) {
@@ -715,8 +732,41 @@ public class MapActivity extends Activity {
 	}
 	
 	private void drawCurrentPositionMapBubble() {
-		if (mapBubble.getVisibility() == View.VISIBLE) {
+		PointF point = convertMapPointToDisplayPoint(locationX, locationY);
+		if (mapBubbleIsWithinMapArea && isCurrentLocationWithinMap() && isPointWithinDisplay(point)) {
+			mapBubble.setVisibility(View.VISIBLE);
 			
+			int theX = (int) (point.x - getResources().getDimensionPixelSize(R.dimen.mapBubble_width)/2);
+			int theY = (int) (point.y - getResources().getDimensionPixelSize(R.dimen.mapBubble_height));
+			
+			ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) mapBubble.getLayoutParams();
+			mlp.setMargins(theX, theY, 0, 0);
+		} else {
+			mapBubble.setVisibility(View.GONE);
+		}
+	}
+	
+	private boolean isPointWithinDisplay(PointF point) {
+		if (point == null) {
+			return false;
+		}
+		int width = mapImageView.getWidth();
+		int height = mapImageView.getHeight();
+		if (point.x < 0 || point.x > width || point.y < 0 || point.y > height) {
+			return false;
+		}
+		return true;
+	}
+	
+	private void showInitialInfoDialog() {
+		SharedPreferences pref = this.getSharedPreferences(RuisrockConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
+		final String key = "showInitialMapInfo";
+		
+		if (pref.getBoolean(key, true)) {
+			Editor editor = pref.edit();
+			editor.putBoolean(key, false);
+			editor.commit();
+			UIUtil.showDialog(getString(R.string.mapActivity_initialInfo_title), getString(R.string.mapActivity_initialInfo_message), this);
 		}
 	}
 
@@ -742,14 +792,17 @@ public class MapActivity extends Activity {
 
 		@Override
 		public void onAnimationStart(Animation animation) {
+			mapBubbleAnimationInProgress = true;
+			lockMap = true;
 		}
 
 		@Override
 		public void onAnimationEnd(Animation animation) {
+			mapBubbleIsWithinMapArea = false;
 			mapBubble.setVisibility(View.GONE);
+			lockMap = false;
 		}
 	}
-	
 	
 	
 }

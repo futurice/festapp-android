@@ -38,7 +38,7 @@ public class GigDAO {
 	
 	private static final String TAG = "GigDAO";
 	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	private static final String[] GIG_COLUMNS = { "id", "imageId", "artist", "description",
+	private static final String[] GIG_COLUMNS = { "id", "artist", "description",
 		"startTime", "endTime", "stage", "favorite", "active", "alerted" };
 	
 	private static Date startOfFriday = null;
@@ -120,7 +120,6 @@ public class GigDAO {
 				gig.setStartTime(parseJsonDate(JSONUtil.getString(gigObj, "start")));
 				gig.setEndTime(parseJsonDate(JSONUtil.getString(gigObj, "end")));
 				gig.setStage(JSONUtil.getString(gigObj, "stage"));
-				gig.setImageId(getImageIdForArtist(artist));
 				if (isValidGig(gig)) {
 					gigs.add(gig);
 				}
@@ -276,23 +275,14 @@ public class GigDAO {
 	
 	private static Gig convertCursorToGig(Cursor cursor, String id) {
 		return new Gig(cursor.getString(0), // id
-				parseInteger(cursor.getString(1)), // imageId
-				cursor.getString(2), // artist
-				cursor.getString(3), // description
-				parseDate(cursor.getString(4)), // startTime
-				parseDate(cursor.getString(5)), // endTime
-				cursor.getString(6), // stage
+				cursor.getString(1), // artist
+				cursor.getString(2), // description
+				parseDate(cursor.getString(3)), // startTime
+				parseDate(cursor.getString(4)), // endTime
+				cursor.getString(5), // stage
+				cursor.getInt(6) > 0,
 				cursor.getInt(7) > 0,
-				cursor.getInt(8) > 0,
-				cursor.getInt(9) > 0);
-	}
-	
-	private static Integer parseInteger(String integer) {
-		try {
-			return Integer.valueOf(integer);
-		} catch (Exception e) {
-			return null;
-		}
+				cursor.getInt(8) > 0);
 	}
 	
 	public static ContentValues convertGigToContentValues(Gig gig) {
@@ -300,7 +290,6 @@ public class GigDAO {
 		String startTime = (gig.getStartTime() != null) ? DB_DATE_FORMATTER.format(gig.getStartTime()) : null;
 		String endTime = (gig.getEndTime() != null) ? DB_DATE_FORMATTER.format(gig.getEndTime()) : null;
 		values.put("id", gig.getId());
-		values.put("imageId", gig.getImageId());
 		values.put("artist", gig.getArtist());
 		values.put("description", gig.getDescription());
 		values.put("stage", gig.getStage());
@@ -395,7 +384,7 @@ public class GigDAO {
 			break;
 		}
 		
-		return (matchedStage != null) ? context.getString(R.string.mapActivity_nextOnStage, matchedStage, gig.getDayAndTime(), gig.getArtist()) : null;
+		return (matchedStage != null) ? context.getString(R.string.mapActivity_nextOnStage, matchedStage, gig.getTime(), gig.getArtist()) : null;
 	}
 	
 	public static FestivalDay getFestivalDay(Date startTime) {
@@ -428,7 +417,7 @@ public class GigDAO {
 		}
 	}
 	
-	private static Integer getImageIdForArtist(String artist) {
+	public static Integer getImageIdForArtist(String artist) {
 		if (StringUtil.isEmpty(artist)) {
 			return null;
 		}
@@ -456,6 +445,12 @@ public class GigDAO {
 		}
 		if (artist.startsWith("circle")) {
 			return R.drawable.artistimg_circle;
+		}
+		if (artist.startsWith("cmx")) {
+			return R.drawable.artistimg_cmx;
+		}
+		if (artist.startsWith("graveyard")) {
+			return R.drawable.artistimg_graveyard;
 		}
 		if (artist.startsWith("elbow")) {
 			return R.drawable.artistimg_elbow;
@@ -540,6 +535,9 @@ public class GigDAO {
 		}
 		if (artist.startsWith("the capital beat")) {
 			return R.drawable.artistimg_the_capital_beat;
+		}
+		if (artist.startsWith("the freza")) {
+			return R.drawable.artistimg_the_freza;
 		}
 		if (artist.startsWith("the national")) {
 			return R.drawable.artistimg_the_national;

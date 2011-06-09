@@ -1,13 +1,7 @@
 package fi.ruisrock2011.android.domain;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import android.util.Log;
-
-import fi.ruisrock2011.android.rss.RSSItem;
-import fi.ruisrock2011.android.rss.RSSReader;
 
 public class NewsArticle {
 	
@@ -26,18 +20,6 @@ public class NewsArticle {
 		this.date = date;
 		this.content = content;
 	}
-
-	/*
-	public NewsArticle(RSSItem rssItem) {
-		title = rssItem.getTitle();
-		url = rssItem.getLink();
-		try {
-			date = RSSReader.RSS_DATE_FORMATTER.parse(rssItem.getPubDate());
-		} catch (ParseException e) {
-			Log.w("NewsArticle", "Unable to parse pubDate " + rssItem.getPubDate());
-		}
-	}
-	*/
 
 	public String getTitle() {
 		return title;

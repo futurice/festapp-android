@@ -13,8 +13,6 @@ import fi.ruisrock2011.android.util.RuisrockConstants;
  */
 public class NewsContentActivity extends Activity {
 	
-	private static final String TAG = "NewsDescriptionActivity";
-	
 	private WebView contentView;
 	
 	@Override

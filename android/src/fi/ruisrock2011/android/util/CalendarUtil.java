@@ -1,6 +1,5 @@
 package fi.ruisrock2011.android.util;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;

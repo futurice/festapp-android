@@ -1,7 +1,6 @@
 package fi.ruisrock2011.android.dao;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,8 +15,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import fi.ruisrock2011.android.R;
-import fi.ruisrock2011.android.domain.Gig;
 import fi.ruisrock2011.android.domain.NewsArticle;
 import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
 import fi.ruisrock2011.android.util.HTTPUtil;

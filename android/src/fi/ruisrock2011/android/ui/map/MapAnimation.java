@@ -90,6 +90,11 @@ public class MapAnimation extends TimerTask {
 		currentCenterY = centerY_;
 		runningMove = true;
 	}
+	
+	public void setCenter(float centerX, float centerY) {
+		currentCenterX = centerX;
+		currentCenterY = centerY;
+	}
 
 	public void setScaleInfo(float current_scale, float target_scale) {
 		this.current_scale = current_scale;

@@ -1,18 +1,13 @@
 package fi.ruisrock2011.android.util;
 
-import fi.ruisrock2011.android.R;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
+import fi.ruisrock2011.android.R;
 
 public class UIUtil {
 	

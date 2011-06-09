@@ -1,9 +1,6 @@
 package fi.ruisrock2011.android;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -17,9 +14,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.domain.Gig;
-import fi.ruisrock2011.android.domain.to.FestivalDay;
-import fi.ruisrock2011.android.util.RuisrockConstants;
-import fi.ruisrock2011.android.util.StringUtil;
 import fi.ruisrock2011.android.util.UIUtil;
 
 /**
@@ -82,7 +76,7 @@ public class ArtistInfoActivity extends Activity {
 			
 			ImageView artistImage = (ImageView) findViewById(R.id.artistImage);
 			RelativeLayout artistImageContainer = (RelativeLayout) findViewById(R.id.artistImageContainer);
-			Integer imageId = gig.getImageId();
+			Integer imageId = GigDAO.getImageIdForArtist(gig.getArtist());
 			if (imageId == null) {
 				artistImageContainer.setVisibility(View.GONE);
 			} else {

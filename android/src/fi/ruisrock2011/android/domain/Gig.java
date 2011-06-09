@@ -12,7 +12,6 @@ import fi.ruisrock2011.android.util.StringUtil;
 public class Gig {
 	
 	private static final SimpleDateFormat sdfHoursAndMinutes = new SimpleDateFormat("HH:mm");
-	private static final SimpleDateFormat parcelableDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	private String id;
 	private String artist;
@@ -20,7 +19,6 @@ public class Gig {
 	private Date startTime;
 	private Date endTime;
 	private String stage;
-	private Integer imageId;
 	
 	private boolean favorite;
 	private boolean active = true;
@@ -30,10 +28,9 @@ public class Gig {
 		
 	}
 
-	public Gig(String id, Integer imageId, String artist, String description, Date startTime, Date endTime, String stage,
+	public Gig(String id, String artist, String description, Date startTime, Date endTime, String stage,
 			boolean favorite, boolean active, boolean alerted) {
 		this.id = id;
-		this.imageId = imageId;
 		this.artist = artist;
 		this.description = description;
 		this.startTime = startTime;
@@ -121,14 +118,6 @@ public class Gig {
 
 	public boolean isAlerted() {
 		return alerted;
-	}
-	
-	public void setImageId(Integer imageId) {
-		this.imageId = imageId;
-	}
-
-	public Integer getImageId() {
-		return imageId;
 	}
 
 	@Override

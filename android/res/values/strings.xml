@@ -50,10 +50,12 @@
     <string name="mapActivity.distanceToMap">Etäisyys juhlapaikasta: %s km</string>
     <string name="mapActivity.gpsAccuracy">Arvioitu GPS-tarkkuus: %s m</string>
     <string name="mapActivity.gpsWaitingForFix">Odotetaan GPS-sijaintia...</string>
-    <string name="mapActivity.nextOnStage">%1$s esiintyy %2$s:\n%3$s</string>
+    <string name="mapActivity.nextOnStage">%1$s esiintyy %2$s\n%3$s</string>
+    <string name="mapActivity.initialInfo.title">Tiesitkö?</string>
+    <string name="mapActivity.initialInfo.message">Painamalla lavan nimeä kartalla näet, mikä bändi kyseisellä lavalla soittaa juuri nyt / seuraavaksi.</string>
     
     <!-- Timeline view -->
-    <string name="timelineActivity.initialInfo.title">Oma aikataulu</string>
+    <string name="timelineActivity.initialInfo.title">Tiesitkö?</string>
     <string name="timelineActivity.initialInfo.msg">Voit luoda oman aikataulun merkitsemällä suosikkibändisi tähdellä. Suosikkibändin keikasta annetaan hälytys 15 minuuttia ennen sen alkua.</string>
     
     <!-- Fonecta 02 view -->

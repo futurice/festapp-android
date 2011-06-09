@@ -14,4 +14,7 @@
 	<dimen name="timeline.stageMarginBottom">10.5dip</dimen>
 	
 	<dimen name="timeline.hourText.offset">19dip</dimen>
+	
+	<dimen name="mapBubble.width">115dip</dimen>
+	<dimen name="mapBubble.height">55dip</dimen>
 </resources>

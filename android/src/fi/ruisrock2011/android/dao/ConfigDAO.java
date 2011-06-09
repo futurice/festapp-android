@@ -12,7 +12,6 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import fi.ruisrock2011.android.R;
-import fi.ruisrock2011.android.domain.Gig;
 import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
 import fi.ruisrock2011.android.domain.to.MapLayerOptions;
 import fi.ruisrock2011.android.domain.to.SelectableOption;
@@ -146,19 +145,10 @@ public class ConfigDAO {
 	private static List<String> getAllMapLayers(Context context) {
 		if (MAP_LAYER_OPTIONS.size() == 0) {
 			MAP_LAYER_OPTIONS.add(context.getString(R.string.mapActivity_layer_gps));
-			//MAP_LAYER_OPTIONS.add(context.getString(R.string.mapActivity_layer_test));
 		}
 		return MAP_LAYER_OPTIONS;
 	}
 	
-	private static Date getDate(String date) {
-		try {
-			return DB_DATE_FORMATTER.parse(date);
-		} catch (ParseException e) {
-			Log.e(TAG, "Unable to parse date from " + date);
-		}
-		return null;
-	}
 	
 	private static void setAttributeValue(String attributeName, String attributeValue, Context context) {
 		SQLiteDatabase db = null;

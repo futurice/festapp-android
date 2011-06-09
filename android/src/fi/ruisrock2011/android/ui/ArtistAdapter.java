@@ -3,15 +3,14 @@ package fi.ruisrock2011.android.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import fi.ruisrock2011.android.R;
-import fi.ruisrock2011.android.domain.Gig;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+import fi.ruisrock2011.android.R;
+import fi.ruisrock2011.android.domain.Gig;
 
 public class ArtistAdapter extends BaseAdapter {
 	

@@ -17,12 +17,19 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent">
 	    
-		<ImageView android:layout_width="wrap_content" android:src="@drawable/ic_maps_indicator_current_position_anim" android:id="@+id/currentPosition" android:layout_height="wrap_content"></ImageView>
+		<ImageView
+			android:id="@+id/currentPosition"
+			android:scaleType="fitStart"
+			android:src="@drawable/ic_maps_indicator_current_position_anim" 
+			android:layout_width="@dimen/map.currentPosition.size"
+			android:layout_height="@dimen/map.currentPosition.size"></ImageView>
 		<TextView android:background="@drawable/map_bubble"
 			android:id="@+id/mapBubble"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_margin="50dip"
+			android:layout_width="@dimen/mapBubble.width"
+			android:layout_height="@dimen/mapBubble.height"
+			android:textStyle="bold"
+			android:singleLine="true"
+			android:gravity="center"
 			android:text="Olet tässä" android:textColor="#ffffff" />
 	</RelativeLayout>
 	

@@ -3,7 +3,6 @@ package fi.ruisrock2011.android;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +14,6 @@ import fi.ruisrock2011.android.dao.NewsDAO;
 import fi.ruisrock2011.android.domain.NewsArticle;
 import fi.ruisrock2011.android.ui.NewsArticleAdapter;
 import fi.ruisrock2011.android.util.StringUtil;
-import fi.ruisrock2011.android.util.UIUtil;
 
 /**
  * View for showing a list of News-articles.
@@ -25,10 +23,7 @@ import fi.ruisrock2011.android.util.UIUtil;
 public class NewsListActivity extends Activity {
 	
 	private ListView newsList;
-	private boolean rssLoadingSuccess;
 	private List<NewsArticle> articles;
-	
-	private ProgressDialog progressDialog;
 	
 	private OnItemClickListener newsArticleClickListener = new OnItemClickListener() {
 		@Override
@@ -58,59 +53,12 @@ public class NewsListActivity extends Activity {
 		createNewsList();
 	}
 	
-	
-	/*
-	private boolean updateNewsArticlesViaRSS() {
-		RSSReader rssReader = new RSSReader();
-		List<RSSItem> feed = rssReader.loadRSSFeed(RuisrockConstants.NEWS_RSS_URL);
-		if (feed != null && feed.size() > 0) {
-			articles = new ArrayList<NewsArticle>();
-			for (RSSItem rssItem : feed) {
-				articles.add(new NewsArticle(rssItem));
-			}
-			NewsDAO.replaceAll(this, articles);
-			return true;
-		}
-		return false;
-	}
-	*/
-	
 	private void createNewsList() {
 		newsList = (ListView) findViewById(R.id.newsList);
-		
 		articles = NewsDAO.findAll(this);
-		/*
-		if (articles.size() == 0) {
-			progressDialog = ProgressDialog.show(this, "", getString(R.string.newsActivity_loadingArticles));
-			ActivityThread rssThread = new ActivityThread();
-			rssThread.start();
-		}
-		*/
 		
 	    newsList.setAdapter(new NewsArticleAdapter(this, articles));
 	    newsList.setOnItemClickListener(newsArticleClickListener);
 	}
-	
-	/*
-	private class ActivityThread extends Thread {
-		@Override
-		public void run() {
-			rssLoadingSuccess = updateNewsArticlesViaRSS();
-			handler.sendEmptyMessage(0);
-		}
-
-		private Handler handler = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				progressDialog.dismiss();
-				if (rssLoadingSuccess) {
-					newsList.setAdapter(new NewsArticleAdapter(getBaseContext(), articles));
-				} else {
-					showErrorDialog(getString(R.string.Error), getString(R.string.newsActivity_httpError));
-				}
-			}
-		};
-	}
-	*/
 	
 }

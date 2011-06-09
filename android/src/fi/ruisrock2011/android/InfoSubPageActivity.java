@@ -2,12 +2,9 @@ package fi.ruisrock2011.android;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.WebView;
 import android.widget.TextView;
-import fi.ruisrock2011.android.dao.ConfigDAO;
 import fi.ruisrock2011.android.util.RuisrockConstants;
-import fi.ruisrock2011.android.util.StringUtil;
 
 /**
  * View for a Info-sub-page.
@@ -16,7 +13,6 @@ import fi.ruisrock2011.android.util.StringUtil;
  */
 public class InfoSubPageActivity extends Activity {
 	
-	private static final String TAG = "InfoSubPageActivity";
 	private String pageTitle;
 	private String pageContent;
 	
