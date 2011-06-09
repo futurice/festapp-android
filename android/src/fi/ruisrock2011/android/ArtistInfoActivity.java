@@ -65,6 +65,7 @@ public class ArtistInfoActivity extends Activity {
 			artistName.setText(gig.getArtist());
 			
 			TableLayout infoTable = (TableLayout) findViewById(R.id.artistInfoTable);
+			infoTable.setBackgroundResource(R.drawable.artist_info_table_bg);
 			infoTable.setVisibility(View.VISIBLE);
 			String stage = (gig.getStage() != null) ? gig.getStage() : "";
 			((TextView) findViewById(R.id.artistInfoStage)).setText(stage);

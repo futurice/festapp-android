@@ -7,7 +7,7 @@
 	<!-- android:layout_alignParentBottom="true" -->
 	<TableLayout
 		android:layout_marginBottom="-10px"
-		android:background="@drawable/artist_info_table_bg"
+		android:background="#99000000"
 		android:gravity="center_horizontal"
 		android:layout_alignParentTop="true"
 		android:shrinkColumns="0"

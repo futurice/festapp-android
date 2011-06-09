@@ -155,7 +155,7 @@ public class TimelineActivity extends Activity {
 
 	private void updateCurrentTimeline() {
 		Date now = CalendarUtil.getNow();
-		if (timelineStartMoment == null || timelineEndMoment == null) { 
+		if (timelineStartMoment == null || timelineEndMoment == null) {
 			return;
 		}
 		View line = findViewById(R.id.timelineNowLine);
