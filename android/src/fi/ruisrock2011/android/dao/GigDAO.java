@@ -422,6 +422,7 @@ public class GigDAO {
 			return null;
 		}
 		artist = artist.toLowerCase().trim();
+		artist = artist.replaceAll("\\([a-z]+\\)$", "");
 		if (artist.startsWith("amorphis")) {
 			return R.drawable.artistimg_amorphis;
 		}
@@ -542,7 +543,7 @@ public class GigDAO {
 		if (artist.startsWith("the national")) {
 			return R.drawable.artistimg_the_national;
 		}
-		if (artist.startsWith("the prodigy")) {
+		if (artist.startsWith("the prodigy") || artist.equals("prodigy")) {
 			return R.drawable.artistimg_the_prodigy;
 		}
 		if (artist.startsWith("uusi fantasia")) {

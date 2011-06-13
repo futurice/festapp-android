@@ -9,6 +9,8 @@ import java.util.Random;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
@@ -128,7 +130,6 @@ public class TimelineActivity extends Activity {
             }
         };
         scrollView.setOnTouchListener(gestureListener);
-        UIUtil.showInitialFavoriteInfoOnFirstVisit(this);
         
 		if (initialScrollTo != null && initialScrollTo > 0) {
 			scrollView.post(new Runnable() {
@@ -136,6 +137,28 @@ public class TimelineActivity extends Activity {
 					scrollView.smoothScrollTo(initialScrollTo, 0);
 				}
 			});
+		}
+		
+		showInitialFavoriteInfoOnFirstVisit(this);
+	}
+	
+	private void showInitialFavoriteInfoOnFirstVisit(Context context) {
+		SharedPreferences pref = context.getSharedPreferences(RuisrockConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
+		final String key = RuisrockConstants.PREFERENCE_SHOW_FAVORITE_INFO;
+		
+		// TODO: Start DEBUG
+		/*
+		Editor ed = pref.edit();
+		ed.putBoolean(key, true);
+		ed.commit();
+		*/
+		// END DEBUG
+		
+		if (pref.getBoolean(key, true)) {
+			Editor editor = pref.edit();
+			editor.putBoolean(key, false);
+			editor.commit();
+			UIUtil.showDialog(context.getString(R.string.timelineActivity_initialInfo_title), context.getString(R.string.timelineActivity_initialInfo_msg), context);
 		}
 	}
 	

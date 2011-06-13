@@ -26,25 +26,5 @@ public class UIUtil {
 		
 		dialog.show();
 	}
-	
-	public static void showInitialFavoriteInfoOnFirstVisit(Context context) {
-		SharedPreferences pref = context.getSharedPreferences(RuisrockConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
-		final String key = "showFavoriteInfo";
-		
-		// TODO: Start DEBUG
-		/*
-		Editor ed = pref.edit();
-		ed.putBoolean(key, true);
-		ed.commit();
-		*/
-		// END DEBUG
-		
-		if (pref.getBoolean(key, true)) {
-			Editor editor = pref.edit();
-			editor.putBoolean(key, false);
-			editor.commit();
-			UIUtil.showDialog(context.getString(R.string.timelineActivity_initialInfo_title), context.getString(R.string.timelineActivity_initialInfo_msg), context);
-		}
-	}
 
 }

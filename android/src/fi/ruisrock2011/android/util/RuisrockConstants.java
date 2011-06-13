@@ -22,6 +22,7 @@ public class RuisrockConstants {
 	public static final int SERVICE_NEWS_ALERT_THRESHOLD_IN_MINUTES = 5 * 60;
 	
 	public static final String PREFERENCE_GLOBAL = "fi.ruisrock2011.android.globalPreference";
+	public static final String PREFERENCE_SHOW_FAVORITE_INFO = "showFavoriteInfo";
 	
 	// INITIAL ETAG VALUES
 	public static final String ETAG_GIGS = "5f1b28578706b53a4850ec76c1d77332";

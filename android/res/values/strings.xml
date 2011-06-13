@@ -40,6 +40,7 @@
     <string name="artistInfoActivity.invalidId">Bändin tietoja ei löydy.</string>
     <string name="artistInfoActivity.favoriteOn">Bändi merkittiin suosikiksi. Puhelin hälyttää 15 min ennen keikan alkua.</string>
     <string name="artistInfoActivity.favoriteOff">Bändin keikkamuistutus poistettiin.</string>
+    <string name="artistInfoActivity.menu.OpenInSpotify">Hae Spotifysta</string>
     
     <!-- Map view -->
     <string name="mapActivity.ChooseLayers">Näytä kartalla</string>
