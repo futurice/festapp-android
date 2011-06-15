@@ -202,11 +202,15 @@ public class ArtistInfoActivity extends Activity {
 		}
 		artist = artist.toLowerCase().trim();
 		artist = artist.replaceAll("\\([a-z]+\\)$", "");
+		artist = artist.trim();
 		if (artist.startsWith("amorphis")) {
 			return "spotify:artist:2UOVgpgiNTC6KK0vSC77aD";
 		}
 		if (artist.startsWith("anna calvi")) {
 			return "spotify:artist:50sSN9E5i4DJzYDclAXlSo";
+		}
+		if (artist.startsWith("anssi 8000")) {
+			return "spotify:artist:1qiFMp3603jO86EYOjDIj9";
 		}
 		if (artist.startsWith("apulanta")) {
 			return "spotify:artist:5kwthnxNdfnqGk0nL35wDC";
@@ -235,6 +239,9 @@ public class ArtistInfoActivity extends Activity {
 		if (artist.startsWith("elbow")) {
 			return "spotify:artist:0TJB3EE2efClsYIDQ8V2Jk";
 		}
+		if (artist.startsWith("felix zenger")) {
+			return "spotify:artist:13eYLbVUzgd8RytNSjssVO";
+		}
 		if (artist.startsWith("fleet foxes")) {
 			return "spotify:artist:4EVpmkEwrLYEg6jIsiPMIb";
 		}
@@ -249,6 +256,9 @@ public class ArtistInfoActivity extends Activity {
 		}
 		if (artist.contains("villegalle")) {
 			return "spotify:artist:4ASPsiINepImjhptGTwnbH";
+		}
+		if (artist.startsWith("jarkko martikainen")) {
+			return "spotify:artist:466GWVoauVVD15fGVapVKv";
 		}
 		/*
 		if (artist.startsWith("jätkäjätkät")) {
@@ -267,6 +277,9 @@ public class ArtistInfoActivity extends Activity {
 		if (artist.startsWith("kotiteollisuus")) {
 			return "spotify:artist:0r9Q7acXxkDPoqfRfAb9Aw";
 		}
+		if (artist.equals("lama")) {
+			return "spotify:artist:4fePAqrqNX0ezZxNTDgdov";
+		}
 		if (artist.startsWith("magenta skycode")) {
 			return "spotify:artist:50ExyXXZnoYUrtmAJguRMk";
 		}
@@ -278,14 +291,26 @@ public class ArtistInfoActivity extends Activity {
 			return R.drawable.artistimg_michael_monroe;
 		}
 		*/
+		if (artist.startsWith("mirel wagner")) {
+			return "spotify:artist:599W9qxs3LzkiiEmkoK6Kx";
+		}
+		if (artist.startsWith("olavi uusivirta")) {
+			return "spotify:artist:5LbUBFEG2qciScT9kwFqmV";
+		}
 		if (artist.startsWith("paleface")) {
 			return "spotify:artist:5CNgBVZXUEEGqyzgjUAgDj";
+		}
+		if (artist.startsWith("paradise oskar")) {
+			return "spotify:artist:15ksAhjnYhuK2wOZCYg9g3";
 		}
 		if (artist.startsWith("paramore")) {
 			return "spotify:artist:74XFHRwlV6OrjEM0A2NCMF";
 		}
 		if (artist.startsWith("pariisin kev")) {
 			return "spotify:artist:2Bj3YsSKo7O5bj3Ku6z1Ny";
+		}
+		if (artist.startsWith("pelle miljoona")) {
+			return "spotify:artist:3b9AnZICKvmVlgG2nKEplU";
 		}
 		/*
 		if (artist.startsWith("pertti kurikan nimi")) {
@@ -330,6 +355,9 @@ public class ArtistInfoActivity extends Activity {
 		}
 		if (artist.startsWith("the prodigy") || artist.equals("prodigy")) {
 			return "spotify:artist:1GwxXgEc6oxCKQ5wykWXFs";
+		}
+		if (artist.startsWith("tuomari nurmio")) {
+			return "spotify:artist:7zBD3u7aYHxNPlLWc5CAdh";
 		}
 		if (artist.startsWith("uusi fantasia")) {
 			return "spotify:artist:7K1JNuo3rYr7MNgIXAyysC";

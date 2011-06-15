@@ -423,11 +423,15 @@ public class GigDAO {
 		}
 		artist = artist.toLowerCase().trim();
 		artist = artist.replaceAll("\\([a-z]+\\)$", "");
+		artist = artist.trim();
 		if (artist.startsWith("amorphis")) {
 			return R.drawable.artistimg_amorphis;
 		}
 		if (artist.startsWith("anna calvi")) {
 			return R.drawable.artistimg_anna_calvi;
+		}
+		if (artist.startsWith("anssi 8000")) {
+			return R.drawable.artistimg_anssi_8000;
 		}
 		if (artist.startsWith("apulanta")) {
 			return R.drawable.artistimg_apulanta;
@@ -456,6 +460,9 @@ public class GigDAO {
 		if (artist.startsWith("elbow")) {
 			return R.drawable.artistimg_elbow;
 		}
+		if (artist.startsWith("felix zenger")) {
+			return R.drawable.artistimg_felix_zenger;
+		}
 		if (artist.startsWith("fleet foxes")) {
 			return R.drawable.artistimg_fleet_foxes;
 		}
@@ -470,6 +477,9 @@ public class GigDAO {
 		}
 		if (artist.contains("villegalle")) {
 			return R.drawable.artistimg_jare_et_villegalle;
+		}
+		if (artist.startsWith("jarkko martikainen")) {
+			return R.drawable.artistimg_jarkko_martikainen;
 		}
 		if (artist.startsWith("jätkäjätkät")) {
 			return R.drawable.artistimg_jatkajatkat;
@@ -486,6 +496,9 @@ public class GigDAO {
 		if (artist.startsWith("kotiteollisuus")) {
 			return R.drawable.artistimg_kotiteollisuus;
 		}
+		if (artist.equals("lama")) {
+			return R.drawable.artistimg_lama;
+		}
 		if (artist.startsWith("magenta skycode")) {
 			return R.drawable.artistimg_magenta_skycode;
 		}
@@ -495,14 +508,26 @@ public class GigDAO {
 		if (artist.startsWith("michael monroe")) {
 			return R.drawable.artistimg_michael_monroe;
 		}
+		if (artist.startsWith("mirel wagner")) {
+			return R.drawable.artistimg_mirel_wagner;
+		}
+		if (artist.startsWith("olavi uusivirta")) {
+			return R.drawable.artistimg_olavi_uusivirta;
+		}
 		if (artist.startsWith("paleface")) {
 			return R.drawable.artistimg_paleface;
+		}
+		if (artist.startsWith("paradise oskar")) {
+			return R.drawable.artistimg_paradise_oskar;
 		}
 		if (artist.startsWith("paramore")) {
 			return R.drawable.artistimg_paramore;
 		}
 		if (artist.startsWith("pariisin kev")) {
 			return R.drawable.artistimg_pariisin_kevat;
+		}
+		if (artist.startsWith("pelle miljoona")) {
+			return R.drawable.artistimg_pelle_miljoona;
 		}
 		if (artist.startsWith("pertti kurikan nimi")) {
 			return R.drawable.artistimg_pertti_kurikan_np;
@@ -545,6 +570,9 @@ public class GigDAO {
 		}
 		if (artist.startsWith("the prodigy") || artist.equals("prodigy")) {
 			return R.drawable.artistimg_the_prodigy;
+		}
+		if (artist.startsWith("tuomari nurmio")) {
+			return R.drawable.artistimg_tuomari_nurmio;
 		}
 		if (artist.startsWith("uusi fantasia")) {
 			return R.drawable.artistimg_uusi_fantasia;
