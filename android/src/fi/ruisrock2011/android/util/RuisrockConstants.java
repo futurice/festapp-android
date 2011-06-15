@@ -25,7 +25,7 @@ public class RuisrockConstants {
 	public static final String PREFERENCE_SHOW_FAVORITE_INFO = "showFavoriteInfo";
 	
 	// INITIAL ETAG VALUES
-	public static final String ETAG_GIGS = "5f1b28578706b53a4850ec76c1d77332";
+	public static final String ETAG_GIGS = "f15d2662740b17df94451df386004fb9";
 	public static final String ETAG_TRANSPORTATION = "65afc40ef57359e62246b118407d695a";
 	public static final String ETAG_NEWS = "b3d3d843fb72e9ce6652779242ab244c";
 	public static final String ETAG_FOOD_AND_DRINK = "077fadec446efd20f8d15337989cc410";

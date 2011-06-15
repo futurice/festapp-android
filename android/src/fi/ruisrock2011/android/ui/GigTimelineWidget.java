@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,6 +47,11 @@ public class GigTimelineWidget extends RelativeLayout {
 		starIcon.setChecked(gig.isFavorite());
 		starIcon.setOnCheckedChangeListener(favoriteListener);
 		setFavorite(gig.isFavorite());
+		if (gig.getDuration() < 20) {
+			starIcon.setVisibility(View.GONE);
+		} else {
+			starIcon.setVisibility(View.VISIBLE);
+		}
 		
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 		int width = PIXELS_PER_MINUTE * gig.getDuration();

@@ -436,6 +436,9 @@ public class GigDAO {
 		if (artist.startsWith("apulanta")) {
 			return R.drawable.artistimg_apulanta;
 		}
+		if (artist.startsWith("betty bloomerz")) {
+			return R.drawable.artistimg_betty_bloomerz;
+		}
 		if (artist.startsWith("bob hund")) {
 			return R.drawable.artistimg_bob_hund;
 		}
@@ -495,6 +498,9 @@ public class GigDAO {
 		}
 		if (artist.startsWith("kotiteollisuus")) {
 			return R.drawable.artistimg_kotiteollisuus;
+		}
+		if (artist.startsWith("kuuma ankanpoikanen")) {
+			return R.drawable.artistimg_kuuma_ankanpoikanen;
 		}
 		if (artist.equals("lama")) {
 			return R.drawable.artistimg_lama;
