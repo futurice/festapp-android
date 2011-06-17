@@ -112,7 +112,8 @@ public class ArtistInfoActivity extends Activity {
 			StringBuilder timeText = new StringBuilder("");
 			for (GigLocation location : gig.getLocations()) {
 				String nl = (stageText.length() != 0) ? "\n" : "";
-				stageText.append(nl + location.getStage());
+				String stage = (location.getStage() != null) ? location.getStage() : "";
+				stageText.append(nl + stage);
 				timeText.append(nl + location.getDayAndTime());
 			}
 			((TextView) findViewById(R.id.artistInfoStage)).setText(stageText.toString());

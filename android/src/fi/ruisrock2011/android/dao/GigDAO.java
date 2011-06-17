@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,7 @@ import fi.ruisrock2011.android.domain.to.FestivalDay;
 import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
 import fi.ruisrock2011.android.domain.to.StageType;
 import fi.ruisrock2011.android.util.CalendarUtil;
+import fi.ruisrock2011.android.util.GigArtistNameComparator;
 import fi.ruisrock2011.android.util.HTTPUtil;
 import fi.ruisrock2011.android.util.JSONUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
@@ -41,7 +43,6 @@ public class GigDAO {
 	
 	private static final String TAG = "GigDAO";
 	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	//private static final String[] GIG_COLUMNS = { "id", "artist", "description", "favorite", "active", "alerted" };
 	
 	private static final String GIGS_QUERY = "SELECT gig.id, gig.artist, gig.description, gig.favorite, gig.active, gig.alerted, " +
 			"location.stage, location.startTime, location.endTime FROM gig LEFT JOIN location ON (gig.id = location.id)";
@@ -121,7 +122,9 @@ public class GigDAO {
 		} finally {
 			closeDb(db, cursor);
 		}
-		return new ArrayList<Gig>(gigs.values());
+		List<Gig> gigsList = new ArrayList<Gig>(gigs.values());
+		Collections.sort(gigsList, new GigArtistNameComparator());
+		return gigsList; 
 	}
 	
 	public static List<Gig> parseFromJson(String json) throws Exception {
@@ -188,7 +191,7 @@ public class GigDAO {
 		try {
 			db = (new DatabaseHelper(context)).getReadableDatabase();
 			//cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND festivalDay = ? AND stage IS NOT NULL", new String[]{festivalDay.name()}, null, null, "stage ASC, startTime ASC");
-			cursor = db.rawQuery(GIGS_QUERY + " WHERE gig.active = 1 AND location.festivalDay = ? AND location.stage IS NOT NULL ORDER BY gig.id", new String[]{festivalDay.name()});
+			cursor = db.rawQuery(GIGS_QUERY + " WHERE gig.active = 1 AND location.festivalDay = ? AND location.stage IS NOT NULL ORDER BY location.stage ASC, location.startTime ASC", new String[]{festivalDay.name()});
 			while (cursor.moveToNext()) {
 		        Gig gig = convertCursorToGig(cursor, cursor.getString(0));
 		        GigLocation location = convertCursorToGigLocation(cursor, cursor.getString(0));
