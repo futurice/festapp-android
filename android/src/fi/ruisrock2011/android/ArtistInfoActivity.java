@@ -25,6 +25,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.domain.Gig;
+import fi.ruisrock2011.android.domain.GigLocation;
 import fi.ruisrock2011.android.util.RuisrockConstants;
 import fi.ruisrock2011.android.util.StringUtil;
 import fi.ruisrock2011.android.util.UIUtil;
@@ -107,9 +108,15 @@ public class ArtistInfoActivity extends Activity {
 			TableLayout infoTable = (TableLayout) findViewById(R.id.artistInfoTable);
 			infoTable.setBackgroundResource(R.drawable.artist_info_table_bg);
 			infoTable.setVisibility(View.VISIBLE);
-			String stage = (gig.getStage() != null) ? gig.getStage() : "";
-			((TextView) findViewById(R.id.artistInfoStage)).setText(stage);
-			((TextView) findViewById(R.id.artistInfoLiveTime)).setText(gig.getDayAndTime());
+			StringBuilder stageText = new StringBuilder("");
+			StringBuilder timeText = new StringBuilder("");
+			for (GigLocation location : gig.getLocations()) {
+				String nl = (stageText.length() != 0) ? "\n" : "";
+				stageText.append(nl + location.getStage());
+				timeText.append(nl + location.getDayAndTime());
+			}
+			((TextView) findViewById(R.id.artistInfoStage)).setText(stageText.toString());
+			((TextView) findViewById(R.id.artistInfoLiveTime)).setText(timeText.toString());
 			ToggleButton favoriteButton = (ToggleButton) findViewById(R.id.artistInfoFavorite);
 			favoriteButton.setChecked(gig.isFavorite());
 			favoriteButton.setOnClickListener(favoriteListener);

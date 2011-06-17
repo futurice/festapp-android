@@ -50,14 +50,14 @@ public class DaySchedule {
 		for (Map.Entry<String, List<Gig>> entry : stageGigs.entrySet()) {
 			for (Gig gig : entry.getValue()) {
 				if (earliestTime == null || latestTime == null) {
-					earliestTime = gig.getStartTime();
-					latestTime = gig.getEndTime();
+					earliestTime = gig.getOnlyStartTime();
+					latestTime = gig.getOnlyEndTime();
 				} else {
-					if (gig.getStartTime().before(earliestTime)) {
-						earliestTime = gig.getStartTime();
+					if (gig.getOnlyStartTime().before(earliestTime)) {
+						earliestTime = gig.getOnlyStartTime();
 					}
-					if (gig.getEndTime().after(latestTime)) {
-						latestTime = gig.getEndTime();
+					if (gig.getOnlyEndTime().after(latestTime)) {
+						latestTime = gig.getOnlyEndTime();
 					}
 				}
 			}

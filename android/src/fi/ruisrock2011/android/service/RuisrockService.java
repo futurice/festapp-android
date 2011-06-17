@@ -81,8 +81,8 @@ public class RuisrockService extends Service {
 	    int uniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
 	    PendingIntent pending = PendingIntent.getActivity(getBaseContext(), uniqueId, contentIntent, 0);
 	    
-	    String tickerText = gig.getArtist() + ": " + gig.getStageAndTime();
-	    notify(pending, gig.getId(), tickerText, gig.getArtist(), gig.getStageAndTime());
+	    String tickerText = gig.getArtist() + ": " + gig.getOnlyStageAndTime();
+	    notify(pending, gig.getId(), tickerText, gig.getArtist(), gig.getOnlyStageAndTime());
 	}
 	
 	private void notify(NewsArticle article) {

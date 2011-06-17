@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import fi.ruisrock2011.android.R;
 import fi.ruisrock2011.android.domain.Gig;
+import fi.ruisrock2011.android.domain.GigLocation;
 
 public class ArtistAdapter extends BaseAdapter {
 	
@@ -49,7 +50,12 @@ public class ArtistAdapter extends BaseAdapter {
 		TextView timeAndStage = (TextView) view.findViewById(R.id.gig_timeAndStage);
 
 		artist.setText(items.get(position).getArtist());
-		timeAndStage.setText(items.get(position).getStageAndTime());
+		StringBuilder stageAndTimeText = new StringBuilder("");
+		for (GigLocation location : items.get(position).getLocations()) {
+			String nl = (stageAndTimeText.length() == 0) ? "" : "\n";
+			stageAndTimeText.append(nl + location.getStageAndTime());
+		}
+		timeAndStage.setText(stageAndTimeText);
 		return view;
 	}
 

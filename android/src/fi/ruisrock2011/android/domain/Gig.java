@@ -1,8 +1,10 @@
 package fi.ruisrock2011.android.domain;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.domain.to.FestivalDay;
@@ -10,35 +12,39 @@ import fi.ruisrock2011.android.util.CalendarUtil;
 import fi.ruisrock2011.android.util.StringUtil;
 
 public class Gig {
-	
-	private static final SimpleDateFormat sdfHoursAndMinutes = new SimpleDateFormat("HH:mm");
 
 	private String id;
 	private String artist;
 	private String description;
-	private Date startTime;
-	private Date endTime;
-	private String stage;
-	
 	private boolean favorite;
 	private boolean active = true;
 	private boolean alerted = false;
+	
+	private List<GigLocation> locations = new ArrayList<GigLocation>();
 	
 	public Gig() {
 		
 	}
 
-	public Gig(String id, String artist, String description, Date startTime, Date endTime, String stage,
-			boolean favorite, boolean active, boolean alerted) {
+	public Gig(String id, String artist, String description, boolean favorite, boolean active, boolean alerted) {
 		this.id = id;
 		this.artist = artist;
 		this.description = description;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.stage = stage;
 		this.favorite = favorite;
 		this.active = active;
 		this.alerted = alerted;
+	}
+	
+	public List<GigLocation> getLocations() {
+		return locations;
+	}
+	
+	public void setLocations(List<GigLocation> locations) {
+		this.locations = locations;
+	}
+	
+	public void addLocation(GigLocation location) {
+		locations.add(location);
 	}
 
 	public void setId(String id) {
@@ -63,37 +69,6 @@ public class Gig {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Date getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-
-	public Date getEndTime() {
-		return endTime;
-	}
-	
-	public Integer getDuration() {
-		if (startTime == null || endTime == null) {
-			return null;
-		}
-		return CalendarUtil.getMinutesBetweenTwoDates(startTime, endTime);
-	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
-
-	public String getStage() {
-		return stage;
-	}
-
-	public void setStage(String stage) {
-		this.stage = stage;
 	}
 
 	public boolean isFavorite() {
@@ -122,42 +97,42 @@ public class Gig {
 
 	@Override
 	public String toString() {
-		return String.format("Gig {id: %s, artist: %s, stage: %s, startTime: %s}", id, artist, stage, startTime);
+		return String.format("Gig {id: %s, artist: %s}", id, artist);
 	}
 	
-	public String getStageAndTime() {
-		String stage = (this.stage != null) ? this.stage : "";
-		String time = getDayAndTime();
-		
-		if (StringUtil.isNotEmpty(stage) && StringUtil.isNotEmpty(time)) {
-			return String.format("%s, %s", stage, time);
-		} else if (StringUtil.isNotEmpty(stage)) {
-			return stage;
-		} else if (StringUtil.isNotEmpty(time)) {
-			return time;
+	public Date getOnlyStartTime() {
+		if (locations.size() == 1) {
+			return locations.get(0).getStartTime();
+		}
+		return null;
+	}
+	
+	public Date getOnlyEndTime() {
+		if (locations.size() == 1) {
+			return locations.get(0).getEndTime();
+		}
+		return null;
+	}
+	
+	public String getOnlyStage() {
+		if (locations.size() == 1) {
+			return locations.get(0).getStage();
+		}
+		return null;
+	}
+	
+	public Integer getOnlyDuration() {
+		if (locations.size() == 1) {
+			return locations.get(0).getDuration();
+		}
+		return null;
+	}
+	
+	public String getOnlyStageAndTime() {
+		if (locations.size() == 1) {
+			return locations.get(0).getStageAndTime();
 		}
 		return "";
-	}
-	
-	public String getDayAndTime() {
-		return (startTime != null && endTime != null) ? getStartDay().substring(0, 2).toLowerCase() + " " + getTime() : "";
-	}
-	
-	public String getTime() {
-		return (startTime != null && endTime != null) ? "klo " + sdfHoursAndMinutes.format(startTime) + " - " + sdfHoursAndMinutes.format(endTime) : "";
-	}
-	
-	public String getStartDay() {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(startTime);
-		return CalendarUtil.getFullWeekdayName(cal.get(Calendar.DAY_OF_WEEK));
-	}
-	
-	public FestivalDay getFestivalDay() {
-		if (startTime == null || endTime == null) {
-			return null;
-		}
-		return GigDAO.getFestivalDay(startTime);
 	}
 
 }

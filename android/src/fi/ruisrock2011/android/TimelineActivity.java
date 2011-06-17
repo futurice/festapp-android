@@ -223,8 +223,8 @@ public class TimelineActivity extends Activity {
 
 			Date previousTime = timelineStartMoment;
 			for (Gig gig : stageGigs.get(stage)) {
-				if (previousTime.before(gig.getStartTime())) {
-					int margin = GigTimelineWidget.PIXELS_PER_MINUTE * CalendarUtil.getMinutesBetweenTwoDates(previousTime, gig.getStartTime());
+				if (previousTime.before(gig.getOnlyStartTime())) {
+					int margin = GigTimelineWidget.PIXELS_PER_MINUTE * CalendarUtil.getMinutesBetweenTwoDates(previousTime, gig.getOnlyStartTime());
 					TextView tv = new TextView(this);
 					tv.setHeight(ROW_HEIGHT);
 					tv.setWidth(margin);
@@ -233,7 +233,7 @@ public class TimelineActivity extends Activity {
 				
 				GigTimelineWidget gigWidget = new GigTimelineWidget(this, null, gig, previousTime);
 				stageRow.addView(gigWidget);
-				if (gig.getEndTime().equals(daySchedule.getLatestTime())) {
+				if (gig.getOnlyEndTime().equals(daySchedule.getLatestTime())) {
 					int margin = GigTimelineWidget.PIXELS_PER_MINUTE * TIMELINE_END_OFFSET;
 					TextView tv = new TextView(this);
 					tv.setHeight(ROW_HEIGHT);
@@ -242,7 +242,7 @@ public class TimelineActivity extends Activity {
 				}
 				
 				gigWidget.setOnClickListener(gigWidgetClickListener);
-				previousTime = gig.getEndTime();
+				previousTime = gig.getOnlyEndTime();
 			}
 			gigLayout.addView(getGuitarString(row++));
 			gigLayout.addView(stageRow);

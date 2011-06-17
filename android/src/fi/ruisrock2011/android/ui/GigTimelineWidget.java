@@ -47,14 +47,14 @@ public class GigTimelineWidget extends RelativeLayout {
 		starIcon.setChecked(gig.isFavorite());
 		starIcon.setOnCheckedChangeListener(favoriteListener);
 		setFavorite(gig.isFavorite());
-		if (gig.getDuration() < 20) {
+		if (gig.getOnlyDuration() < 20) {
 			starIcon.setVisibility(View.GONE);
 		} else {
 			starIcon.setVisibility(View.VISIBLE);
 		}
 		
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-		int width = PIXELS_PER_MINUTE * gig.getDuration();
+		int width = PIXELS_PER_MINUTE * gig.getOnlyDuration();
 		params.width = width;
 		int height = (int) getResources().getDimension(R.dimen.timeline_gigHeight);
 		params.height = height;

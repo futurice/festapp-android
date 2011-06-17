@@ -6,6 +6,7 @@ public class RuisrockConstants {
 	
 	public static final String NEWS_JSON_URL = "http://legotius.futurice.com/ruisrock/cache.php?page=news";
 	public static final String GIGS_JSON_URL = "http://legotius.futurice.com/ruisrock/cache.php?page=bands";
+	//public static final String GIGS_JSON_URL = "http://legotius.futurice.com/debug_ruisrock/gigs";
 	
 	public static final String SERVICES_JSON_URL = "http://legotius.futurice.com/ruisrock/cache.php?page=services";
 	public static final String GENERAL_INFO_JSON_URL = "http://legotius.futurice.com/ruisrock/cache.php?page=general";
@@ -26,11 +27,11 @@ public class RuisrockConstants {
 	
 	// INITIAL ETAG VALUES
 	public static final String ETAG_GIGS = "f15d2662740b17df94451df386004fb9";
-	public static final String ETAG_TRANSPORTATION = "65afc40ef57359e62246b118407d695a";
-	public static final String ETAG_NEWS = "b3d3d843fb72e9ce6652779242ab244c";
-	public static final String ETAG_FOOD_AND_DRINK = "077fadec446efd20f8d15337989cc410";
+	public static final String ETAG_TRANSPORTATION = "1d28fee3a6f9f647e370015808eb65d2";
+	public static final String ETAG_NEWS = "00e489b34b656da83211e8c1de343b59";
+	public static final String ETAG_FOOD_AND_DRINK = "0e24b1d90b3184ebe50fc0ef6476ddbb";
 	public static final String ETAG_SERVICES = "369d5f3abd8c9106f2f17e9bc4741e67";
-	public static final String ETAG_GENERAL_INFO = "38b9ba53c1b6edb0c5835cd31084f247";
+	public static final String ETAG_GENERAL_INFO = "1fdabf7ad8f234a1835476d97ef4a0a9";
 	
 	/*
 	public static final String ETAG_GIGS = null;

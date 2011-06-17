@@ -24,7 +24,7 @@ import fi.ruisrock2011.android.util.StringUtil;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME = "ruisrock2011_db";
-	private static final int DB_VERSION = 2;
+	private static final int DB_VERSION = 13; // Latest release at the market: 1
 	private static final String TAG = "DatabaseHelper";
 	
 	private Context context;
@@ -40,6 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createNewsTable(db);
 			createConfigTable(db);
 			createGigTable(db);
+			createGigLocationTable(db);
 			
 			createNewsArticlesFromLocalJson(db);
 			createGigsFromLocalJson(db);
@@ -70,7 +71,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		for (Gig gig : gigs) {
 			if (GigDAO.isValidGig(gig)) {
 				ContentValues values = GigDAO.convertGigToContentValues(gig);
-				db.insert("gig", "date", values);
+				db.insert("gig", "description", values);
+				
+				for (ContentValues cv : GigDAO.convertGigToLocationContentValues(gig)) {
+					db.insert("location", null, cv);
+				}
 			}
 		}
 		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_GIGS, RuisrockConstants.ETAG_GIGS);
@@ -143,12 +148,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"id TEXT PRIMARY KEY, " +
 				"artist TEXT, " +
 				"description TEXT, " +
+				"active BOOLEAN, " +
+				"favorite BOOLEAN, " +
+				"alerted BOOLEAN)";
+		db.execSQL(sql);
+	}
+	
+	private void createGigLocationTable(SQLiteDatabase db) throws Exception {
+		db.execSQL("DROP TABLE IF EXISTS location");
+		String sql = "CREATE TABLE IF NOT EXISTS location (" +
+				"id TEXT NOT NULL, " +
 				"startTime DATE, " +
 				"endTime DATE, " +
 				"festivalDay VARCHAR(63), " +
-				"active BOOLEAN, " +
-				"favorite BOOLEAN, " +
-				"alerted BOOLEAN, " +
 				"stage VARCHAR(255))";
 		db.execSQL(sql);
 	}
