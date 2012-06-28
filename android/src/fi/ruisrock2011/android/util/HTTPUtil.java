@@ -59,7 +59,7 @@ import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
  * @author Pyry-Samuli Lahti / Futurice
  */
 public class HTTPUtil {
-	
+
 	private static final String TAG = "HTTPUtil";
 
 	private static final String CONTENT_TYPE = "Content-Type";
@@ -124,45 +124,45 @@ public class HTTPUtil {
 	public HTTPBackendResponse performGet(final String url) {
 		return performRequest(null, url, null, null, null, null, HTTPUtil.GET_TYPE);
 	}
-	
+
 	public static boolean isContentUpdated(String urlString, String previousEtag) throws Exception {
 		if (previousEtag == null || previousEtag.length() == 0) {
 			return true;
 		}
-        URL url = new URL(urlString);
+		URL url = new URL(urlString);
 
-        Socket socket = null;
-        PrintWriter writer = null;
-        BufferedReader reader = null;
+		Socket socket = null;
+		PrintWriter writer = null;
+		BufferedReader reader = null;
 
-        boolean contentChanged = true;
-        try {
-            socket = new Socket(url.getHost(), 80);
-            writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-            writer.println("HEAD "+url.getFile()+" HTTP/1.1");
-            writer.println("Host: " + url.getHost());
-            writer.println(""); // Important, else the server will expect that there's more into the request.
-            writer.flush();
+		boolean contentChanged = true;
+		try {
+			socket = new Socket(url.getHost(), 80);
+			writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+			writer.println("HEAD "+url.getFile()+" HTTP/1.1");
+			writer.println("Host: " + url.getHost());
+			writer.println(""); // Important, else the server will expect that there's more into the request.
+			writer.flush();
 
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                String etag = "ETag: ";
-                if (line.startsWith(etag)) {
-                	String newEtag = line.replaceFirst(etag, "").replace("\"", "");
-                	if (newEtag.equals(previousEtag)) {
-                		contentChanged = false;
-                		break;
-                	}
-                }
-            }
-        } finally {
-            if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {} 
-            if (writer != null) { writer.close(); }
-            if (socket != null) try { socket.close(); } catch (IOException logOrIgnore) {} 
-        }
-		
+			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				String etag = "ETag: ";
+				if (line.startsWith(etag)) {
+					String newEtag = line.replaceFirst(etag, "").replace("\"", "");
+					if (newEtag.equals(previousEtag)) {
+						contentChanged = false;
+						break;
+					}
+				}
+			}
+		} finally {
+			if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {} 
+			if (writer != null) { writer.close(); }
+			if (socket != null) try { socket.close(); } catch (IOException logOrIgnore) {} 
+		}
+
 		return contentChanged;
 	}
 
@@ -282,11 +282,15 @@ public class HTTPUtil {
 				return httpBackendResponse;
 			}
 			httpBackendResponse.setContent(StringUtil.convertStreamToString(httpResponse.getEntity().getContent()));
-			String etag = httpResponse.getHeaders("ETag")[0].getValue();
-			if (etag != null) {
-				etag = etag.replace("\"", "");
+
+			Header[] headers = httpResponse.getHeaders("ETag");
+			if (headers != null && headers.length > 0) {
+				String etag = headers[0].getValue();
+				if (etag != null) {
+					etag = etag.replace("\"", "");
+				}
+				httpBackendResponse.setEtag(etag);
 			}
-			httpBackendResponse.setEtag(etag);
 			httpBackendResponse.setValid(true);
 			httpResponse.getEntity().consumeContent();
 		} catch (Exception e) {

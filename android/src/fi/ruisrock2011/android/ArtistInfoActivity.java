@@ -106,7 +106,7 @@ public class ArtistInfoActivity extends Activity {
 			artistName.setText(gig.getArtist());
 			
 			TableLayout infoTable = (TableLayout) findViewById(R.id.artistInfoTable);
-			infoTable.setBackgroundResource(R.drawable.artist_info_table_bg);
+//			infoTable.setBackgroundResource(R.drawable.artist_info_table_bg);
 			infoTable.setVisibility(View.VISIBLE);
 			StringBuilder stageText = new StringBuilder("");
 			StringBuilder timeText = new StringBuilder("");
@@ -208,99 +208,96 @@ public class ArtistInfoActivity extends Activity {
 		if (StringUtil.isEmpty(artist)) {
 			return null;
 		}
+		
 		artist = artist.toLowerCase().trim();
 		artist = artist.replaceAll("\\([a-z]+\\)$", "");
 		artist = artist.trim();
-		if (artist.startsWith("amorphis")) {
-			return "spotify:artist:2UOVgpgiNTC6KK0vSC77aD";
-		}
-		if (artist.startsWith("anna calvi")) {
-			return "spotify:artist:50sSN9E5i4DJzYDclAXlSo";
-		}
-		if (artist.startsWith("anssi 8000")) {
-			return "spotify:artist:1qiFMp3603jO86EYOjDIj9";
+		if (artist.startsWith("apocalyptica")) {
+			return "spotify:artist:4Lm0pUvmisUHMdoky5ch2I";
 		}
 		if (artist.startsWith("apulanta")) {
 			return "spotify:artist:5kwthnxNdfnqGk0nL35wDC";
 		}
-		if (artist.startsWith("bob hund")) {
-			return "spotify:artist:6OZxE19iim1JKvCA3GmCVx";
+		if (artist.startsWith("black twig")) {
+			return "spotify:artist:79AcJfuSU5H7rkKOuPG4y1";
 		}
-		if (artist.startsWith("bring me the horizon")) {
-			return "spotify:artist:1Ffb6ejR6Fe5IamqA5oRUF";
+		if (artist.startsWith("bloc party")) {
+			return "spotify:artist:3MM8mtgFzaEJsqbjZBSsHJ";
 		}
-		if (artist.startsWith("bullet for my valentine")) {
-			return "spotify:artist:7iWiAD5LLKyiox2grgfmUT";
+		if (artist.startsWith("burning hearts")) {
+			return "spotify:artist:07RLOidpB4QSAETF8ZlR5W";
 		}
-		if (artist.startsWith("carpark north")) {
-			return "spotify:artist:6v8pFbihIDnlV6freVYMmZ";
+		if (artist.startsWith("children of bodom")) {
+			return "spotify:artist:1xUhNgw4eJDZfvumIpcz1B";
 		}
-		if (artist.startsWith("circle")) {
-			return "spotify:artist:0VFRNaQs3xWnI8zSB66MDR";
+		if (artist.startsWith("chisu")) {
+			return "spotify:artist:0Wo2rgrMZVYn0u0uxlDPJP";
 		}
-		if (artist.startsWith("cmx")) {
-			return "spotify:artist:7Ip1eXTDPgmMib2tTiJCyG";
+		if (artist.startsWith("disco ensemble")) {
+			return "spotify:artist:0027wHZDQXpRll4ckwDGad";
 		}
-		if (artist.startsWith("graveyard")) {
-			return "spotify:artist:0hU5urLse5h1Z0b4zQkovL";
+		if (artist.startsWith("elokuu")) {
+			return "spotify:artist:0LqzBv7bOc73BPn8du1K2o";
 		}
-		if (artist.startsWith("elbow")) {
-			return "spotify:artist:0TJB3EE2efClsYIDQ8V2Jk";
+		if (artist.startsWith("eppu normaali")) {
+			return "spotify:artist:6KbCFHgM4basg1TvK3oEzv";
 		}
-		if (artist.startsWith("felix zenger")) {
-			return "spotify:artist:13eYLbVUzgd8RytNSjssVO";
+		if (artist.startsWith("ewert and the two dragons")) {
+			return "spotify:artist:1D34O3ftIxPfbMN7bVVSPS";
 		}
-		if (artist.startsWith("fleet foxes")) {
-			return "spotify:artist:4EVpmkEwrLYEg6jIsiPMIb";
+		if (artist.startsWith("fintelligens")) {
+			return "spotify:artist:17LOJRoDtwnUqJzspDoFSy";
 		}
-		if (artist.startsWith("happoradio")) {
-			return "spotify:artist:088hJWSolrJNzoNBo2cyOd";
+		if (artist.startsWith("flogging molly")) {
+			return "spotify:artist:5kQGFREO5FzMBMsAO3cEtj";
 		}
-		if (artist.startsWith("hurts")) {
-			return "spotify:artist:3w4VAlllkAWI6m0AV0Gn6a";
+		if (artist.startsWith("french films")) {
+			return "spotify:artist:4AOMGVao7fbfxQE7ON6Qml";
 		}
-		if (artist.startsWith("isobel campbell")) {
-			return "spotify:artist:6O3XESr2bixxsS9dTY99Rf";
+		if (artist.startsWith("gg caravan")) {
+			return "spotify:artist:2nbvM2nsgPcAeUxiDPC6FX";
 		}
-		if (artist.contains("villegalle")) {
-			return "spotify:artist:4ASPsiINepImjhptGTwnbH";
+		if (artist.startsWith("gracias")) {
+			return "spotify:artist:2GRNS6DnefxBzYSZXDc6ij";
 		}
-		if (artist.startsWith("jarkko martikainen")) {
-			return "spotify:artist:466GWVoauVVD15fGVapVKv";
+		if (artist.startsWith("herra ylpp")) {
+			return "spotify:artist:4St5yIsy2GgMO3dRxxtxAo";
 		}
-		/*
-		if (artist.startsWith("jätkäjätkät")) {
-			return null;
+		if (artist.startsWith("huoratron")) {
+			return "spotify:artist:2SRSJhAtFtJRhizJMdf0Gt";
 		}
-		*/
-		if (artist.startsWith("jenni vartiainen")) {
-			return "spotify:artist:6PP1ZiMzBbTeRqGvhr3pV9";
+		if (artist.contains("jimmy cliff")) {
+			return "spotify:artist:3rJ3m1tM6vUgiWLjfV8sRf";
 		}
 		if (artist.startsWith("jukka poika")) {
 			return "spotify:artist:57ZjZU8vSOeP0Q2hbwh8wn";
 		}
-		if (artist.startsWith("kaija koo")) {
-			return "spotify:artist:60UkyJpgRSEUtcVTasRFEq";
+		if (artist.startsWith("kauko r")) {
+			return "spotify:artist:1gdEQi5Qd5hYKMYeSCwnLK";
 		}
-		if (artist.startsWith("kotiteollisuus")) {
-			return "spotify:artist:0r9Q7acXxkDPoqfRfAb9Aw";
+		if (artist.startsWith("kuningasidea")) {
+			return "spotify:artist:7EuXVmTcFfpvmFbi1CTctP";
 		}
-		if (artist.equals("lama")) {
-			return "spotify:artist:4fePAqrqNX0ezZxNTDgdov";
+		if (artist.startsWith("lapko")) {
+			return "spotify:artist:7c3qr8krIQX4LbiU0KHXCX";
 		}
-		if (artist.startsWith("magenta skycode")) {
-			return "spotify:artist:50ExyXXZnoYUrtmAJguRMk";
+		if (artist.startsWith("metronomy")) {
+			return "spotify:artist:54QMjE4toDfiCryzYWCpXX";
 		}
-		if (artist.startsWith("manu chao")) {
-			return "spotify:artist:6wH6iStAh4KIaWfuhf0NYM";
-		}
-		/*
 		if (artist.startsWith("michael monroe")) {
-			return R.drawable.artistimg_michael_monroe;
+			return "spotify:artist:5Ul6r5lUSOraWUidNnsILZ";
 		}
-		*/
-		if (artist.startsWith("mirel wagner")) {
-			return "spotify:artist:599W9qxs3LzkiiEmkoK6Kx";
+		if (artist.startsWith("moonface")) {
+			return "spotify:artist:0h1JqR0KD88ru6f5yUd7Lh";
+		}
+		if (artist.startsWith("mustasch")) {
+			return "spotify:artist:7ig8pUnno95YNA9MclOveH";
+		}
+		if (artist.startsWith("nightwish")) {
+			return "spotify:artist:2NPduAUeLVsfIauhRwuft1";
+		}
+		if (artist.startsWith("notkea rotta")) {
+			return "spotify:artist:2FrQM3hYDld2cLxy5vXuU7";
 		}
 		if (artist.startsWith("olavi uusivirta")) {
 			return "spotify:artist:5LbUBFEG2qciScT9kwFqmV";
@@ -308,70 +305,77 @@ public class ArtistInfoActivity extends Activity {
 		if (artist.startsWith("paleface")) {
 			return "spotify:artist:5CNgBVZXUEEGqyzgjUAgDj";
 		}
-		if (artist.startsWith("paradise oskar")) {
-			return "spotify:artist:15ksAhjnYhuK2wOZCYg9g3";
-		}
-		if (artist.startsWith("paramore")) {
-			return "spotify:artist:74XFHRwlV6OrjEM0A2NCMF";
-		}
 		if (artist.startsWith("pariisin kev")) {
 			return "spotify:artist:2Bj3YsSKo7O5bj3Ku6z1Ny";
 		}
-		if (artist.startsWith("pelle miljoona")) {
-			return "spotify:artist:3b9AnZICKvmVlgG2nKEplU";
+		if (artist.startsWith("pasa")) {
+			return "spotify:artist:09W3yLwRPQ77POxGCNfLc7";
 		}
-		/*
-		if (artist.startsWith("pertti kurikan nimi")) {
-			return R.drawable.artistimg_pertti_kurikan_np;
-		}
-		*/
 		if (artist.startsWith("pmmp")) {
 			return "spotify:artist:6LUnsRyqOZdHGTZqMlWVV2";
 		}
-		if (artist.startsWith("primus")) {
-			return "spotify:artist:64mPnRMMeudAet0E62ypkx";
+		if (artist.startsWith("pulp")) {
+			return "spotify:artist:36E7oYfz3LLRto6l2WmDcD";
 		}
-		if (artist.startsWith("raappana")) {
-			return "spotify:artist:7m7tqSW9C7alkliDAZYvF0";
+		if (artist.startsWith("refused")) {
+			return "spotify:artist:5sdxGvwxI1TkTA6Pu2jnTb";
 		}
-		if (artist.startsWith("robyn")) {
-			return "spotify:artist:6UE7nl9mha6s8z0wFQFIZ2";
+		if (artist.startsWith("regina")) {
+			return "spotify:artist:4COCsob5jcnZPAe3QjARrc";
 		}
-		if (artist.startsWith("rubik")) {
-			return "spotify:artist:0xE2i2PABOl0mrd4cNT40j";
+		if (artist.startsWith("rival sons")) {
+			return "spotify:artist:356c8AN5YWKvz86B4Sb1yf";
 		}
-		if (artist.startsWith("sabaton")) {
-			return "spotify:artist:3o2dn2O0FCVsWDFSh8qxgG";
+		if (artist.startsWith("robin")) {
+			return "spotify:artist:4Q4b4S784htx6DtxcMUfMO";
+		}
+		if (artist.startsWith("ruudolf")) {
+			return "spotify:artist:2AHLeXCzAB77q0680DNtr5";
+		}
+		if (artist.startsWith("santigold")) {
+			return "spotify:artist:6Jrxnp0JgqmeUX1veU591p";
 		}
 		if (artist.startsWith("scandinavian music group")) {
 			return "spotify:artist:773p3GT2SYlZUbqTo1nXKI";
 		}
+		if (artist.startsWith("snoop dogg")) {
+			return "spotify:artist:7hJcb9fa4alzcOq3EaNPoG";
+		}
 		if (artist.startsWith("stam1na")) {
 			return "spotify:artist:41nB823nb3wxEI25UeGHqG";
 		}
-		if (artist.startsWith("sweatmaster")) {
-			return "spotify:artist:2GhrB6KvD9FsgG81kMsD89";
+		if (artist.startsWith("stig")) {
+			return "spotify:artist:6TKvvwslcx2bKwiX2aBxbd";
 		}
-		if (artist.startsWith("the capital beat")) {
-			return "spotify:artist:7kQ4odJphDeYdON7v0H5Yr";
+		if (artist.startsWith("stockers")) {
+			return "spotify:artist:6hfIf033ub2boheR8K6Aez";
 		}
-		if (artist.startsWith("the freza")) {
-			return "spotify:artist:30ubXnWx23pTD0EQOm5I1D";
+		if (artist.startsWith("suicidal tendencies")) {
+			return "spotify:artist:3WPKDlucMsXH6FC1XaclZC";
 		}
-		if (artist.startsWith("the national")) {
-			return "spotify:artist:2cCUtGK9sDU2EoElnk0GNB";
+		if (artist.startsWith("the cardigans")) {
+			return "spotify:artist:1tqZaCwM57UFKjWoYwMLrw";
 		}
-		if (artist.startsWith("the prodigy") || artist.equals("prodigy")) {
-			return "spotify:artist:1GwxXgEc6oxCKQ5wykWXFs";
+		if (artist.startsWith("the mars volta")) {
+			return "spotify:artist:75U40yZLLPglFgXbDVnmVs";
 		}
-		if (artist.startsWith("tuomari nurmio")) {
-			return "spotify:artist:7zBD3u7aYHxNPlLWc5CAdh";
+		if (artist.startsWith("the rasmus")) {
+			return "spotify:artist:76ptJV8617638xrpeoUtzl";
 		}
-		if (artist.startsWith("uusi fantasia")) {
-			return "spotify:artist:7K1JNuo3rYr7MNgIXAyysC";
+		if (artist.startsWith("two door cinema club")) {
+			return "spotify:artist:536BYVgOnRky0xjsPT96zl";
+		}
+		if (artist.startsWith("veronica maggio")) {
+			return "spotify:artist:2OIWxN9xUhgUHkeUCWCaNs";
 		}
 		if (artist.startsWith("von hertzen brothers")) {
 			return "spotify:artist:5QA702pGd9qa2oWvp21ofG";
+		}
+		if (artist.startsWith("yeasayer")) {
+			return "spotify:artist:04HvbIwBccFmRie5ATX4ft";
+		}
+		if (artist.startsWith("zebra and snake")) {
+			return "spotify:artist:6rhdTr9TbMSfQ1CzkVY8V1";
 		}
 		
 		// Search for artist

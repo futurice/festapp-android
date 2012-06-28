@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="fill_parent"
-				android:id="@+id/linearLayout1" android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-    <include layout="@layout/ruisrock_logo" android:id="@+id/logo" android:layout_gravity="center" />
-    	
-   	<RelativeLayout android:layout_marginTop="-20px" android:background="@drawable/content_area_bg" android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/relativeLayout1">
-		<TextView  
-			style="@style/Header1"
-			android:id="@+id/infoSubPageTitle"
-		    android:layout_width="fill_parent" 
-		    android:layout_height="wrap_content" 
-		    android:text="" />
-	    <ScrollView android:layout_height="fill_parent" android:id="@+id/scrollView1" android:layout_width="fill_parent" android:layout_below="@id/infoSubPageTitle">
-			<WebView android:id="@+id/infoPageWebView" android:layout_width="fill_parent" android:layout_height="fill_parent"></WebView>
-	    </ScrollView>
-   	</RelativeLayout>
-    	
+    <include
+        android:id="@+id/logo"
+        layout="@layout/ruisrock_logo" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/content_area_bg" >
+
+        <TextView
+            android:id="@+id/infoSubPageTitle"
+            style="@style/Header1"
+            android:layout_marginBottom="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            
+            android:layout_below="@id/infoSubPageTitle" >
+
+            <WebView
+                android:id="@+id/infoPageWebView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+            </WebView>
+        </ScrollView>
+    </RelativeLayout>
+
 </LinearLayout>

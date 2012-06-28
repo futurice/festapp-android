@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class GeneralInfoListActivity extends Activity {
-	
+
 	private ListView list;
 	private ListItemStringAdapter adapter;
 	private OnItemClickListener listItemClickListener = new OnItemClickListener() {
@@ -38,6 +38,10 @@ public class GeneralInfoListActivity extends Activity {
 					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_OPEN_HOURS, getBaseContext()));
 				} else if (selected.equals(getString(R.string.generalInfo_Tickets))) {
 					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_TICKETS, getBaseContext()));
+				} else if (selected.equals(getString(R.string.generalInfo_Accessibility))) {
+					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_ACCESSIBILITY, getBaseContext()));
+				} else if (selected.equals(getString(R.string.generalInfo_SafetyInstructions))) {
+					intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_SAFETY_INSTRUCTIONS, getBaseContext()));
 				}
 				
 				intent.putExtra("subPageTitle", selected);
@@ -64,10 +68,17 @@ public class GeneralInfoListActivity extends Activity {
 		items.add(getString(R.string.generalInfo_LostAndFound));
 		items.add(getString(R.string.generalInfo_OpenHours));
 		items.add(getString(R.string.generalInfo_Tickets));
+		items.add(getString(R.string.generalInfo_Accessibility));
+		items.add(getString(R.string.generalInfo_SafetyInstructions));
 		Collections.sort(items);
 		adapter = new ListItemStringAdapter(this, items);
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(listItemClickListener);
 	}
 
+	@Override
+	public void onBackPressed() {
+		finish();
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+	}
 }

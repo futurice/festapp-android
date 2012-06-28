@@ -265,7 +265,7 @@ public class MapActivity extends Activity {
 	}
 
 	private OnTouchListener mapTouchListener = new OnTouchListener() {
-		public boolean onTouch(View v, MotionEvent event) {
+		public boolean onTouch(View v, MotionEvent event) {			
 			long downUpTime = event.getEventTime() - downTimer;
 			if (event.getAction() == MotionEvent.ACTION_UP && downUpTime < 150) {
 				handleMapOnClick(event.getX(), event.getY());
@@ -338,7 +338,7 @@ public class MapActivity extends Activity {
 		
 		float x = left + (right-left)*xRatio;
 		float y = top + (bottom-top)*yRatio;
-		
+				
 		String toastMessage = null;
 		// Telttalava
 		if (x > 744 && x < 920 &&
@@ -349,7 +349,7 @@ public class MapActivity extends Activity {
 		// Converse
 		if (x > 1280 && x < 1370 &&
 				y > 552 && y < 620) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.CONVERSE, getBaseContext());
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.AURINKO, getBaseContext());
 		}
 		
 		// Niitty
@@ -364,10 +364,10 @@ public class MapActivity extends Activity {
 			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.RANTA, getBaseContext());
 		}
 		
-		// Pikku
+		// Louna
 		if (x > 1640 && x < 1761 &&
 				y > 765 && y < 830) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.PIKKU, getBaseContext());
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.LOUNA, getBaseContext());
 		}
 		
 		// Show message if applicable
@@ -388,8 +388,6 @@ public class MapActivity extends Activity {
 	private void showToast(String msg) {
 		if (mapToast == null) {
 			mapToast = Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG);
-		} else {
-			mapToast.cancel();
 		}
 		mapToast.setText(msg);
 		mapToast.show();

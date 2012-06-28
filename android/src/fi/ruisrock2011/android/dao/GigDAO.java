@@ -64,10 +64,10 @@ public class GigDAO {
 	
 	static {
 		try {
-			startOfFriday = DB_DATE_FORMATTER.parse("2011-07-08 06:00");
-			startOfSaturday = DB_DATE_FORMATTER.parse("2011-07-09 06:00");
-			startOfSunday = DB_DATE_FORMATTER.parse("2011-07-10 06:00");
-			endOfSunday = DB_DATE_FORMATTER.parse("2011-07-11 06:00");
+			startOfFriday = DB_DATE_FORMATTER.parse("2012-07-06 06:00");
+			startOfSaturday = DB_DATE_FORMATTER.parse("2012-07-07 06:00");
+			startOfSunday = DB_DATE_FORMATTER.parse("2012-07-08 06:00");
+			endOfSunday = DB_DATE_FORMATTER.parse("2012-07-09 06:00");
 		} catch (ParseException e) {
 			Log.e(TAG, "Error setting festival day intervals.");
 		}
@@ -130,10 +130,14 @@ public class GigDAO {
 	public static List<Gig> parseFromJson(String json) throws Exception {
 		Map<String, Gig> gigs = new HashMap<String, Gig>();
 		JSONArray list = new JSONArray(json);
-		
 		for (int i=0; i < list.length(); i++) {
 			try {
 				JSONObject gigObj = list.getJSONObject(i);
+				
+				if (!JSONUtil.getString(gigObj, "lang").equals("fi")) {
+					continue;
+				}
+				
 				String gigId = JSONUtil.getString(gigObj, "id");
 				
 				Gig gig = new Gig();
@@ -146,7 +150,7 @@ public class GigDAO {
 					gig.setArtist(JSONUtil.getString(gigObj, "name"));
 					gig.setDescription(JSONUtil.getString(gigObj, "description"));
 				}
-				
+								
 				Date startTime = parseJsonDate(JSONUtil.getString(gigObj, "start"));
 				Date endTime = parseJsonDate(JSONUtil.getString(gigObj, "end"));
 				String stage = JSONUtil.getString(gigObj, "stage");
@@ -250,7 +254,7 @@ public class GigDAO {
 				Log.i(TAG, String.format("Successfully updated Gigs via HTTP. Result {received: %d, updated: %d, added: %s, invalid: %s", gigs.size(), updatedGigs, newGigs, invalidGigs));
 			} finally {
 				db.endTransaction();
-				closeDb(db, cursor);
+				closeDb(db, null);
 			}
 		} else {
 			Log.w(TAG, "Could not update Gigs.");
@@ -320,6 +324,7 @@ public class GigDAO {
 			}
 			gig.addLocation(convertCursorToGigLocation(cursor, id));
 		}
+		cursor.close();
 		return gig;
 	}
 	
@@ -443,9 +448,9 @@ public class GigDAO {
 		stage = stage.toLowerCase().trim();
 		String matchedStage = null;
 		switch (stageType) {
-		case CONVERSE:
-			if (stage.startsWith("converse")) {
-				matchedStage = "Converse-lavalla";
+		case AURINKO:
+			if (stage.startsWith("aurinko")) {
+				matchedStage = "Aurinkolavalla";
 			}
 			break;
 		case NIITTY:
@@ -453,9 +458,9 @@ public class GigDAO {
 				matchedStage = "Niittylavalla";
 			}
 			break;
-		case PIKKU:
-			if (stage.startsWith("pikku")) {
-				matchedStage = "Pikkulavalla";
+		case LOUNA:
+			if (stage.startsWith("louna")) {
+				matchedStage = "Louna-lavalla";
 			}
 			break;
 		case RANTA:
@@ -510,167 +515,179 @@ public class GigDAO {
 		artist = artist.toLowerCase().trim();
 		artist = artist.replaceAll("\\([a-z]+\\)$", "");
 		artist = artist.trim();
-		if (artist.startsWith("amorphis")) {
-			return R.drawable.artistimg_amorphis;
+		if (artist.startsWith("antero lindgren")) {
+			return R.drawable.artistimg_antero_lindgren;
 		}
-		if (artist.startsWith("anna calvi")) {
-			return R.drawable.artistimg_anna_calvi;
-		}
-		if (artist.startsWith("anssi 8000")) {
-			return R.drawable.artistimg_anssi_8000;
+		if (artist.startsWith("apocalyptica")) {
+			return R.drawable.artistimg_apocalyptica;
 		}
 		if (artist.startsWith("apulanta")) {
 			return R.drawable.artistimg_apulanta;
 		}
-		if (artist.startsWith("betty bloomerz")) {
-			return R.drawable.artistimg_betty_bloomerz;
+		if (artist.startsWith("black twig")) {
+			return R.drawable.artistimg_black_twig;
 		}
-		if (artist.startsWith("bob hund")) {
-			return R.drawable.artistimg_bob_hund;
+		if (artist.startsWith("bloc party")) {
+			return R.drawable.artistimg_bloc_party;
 		}
-		if (artist.startsWith("bring me the horizon")) {
-			return R.drawable.artistimg_bring_me_the_horizon;
+		if (artist.startsWith("burning hearts")) {
+			return R.drawable.artistimg_burning_hearts;
 		}
-		if (artist.startsWith("bullet for my valentine")) {
-			return R.drawable.artistimg_bullet_for_my_valentine;
+		if (artist.startsWith("children of bodom")) {
+			return R.drawable.artistimg_children_of_bodom;
 		}
-		if (artist.startsWith("carpark north")) {
-			return R.drawable.artistimg_carpark_north;
+		if (artist.startsWith("chisu")) {
+			return R.drawable.artistimg_chisu;
 		}
-		if (artist.startsWith("circle")) {
-			return R.drawable.artistimg_circle;
+		if (artist.startsWith("disco ensemble")) {
+			return R.drawable.artistimg_disco_ensemble;
 		}
-		if (artist.startsWith("cmx")) {
-			return R.drawable.artistimg_cmx;
+		if (artist.startsWith("elokuu")) {
+			return R.drawable.artistimg_elokuu;
 		}
-		if (artist.startsWith("graveyard")) {
-			return R.drawable.artistimg_graveyard;
+		if (artist.startsWith("eppu normaali")) {
+			return R.drawable.artistimg_eppu_normaali;
 		}
-		if (artist.startsWith("elbow")) {
-			return R.drawable.artistimg_elbow;
+		if (artist.startsWith("ewert and the two dragons")) {
+			return R.drawable.artistimg_ewert_and_the_two_dragons;
 		}
-		if (artist.startsWith("felix zenger")) {
-			return R.drawable.artistimg_felix_zenger;
+		if (artist.startsWith("fintelligens")) {
+			return R.drawable.artistimg_fintelligens;
 		}
-		if (artist.startsWith("fleet foxes")) {
-			return R.drawable.artistimg_fleet_foxes;
+		if (artist.startsWith("flogging molly")) {
+			return R.drawable.artistimg_flogging_molly;
 		}
-		if (artist.startsWith("happoradio")) {
-			return R.drawable.artistimg_happoradio;
+		if (artist.startsWith("french films")) {
+			return R.drawable.artistimg_french_films;
 		}
-		if (artist.startsWith("hurts")) {
-			return R.drawable.artistimg_hurts;
+		if (artist.startsWith("gg caravan")) {
+			return R.drawable.artistimg_gg_caravan;
 		}
-		if (artist.startsWith("isobel campbell")) {
-			return R.drawable.artistimg_isobelc_and_markl;
+		if (artist.startsWith("gracias")) {
+			return R.drawable.artistimg_gracias;
 		}
-		if (artist.contains("villegalle")) {
-			return R.drawable.artistimg_jare_et_villegalle;
+		if (artist.startsWith("herra ylpp")) {
+			return R.drawable.artistimg_herra_ylppo_ja_ihmiset;
 		}
-		if (artist.startsWith("jarkko martikainen")) {
-			return R.drawable.artistimg_jarkko_martikainen;
+		if (artist.startsWith("huoratron")) {
+			return R.drawable.artistimg_huoratron;
 		}
-		if (artist.startsWith("jätkäjätkät")) {
-			return R.drawable.artistimg_jatkajatkat;
-		}
-		if (artist.startsWith("jenni vartiainen")) {
-			return R.drawable.artistimg_jenni_vartiainen;
+		if (artist.contains("jimmy cliff")) {
+			return R.drawable.artistimg_jimmy_cliff;
 		}
 		if (artist.startsWith("jukka poika")) {
-			return R.drawable.artistimg_jukka_poika;
+			return R.drawable.artistimg_jukka_poika_and_sound_explosion_band;
 		}
-		if (artist.startsWith("kaija koo")) {
-			return R.drawable.artistimg_kaija_koo;
+//		if (artist.startsWith("jätkäjätkät")) {
+//			return R.drawable.artistimg_jatkajatkat;
+//		}
+		if (artist.startsWith("kauko r")) {
+			return R.drawable.artistimg_kauko_rouhka_ja_narttu;
 		}
-		if (artist.startsWith("kotiteollisuus")) {
-			return R.drawable.artistimg_kotiteollisuus;
+		if (artist.startsWith("kuningasidea")) {
+			return R.drawable.artistimg_kuningasidea;
 		}
-		if (artist.startsWith("kuuma ankanpoikanen")) {
-			return R.drawable.artistimg_kuuma_ankanpoikanen;
+		if (artist.startsWith("lapko")) {
+			return R.drawable.artistimg_lapko;
 		}
-		if (artist.equals("lama")) {
-			return R.drawable.artistimg_lama;
-		}
-		if (artist.startsWith("magenta skycode")) {
-			return R.drawable.artistimg_magenta_skycode;
-		}
-		if (artist.startsWith("manu chao")) {
-			return R.drawable.artistimg_manu_chao;
+		if (artist.startsWith("metronomy")) {
+			return R.drawable.artistimg_metronomy;
 		}
 		if (artist.startsWith("michael monroe")) {
 			return R.drawable.artistimg_michael_monroe;
 		}
-		if (artist.startsWith("mirel wagner")) {
-			return R.drawable.artistimg_mirel_wagner;
+		if (artist.equals("mikko joensuu")) {
+			return R.drawable.artistimg_mikko_joensuu;
+		}
+		if (artist.startsWith("moonface")) {
+			return R.drawable.artistimg_moonface_with_siinai;
+		}
+		if (artist.startsWith("mustasch")) {
+			return R.drawable.artistimg_mustasch;
+		}
+		if (artist.startsWith("nightwish")) {
+			return R.drawable.artistimg_nightwish;
+		}
+		if (artist.startsWith("notkea rotta")) {
+			return R.drawable.artistimg_notkea_rotta;
 		}
 		if (artist.startsWith("olavi uusivirta")) {
 			return R.drawable.artistimg_olavi_uusivirta;
 		}
 		if (artist.startsWith("paleface")) {
-			return R.drawable.artistimg_paleface;
-		}
-		if (artist.startsWith("paradise oskar")) {
-			return R.drawable.artistimg_paradise_oskar;
-		}
-		if (artist.startsWith("paramore")) {
-			return R.drawable.artistimg_paramore;
+			return R.drawable.artistimg_paleface_ja_rajahtava_nyrkki;
 		}
 		if (artist.startsWith("pariisin kev")) {
 			return R.drawable.artistimg_pariisin_kevat;
 		}
-		if (artist.startsWith("pelle miljoona")) {
-			return R.drawable.artistimg_pelle_miljoona;
-		}
-		if (artist.startsWith("pertti kurikan nimi")) {
-			return R.drawable.artistimg_pertti_kurikan_np;
+		if (artist.startsWith("pasa")) {
+			return R.drawable.artistimg_pasa;
 		}
 		if (artist.startsWith("pmmp")) {
 			return R.drawable.artistimg_pmmp;
 		}
-		if (artist.startsWith("primus")) {
-			return R.drawable.artistimg_primus;
+		if (artist.startsWith("pulp")) {
+			return R.drawable.artistimg_pulp;
 		}
-		if (artist.startsWith("raappana")) {
-			return R.drawable.artistimg_raappana;
+		if (artist.startsWith("refused")) {
+			return R.drawable.artistimg_refused;
 		}
-		if (artist.startsWith("robyn")) {
-			return R.drawable.artistimg_robyn;
+		if (artist.startsWith("regina")) {
+			return R.drawable.artistimg_regina;
 		}
-		if (artist.startsWith("rubik")) {
-			return R.drawable.artistimg_rubik;
+		if (artist.startsWith("rival sons")) {
+			return R.drawable.artistimg_rival_sons;
 		}
-		if (artist.startsWith("sabaton")) {
-			return R.drawable.artistimg_sabaton;
+		if (artist.startsWith("robin")) {
+			return R.drawable.artistimg_robin;
+		}
+		if (artist.startsWith("ruudolf")) {
+			return R.drawable.artistimg_ruudolf_ja_karri_koira;
+		}
+		if (artist.startsWith("santigold")) {
+			return R.drawable.artistimg_santigold;
 		}
 		if (artist.startsWith("scandinavian music group")) {
-			return R.drawable.artistimg_scandinavian_mg;
+			return R.drawable.artistimg_scandinavian_music_group;
+		}
+		if (artist.startsWith("snoop dogg")) {
+			return R.drawable.artistimg_snoog_dogg;
 		}
 		if (artist.startsWith("stam1na")) {
 			return R.drawable.artistimg_stam1na;
 		}
-		if (artist.startsWith("sweatmaster")) {
-			return R.drawable.artistimg_sweatmaster;
+		if (artist.startsWith("stig")) {
+			return R.drawable.artistimg_stig;
 		}
-		if (artist.startsWith("the capital beat")) {
-			return R.drawable.artistimg_the_capital_beat;
+		if (artist.startsWith("stockers")) {
+			return R.drawable.artistimg_stockers;
 		}
-		if (artist.startsWith("the freza")) {
-			return R.drawable.artistimg_the_freza;
+		if (artist.startsWith("suicidal tendencies")) {
+			return R.drawable.artistimg_suicidal_tendencies;
 		}
-		if (artist.startsWith("the national")) {
-			return R.drawable.artistimg_the_national;
+		if (artist.startsWith("the cardigans")) {
+			return R.drawable.artistimg_the_cardigans;
 		}
-		if (artist.startsWith("the prodigy") || artist.equals("prodigy")) {
-			return R.drawable.artistimg_the_prodigy;
+		if (artist.startsWith("the mars volta")) {
+			return R.drawable.artistimg_the_mars_volta;
 		}
-		if (artist.startsWith("tuomari nurmio")) {
-			return R.drawable.artistimg_tuomari_nurmio;
+		if (artist.startsWith("the rasmus")) {
+			return R.drawable.artistimg_the_rasmus;
 		}
-		if (artist.startsWith("uusi fantasia")) {
-			return R.drawable.artistimg_uusi_fantasia;
+		if (artist.startsWith("two door cinema club")) {
+			return R.drawable.artistimg_two_door_cinema_club;
+		}
+		if (artist.startsWith("veronica maggio")) {
+			return R.drawable.artistimg_veronica_maggio;
 		}
 		if (artist.startsWith("von hertzen brothers")) {
 			return R.drawable.artistimg_von_hertzen_brothers;
+		}
+		if (artist.startsWith("yeasayer")) {
+			return R.drawable.artistimg_yeasayer;
+		}
+		if (artist.startsWith("zebra and snake")) {
+			return R.drawable.artistimg_zebra_and_snake;
 		}
 		return null;
 	}

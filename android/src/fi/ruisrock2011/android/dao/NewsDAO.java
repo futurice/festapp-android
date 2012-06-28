@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,7 +27,7 @@ import fi.ruisrock2011.android.util.RuisrockConstants;
  */
 public class NewsDAO {
 	
-	private static DateFormat RSS_DATE_FORMATTER = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+	private static DateFormat RSS_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm"); //new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
 	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	private static final String TAG = "NewsDAO";
 	private static final String[] NEWS_COLUMNS = { "url", "title", "newsDate", "content" };
@@ -197,8 +196,10 @@ public class NewsDAO {
 		for (int i=0; i < list.length(); i++) {
 			try {
 				JSONObject newsObject = list.getJSONObject(i);
-				Date date = RSS_DATE_FORMATTER.parse(JSONUtil.getString(newsObject, "pubDate"));
-				NewsArticle article = new NewsArticle(JSONUtil.getString(newsObject, "link"), JSONUtil.getString(newsObject, "title"), date, JSONUtil.getString(newsObject, "content"));
+				String dateString = JSONUtil.getString(newsObject, "date");
+				String titleString = JSONUtil.getString(newsObject, "title");
+				Date date = RSS_DATE_FORMATTER.parse(dateString.replace("T", " "));
+				NewsArticle article = new NewsArticle(titleString + dateString, titleString, date, JSONUtil.getString(newsObject, "content_plaintext"));
 				articles.add(article);
 			} catch (Exception e) {
 				Log.w(TAG, "Received invalid JSON-structure", e);

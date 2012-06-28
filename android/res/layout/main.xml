@@ -1,26 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-	    
-    <include layout="@layout/ruisrock_logo" android:id="@+id/logo" />
-    
-    <include layout="@layout/fonecta_powered_by" />
-	    
-	<TableLayout android:layout_marginTop="-30px" android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/tableLayout1" android:layout_below="@id/logo">
-		<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_horizontal">
-			<ImageView android:src="@drawable/btn_main_schedule" android:layout_width="wrap_content" android:id="@+id/mainGridSchedule" android:layout_height="wrap_content"></ImageView>
-			<ImageView android:src="@drawable/btn_main_artists" android:layout_width="wrap_content" android:id="@+id/mainGridArtists" android:layout_height="wrap_content"></ImageView>
-		</TableRow>
-		<TableRow  android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_horizontal">
-			<ImageView android:src="@drawable/btn_main_info" android:layout_width="wrap_content" android:id="@+id/mainGridInfo" android:layout_height="wrap_content"></ImageView>
-			<ImageView android:src="@drawable/btn_main_map" android:layout_width="wrap_content" android:id="@+id/mainGridMap" android:layout_height="wrap_content"></ImageView>
-		</TableRow>
-		<TableRow  android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_horizontal">
-			<ImageView android:src="@drawable/btn_main_news" android:layout_width="wrap_content" android:id="@+id/mainGridNews" android:layout_height="wrap_content"></ImageView>
-			<ImageView android:src="@drawable/btn_main_02" android:layout_width="wrap_content" android:id="@+id/mainGridFonecta" android:layout_height="wrap_content"></ImageView>
-		</TableRow>
-	</TableLayout>
-	
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/logo"
+        layout="@layout/ruisrock_logo" />
+
+    <include
+        android:id="@+id/fonecta_logo"
+        layout="@layout/fonecta_powered_by" />
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/fonecta_logo"
+        android:layout_below="@id/logo"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" >
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/mainGridSchedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/btn_main_schedule" >
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/mainGridArtists"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/btn_main_artists" >
+            </ImageView>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <ImageView
+                android:id="@+id/mainGridInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/btn_main_info" >
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/mainGridMap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/btn_main_map" >
+            </ImageView>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <ImageView
+                android:id="@+id/mainGridNews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/btn_main_news" >
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/mainGridFonecta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/btn_main_02" >
+            </ImageView>
+        </TableRow>
+    </TableLayout>
+
 </RelativeLayout>

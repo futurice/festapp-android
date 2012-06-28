@@ -3,12 +3,13 @@
 	<!-- Single words -->
     <string name="News">Uutiset</string>
     <string name="Artists">Bändit</string>
-    <string name="app_name">Ruisrock 2011</string>
+    <string name="app_name">Ruisrock 2012</string>
     <string name="Error">Virhe</string>
     <string name="Schedule">Aikataulu</string>
     <string name="Debug">Debug</string>
     <string name="Map">Kartta</string>
     <string name="Save">Tallenna</string>
+    <string name="Call">Soita</string>
     <string name="Cancel">Peruuta</string>
     <string name="Close">Sulje</string>
     <string name="Friday">Perjantai</string>
@@ -61,8 +62,9 @@
     
     <!-- Fonecta 02 view -->
     <string name="fonectaActivity.title">KYSY MITÄ VAAN.</string>
-    <string name="fonectaActivity.showPrices.text">Soitto on maksullinen. Katso hintatiedot »</string>
+    <string name="fonectaActivity.showPrices.text">Soitto on maksullinen. Katso hintatiedot täältä »</string>
     <string name="fonectaActivity.callError">Soitto epäonnistui. Verkossa voi esiintyä ruuhkaa festivaalialueella.</string>
+    <string name="fonectaActivity.confirmation">Olet soittamassa Fonectan maksulliseen 020202-palveluun. Haluatko jatkaa?</string>
     
     <!-- Services -->
     <string name="service.Cloakroom">Narikka</string>
@@ -77,8 +79,10 @@
     <string name="generalInfo.OpenHours">Aukioloajat</string>
     <string name="generalInfo.InfoStand">Infopiste</string>
     <string name="generalInfo.LostAndFound">Löytötavarat</string>
-    <string name="generalInfo.Firstaid">Ensiapu &amp; sairaalahoito</string>
+    <string name="generalInfo.Firstaid">Ensiapu</string>
     <string name="generalInfo.Tickets">Lipunmyynti</string>
+    <string name="generalInfo.Accessibility">Saavutettavuus</string>
+    <string name="generalInfo.SafetyInstructions">Turvallisuusohjeet</string>
     
     <!-- Notification -->
     <string name="notification.news.title">Ruisrock tiedottaa</string>

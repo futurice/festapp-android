@@ -2,8 +2,6 @@ package fi.ruisrock2011.android.util;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;

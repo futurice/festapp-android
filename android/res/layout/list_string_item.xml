@@ -13,5 +13,5 @@
 		android:id="@+id/text"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_weight="1" android:layout_gravity="left|center_vertical" android:textSize="17sp" android:layout_marginLeft="0dip"/>
+		android:layout_weight="1" android:gravity="left|center_vertical" android:textSize="17sp" android:layout_marginLeft="0dip"/>
 </LinearLayout>

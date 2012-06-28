@@ -1,14 +1,13 @@
 package fi.ruisrock2011.android.dao;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import fi.ruisrock2011.android.R;
@@ -42,7 +41,7 @@ public class ConfigDAO {
 	public static final String ATTR_ETAG_FOR_FOODANDDRINK = "etag_foodanddrink";
 	public static final String ATTR_ETAG_FOR_TRANSPORTATION = "etag_transportation";
 	public static final String ATTR_ETAG_FOR_SERVICES = "etag_services";
-	public static final String ATTR_ETAG_FOR_GENERAL_INFO = "etag_generalinfo";
+	public static final String ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS = "etag_generalinfo";
 	
 	public static final String ATTR_PAGE_FOODANDDRINK = "page_foodanddrink";
 	public static final String ATTR_PAGE_TRANSPORTATION = "page_transportation";
@@ -60,6 +59,8 @@ public class ConfigDAO {
 	public static final String ATTR_PAGE_GENERALINFO_LOST_AND_FOUND = "page_lost_and_found";
 	public static final String ATTR_PAGE_GENERALINFO_FIRSTAID = "page_firstaid";
 	public static final String ATTR_PAGE_GENERALINFO_TICKETS = "page_tickets";
+	public static final String ATTR_PAGE_GENERALINFO_ACCESSIBILITY = "page_accessibility";
+	public static final String ATTR_PAGE_GENERALINFO_SAFETY_INSTRUCTIONS = "page_safety_instructions";
 	
 	public static MapLayerOptions findMapLayers(Context context) {
 		String values = getAttributeValue(ATTR_SELECTED_MAP_LAYERS, context);
@@ -109,12 +110,12 @@ public class ConfigDAO {
 		setAttributeValue(ATTR_ETAG_FOR_SERVICES, etag, context);
 	}
 	
-	public static String getEtagForGeneralInfo(Context context) {
-		return getAttributeValue(ATTR_ETAG_FOR_GENERAL_INFO, context);
+	public static String getEtagForFrequentlyAskedQuestions(Context context) {
+		return getAttributeValue(ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, context);
 	}
 	
 	public static void setEtagForGeneralInfo(Context context, String etag) {
-		setAttributeValue(ATTR_ETAG_FOR_GENERAL_INFO, etag, context);
+		setAttributeValue(ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, etag, context);
 	}
 	
 	public static String getPageFoodAndDrink(Context context) {
@@ -235,9 +236,26 @@ public class ConfigDAO {
 			return;
 		}
 		setEtagForFoodAndDrink(context, response.getEtag());
-		setPageFoodAndDrink(context, response.getContent());
+		// TODO: Ruisrock2012. Format of response needs fixing.
+		try {
+			String content = parseFromJson(response.getContent(), "content_plaintext");
+			setPageFoodAndDrink(context, content);
+		} catch (Exception e) {
+			Log.w(TAG, "Received invalid JSON-structure", e);
+		}
 	}
 	
+	public static String parseFromJson(String json, String key) throws Exception {
+		String content = "";
+		try {
+			JSONObject jsonObject = new JSONArray(json).getJSONObject(0);
+			content = JSONUtil.getString(jsonObject, key);
+		} catch (Exception e) {
+			Log.w(TAG, "Received invalid JSON-structure", e);
+		}
+		return content;
+	}
+
 	public static void updateTransportationPageOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.TRANSPORTATION_HTML_URL);
@@ -262,17 +280,18 @@ public class ConfigDAO {
 		}
 	}
 	
-	public static void updateGeneralInfoPagesOverHttp(Context context) {
+	public static void updateFrequentlyAskedQuestionsPagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
-		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.GENERAL_INFO_JSON_URL);
+		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL);
 		if (!response.isValid() || response.getContent() == null) {
 			return;
 		}
-		setAttributeValue(ATTR_ETAG_FOR_GENERAL_INFO, response.getEtag(), context);
+		setAttributeValue(ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, response.getEtag(), context);
 		try {
-			setAttributeValues(parseGeneralInfoMapFromJson(context, response.getContent()), context);
+			setAttributeValue(ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, parseFromJson(response.getContent(), "content"), context);
 		} catch (Exception e) {
-			Log.e(TAG, "Error parsing GeneralInfo JSON.", e);
+			e.printStackTrace();
+			Log.e(TAG, "Error parsing FrequentlyAskedQuestions JSON.", e);
 		}
 	}
 	
@@ -294,13 +313,12 @@ public class ConfigDAO {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(ATTR_PAGE_GENERALINFO_FIRSTAID, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_Firstaid)));
-		map.put(ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_FrequentlyAsked)));
 		map.put(ATTR_PAGE_GENERALINFO_INFO_STAND, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_InfoStand)));
 		map.put(ATTR_PAGE_GENERALINFO_LOST_AND_FOUND, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_LostAndFound)));
 		map.put(ATTR_PAGE_GENERALINFO_OPEN_HOURS, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_OpenHours)));
 		map.put(ATTR_PAGE_GENERALINFO_TICKETS, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_Tickets)));
+		map.put(ATTR_PAGE_GENERALINFO_ACCESSIBILITY, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_Accessibility)));
+		map.put(ATTR_PAGE_GENERALINFO_SAFETY_INSTRUCTIONS, JSONUtil.getString(servicesObj, context.getString(R.string.generalInfo_SafetyInstructions)));
 		return map;
 	}
-	
-
 }

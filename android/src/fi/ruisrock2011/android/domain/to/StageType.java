@@ -1,9 +1,9 @@
 package fi.ruisrock2011.android.domain.to;
 
 public enum StageType {
-	CONVERSE,
+	AURINKO,
 	TELTTA,
-	PIKKU,
+	LOUNA,
 	NIITTY,
 	RANTA
 }

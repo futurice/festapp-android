@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    
-	<include layout="@layout/ruisrock_logo" android:id="@+id/logo" />
-         
-   	<RelativeLayout android:layout_marginTop="-20px" android:background="@drawable/content_area_bg" android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/relativeLayout1">
-	<TextView  
-		style="@style/Header1"
-		android:id="@+id/whiteTitle"
-	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content" 
-	    android:text="@string/Services" />
-	
-	    	
-	    <ListView
-	    	android:layout_below="@id/whiteTitle"
-	        android:id="@+id/list"
-	        android:layout_width="fill_parent"
-	        android:layout_height="fill_parent" 
-	        android:cacheColorHint="#00000000">
-		</ListView>
-   	</RelativeLayout>
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/logo"
+        layout="@layout/ruisrock_logo" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/content_area_bg" >
+
+        <TextView
+            android:id="@+id/whiteTitle"
+            style="@style/Header1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Services" />
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/whiteTitle"
+            android:layout_marginBottom="-100dp"
+            android:layout_marginTop="-100dp"
+            android:cacheColorHint="#00000000"
+            android:paddingBottom="100dp"
+            android:paddingTop="150dp" >
+        </ListView>
+    </RelativeLayout>
+
 </LinearLayout>

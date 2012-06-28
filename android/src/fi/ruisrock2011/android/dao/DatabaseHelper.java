@@ -24,7 +24,7 @@ import fi.ruisrock2011.android.util.StringUtil;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME = "ruisrock2011_db";
-	private static final int DB_VERSION = 2; // Latest release at the market: 2
+	private static final int DB_VERSION = 3; // Latest release at the market: 3
 	private static final String TAG = "DatabaseHelper";
 	
 	private Context context;
@@ -47,13 +47,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createFoodAndDrinkPageFromLocalFile(db);
 			createTransportationPageFromLocalFile(db);
 			createServicePagesFromLocalFile(db);
+			createFrequentlyAskedQuestionsPagesFromLocalFile(db);
 			createGeneralInfoPagesFromLocalFile(db);
 		} catch (Exception e) {
 			Log.e(TAG, "Cannot create DB", e);
-			Toast.makeText(context, "Sovelluksen alustus ep√§onnistui.", Toast.LENGTH_LONG).show();
+			Toast.makeText(context, "Sovelluksen alustus epäonnistui.", Toast.LENGTH_LONG).show();
 		}
 	}
-	
+
 	private void createNewsTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS news");
 		String sql = "CREATE TABLE IF NOT EXISTS news (" +
@@ -110,7 +111,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String page = StringUtil.convertStreamToString(is);
 		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_PAGE_TRANSPORTATION, page);
 		db.insert("config", "attributeValue", values);
-		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_TRANSPORTATION, RuisrockConstants.ETAG_TRANSPORTATION));
+//		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_TRANSPORTATION, RuisrockConstants.ETAG_TRANSPORTATION));
 	}
 	
 	private void createServicePagesFromLocalFile(SQLiteDatabase db) throws Exception {
@@ -121,7 +122,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		for (Map.Entry<String, String> entry : services.entrySet()) {
 			db.insert("config", "attributeValue", convertMapEntryToContentValues(entry));
 		}
-		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_SERVICES, RuisrockConstants.ETAG_SERVICES));
+//		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_SERVICES, RuisrockConstants.ETAG_SERVICES));
+	}
+	
+	private void createFrequentlyAskedQuestionsPagesFromLocalFile(SQLiteDatabase db) throws Exception {
+		InputStream is = context.getResources().openRawResource(R.raw.faq);
+		String json = StringUtil.convertStreamToString(is);
+		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, ConfigDAO.parseFromJson(json, "content"));
+		db.insert("config", "attributeValue", values);
+		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, RuisrockConstants.ETAG_FREQUENTLY_ASKED_QUESTIONS));	
 	}
 	
 	private void createGeneralInfoPagesFromLocalFile(SQLiteDatabase db) throws Exception {
@@ -132,7 +141,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		for (Map.Entry<String, String> entry : services.entrySet()) {
 			db.insert("config", "attributeValue", convertMapEntryToContentValues(entry));
 		}
-		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_GENERAL_INFO, RuisrockConstants.ETAG_GENERAL_INFO));
 	}
 	
 	private ContentValues convertMapEntryToContentValues(Map.Entry<String, String> entry) {

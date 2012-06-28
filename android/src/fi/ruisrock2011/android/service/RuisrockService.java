@@ -50,9 +50,10 @@ public class RuisrockService extends Service {
 					if (counter % 12*5 == 0) { // every 5 hours
 						Log.i(TAG, "Executing 5-hour operations.");
 						updateFoodAndDrinkPage();
-						updateTransportationPage();
-						updateServicesPageData();
-						updateGeneralInfoPageData();
+						// TODO: Ruisrock 2012. Transportation and services not updated from server.
+//						updateTransportationPage();
+//						updateServicesPageData();
+						updateFrequentlyAskedQuestionsPageData();
 					}
 				} else {
 					Log.i(TAG, "Stopping service due to date constraint.");
@@ -140,16 +141,16 @@ public class RuisrockService extends Service {
 		}
 	}
 	
-	private void updateGeneralInfoPageData() {
+	private void updateFrequentlyAskedQuestionsPageData() {
 		try {
-			if (HTTPUtil.isContentUpdated(RuisrockConstants.GENERAL_INFO_JSON_URL, ConfigDAO.getEtagForGeneralInfo(getBaseContext()))) {
-				ConfigDAO.updateGeneralInfoPagesOverHttp(getBaseContext());
-				Log.i(TAG, "Successfully updated data for GeneralInfo.");
+			if (HTTPUtil.isContentUpdated(RuisrockConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL, ConfigDAO.getEtagForFrequentlyAskedQuestions(getBaseContext()))) {
+				ConfigDAO.updateFrequentlyAskedQuestionsPagesOverHttp(getBaseContext());
+				Log.i(TAG, "Successfully updated data for FrequentlyAskedQuestions.");
 			} else {
-				Log.i(TAG, "GeneralInfo data was up-to-date.");
+				Log.i(TAG, "FrequentlyAskedQuestions data was up-to-date.");
 			}
 		} catch (Exception e) {
-			Log.e(TAG, "Could not update GeneralInfo data.", e);
+			Log.e(TAG, "Could not update FrequentlyAskedQuestions data.", e);
 		}
 	}
 	

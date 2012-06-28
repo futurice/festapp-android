@@ -1,15 +1,9 @@
 package fi.ruisrock2011.android.domain;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import fi.ruisrock2011.android.dao.GigDAO;
-import fi.ruisrock2011.android.domain.to.FestivalDay;
-import fi.ruisrock2011.android.util.CalendarUtil;
-import fi.ruisrock2011.android.util.StringUtil;
 
 public class Gig {
 

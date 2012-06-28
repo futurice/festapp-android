@@ -1,12 +1,9 @@
 package fi.ruisrock2011.android;
 
-import java.io.InputStream;
-
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.Html;
-import android.widget.TextView;
-import fi.ruisrock2011.android.util.StringUtil;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 /**
  * View for Fonecta prices.
@@ -20,17 +17,19 @@ public class FonectaPricesActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fonecta_02_prices);
 		
-		TextView textView = (TextView) findViewById(R.id.text);
-		textView.setText(Html.fromHtml(getText()));
+		WebView view = (WebView)findViewById(R.id.fonecta_02_prices_webview);
+		view.getSettings().setLoadWithOverviewMode(true);
+		view.getSettings().setUseWideViewPort(true);
+		view.setWebViewClient(new MyWebView());
+		
+		view.loadUrl("http://www.fonecta.com/kuluttajapalvelut/020202/fi_FI/hinnat/");
 	}
 	
-	private String getText() {
-		InputStream is = getResources().openRawResource(R.raw.page_02_prices);
-		try {
-			return StringUtil.convertStreamToString(is);
-		} catch (Exception e) {
-			return "";
-		}
-	}
-
+	private class MyWebView extends WebViewClient { 
+        @Override 
+        public boolean shouldOverrideUrlLoading(WebView view, String url) { 
+            view.loadUrl(url); 
+            return true;
+        } 
+    }
 }

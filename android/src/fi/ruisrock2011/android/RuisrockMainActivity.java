@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import fi.ruisrock2011.android.dao.AnalyticsHelper;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.dao.NewsDAO;
 import fi.ruisrock2011.android.domain.NewsArticle;
@@ -38,6 +39,7 @@ public class RuisrockMainActivity extends Activity {
 				break;
 			case R.id.mainGridFonecta:
 				startActivity(new Intent(getBaseContext(), FonectaActivity.class));
+				AnalyticsHelper.sendAnalytics(RuisrockMainActivity.this, AnalyticsHelper.EVENT_02_TAB);
 				break;
 			}
 		}
