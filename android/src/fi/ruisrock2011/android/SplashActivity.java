@@ -29,7 +29,6 @@ public class SplashActivity extends Activity {
 			startActivity(new Intent(getBaseContext(), RuisrockMainActivity.class));
 			finish();
 		} else {
-			
 			// thread for displaying the SplashScreen
 			Thread splashTread = new Thread() {
 				@Override
@@ -48,9 +47,7 @@ public class SplashActivity extends Activity {
 						active = false;
 						// TODO: Added transitions for Ruisrock2012 for smoother activity switch
 						SplashActivity.this.startActivity(new Intent(getBaseContext(), RuisrockMainActivity.class));
-						overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 						SplashActivity.this.finish();
-						overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 					}
 				}
 			};

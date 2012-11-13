@@ -199,7 +199,7 @@ public class NewsDAO {
 				String dateString = JSONUtil.getString(newsObject, "date");
 				String titleString = JSONUtil.getString(newsObject, "title");
 				Date date = RSS_DATE_FORMATTER.parse(dateString.replace("T", " "));
-				NewsArticle article = new NewsArticle(titleString + dateString, titleString, date, JSONUtil.getString(newsObject, "content_plaintext"));
+				NewsArticle article = new NewsArticle(titleString + dateString, titleString, date, "<p>" + JSONUtil.getString(newsObject, "content_plaintext").replace("  ", "<br /><br />") + "</ p>");
 				articles.add(article);
 			} catch (Exception e) {
 				Log.w(TAG, "Received invalid JSON-structure", e);

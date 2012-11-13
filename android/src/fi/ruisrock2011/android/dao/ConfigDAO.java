@@ -239,7 +239,14 @@ public class ConfigDAO {
 		// TODO: Ruisrock2012. Format of response needs fixing.
 		try {
 			String content = parseFromJson(response.getContent(), "content_plaintext");
-			setPageFoodAndDrink(context, content);
+			
+			// Ugly hacks to content_plaintext
+			content = content.replace("\\u2028", "").replace("\\u017e", "ż");
+			while(content.contains("\\r\\n\\r\\n")) {
+				content = content.replace("\\r\\n\\r\\n", "\\r\\n");
+			}
+			
+			setPageFoodAndDrink(context, "<p>" + content.replace("  ", "<br /><br />") + "</ p>");
 		} catch (Exception e) {
 			Log.w(TAG, "Received invalid JSON-structure", e);
 		}

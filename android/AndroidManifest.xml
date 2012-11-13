@@ -13,7 +13,7 @@
 
 	<application android:icon="@drawable/icon" android:label="@string/app_name">
 		<!-- Splash and Main activities -->
-		<activity android:name=".SplashActivity" android:theme="@style/RuisrockTheme.Fullscreen" android:screenOrientation="portrait">
+		<activity android:name=".SplashActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" android:screenOrientation="portrait">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />

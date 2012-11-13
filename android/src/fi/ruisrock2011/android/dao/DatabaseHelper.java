@@ -51,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createGeneralInfoPagesFromLocalFile(db);
 		} catch (Exception e) {
 			Log.e(TAG, "Cannot create DB", e);
-			Toast.makeText(context, "Sovelluksen alustus ep�onnistui.", Toast.LENGTH_LONG).show();
+			Toast.makeText(context, "Sovelluksen alustus epäonnistui.", Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -99,7 +99,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private void createFoodAndDrinkPageFromLocalFile(SQLiteDatabase db) throws Exception {
 		InputStream is = context.getResources().openRawResource(R.raw.page_foodanddrink);
 		String page = StringUtil.convertStreamToString(is);
-		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_PAGE_FOODANDDRINK, page);
+		
+		// Ugly hacks to content_plaintext
+		page = page.replace("\\u2028", "").replace("\\u017e", "ż");
+		while(page.contains("\\r\\n\\r\\n")) {
+			page = page.replace("\\r\\n\\r\\n", "\\r\\n");
+		}
+		
+		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_PAGE_FOODANDDRINK, "<p>" + page.replace("\\r\\n", "<br /><br />") + "</ p>");
 		db.insert("config", "attributeValue", values);
 		
 		values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FOODANDDRINK, RuisrockConstants.ETAG_FOOD_AND_DRINK);
