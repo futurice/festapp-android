@@ -66,10 +66,10 @@ public class GigTimelineWidget extends RelativeLayout {
 		starIcon.setChecked(fav);
 		if (fav) {
 			setBackgroundResource(R.drawable.schedule_gig_favorite);
-			artistLabel.setTextColor(R.color.timeline_brown);
+			artistLabel.setTextColor(Color.parseColor("#a95800"));
 		} else {
 			setBackgroundResource(R.drawable.schedule_gig);
-			artistLabel.setTextColor(Color.WHITE);
+			artistLabel.setTextColor(Color.parseColor("#fbf6dd"));
 		}
 	}
 	

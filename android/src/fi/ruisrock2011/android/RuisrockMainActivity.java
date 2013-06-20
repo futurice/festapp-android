@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import fi.ruisrock2011.android.dao.AnalyticsHelper;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.dao.NewsDAO;
 import fi.ruisrock2011.android.domain.NewsArticle;
@@ -22,25 +21,25 @@ public class RuisrockMainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
-			case R.id.mainGridArtists:
+			case R.id.main_menu_bands:
 				startActivity(new Intent(getBaseContext(), ArtistListActivity.class));
 				break;
-			case R.id.mainGridSchedule:
+			case R.id.main_menu_timetable:
 				startActivity(new Intent(getBaseContext(), ScheduleTabActivity.class));
 				break;
-			case R.id.mainGridMap:
+			case R.id.main_menu_map:
 				startActivity(new Intent(getBaseContext(), MapActivity.class));
 				break;
-			case R.id.mainGridInfo:
+			case R.id.main_menu_info:
 				startActivity(new Intent(getBaseContext(), InfoPageActivity.class));
 				break;
-			case R.id.mainGridNews:
+			case R.id.main_menu_news:
 				startActivity(new Intent(getBaseContext(), NewsListActivity.class));
 				break;
-			case R.id.mainGridFonecta:
-				startActivity(new Intent(getBaseContext(), FonectaActivity.class));
-				AnalyticsHelper.sendAnalytics(RuisrockMainActivity.this, AnalyticsHelper.EVENT_02_TAB);
-				break;
+//			case R.id.mainGridFonecta:
+//				startActivity(new Intent(getBaseContext(), FonectaActivity.class));
+//				AnalyticsHelper.sendAnalytics(RuisrockMainActivity.this, AnalyticsHelper.EVENT_02_TAB);
+//				break;
 			}
 		}
 	};
@@ -57,12 +56,12 @@ public class RuisrockMainActivity extends Activity {
 	}
 	
 	private void createMainMenuItems() {
-		findViewById(R.id.mainGridInfo).setOnClickListener(clickListener);
-		findViewById(R.id.mainGridArtists).setOnClickListener(clickListener);
-		findViewById(R.id.mainGridSchedule).setOnClickListener(clickListener);
-		findViewById(R.id.mainGridMap).setOnClickListener(clickListener);
-		findViewById(R.id.mainGridFonecta).setOnClickListener(clickListener);
-		findViewById(R.id.mainGridNews).setOnClickListener(clickListener);
+		findViewById(R.id.main_menu_info).setOnClickListener(clickListener);
+		findViewById(R.id.main_menu_bands).setOnClickListener(clickListener);
+		findViewById(R.id.main_menu_timetable).setOnClickListener(clickListener);
+		findViewById(R.id.main_menu_map).setOnClickListener(clickListener);
+//		findViewById(R.id.mainGridFonecta).setOnClickListener(clickListener);
+		findViewById(R.id.main_menu_news).setOnClickListener(clickListener);
 	}
 	
 	private void handleNotificationEvents() {

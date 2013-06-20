@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- Single words -->
-    <string name="News">Uutiset</string>
-    <string name="Artists">Bändit</string>
+    <string name="News">UUTISET</string>
+    <string name="Artists">BÄNDIT</string>
     <string name="app_name">Ruisrock 2012</string>
     <string name="Error">Virhe</string>
     <string name="Schedule">Aikataulu</string>

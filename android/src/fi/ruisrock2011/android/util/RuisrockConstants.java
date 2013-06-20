@@ -6,8 +6,8 @@ public class RuisrockConstants {
 	
 	
 	// TODO: Changed urls for Ruisrock2012
-	public static final String NEWS_JSON_URL = "http://www.ruisrock.fi/json.php?action=news"; //"http://legotius.futurice.com/ruisrock/cache.php?page=news";
-	public static final String GIGS_JSON_URL = "http://www.ruisrock.fi/json.php?action=bands"; //"http://legotius.futurice.com/ruisrock/cache.php?page=bands";
+	public static final String NEWS_JSON_URL = "http://www.ruisrock.fi/json.php?query=uutiset"; //action=news"; //"http://legotius.futurice.com/ruisrock/cache.php?page=news";
+	public static final String GIGS_JSON_URL = "http://www.ruisrock.fi/json.php?query=artistit"; //action=bands"; //"http://legotius.futurice.com/ruisrock/cache.php?page=bands";
 	//public static final String GIGS_JSON_URL = "http://legotius.futurice.com/debug_ruisrock/gigs";
 	
 	public static final String SERVICES_JSON_URL = "http://legotius.futurice.com/ruisrock/cache.php?page=services";

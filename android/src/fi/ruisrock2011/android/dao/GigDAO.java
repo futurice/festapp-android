@@ -516,7 +516,7 @@ public class GigDAO {
 		artist = artist.replaceAll("\\([a-z]+\\)$", "");
 		artist = artist.trim();
 		if (artist.startsWith("antero lindgren")) {
-			return R.drawable.artistimg_antero_lindgren;
+			return R.drawable.test; //artistimg_antero_lindgren;
 		}
 		if (artist.startsWith("apocalyptica")) {
 			return R.drawable.artistimg_apocalyptica;

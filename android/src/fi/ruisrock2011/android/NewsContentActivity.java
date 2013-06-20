@@ -1,6 +1,7 @@
 package fi.ruisrock2011.android;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class NewsContentActivity extends Activity {
 		if (extras != null) {
 			titleView.setText((String) extras.get("news.title"));
 			dateView.setText((String) extras.get("news.date"));
+			contentView.setBackgroundColor(Color.TRANSPARENT);
 			contentView.loadDataWithBaseURL(RuisrockConstants.RUISROCK_BASE_URL, (String) extras.get("news.content"), "text/html", "utf-8", null);
 		}
 	}

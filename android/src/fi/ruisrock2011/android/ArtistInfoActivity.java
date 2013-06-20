@@ -12,12 +12,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -105,7 +107,7 @@ public class ArtistInfoActivity extends Activity {
 			TextView artistName = (TextView) findViewById(R.id.artistName);
 			artistName.setText(gig.getArtist());
 			
-			TableLayout infoTable = (TableLayout) findViewById(R.id.artistInfoTable);
+			LinearLayout infoTable = (LinearLayout) findViewById(R.id.artistInfoTable);
 //			infoTable.setBackgroundResource(R.drawable.artist_info_table_bg);
 			infoTable.setVisibility(View.VISIBLE);
 			StringBuilder stageText = new StringBuilder("");
@@ -124,13 +126,19 @@ public class ArtistInfoActivity extends Activity {
 			infoTable.bringToFront();
 			
 			ImageView artistImage = (ImageView) findViewById(R.id.artistImage);
-			RelativeLayout artistImageContainer = (RelativeLayout) findViewById(R.id.artistImageContainer);
+			LinearLayout artistImageContainer = (LinearLayout) findViewById(R.id.artistImageContainer);
 			Integer imageId = GigDAO.getImageIdForArtist(gig.getArtist());
 			if (imageId == null) {
 				artistImageContainer.setVisibility(View.GONE);
 			} else {
 				try {
-					artistImage.setImageDrawable(getResources().getDrawable(imageId));
+//					artistImage.setImageDrawable(getResources().getDrawable(imageId));
+
+					DisplayMetrics metrics = new DisplayMetrics();
+					getWindowManager().getDefaultDisplay().getMetrics(metrics);
+					int width = metrics.widthPixels;
+					int height = (int) (400 * getResources().getDisplayMetrics().density);
+					artistImage.setImageBitmap(UIUtil.decodeSampledBitmapFromResource(getResources(), imageId.intValue(), width, height));
 					artistImageContainer.setVisibility(View.VISIBLE);
 				} catch (Exception e) {
 					artistImageContainer.setVisibility(View.GONE);

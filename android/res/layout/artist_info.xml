@@ -1,157 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/artistInfoView"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
-    <!-- Banner -->
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_bottom_repeat" >
 
     <RelativeLayout
-        android:id="@+id/artistImageContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/black"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" >
-
-        <fi.ruisrock2011.android.ui.AspectRatioImageView
-            android:id="@+id/artistImage"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="-1dp"
-            android:layout_marginRight="-1dp"
-            android:adjustViewBounds="true" />
-
-        <!-- <fi.ruisrock2011.android.ui.AspectRatioImageView -->
-        <!-- android:layout_width="fill_parent" -->
-        <!-- android:layout_height="wrap_content" -->
-        <!-- android:layout_alignParentTop="true" -->
-        <!-- android:layout_centerHorizontal="true" -->
-        <!-- android:adjustViewBounds="true" -->
-        <!-- android:src="@drawable/artist_overlay" /> -->
-    </RelativeLayout>
-
-    <!-- STAGE/TIME/FAVORITE TABLE -->
-    <!-- android:layout_alignParentBottom="true" -->
-
-    <TableLayout
-        android:id="@+id/artistInfoTable"
+        android:id="@+id/artistInfoView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/artistImageContainer"
-        android:background="@android:color/black"
-        android:gravity="center_horizontal" >
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-        <!-- <TableRow -->
-        <!-- android:id="@+id/tableRow1" -->
-        <!-- android:layout_width="fill_parent" -->
-        <!-- android:layout_height="wrap_content" > -->
-
-
-        <!-- <TextView -->
-        <!-- android:layout_width="wrap_content" -->
-        <!-- android:layout_height="wrap_content" -->
-        <!-- android:layout_margin="3dip" -->
-        <!-- android:text="@string/Stage" -->
-        <!-- android:textColor="#ffffff" -->
-        <!-- android:textStyle="bold" > -->
-        <!-- </TextView> -->
-
-
-        <!-- <TextView -->
-        <!-- android:layout_width="wrap_content" -->
-        <!-- android:layout_height="wrap_content" -->
-        <!-- android:layout_margin="3dip" -->
-        <!-- android:text="@string/PerformanceTime" -->
-        <!-- android:textColor="#ffffff" -->
-        <!-- android:textStyle="bold" > -->
-        <!-- </TextView> -->
-
-
-        <!-- <TextView -->
-        <!-- android:layout_width="wrap_content" -->
-        <!-- android:layout_height="wrap_content" -->
-        <!-- android:layout_margin="3dip" -->
-        <!-- android:text="@string/Favorite" -->
-        <!-- android:textColor="#ffffff" -->
-        <!-- android:textStyle="bold" > -->
-        <!-- </TextView> -->
-        <!-- </TableRow> -->
-
-        <TableRow
-            android:id="@+id/tableRow2"
+        <ImageView
+            android:id="@+id/background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center" >
+            android:layout_alignParentLeft="true"
+            android:scaleType="matrix"
+            android:src="@drawable/background" />
 
-            <!-- <TextView -->
-            <!-- android:id="@+id/artistInfoStage" -->
-            <!-- android:layout_width="wrap_content" -->
-            <!-- android:layout_height="wrap_content" -->
-            <!-- android:layout_margin="3dip" -->
-            <!-- android:text="Päälava" -->
-            <!-- android:textColor="#ffffff" > -->
-            <!-- </TextView> -->
+        <ImageView
+            android:id="@+id/background_bottom"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/background"
+            android:background="@drawable/background_bottom_repeat" />
 
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/background_bottom"
+            android:layout_toRightOf="@id/background"
+            android:background="@drawable/background_right_repeat" />
 
-            <!-- <TextView -->
-            <!-- android:id="@+id/artistInfoLiveTime" -->
-            <!-- android:layout_width="wrap_content" -->
-            <!-- android:layout_height="wrap_content" -->
-            <!-- android:layout_margin="3dip" -->
-            <!-- android:text="pe klo 22:00 - 23:00" -->
-            <!-- android:textColor="#ffffff" > -->
-            <!-- </TextView> -->
+        <include
+            android:id="@+id/logo"
+            layout="@layout/ruisrock_logo" />
 
-            <RelativeLayout
-                android:id="@+id/relativeLayout2"
+        <!-- Banner -->
+
+        <LinearLayout
+            android:id="@+id/artistImageContainer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/artist_picture_frame_top" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/artist_picture_frame_side" />
+
+                <ImageView
+                    android:id="@+id/artistImage"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/frame_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/artist_picture_frame_side" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/artist_picture_frame_bottom" />
+        </LinearLayout>
+
+        <!-- STAGE/TIME/FAVORITE TABLE -->
+        <!-- android:layout_alignParentBottom="true" -->
+
+        <LinearLayout
+            android:id="@+id/artistInfoTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/artistImageContainer"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/timeline_day"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" >
+
+            <ToggleButton
+                android:id="@+id/artistInfoFavorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dip" >
-
-                <ToggleButton
-                    android:id="@+id/artistInfoFavorite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/star"
-                    android:textOff=""
-                    android:textOn="" />
-            </RelativeLayout>
+                android:background="@drawable/star"
+                android:textOff=""
+                android:textOn="" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dip"
+                android:layout_marginLeft="5dp"
                 android:gravity="center_vertical"
                 android:text="Merkkaa suosikiksi"
-                android:textColor="#888888" >
+                android:textColor="#fbf6dd" >
             </TextView>
-        </TableRow>
-    </TableLayout>
-
-    <!-- android:layout_above="@id/artistInfoTable" -->
-
-    <RelativeLayout
-        android:id="@+id/artistInfoContainer"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/artistInfoTable"
-        android:background="@android:color/black" >
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@android:color/white"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/artistInfoTable"
+            android:layout_marginTop="15dp"
             android:orientation="vertical"
-            android:paddingBottom="15dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp" >
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp" >
 
             <!-- Artist name -->
 
@@ -160,55 +134,46 @@
                 style="@style/Header1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="Bullet for my Valentine"
-                android:textSize="24sp" />
+                android:text="Bullet for my Valentine" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:gravity="center_horizontal"
+                android:layout_marginTop="1dp"
                 android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/artistInfoStage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dip"
+                    android:paddingRight="5dp"
                     android:text="Päälava"
-                    android:textColor="#888888" >
+                    android:textColor="#111111"
+                    android:textSize="18sp" >
                 </TextView>
 
                 <TextView
                     android:id="@+id/artistInfoLiveTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dip"
                     android:text="pe klo 22:00 - 23:00"
-                    android:textColor="#888888" >
+                    android:textColor="#111111"
+                    android:textSize="18sp" >
                 </TextView>
             </LinearLayout>
 
-            <ScrollView
-                android:id="@+id/scrollView1"
+            <!-- Description -->
+
+            <TextView
+                android:id="@+id/artistDescription"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginBottom="-100dp"
-                android:layout_marginTop="-150dp"
-                android:paddingBottom="100dp"
-                android:paddingTop="150dp" >
-
-                <!-- Description -->
-
-                <TextView
-                    android:id="@+id/artistDescription"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="2px"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempor lacus ac sem consequat rutrum. Maecenas interdum odio in libero tincidunt in condimentum nibh molestie. In elementum nisl id purus pretium semper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec porta diam at nunc pulvinar ultrices. In hac habitasse platea dictumst. Mauris in porta augue. Quisque et nulla dolor, non adipiscing ligula. Suspendisse in nibh vitae nulla pellentesque imperdiet pretium venenatis lectus. Cras enim lorem, faucibus nec ultricies imperdiet, commodo congue tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla vitae justo libero. Praesent semper ipsum quis massa malesuada euismod. Suspendisse potenti. Aenean vulputate arcu orci, sed egestas felis. Donec suscipit venenatis ullamcorper. Curabitur non urna ante, vel mattis nunc. Integer sollicitudin blandit vulputate. Curabitur pharetra placerat risus et commodo. Duis blandit auctor varius. Ut sit amet adipiscing ante. Maecenas iaculis tortor vitae nibh scelerisque id ullamcorper odio consectetur. Suspendisse vehicula pellentesque nibh nec pulvinar. Aliquam pretium bibendum sagittis. Duis placerat vestibulum enim quis rutrum. Nunc porta, sem at congue malesuada, quam augue porttitor est, nec laoreet est felis eu quam. Proin in vehicula purus. Curabitur eu nisl dolor, at interdum velit. Vestibulum nunc mauris, facilisis venenatis dictum sed, placerat sed odio. Fusce lobortis interdum blandit. Suspendisse tincidunt mollis nibh. Mauris semper, elit nec commodo scelerisque, risus lectus faucibus dolor, blandit rhoncus mauris risus ac purus. " />
-            </ScrollView>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempor lacus ac sem consequat rutrum. Maecenas interdum odio in libero tincidunt in condimentum nibh molestie. In elementum nisl id purus pretium semper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec porta diam at nunc pulvinar ultrices. In hac habitasse platea dictumst. Mauris in porta augue. Quisque et nulla dolor, non adipiscing ligula. Suspendisse in nibh vitae nulla pellentesque imperdiet pretium venenatis lectus. Cras enim lorem, faucibus nec ultricies imperdiet, commodo congue tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla vitae justo libero. Praesent semper ipsum quis massa malesuada euismod. Suspendisse potenti. Aenean vulputate arcu orci, sed egestas felis. Donec suscipit venenatis ullamcorper. Curabitur non urna ante, vel mattis nunc. Integer sollicitudin blandit vulputate. Curabitur pharetra placerat risus et commodo. Duis blandit auctor varius. Ut sit amet adipiscing ante. Maecenas iaculis tortor vitae nibh scelerisque id ullamcorper odio consectetur. Suspendisse vehicula pellentesque nibh nec pulvinar. Aliquam pretium bibendum sagittis. Duis placerat vestibulum enim quis rutrum. Nunc porta, sem at congue malesuada, quam augue porttitor est, nec laoreet est felis eu quam. Proin in vehicula purus. Curabitur eu nisl dolor, at interdum velit. Vestibulum nunc mauris, facilisis venenatis dictum sed, placerat sed odio. Fusce lobortis interdum blandit. Suspendisse tincidunt mollis nibh. Mauris semper, elit nec commodo scelerisque, risus lectus faucibus dolor, blandit rhoncus mauris risus ac purus. "
+                android:textColor="#111111"
+                android:textSize="15sp"
+                android:lineSpacingMultiplier="1.2" />
         </LinearLayout>
     </RelativeLayout>
 
-</RelativeLayout>
+</ScrollView>

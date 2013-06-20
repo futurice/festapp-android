@@ -1,35 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    
-    <include layout="@layout/fonecta_powered_by" />
-    
-	<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/linearLayout1" android:orientation="vertical">
-	
-	    <include layout="@layout/ruisrock_logo" android:id="@+id/logo" />
-	    	
-	    <ImageView
-	    	android:id="@+id/infoPage_btnGeneralInfo" 
-	    	android:layout_width="wrap_content" android:layout_height="wrap_content" 
-	    	android:src="@drawable/btn_infopage_generalinfo" android:layout_gravity="center" />
-	    	
-	    <ImageView
-	    	android:id="@+id/infoPage_btnServices" 
-	    	android:layout_width="wrap_content" android:layout_height="wrap_content" 
-	    	android:src="@drawable/btn_infopage_services" android:layout_gravity="center" />
-	    	
-	    <ImageView
-	    	android:id="@+id/infoPage_btnFoodAndDrink" 
-	    	android:layout_width="wrap_content" android:layout_height="wrap_content" 
-	    	android:src="@drawable/btn_infopage_fooddrink" android:layout_gravity="center" />
-	    	
-	    <ImageView
-	    	android:id="@+id/infoPage_btnTransportation" 
-	    	android:layout_width="wrap_content" android:layout_height="wrap_content" 
-	    	android:src="@drawable/btn_infopage_transportation" android:layout_gravity="center" />
-	    	
-	</LinearLayout>
-	
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<ImageView android:id="@+id/background" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:src="@drawable/background"
+		android:layout_alignParentLeft="true" android:scaleType="matrix" />
+
+	<ImageView android:id="@+id/background_bottom"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:background="@drawable/background_bottom_repeat"
+		android:layout_below="@id/background" />
+
+	<ImageView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:background="@drawable/background_right_repeat"
+		android:layout_above="@id/background_bottom" android:layout_toRightOf="@id/background" />
+
+	<include android:id="@+id/logo" layout="@layout/ruisrock_logo" />
+
+	<ScrollView android:layout_width="fill_parent" android:layout_marginTop="50dp"
+		android:layout_below="@id/logo" android:layout_height="fill_parent">
+
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:id="@+id/linearLayout1"
+			android:orientation="vertical">
+
+			<TextView android:id="@+id/infoPage_btnGeneralInfo"
+				android:text="YLEISINFO" android:layout_width="wrap_content" android:textColor="#fbf6dd"
+				android:textStyle="bold" android:textSize="20dp" android:paddingLeft="20dp" android:paddingRight="40dp"
+				android:layout_height="wrap_content" android:background="@drawable/btn_info_menu"
+				android:gravity="center_vertical" android:layout_marginBottom="10dp" />
+
+			<TextView android:id="@+id/infoPage_btnServices"
+				android:text="PALVELUT" android:layout_width="wrap_content" android:textColor="#fbf6dd"
+				android:textStyle="bold" android:textSize="20dp" android:paddingLeft="20dp" android:paddingRight="40dp"
+				android:layout_height="wrap_content" android:background="@drawable/btn_info_menu"
+				android:gravity="center_vertical" android:layout_marginBottom="10dp" />
+
+			<TextView android:id="@+id/infoPage_btnFoodAndDrink"
+				android:text="RUOKA &amp; JUOMA" android:layout_width="wrap_content" android:textColor="#fbf6dd"
+				android:textStyle="bold" android:textSize="20dp" android:paddingLeft="20dp" android:paddingRight="40dp"
+				android:layout_height="wrap_content" android:background="@drawable/btn_info_menu"
+				android:gravity="center_vertical" android:layout_marginBottom="10dp" />
+
+			<TextView android:id="@+id/infoPage_btnTransportation"
+				android:text="LIIKKUMINEN" android:layout_width="wrap_content" android:textColor="#fbf6dd"
+				android:textStyle="bold" android:textSize="20dp" android:paddingLeft="20dp" android:paddingRight="40dp"
+				android:layout_height="wrap_content" android:background="@drawable/btn_info_menu"
+				android:gravity="center_vertical" android:layout_marginBottom="10dp" />
+
+		</LinearLayout>
+
+	</ScrollView>
+
 </RelativeLayout>

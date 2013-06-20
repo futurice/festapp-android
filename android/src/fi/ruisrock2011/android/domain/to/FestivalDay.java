@@ -8,11 +8,11 @@ public enum FestivalDay {
 	public String getFinnishName() {
 		switch (this) {
 		case FRIDAY:
-			return "Perjantai";
+			return "PERJANTAI";
 		case SATURDAY:
-			return "Lauantai";
+			return "LAUANTAI";
 		case SUNDAY:
-			return "Sunnuntai";
+			return "SUNNUNTAI";
 		default:
 			return null;
 		}

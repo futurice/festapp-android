@@ -6,9 +6,7 @@
 	<ImageView
 		android:id="@+id/timelineVerticalBg"
 		android:scaleType="fitXY"
-		
-		android:src="@drawable/timeline_vertical_bg"
-		android:layout_height="30dip" android:layout_width="fill_parent"/>
+			android:layout_height="30dip" android:layout_width="fill_parent"/>
 		
 	<!-- android:layout_marginBottom="@dimen/timeline.backgroundBottomMargin" -->
 	<ImageView

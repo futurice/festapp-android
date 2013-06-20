@@ -1,100 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-    <include
-        android:id="@+id/logo"
-        layout="@layout/ruisrock_logo" />
+	<ImageView android:id="@+id/background" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:src="@drawable/background"
+		android:layout_alignParentLeft="true" android:scaleType="matrix" />
 
-    <include
-        android:id="@+id/fonecta_logo"
-        layout="@layout/fonecta_powered_by" />
+	<ImageView android:id="@+id/background_bottom"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:background="@drawable/background_bottom_repeat"
+		android:layout_below="@id/background" />
 
-    <TableLayout
-        android:id="@+id/tableLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@id/fonecta_logo"
-        android:layout_below="@id/logo"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" >
+	<ImageView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:background="@drawable/background_right_repeat"
+		android:layout_above="@id/background_bottom" android:layout_toRightOf="@id/background" />
 
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="1" >
+	<include android:id="@+id/logo" layout="@layout/ruisrock_logo" />
 
-            <ImageView
-                android:id="@+id/mainGridSchedule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:src="@drawable/btn_main_schedule" >
-            </ImageView>
+	<LinearLayout android:layout_width="wrap_content"
+		android:layout_marginTop="15dp"
+		android:layout_alignParentLeft="true" android:layout_below="@id/logo"
+		android:layout_height="wrap_content" android:orientation="vertical">
+		<ImageView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:src="@drawable/main_menu_start" />
+		<LinearLayout android:layout_width="wrap_content"
+			android:id="@+id/main_menu_timetable" android:paddingLeft="40dp"
+			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
+			android:layout_height="wrap_content">
+			<TextView android:layout_width="wrap_content"
+				android:gravity="center_vertical" android:textColor="#fbf6dd"
+				android:textStyle="bold" android:textSize="20dp"
+				android:layout_height="fill_parent" android:text="AIKATAULU" />
+		</LinearLayout>
+		<ImageView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
+		<LinearLayout android:layout_width="wrap_content"
+			android:paddingLeft="40dp" android:id="@+id/main_menu_bands"
+			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
+			android:layout_height="wrap_content">
+			<TextView android:layout_width="wrap_content"
+				android:gravity="center_vertical" android:textColor="#fbf6dd"
+				android:textStyle="bold" android:textSize="20dp"
+				android:layout_height="fill_parent" android:text="BÄNDIT" />
+		</LinearLayout>
+		<ImageView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
+		<LinearLayout android:layout_width="wrap_content"
+			android:paddingLeft="40dp" android:id="@+id/main_menu_map"
+			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
+			android:layout_height="wrap_content">
+			<TextView android:layout_width="wrap_content"
+				android:gravity="center_vertical" android:textColor="#fbf6dd"
+				android:textStyle="bold" android:textSize="20dp"
+				android:layout_height="fill_parent" android:text="KARTTA" />
+		</LinearLayout>
+		<ImageView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
+		<LinearLayout android:layout_width="wrap_content"
+			android:paddingLeft="40dp" android:id="@+id/main_menu_info"
+			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
+			android:layout_height="wrap_content">
+			<TextView android:layout_width="wrap_content"
+				android:gravity="center_vertical" android:textColor="#fbf6dd"
+				android:textStyle="bold" android:textSize="20dp"
+				android:layout_height="fill_parent" android:text="INFO" />
+		</LinearLayout>
+		<ImageView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
+		<LinearLayout android:layout_width="wrap_content"
+			android:paddingLeft="40dp" android:id="@+id/main_menu_news"
+			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
+			android:layout_height="wrap_content">
+			<TextView android:layout_width="wrap_content"
+				android:gravity="center_vertical" android:textColor="#fbf6dd"
+				android:textStyle="bold" android:textSize="20dp"
+				android:layout_height="fill_parent" android:text="UUTISET" />
+		</LinearLayout>
 
-            <ImageView
-                android:id="@+id/mainGridArtists"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:src="@drawable/btn_main_artists" >
-            </ImageView>
-        </TableRow>
+		<ImageView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:src="@drawable/main_menu_bottom" />
+	</LinearLayout>
 
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center" >
+	<ImageView android:layout_width="wrap_content" 
+		android:scaleType="matrix" android:src="@drawable/hihhuli" android:layout_marginLeft="170dp" android:layout_marginTop="140dp"
+		android:layout_height="wrap_content" android:layout_alignParentRight="true"
+		android:layout_alignParentBottom="true" />
 
-            <ImageView
-                android:id="@+id/mainGridInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:src="@drawable/btn_main_info" >
-            </ImageView>
-
-            <ImageView
-                android:id="@+id/mainGridMap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:src="@drawable/btn_main_map" >
-            </ImageView>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center" >
-
-            <ImageView
-                android:id="@+id/mainGridNews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:src="@drawable/btn_main_news" >
-            </ImageView>
-
-            <ImageView
-                android:id="@+id/mainGridFonecta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:src="@drawable/btn_main_02" >
-            </ImageView>
-        </TableRow>
-    </TableLayout>
+	<ImageView android:layout_width="wrap_content" android:src="@drawable/ankka"
+		android:paddingRight="120dp" android:layout_height="wrap_content"
+		android:layout_marginLeft="30dp" android:layout_alignParentLeft="true"
+		android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

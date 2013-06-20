@@ -7,8 +7,10 @@ import java.util.List;
 import fi.ruisrock2011.android.dao.ConfigDAO;
 import fi.ruisrock2011.android.ui.ListItemStringAdapter;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -50,9 +52,16 @@ public class ServicesListActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_string);
-		((TextView) findViewById(R.id.whiteTitle)).setText(R.string.Services);
 		
 		list = (ListView) findViewById(R.id.list);
+		
+		LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View header = inflater.inflate(R.layout.list_header, null, false);
+
+		((TextView)header.findViewById(R.id.listTitle)).setText(getResources().getString(R.string.Services));
+
+		list.addHeaderView(header);
+		
 		populateListItems();
 	}
 	

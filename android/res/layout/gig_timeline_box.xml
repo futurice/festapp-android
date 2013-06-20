@@ -51,8 +51,9 @@
 		android:layout_toRightOf="@id/starIcon"
 		android:ellipsize="marquee"
 		android:typeface="sans"
-		android:textSize="13sp"
-		android:textColor="#000000"
+		android:textStyle="bold"
+		android:textSize="11dp"
+		android:textColor="#fbf6dd"
 		android:text="Some band" />
 		
 	 

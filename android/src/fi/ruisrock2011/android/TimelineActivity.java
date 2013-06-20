@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
@@ -296,6 +298,9 @@ public class TimelineActivity extends Activity {
 		
 		while (cal.getTime().before(timelineEndMoment)) {
 			tv = new TextView(this);
+			tv.setTextColor(Color.parseColor("#e32c22"));
+			tv.setTypeface(null, Typeface.BOLD);
+
 			String hour = cal.get(Calendar.HOUR_OF_DAY) + ":00";
 			if (hour.length() == 4) {
 				hour = "0" + hour;
@@ -310,6 +315,9 @@ public class TimelineActivity extends Activity {
 			inflater.inflate(R.layout.timeline_hour_marker, timelineVerticalLines);
 			
 			tv = new TextView(this);
+			tv.setTextColor(Color.parseColor("#e32c22"));
+			tv.setTypeface(null, Typeface.BOLD);
+
 			tv.setText("");
 			int width = GigTimelineWidget.PIXELS_PER_MINUTE * minutes - (HOUR_MARKER_WIDTH);
 			tv.setWidth(width);

@@ -3,10 +3,13 @@ package fi.ruisrock2011.android;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import fi.ruisrock2011.android.R;
@@ -51,6 +54,13 @@ public class ArtistListActivity extends Activity {
 	private void createArtistList() {
 		artistList = (ListView) findViewById(R.id.artistList);
 		gigs = GigDAO.findAllActive(this);
+		
+		LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View header = inflater.inflate(R.layout.list_header, null, false);
+
+		((TextView)header.findViewById(R.id.listTitle)).setText(getResources().getString(R.string.Artists));
+
+		artistList.addHeaderView(header);
 		
 	    artistList.setAdapter(new ArtistAdapter(this, gigs));
 	    artistList.setOnItemClickListener(artistClickListener);

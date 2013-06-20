@@ -2,8 +2,6 @@ package fi.ruisrock2011.android;
 
 import fi.ruisrock2011.android.R;
 import fi.ruisrock2011.android.dao.AnalyticsHelper;
-import fi.ruisrock2011.android.domain.to.HTTPBackendResponse;
-import fi.ruisrock2011.android.util.HTTPUtil;
 import fi.ruisrock2011.android.util.RuisrockConstants;
 import android.app.Activity;
 import android.content.Intent;

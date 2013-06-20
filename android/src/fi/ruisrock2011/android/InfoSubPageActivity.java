@@ -1,6 +1,7 @@
 package fi.ruisrock2011.android;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class InfoSubPageActivity extends Activity {
 		}
 
 		WebView contentView = (WebView) findViewById(R.id.infoPageWebView);
+		contentView.setBackgroundColor(Color.TRANSPARENT);
 		contentView.loadDataWithBaseURL(RuisrockConstants.RUISROCK_BASE_URL, pageContent, "text/html", "utf-8", null);
 	}
 

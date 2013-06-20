@@ -8,9 +8,10 @@
 		android:tag="stageName"
 		android:layout_height="fill_parent"
 		android:gravity="center_vertical"
-		android:paddingLeft="2dip"
+		android:paddingLeft="4dp"
 		android:typeface="sans"
 		android:textSize="13sp"
+		android:textStyle="bold"
 		android:ellipsize="marquee"
 		android:textColor="#ffffff"
 		android:text="stage" />

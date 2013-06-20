@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:layout_height="fill_parent" >
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:scaleType="matrix"
+        android:src="@drawable/background" />
+
+    <ImageView
+        android:id="@+id/background_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/background"
+        android:background="@drawable/background_bottom_repeat" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/background_bottom"
+        android:layout_toRightOf="@id/background"
+        android:background="@drawable/background_right_repeat" />
 
     <include
         android:id="@+id/logo"
@@ -12,27 +33,21 @@
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/content_area_bg" >
-
-        <TextView
-            android:id="@+id/whiteTitle"
-            style="@style/Header1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/News" />
+                android:layout_below="@id/logo"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/text_background">
 
         <ListView
+        android:background="@android:color/transparent"
             android:id="@+id/newsList"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@id/whiteTitle"
-            android:layout_marginBottom="-100dp"
-            android:layout_marginTop="-100dp"
-            android:cacheColorHint="#00000000"
-            android:paddingBottom="100dp"
-            android:paddingTop="150dp" />
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:fadingEdge="none"  />
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
