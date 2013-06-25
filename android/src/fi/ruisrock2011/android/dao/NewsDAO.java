@@ -196,10 +196,10 @@ public class NewsDAO {
 		for (int i=0; i < list.length(); i++) {
 			try {
 				JSONObject newsObject = list.getJSONObject(i);
-				String dateString = JSONUtil.getString(newsObject, "date");
+				Date date = new Date(Long.valueOf(JSONUtil.getString(newsObject, "time")));
 				String titleString = JSONUtil.getString(newsObject, "title");
-				Date date = RSS_DATE_FORMATTER.parse(dateString.replace("T", " "));
-				NewsArticle article = new NewsArticle(titleString + dateString, titleString, date, "<p>" + JSONUtil.getString(newsObject, "content_plaintext").replace("  ", "<br /><br />") + "</ p>");
+				String dateString = RSS_DATE_FORMATTER.format(date);
+				NewsArticle article = new NewsArticle(titleString + dateString, titleString, date, "<p>" + JSONUtil.getString(newsObject, "content").replace("  ", "<br /><br />") + "</ p>");
 				articles.add(article);
 			} catch (Exception e) {
 				Log.w(TAG, "Received invalid JSON-structure", e);

@@ -44,7 +44,7 @@ public class GigDAO {
 	private static final String TAG = "GigDAO";
 	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	
-	private static final String GIGS_QUERY = "SELECT gig.id, gig.artist, gig.description, gig.favorite, gig.active, gig.alerted, " +
+	private static final String GIGS_QUERY = "SELECT gig.id, gig.artist, gig.description, gig.favorite, gig.active, gig.alerted, gig.youtube, gig.spotify," +
 			"location.stage, location.startTime, location.endTime FROM gig LEFT JOIN location ON (gig.id = location.id)";
 	
 	// gig.id				0
@@ -53,9 +53,11 @@ public class GigDAO {
 	// gig.favorite			3
 	// gig.active			4
 	// gig.alerted			5
-	// location.stage		6
-	// location.startTime	7
-	// location.endTime		8
+	// gig.youtube			6
+	// gig.spotify			7
+	// location.stage		8
+	// location.startTime	9
+	// location.endTime		10
 	
 	private static Date startOfFriday = null;
 	private static Date startOfSaturday = null;
@@ -64,10 +66,10 @@ public class GigDAO {
 	
 	static {
 		try {
-			startOfFriday = DB_DATE_FORMATTER.parse("2012-07-06 06:00");
-			startOfSaturday = DB_DATE_FORMATTER.parse("2012-07-07 06:00");
-			startOfSunday = DB_DATE_FORMATTER.parse("2012-07-08 06:00");
-			endOfSunday = DB_DATE_FORMATTER.parse("2012-07-09 06:00");
+			startOfFriday = DB_DATE_FORMATTER.parse("2013-07-05 06:00");
+			startOfSaturday = DB_DATE_FORMATTER.parse("2013-07-06 06:00");
+			startOfSunday = DB_DATE_FORMATTER.parse("2013-07-07 06:00");
+			endOfSunday = DB_DATE_FORMATTER.parse("2013-07-07 18:00");
 		} catch (ParseException e) {
 			Log.e(TAG, "Error setting festival day intervals.");
 		}
@@ -133,11 +135,7 @@ public class GigDAO {
 		for (int i=0; i < list.length(); i++) {
 			try {
 				JSONObject gigObj = list.getJSONObject(i);
-				
-				if (!JSONUtil.getString(gigObj, "lang").equals("fi")) {
-					continue;
-				}
-				
+								
 				String gigId = JSONUtil.getString(gigObj, "id");
 				
 				Gig gig = new Gig();
@@ -147,13 +145,15 @@ public class GigDAO {
 					isNewGig = false;
 				} else {
 					gig.setId(gigId);
-					gig.setArtist(JSONUtil.getString(gigObj, "name"));
-					gig.setDescription(JSONUtil.getString(gigObj, "description"));
+					gig.setArtist(JSONUtil.getString(gigObj, "nimi"));
+					gig.setDescription(JSONUtil.getString(gigObj, "sisalto"));
+					gig.setYoutube(JSONUtil.getString(gigObj,"youtube"));
+					gig.setSpotify(JSONUtil.getString(gigObj,"spotify"));
 				}
 								
-				Date startTime = parseJsonDate(JSONUtil.getString(gigObj, "start"));
-				Date endTime = parseJsonDate(JSONUtil.getString(gigObj, "end"));
-				String stage = JSONUtil.getString(gigObj, "stage");
+				Date startTime = parseJsonDate(JSONUtil.getLong(gigObj, "aika"));
+				Date endTime = parseJsonDate(JSONUtil.getLong(gigObj, "aika_stop"));
+				String stage = JSONUtil.getString(gigObj, "lava");
 				if (startTime != null && endTime != null && StringUtil.isNotEmpty(stage)) {
 					GigLocation gigLocation = new GigLocation(stage, startTime, endTime);
 					gig.addLocation(gigLocation);
@@ -175,17 +175,11 @@ public class GigDAO {
 		return stage.replaceAll("(?i)[- ]?(lava|stage)$", "");
 	}
 	
-	private static Date parseJsonDate(String date) {
-		if (date == null) {
+	private static Date parseJsonDate(Long time) {
+		if (time == null) {
 			return null;
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-		try {
-			return sdf.parse(date);
-		} catch (Exception e) {
-			return null;
-		}
-		
+		return new Date(time * 1000);
 	}
 	
 	public static DaySchedule findDaySchedule(Context context, FestivalDay festivalDay) {
@@ -334,14 +328,16 @@ public class GigDAO {
 				cursor.getString(2), // description
 				cursor.getInt(3) > 0,
 				cursor.getInt(4) > 0,
-				cursor.getInt(5) > 0);
+				cursor.getInt(5) > 0,
+				cursor.getString(6),
+				cursor.getString(7));
 	}
 	
 	private static GigLocation convertCursorToGigLocation(Cursor cursor, String id) {
 		return new GigLocation(
-				cursor.getString(6), // stage
-				parseDate(cursor.getString(7)), // startTime
-				parseDate(cursor.getString(8))); // endTime
+				cursor.getString(8), // stage
+				parseDate(cursor.getString(9)), // startTime
+				parseDate(cursor.getString(10))); // endTime
 	}
 	
 	public static ContentValues convertGigToContentValues(Gig gig) {
@@ -357,6 +353,8 @@ public class GigDAO {
 		values.put("active", gig.isActive());
 		values.put("favorite", gig.isFavorite());
 		values.put("alerted", gig.isAlerted());
+		values.put("youtube", gig.getYoutube());
+		values.put("spotify", gig.getSpotify());
 		/*
 		if (gig.getFestivalDay() != null) {
 			values.put("festivalDay", gig.getFestivalDay().name());
@@ -506,190 +504,6 @@ public class GigDAO {
 		if (cursor != null) {
 			cursor.close();
 		}
-	}
-	
-	public static Integer getImageIdForArtist(String artist) {
-		if (StringUtil.isEmpty(artist)) {
-			return null;
-		}
-		artist = artist.toLowerCase().trim();
-		artist = artist.replaceAll("\\([a-z]+\\)$", "");
-		artist = artist.trim();
-		if (artist.startsWith("antero lindgren")) {
-			return R.drawable.test; //artistimg_antero_lindgren;
-		}
-		if (artist.startsWith("apocalyptica")) {
-			return R.drawable.artistimg_apocalyptica;
-		}
-		if (artist.startsWith("apulanta")) {
-			return R.drawable.artistimg_apulanta;
-		}
-		if (artist.startsWith("black twig")) {
-			return R.drawable.artistimg_black_twig;
-		}
-		if (artist.startsWith("bloc party")) {
-			return R.drawable.artistimg_bloc_party;
-		}
-		if (artist.startsWith("burning hearts")) {
-			return R.drawable.artistimg_burning_hearts;
-		}
-		if (artist.startsWith("children of bodom")) {
-			return R.drawable.artistimg_children_of_bodom;
-		}
-		if (artist.startsWith("chisu")) {
-			return R.drawable.artistimg_chisu;
-		}
-		if (artist.startsWith("disco ensemble")) {
-			return R.drawable.artistimg_disco_ensemble;
-		}
-		if (artist.startsWith("elokuu")) {
-			return R.drawable.artistimg_elokuu;
-		}
-		if (artist.startsWith("eppu normaali")) {
-			return R.drawable.artistimg_eppu_normaali;
-		}
-		if (artist.startsWith("ewert and the two dragons")) {
-			return R.drawable.artistimg_ewert_and_the_two_dragons;
-		}
-		if (artist.startsWith("fintelligens")) {
-			return R.drawable.artistimg_fintelligens;
-		}
-		if (artist.startsWith("flogging molly")) {
-			return R.drawable.artistimg_flogging_molly;
-		}
-		if (artist.startsWith("french films")) {
-			return R.drawable.artistimg_french_films;
-		}
-		if (artist.startsWith("gg caravan")) {
-			return R.drawable.artistimg_gg_caravan;
-		}
-		if (artist.startsWith("gracias")) {
-			return R.drawable.artistimg_gracias;
-		}
-		if (artist.startsWith("herra ylpp")) {
-			return R.drawable.artistimg_herra_ylppo_ja_ihmiset;
-		}
-		if (artist.startsWith("huoratron")) {
-			return R.drawable.artistimg_huoratron;
-		}
-		if (artist.contains("jimmy cliff")) {
-			return R.drawable.artistimg_jimmy_cliff;
-		}
-		if (artist.startsWith("jukka poika")) {
-			return R.drawable.artistimg_jukka_poika_and_sound_explosion_band;
-		}
-//		if (artist.startsWith("jätkäjätkät")) {
-//			return R.drawable.artistimg_jatkajatkat;
-//		}
-		if (artist.startsWith("kauko r")) {
-			return R.drawable.artistimg_kauko_rouhka_ja_narttu;
-		}
-		if (artist.startsWith("kuningasidea")) {
-			return R.drawable.artistimg_kuningasidea;
-		}
-		if (artist.startsWith("lapko")) {
-			return R.drawable.artistimg_lapko;
-		}
-		if (artist.startsWith("metronomy")) {
-			return R.drawable.artistimg_metronomy;
-		}
-		if (artist.startsWith("michael monroe")) {
-			return R.drawable.artistimg_michael_monroe;
-		}
-		if (artist.equals("mikko joensuu")) {
-			return R.drawable.artistimg_mikko_joensuu;
-		}
-		if (artist.startsWith("moonface")) {
-			return R.drawable.artistimg_moonface_with_siinai;
-		}
-		if (artist.startsWith("mustasch")) {
-			return R.drawable.artistimg_mustasch;
-		}
-		if (artist.startsWith("nightwish")) {
-			return R.drawable.artistimg_nightwish;
-		}
-		if (artist.startsWith("notkea rotta")) {
-			return R.drawable.artistimg_notkea_rotta;
-		}
-		if (artist.startsWith("olavi uusivirta")) {
-			return R.drawable.artistimg_olavi_uusivirta;
-		}
-		if (artist.startsWith("paleface")) {
-			return R.drawable.artistimg_paleface_ja_rajahtava_nyrkki;
-		}
-		if (artist.startsWith("pariisin kev")) {
-			return R.drawable.artistimg_pariisin_kevat;
-		}
-		if (artist.startsWith("pasa")) {
-			return R.drawable.artistimg_pasa;
-		}
-		if (artist.startsWith("pmmp")) {
-			return R.drawable.artistimg_pmmp;
-		}
-		if (artist.startsWith("pulp")) {
-			return R.drawable.artistimg_pulp;
-		}
-		if (artist.startsWith("refused")) {
-			return R.drawable.artistimg_refused;
-		}
-		if (artist.startsWith("regina")) {
-			return R.drawable.artistimg_regina;
-		}
-		if (artist.startsWith("rival sons")) {
-			return R.drawable.artistimg_rival_sons;
-		}
-		if (artist.startsWith("robin")) {
-			return R.drawable.artistimg_robin;
-		}
-		if (artist.startsWith("ruudolf")) {
-			return R.drawable.artistimg_ruudolf_ja_karri_koira;
-		}
-		if (artist.startsWith("santigold")) {
-			return R.drawable.artistimg_santigold;
-		}
-		if (artist.startsWith("scandinavian music group")) {
-			return R.drawable.artistimg_scandinavian_music_group;
-		}
-		if (artist.startsWith("snoop dogg")) {
-			return R.drawable.artistimg_snoog_dogg;
-		}
-		if (artist.startsWith("stam1na")) {
-			return R.drawable.artistimg_stam1na;
-		}
-		if (artist.startsWith("stig")) {
-			return R.drawable.artistimg_stig;
-		}
-		if (artist.startsWith("stockers")) {
-			return R.drawable.artistimg_stockers;
-		}
-		if (artist.startsWith("suicidal tendencies")) {
-			return R.drawable.artistimg_suicidal_tendencies;
-		}
-		if (artist.startsWith("the cardigans")) {
-			return R.drawable.artistimg_the_cardigans;
-		}
-		if (artist.startsWith("the mars volta")) {
-			return R.drawable.artistimg_the_mars_volta;
-		}
-		if (artist.startsWith("the rasmus")) {
-			return R.drawable.artistimg_the_rasmus;
-		}
-		if (artist.startsWith("two door cinema club")) {
-			return R.drawable.artistimg_two_door_cinema_club;
-		}
-		if (artist.startsWith("veronica maggio")) {
-			return R.drawable.artistimg_veronica_maggio;
-		}
-		if (artist.startsWith("von hertzen brothers")) {
-			return R.drawable.artistimg_von_hertzen_brothers;
-		}
-		if (artist.startsWith("yeasayer")) {
-			return R.drawable.artistimg_yeasayer;
-		}
-		if (artist.startsWith("zebra and snake")) {
-			return R.drawable.artistimg_zebra_and_snake;
-		}
-		return null;
 	}
 	
 }

@@ -24,7 +24,7 @@ import fi.ruisrock2011.android.util.StringUtil;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String DB_NAME = "ruisrock2011_db";
-	private static final int DB_VERSION = 3; // Latest release at the market: 3
+	private static final int DB_VERSION = 4; // Latest release at the market: 3
 	private static final String TAG = "DatabaseHelper";
 	
 	private Context context;
@@ -165,7 +165,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"description TEXT, " +
 				"active BOOLEAN, " +
 				"favorite BOOLEAN, " +
-				"alerted BOOLEAN)";
+				"alerted BOOLEAN, " +
+				"youtube TEXT, " +
+				"spotify TEXT)";
 		db.execSQL(sql);
 	}
 	

@@ -11,5 +11,11 @@ public class JSONUtil {
 		}
 		return j.getString(name);
 	}
+	public static Long getLong(JSONObject j, String name) throws JSONException {
+		if(!j.has(name) || j.isNull(name)) {
+			return null;
+		}
+		return j.getLong(name);
+	}
 
 }

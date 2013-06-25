@@ -7,7 +7,27 @@
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:src="@drawable/splash" />
-
+	<TextView
+	    android:id="@+id/splashLineOne"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Open-sourced by Fonecta"
+	    android:layout_centerHorizontal="true"
+	    android:layout_above="@+id/splashLineTwo"
+	    android:textSize="18dp"
+	    android:textColor="#ff600926"/>
+	<TextView
+	    android:id="@+id/splashLineTwo"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Designed and published by Futurice"
+	    android:layout_centerHorizontal="true"
+	    android:layout_alignParentBottom="true"
+	    android:paddingBottom="8dp"
+	    android:textSize="18dp"
+	    android:textColor="#ff600926"/>
+	
+	
 </RelativeLayout>

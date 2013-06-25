@@ -13,6 +13,8 @@ public class Gig {
 	private boolean favorite;
 	private boolean active = true;
 	private boolean alerted = false;
+	private String youtube;
+	private String spotify;
 	
 	private List<GigLocation> locations = new ArrayList<GigLocation>();
 	
@@ -20,13 +22,15 @@ public class Gig {
 		
 	}
 
-	public Gig(String id, String artist, String description, boolean favorite, boolean active, boolean alerted) {
+	public Gig(String id, String artist, String description, boolean favorite, boolean active, boolean alerted, String youtube, String spotify) {
 		this.id = id;
 		this.artist = artist;
 		this.description = description;
 		this.favorite = favorite;
 		this.active = active;
 		this.alerted = alerted;
+		this.youtube = youtube;
+		this.spotify = spotify;
 	}
 	
 	public List<GigLocation> getLocations() {
@@ -128,5 +132,20 @@ public class Gig {
 		}
 		return "";
 	}
-
+	
+	public String getYoutube() {
+		return youtube;
+	}
+	
+	public void setYoutube(String url) {
+		this.youtube = url;
+	}
+	
+	public String getSpotify() {
+		return spotify;
+	}
+	
+	public void setSpotify(String url) {
+		this.spotify = url;
+	}
 }

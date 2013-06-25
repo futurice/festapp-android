@@ -49,7 +49,8 @@
             android:cacheColorHint="@android:color/transparent"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"
-            android:fadingEdge="none" />
+            android:fadingEdge="none" 
+            android:scrollbarThumbVertical="@drawable/scroll_thumb"/>
     </RelativeLayout>
 
 </RelativeLayout>

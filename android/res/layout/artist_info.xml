@@ -3,7 +3,8 @@
     android:id="@+id/scrollView1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/background_bottom_repeat" >
+    android:background="@drawable/background_bottom_repeat"
+    android:scrollbarThumbVertical="@drawable/scroll_thumb" >
 
     <RelativeLayout
         android:id="@+id/artistInfoView"
@@ -173,6 +174,30 @@
                 android:textColor="#111111"
                 android:textSize="15sp"
                 android:lineSpacingMultiplier="1.2" />
+            <LinearLayout 
+                android:id="@+id/mediaIntegrations"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp">
+				<ImageView
+				    android:id="@+id/youtube"
+				    android:src="@drawable/youtube_logo"
+				    android:onClick="openYoutube"
+				    android:layout_weight="1"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"/>
+				<ImageView
+				    android:id="@+id/spotify"
+				    android:src="@drawable/spotify_logo"
+				    android:onClick="openSpotify"
+				    android:layout_weight="1"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"/>                
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 

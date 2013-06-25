@@ -23,7 +23,8 @@
 		android:layout_marginRight="10dp" android:layout_marginTop="50dp"
 		android:id="@+id/scrollView1" android:layout_width="fill_parent"
 		android:layout_below="@id/logo" android:layout_height="fill_parent"
-		android:background="@drawable/text_background">
+		android:background="@drawable/text_background"
+		android:scrollbarThumbVertical="@drawable/scroll_thumb">
 
 		<LinearLayout android:id="@+id/relativeLayout1"
 			android:padding="6dp" android:orientation="vertical"
