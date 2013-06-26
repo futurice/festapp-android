@@ -140,7 +140,7 @@ public class RuisrockService extends Service {
 		}
 	}
 
-	private void updateServicesPageData() {
+	/*private void updateServicesPageData() {
 		try {
 			if (HTTPUtil.isContentUpdated(RuisrockConstants.SERVICES_JSON_URL,
 					ConfigDAO.getEtagForServices(getBaseContext()))) {
@@ -152,7 +152,7 @@ public class RuisrockService extends Service {
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Services data.", e);
 		}
-	}
+	}*/
 
 	private void updateFrequentlyAskedQuestionsPageData() {
 		try {
@@ -188,7 +188,7 @@ public class RuisrockService extends Service {
 		}
 	}
 
-	private void updateTransportationPage() {
+	/*private void updateTransportationPage() {
 		try {
 			if (HTTPUtil.isContentUpdated(
 					RuisrockConstants.TRANSPORTATION_HTML_URL,
@@ -201,7 +201,7 @@ public class RuisrockService extends Service {
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Transportation-page.", e);
 		}
-	}
+	}*/
 
 	private void updateGigs() {
 		try {

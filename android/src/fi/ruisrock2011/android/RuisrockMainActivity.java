@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import fi.ruisrock2011.android.dao.ConfigDAO;
 import fi.ruisrock2011.android.dao.GigDAO;
 import fi.ruisrock2011.android.dao.NewsDAO;
 import fi.ruisrock2011.android.domain.NewsArticle;
@@ -36,10 +37,9 @@ public class RuisrockMainActivity extends Activity {
 			case R.id.main_menu_news:
 				startActivity(new Intent(getBaseContext(), NewsListActivity.class));
 				break;
-//			case R.id.mainGridFonecta:
-//				startActivity(new Intent(getBaseContext(), FonectaActivity.class));
-//				AnalyticsHelper.sendAnalytics(RuisrockMainActivity.this, AnalyticsHelper.EVENT_02_TAB);
-//				break;
+			case R.id.main_menu_faq:
+				showFAQ();
+				break;
 			}
 		}
 	};
@@ -60,8 +60,8 @@ public class RuisrockMainActivity extends Activity {
 		findViewById(R.id.main_menu_bands).setOnClickListener(clickListener);
 		findViewById(R.id.main_menu_timetable).setOnClickListener(clickListener);
 		findViewById(R.id.main_menu_map).setOnClickListener(clickListener);
-//		findViewById(R.id.mainGridFonecta).setOnClickListener(clickListener);
 		findViewById(R.id.main_menu_news).setOnClickListener(clickListener);
+		findViewById(R.id.main_menu_faq).setOnClickListener(clickListener);
 	}
 	
 	private void handleNotificationEvents() {
@@ -108,5 +108,10 @@ public class RuisrockMainActivity extends Activity {
 		return false;
 	}
 	*/
-	
+	private void showFAQ() {
+		Intent intent = new Intent(this, InfoSubPageActivity.class);
+		intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, getBaseContext()));
+		intent.putExtra("subPageTitle", "Usein kysytyt kysymykset");
+		startActivity(intent);
+	}
 }

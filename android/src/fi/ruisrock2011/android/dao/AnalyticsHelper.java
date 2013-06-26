@@ -16,9 +16,6 @@ public class AnalyticsHelper {
 	private static final String TAG = "AnalyticsHelper";
 
 	public static final String EVENT_START = "p=Kaynnistys";
-	public static final String EVENT_02_TAB = "p=020202";
-	public static final String EVENT_02_CALL = "p=02_soitto";
-	public static final String EVENT_02_CANCEL = "p=02_peruutus";
 	private static final String ANALYTICS_URL = "http://c.cem4mobile.com/?s=ruisrock-android&";
 
 	private static final String RUISROCK_PREFS = "ruisrock prefs";

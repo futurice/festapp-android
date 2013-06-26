@@ -238,15 +238,29 @@ public class ConfigDAO {
 		setEtagForFoodAndDrink(context, response.getEtag());
 		// TODO: Ruisrock2012. Format of response needs fixing.
 		try {
-			String content = parseFromJson(response.getContent(), "content_plaintext");
+			String content = null;
+			JSONArray arr = new JSONArray(response.getContent());
+			for(int i = 0; i < arr.length(); i++) {
+				JSONObject o = arr.getJSONObject(i);
+				if(o.getString("title").equals("Makuelämykset")) {
+					content = o.getString("content");
+					break;
+				}
+			}
+			if(content == null) {
+				Log.w(TAG, "Received invalid JSON-structure. No content found.");
+				return;
+			}
 			
 			// Ugly hacks to content_plaintext
-			content = content.replace("\\u2028", "").replace("\\u017e", "ż");
+			/*content = content.replace("\\u2028", "").replace("\\u017e", "ż");
 			while(content.contains("\\r\\n\\r\\n")) {
 				content = content.replace("\\r\\n\\r\\n", "\\r\\n");
 			}
 			
 			setPageFoodAndDrink(context, "<p>" + content.replace("  ", "<br /><br />") + "</ p>");
+			*/
+			setPageFoodAndDrink(context, content);
 		} catch (Exception e) {
 			Log.w(TAG, "Received invalid JSON-structure", e);
 		}
@@ -263,7 +277,7 @@ public class ConfigDAO {
 		return content;
 	}
 
-	public static void updateTransportationPageOverHttp(Context context) {
+	/*public static void updateTransportationPageOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.TRANSPORTATION_HTML_URL);
 		if (!response.isValid() || response.getContent() == null) {
@@ -285,7 +299,7 @@ public class ConfigDAO {
 		} catch (Exception e) {
 			Log.e(TAG, "Error parsing Services JSON.", e);
 		}
-	}
+	}*/
 	
 	public static void updateFrequentlyAskedQuestionsPagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
@@ -295,7 +309,19 @@ public class ConfigDAO {
 		}
 		setAttributeValue(ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, response.getEtag(), context);
 		try {
-			setAttributeValue(ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, parseFromJson(response.getContent(), "content"), context);
+			JSONArray arr = new JSONArray(response.getContent());
+			String content = null;
+			for(int i = 0; i < arr.length(); i++) {
+				JSONObject o = arr.getJSONObject(i);
+				if(o.getString("title").equals("Usein Kysytyt Kysymykset")) {
+					content = o.getString("content");
+					break;
+				}
+			}
+			if(content == null) {
+				Log.e(TAG, "Error parsing FrequentlyAskedQuestions JSON. No content found.");
+			}
+			setAttributeValue(ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, content, context);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e(TAG, "Error parsing FrequentlyAskedQuestions JSON.", e);

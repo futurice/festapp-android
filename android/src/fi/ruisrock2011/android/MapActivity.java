@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.location.GpsStatus;
 import android.location.Location;
@@ -97,7 +98,7 @@ public class MapActivity extends Activity {
 	private float current_scale = INITIAL_SCALE;
 	private int current_centerX = imageSizeX / 2;
 	private int current_centerY = imageSizeY / 2;
-	private int current_drawable = R.drawable.map_base;
+	private int current_drawable = R.drawable.map_2013;
 
 	private int moveHistorySize;
 	private float lastTwoXMoves[] = new float[2];
@@ -349,7 +350,7 @@ public class MapActivity extends Activity {
 		// Converse
 		if (x > 1280 && x < 1370 &&
 				y > 552 && y < 620) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.AURINKO, getBaseContext());
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.LOUNA, getBaseContext());
 		}
 		
 		// Niitty
@@ -364,10 +365,10 @@ public class MapActivity extends Activity {
 			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.RANTA, getBaseContext());
 		}
 		
-		// Louna
-		if (x > 1640 && x < 1761 &&
-				y > 765 && y < 830) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.LOUNA, getBaseContext());
+		
+		Rect rantaMini = new Rect(1450, 850, 1530, 930);
+		if (rantaMini.contains((int)x, (int)y)) {
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.RANTA_MINI, getBaseContext());
 		}
 		
 		// Show message if applicable

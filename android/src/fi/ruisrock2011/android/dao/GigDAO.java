@@ -446,9 +446,9 @@ public class GigDAO {
 		stage = stage.toLowerCase().trim();
 		String matchedStage = null;
 		switch (stageType) {
-		case AURINKO:
-			if (stage.startsWith("aurinko")) {
-				matchedStage = "Aurinkolavalla";
+		case RANTA_MINI:
+			if (stage.startsWith("mini")) {
+				matchedStage = "Minilavalla";
 			}
 			break;
 		case NIITTY:

@@ -79,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				}
 			}
 		}
-		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_GIGS, RuisrockConstants.ETAG_GIGS);
+		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_GIGS, RuisrockConstants.LAST_MODIFIED_GIGS);
 		db.insert("config", "attributeValue", values);
 	}
 	
@@ -92,7 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			ContentValues values = NewsDAO.convertNewsArticleToContentValues(article);
 			db.insert("news", "content", values);
 		}
-		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_NEWS, RuisrockConstants.ETAG_NEWS);
+		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_NEWS, RuisrockConstants.LAST_MODIFIED_NEWS);
 		db.insert("config", "attributeValue", values);
 	}
 	
@@ -109,7 +109,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_PAGE_FOODANDDRINK, "<p>" + page.replace("\\r\\n", "<br /><br />") + "</ p>");
 		db.insert("config", "attributeValue", values);
 		
-		values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FOODANDDRINK, RuisrockConstants.ETAG_FOOD_AND_DRINK);
+		values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FOODANDDRINK, RuisrockConstants.LAST_MODIFIED_FOOD_AND_DRINK);
 		db.insert("config", "attributeValue", values);
 	}
 	
@@ -137,7 +137,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String json = StringUtil.convertStreamToString(is);
 		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, ConfigDAO.parseFromJson(json, "content"));
 		db.insert("config", "attributeValue", values);
-		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, RuisrockConstants.ETAG_FREQUENTLY_ASKED_QUESTIONS));	
+		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, RuisrockConstants.LAST_MODIFIED_FAQ));	
 	}
 	
 	private void createGeneralInfoPagesFromLocalFile(SQLiteDatabase db) throws Exception {

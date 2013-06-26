@@ -1,7 +1,7 @@
 package fi.ruisrock2011.android.domain.to;
 
 public enum StageType {
-	AURINKO,
+	RANTA_MINI,
 	TELTTA,
 	LOUNA,
 	NIITTY,

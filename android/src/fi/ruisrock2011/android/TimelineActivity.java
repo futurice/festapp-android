@@ -360,22 +360,22 @@ public class TimelineActivity extends Activity {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             try {
-            	if(Math.abs(e1.getY() - e2.getY()) > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-            		Random random = new Random();
-            		MediaPlayer mp = null;
-            		if (random.nextBoolean()) {
-            			mp = MediaPlayer.create(getBaseContext(), R.raw.guitar1);
-            		} else {
-            			mp = MediaPlayer.create(getBaseContext(), R.raw.guitar2);
-            		}
-            		vibrator.vibrate(150l);
-            		mp.start();
-            		mp.setOnCompletionListener(new OnCompletionListener() {
-            			@Override
-            			public void onCompletion(MediaPlayer mp) {
-            				mp.release();
-            			}
-            		});
+            	float distanceX = Math.abs(e1.getX() - e2.getX());
+            	float distanceY = Math.abs(e1.getY() - e2.getY());
+            	if(distanceX == 0 || distanceY / distanceX > 5) { 
+	            	if(distanceY > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+	            		boolean upwardMotion = e1.getY() - e2.getY() > 0;
+	            		MediaPlayer mp = null;
+            			mp = MediaPlayer.create(getBaseContext(), upwardMotion ? R.raw.guitar1 : R.raw.guitar2);
+	            		vibrator.vibrate(150l);
+	            		mp.start();
+	            		mp.setOnCompletionListener(new OnCompletionListener() {
+	            			@Override
+	            			public void onCompletion(MediaPlayer mp) {
+	            				mp.release();
+	            			}
+	            		});
+	            	}
             	}
             } catch (Exception e) {
                 // nothing
