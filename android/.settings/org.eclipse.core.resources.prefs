@@ -1,5 +1,4 @@
-#Fri Jun 29 13:57:22 EEST 2012
 eclipse.preferences.version=1
 encoding//res/raw/page_transportation.html=UTF-8
-encoding//src/fi/ruisrock2011/android/dao/ConfigDAO.java=UTF-8
-encoding//src/fi/ruisrock2011/android/dao/DatabaseHelper.java=UTF-8
+encoding//src/fi/ruisrock/android/dao/ConfigDAO.java=UTF-8
+encoding//src/fi/ruisrock/android/dao/DatabaseHelper.java=UTF-8
