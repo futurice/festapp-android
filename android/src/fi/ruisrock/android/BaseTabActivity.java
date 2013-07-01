@@ -8,7 +8,7 @@ public class BaseTabActivity extends TabActivity {
 	public void onStart() {
 		super.onStart();
 		FlurryAgent.setReportLocation(false);
-		FlurryAgent.onStartSession(this, "JPDYF8CBJHTZNBF4QXHY");
+		FlurryAgent.onStartSession(this, "K58BHQ759NZTF3PV44VW");
 	}
 	@Override
 	protected void onStop() {
