@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.flurry.android.FlurryAgent;
+
 import fi.ruisrock.android.dao.ConfigDAO;
 import fi.ruisrock.android.ui.ListItemStringAdapter;
 import fi.ruisrock.android.R;
@@ -18,7 +20,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class ServicesListActivity extends Activity {
+public class ServicesListActivity extends BaseActivity {
 	
 	private ListView list;
 	private ListItemStringAdapter adapter;
@@ -62,6 +64,8 @@ public class ServicesListActivity extends Activity {
 		list.addHeaderView(header);
 		
 		populateListItems();
+		
+		FlurryAgent.logEvent("Palvelut");
 	}
 	
 	private void populateListItems() {

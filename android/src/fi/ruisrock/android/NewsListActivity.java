@@ -2,6 +2,8 @@ package fi.ruisrock.android;
 
 import java.util.List;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -24,7 +26,7 @@ import fi.ruisrock.android.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class NewsListActivity extends Activity {
+public class NewsListActivity extends BaseActivity {
 	
 	private ListView newsList;
 	private List<NewsArticle> articles;
@@ -55,6 +57,7 @@ public class NewsListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news);
 		createNewsList();
+		FlurryAgent.logEvent("Uutiset");
 	}
 	
 	private void createNewsList() {

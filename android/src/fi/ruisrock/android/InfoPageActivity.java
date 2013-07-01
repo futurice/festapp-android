@@ -1,5 +1,7 @@
 package fi.ruisrock.android;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +14,7 @@ import fi.ruisrock.android.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class InfoPageActivity extends Activity {
+public class InfoPageActivity extends BaseActivity {
 	
 	private View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override
@@ -51,6 +53,8 @@ public class InfoPageActivity extends Activity {
 		findViewById(R.id.infoPage_btnServices).setOnClickListener(clickListener);
 		findViewById(R.id.infoPage_btnFoodAndDrink).setOnClickListener(clickListener);
 		findViewById(R.id.infoPage_btnTransportation).setOnClickListener(clickListener);
+		
+		FlurryAgent.logEvent("Infolista");
 	}
 
 }

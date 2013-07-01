@@ -1,5 +1,7 @@
 package fi.ruisrock.android;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,7 +15,7 @@ import fi.ruisrock.android.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class InfoSubPageActivity extends Activity {
+public class InfoSubPageActivity extends BaseActivity {
 
 	private String pageTitle;
 	private String pageContent;
@@ -33,6 +35,7 @@ public class InfoSubPageActivity extends Activity {
 		WebView contentView = (WebView) findViewById(R.id.infoPageWebView);
 		contentView.setBackgroundColor(Color.TRANSPARENT);
 		contentView.loadDataWithBaseURL(RuisrockConstants.RUISROCK_BASE_URL, pageContent, "text/html", "utf-8", null);
+		FlurryAgent.logEvent(pageTitle);
 	}
 
 	private void setExtras() {

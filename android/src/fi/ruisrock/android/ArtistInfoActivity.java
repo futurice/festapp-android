@@ -1,5 +1,7 @@
 package fi.ruisrock.android;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -31,7 +33,7 @@ import fi.ruisrock.android.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class ArtistInfoActivity extends Activity {
+public class ArtistInfoActivity extends BaseActivity {
 	
 	private RelativeLayout artistInfoView;
 	private Gig gig;
@@ -51,6 +53,7 @@ public class ArtistInfoActivity extends Activity {
 				} else {
 					Toast.makeText(getApplicationContext(), getString(R.string.artistInfoActivity_favoriteOff), Toast.LENGTH_SHORT).show();
 				}
+				FlurryAgent.logEvent(String.format("tähti/profiili %d %s", isFavorite ? 1 : 0, gig.getArtist()));
 			}
 		}
 	};
@@ -65,6 +68,7 @@ public class ArtistInfoActivity extends Activity {
 		gig = getGig();
 		populateViewValues();
 		showInitialInfoOnFirstVisit(this);
+		FlurryAgent.logEvent(gig.getArtist());
 	}
 	
 	private void showInitialInfoOnFirstVisit(Context context) {
@@ -146,6 +150,7 @@ public class ArtistInfoActivity extends Activity {
 		
 	public void openSpotify(View v) {
 		try {
+			FlurryAgent.logEvent("Spotify/" + gig.getArtist() );
 			Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getSpotify()) );
 			startActivity(launcher);
 		} catch(ActivityNotFoundException anfe) {
@@ -154,6 +159,7 @@ public class ArtistInfoActivity extends Activity {
 	}
 	
 	public void openYoutube(View v) {
+		FlurryAgent.logEvent("Youtube/" + gig.getArtist());
 		Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getYoutube()) );
 		startActivity(launcher);
 	}

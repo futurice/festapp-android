@@ -1,5 +1,9 @@
 package fi.ruisrock.android;
 
+import java.io.Flushable;
+
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +21,7 @@ import fi.ruisrock.android.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class RuisrockMainActivity extends Activity {
+public class RuisrockMainActivity extends BaseActivity {
 	
 	private View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override

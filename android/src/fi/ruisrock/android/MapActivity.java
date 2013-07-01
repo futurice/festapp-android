@@ -3,6 +3,8 @@ package fi.ruisrock.android;
 import java.text.DecimalFormat;
 import java.util.Timer;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -53,7 +55,7 @@ import fi.ruisrock.android.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class MapActivity extends Activity {
+public class MapActivity extends BaseActivity {
 	
 	private static final int REQUEST_CODE_GPS = 33;
 	private static final double referenceLatitude = 60.42836515775148;
@@ -197,6 +199,7 @@ public class MapActivity extends Activity {
 		mapImageView.setImageMatrix(matrix);
 		
 		showInitialInfoDialog();
+		FlurryAgent.logEvent("Kartta");
 	}
 	
 	@Override
@@ -374,6 +377,7 @@ public class MapActivity extends Activity {
 		
 		// Show message if applicable
 		if (toastMessage != null) {
+			FlurryAgent.logEvent("Lavaa klikattu kartalla");
 			showToast(toastMessage);
 		}
 		

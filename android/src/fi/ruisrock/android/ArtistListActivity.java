@@ -2,6 +2,8 @@ package fi.ruisrock.android;
 
 import java.util.List;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +25,7 @@ import fi.ruisrock.android.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class ArtistListActivity extends Activity {
+public class ArtistListActivity extends BaseActivity {
 	
 	private ListView artistList;
 	private List<Gig> gigs;
@@ -49,6 +51,7 @@ public class ArtistListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.artists);
 		createArtistList();
+		FlurryAgent.logEvent("Artistit");
 	}
 	
 	private void createArtistList() {

@@ -2,6 +2,8 @@ package fi.ruisrock.android;
 
 import java.util.Date;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +23,7 @@ import fi.ruisrock.android.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class ScheduleTabActivity extends TabActivity {
+public class ScheduleTabActivity extends BaseTabActivity {
 	
 	private TabHost tabHost;
 	
@@ -40,6 +42,7 @@ public class ScheduleTabActivity extends TabActivity {
 			day = FestivalDay.FRIDAY;
 		}
 		tabHost.setCurrentTabByTag(day.name());
+		FlurryAgent.logEvent("Aikajana");
 	}
 	
 	private void addTabSpec(FestivalDay festivalDay) {

@@ -2,6 +2,8 @@ package fi.ruisrock.android.ui;
 
 import java.util.Date;
 
+import com.flurry.android.FlurryAgent;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -71,6 +73,7 @@ public class GigTimelineWidget extends RelativeLayout {
 			setBackgroundResource(R.drawable.schedule_gig);
 			artistLabel.setTextColor(Color.parseColor("#fbf6dd"));
 		}
+		FlurryAgent.logEvent(String.format("tähti/aikajana %d %s", fav ? 1 : 0, gig.getArtist()));
 	}
 	
 	public Gig getGig() {
