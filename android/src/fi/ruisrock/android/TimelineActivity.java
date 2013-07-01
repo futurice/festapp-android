@@ -1,5 +1,6 @@
 package fi.ruisrock.android;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -333,6 +334,14 @@ public class TimelineActivity extends Activity {
 
 	private void addStages() {
 		List<String> stages = daySchedule.getStages();
+		String[] orderedStages = new String[]{"niitty", "ranta", "teltta", "lounta", "mini"};
+		for(int i = 0; i < orderedStages.length; i++)  {
+			String stage = orderedStages[i];
+			if(stages.contains(stage)) {
+				stages.remove(stage);
+				stages.add(i, stage);
+			}
+		}
 		if (stages != null && !stages.isEmpty()) {
 			for (int i = 0; i < stages.size(); i++) {
 				addStageName(GigDAO.truncateStageName(stages.get(i)));
