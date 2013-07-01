@@ -69,7 +69,7 @@ public class GigDAO {
 			startOfFriday = DB_DATE_FORMATTER.parse("2013-07-05 06:00");
 			startOfSaturday = DB_DATE_FORMATTER.parse("2013-07-06 06:00");
 			startOfSunday = DB_DATE_FORMATTER.parse("2013-07-07 06:00");
-			endOfSunday = DB_DATE_FORMATTER.parse("2013-07-07 18:00");
+			endOfSunday = DB_DATE_FORMATTER.parse("2013-07-07 23:00");
 		} catch (ParseException e) {
 			Log.e(TAG, "Error setting festival day intervals.");
 		}
@@ -178,6 +178,16 @@ public class GigDAO {
 	private static Date parseJsonDate(Long time) {
 		if (time == null) {
 			return null;
+		}
+		
+		// Backend returns false timestamps
+		if (time == 4213275300L) {
+			time = 1373220900L;
+		}
+
+		
+		if(time > endOfSunday.getTime()) {
+			time = endOfSunday.getTime();
 		}
 		return new Date(time * 1000);
 	}

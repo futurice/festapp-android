@@ -38,8 +38,11 @@ public class ArtistInfoActivity extends Activity {
 	private OnClickListener favoriteListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			if (v.getId() == R.id.artistInfoFavorite) {
-				ToggleButton favoriteButton = (ToggleButton) v;
+			if (v.getId() == R.id.artistInfoFavorite || v.getId() == R.id.artistInfoTable) {
+				ToggleButton favoriteButton = (ToggleButton) findViewById(R.id.artistInfoFavorite);
+				if(v.getId() == R.id.artistInfoTable) {
+					favoriteButton.setChecked(!favoriteButton.isChecked());
+				}
 				boolean isFavorite = favoriteButton.isChecked();
 				GigDAO.setFavorite(ArtistInfoActivity.this, gig.getId(), isFavorite);
 				gig.setFavorite(isFavorite);
@@ -100,6 +103,7 @@ public class ArtistInfoActivity extends Activity {
 			ToggleButton favoriteButton = (ToggleButton) findViewById(R.id.artistInfoFavorite);
 			favoriteButton.setChecked(gig.isFavorite());
 			favoriteButton.setOnClickListener(favoriteListener);
+			infoTable.setOnClickListener(favoriteListener);
 			infoTable.bringToFront();
 			
 			ImageView artistImage = (ImageView) findViewById(R.id.artistImage);
