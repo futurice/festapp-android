@@ -1,5 +1,7 @@
 package fi.ruisrock.android;
 
+import java.util.HashMap;
+
 import com.flurry.android.FlurryAgent;
 
 import android.app.Activity;
@@ -40,7 +42,9 @@ public class NewsContentActivity extends BaseActivity {
 			contentView.setBackgroundColor(Color.TRANSPARENT);
 			contentView.loadDataWithBaseURL(RuisrockConstants.RUISROCK_BASE_URL, (String) extras.get("news.content"), "text/html", "utf-8", null);
 		}
-		FlurryAgent.logEvent(titleView.getText().toString());
+		HashMap<String, String> titleMap = new HashMap<String, String>();
+		titleMap.put("title", titleView.getText().toString());
+		FlurryAgent.logEvent("Uutinen", titleMap);
 	}
 
 }

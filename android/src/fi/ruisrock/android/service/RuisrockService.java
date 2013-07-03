@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
@@ -28,12 +31,11 @@ import fi.ruisrock.android.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class RuisrockService extends Service {
+public class RuisrockService extends Service{
 
 	private static final String TAG = RuisrockService.class.getSimpleName();
-	private Timer timer;
 	private int counter = -1;
-
+	private PendingIntent alarmIntent;
 	private TimerTask backendTask = new TimerTask() {
 		@Override
 		public void run() {
@@ -77,6 +79,18 @@ public class RuisrockService extends Service {
 		}
 	}
 
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		Log.d(TAG, "Running cron tasks");
+		new Thread() {
+			public void run() {
+				Log.d(TAG, "Running backend task");
+				backendTask.run();
+				Log.d(TAG, "Backend task finished");
+			}
+		}.run();
+		return super.onStartCommand(intent, flags, startId);
+	}
 	private void notify(Gig gig) {
 		Intent contentIntent = new Intent(getBaseContext(),
 				RuisrockMainActivity.class);
@@ -220,26 +234,26 @@ public class RuisrockService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		Intent intent = new Intent("CHECK_ALARMS");
+		alarmIntent = PendingIntent.getBroadcast(this, 12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+		long wait = RuisrockConstants.SERVICE_INITIAL_WAIT_TIME;
+		long interval = RuisrockConstants.SERVICE_FREQUENCY;
+		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, wait, interval, alarmIntent);;
 		Log.i(TAG, "Creating service");
-
-		timer = new Timer("RuisrockTimer");
-		timer.schedule(backendTask,
-				RuisrockConstants.SERVICE_INITIAL_WAIT_TIME,
-				RuisrockConstants.SERVICE_FREQUENCY);
 	}
-
+	
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		Log.i(TAG, "Destroying service");
-
-		timer.cancel();
-		timer = null;
+		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+		alarmManager.cancel(alarmIntent);
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
 	}
-
+	
 }

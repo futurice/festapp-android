@@ -218,7 +218,18 @@ public class TimelineActivity extends Activity {
 		textView.setPadding(1, 10, 1, 1);
 		gigLayout.addView(textView);
 		int row = 1;
-		for (String stage : stageGigs.keySet()) {
+		
+		List<String> stages = new ArrayList<String>(stageGigs.keySet());
+		String[] orderedStages = new String[]{"niitty", "ranta", "teltta", "lounta", "mini"};
+		for(int i = 0; i < orderedStages.length; i++)  {
+			String stage = orderedStages[i];
+			if(stages.contains(stage)) {
+				stages.remove(stage);
+				stages.add(i, stage);
+			}
+		}
+		
+		for (String stage : stages) {
 			LinearLayout stageRow = new LinearLayout(this);
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			params.setMargins(0, 2, 0, 2);

@@ -1,8 +1,9 @@
 package fi.ruisrock.android;
 
+import java.util.HashMap;
+
 import com.flurry.android.FlurryAgent;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -53,7 +54,11 @@ public class ArtistInfoActivity extends BaseActivity {
 				} else {
 					Toast.makeText(getApplicationContext(), getString(R.string.artistInfoActivity_favoriteOff), Toast.LENGTH_SHORT).show();
 				}
-				FlurryAgent.logEvent(String.format("tähti/profiili %d %s", isFavorite ? 1 : 0, gig.getArtist()));
+				HashMap<String, String> artistMap = new HashMap<String, String>();
+				artistMap.put("artisti", gig.getArtist());
+				artistMap.put("suosikki", isFavorite ? "true" : "false");
+				artistMap.put("näkymä", "profiili");
+				FlurryAgent.logEvent("tähti", artistMap);
 			}
 		}
 	};
@@ -68,7 +73,9 @@ public class ArtistInfoActivity extends BaseActivity {
 		gig = getGig();
 		populateViewValues();
 		showInitialInfoOnFirstVisit(this);
-		FlurryAgent.logEvent(gig.getArtist());
+		HashMap<String, String> artistMap = new HashMap<String, String>();
+		artistMap.put("artisti", gig.getArtist());
+		FlurryAgent.logEvent("artisti", artistMap);
 	}
 	
 	private void showInitialInfoOnFirstVisit(Context context) {
@@ -150,7 +157,9 @@ public class ArtistInfoActivity extends BaseActivity {
 		
 	public void openSpotify(View v) {
 		try {
-			FlurryAgent.logEvent("Spotify/" + gig.getArtist() );
+			HashMap<String, String> artistMap = new HashMap<String, String>();
+			artistMap.put("artisti", gig.getArtist());
+			FlurryAgent.logEvent("Spotify", artistMap);
 			Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getSpotify()) );
 			startActivity(launcher);
 		} catch(ActivityNotFoundException anfe) {
@@ -159,7 +168,9 @@ public class ArtistInfoActivity extends BaseActivity {
 	}
 	
 	public void openYoutube(View v) {
-		FlurryAgent.logEvent("Youtube/" + gig.getArtist());
+		HashMap<String, String> artistMap = new HashMap<String, String>();
+		artistMap.put("artisti", gig.getArtist());
+		FlurryAgent.logEvent("Youtube", artistMap);
 		Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getYoutube()) );
 		startActivity(launcher);
 	}

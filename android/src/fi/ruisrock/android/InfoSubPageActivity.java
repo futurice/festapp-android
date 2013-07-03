@@ -1,5 +1,7 @@
 package fi.ruisrock.android;
 
+import java.util.HashMap;
+
 import com.flurry.android.FlurryAgent;
 
 import android.app.Activity;
@@ -35,7 +37,9 @@ public class InfoSubPageActivity extends BaseActivity {
 		WebView contentView = (WebView) findViewById(R.id.infoPageWebView);
 		contentView.setBackgroundColor(Color.TRANSPARENT);
 		contentView.loadDataWithBaseURL(RuisrockConstants.RUISROCK_BASE_URL, pageContent, "text/html", "utf-8", null);
-		FlurryAgent.logEvent(pageTitle);
+		HashMap<String, String> titleMap = new HashMap<String, String>();
+		titleMap.put("otsikko", pageTitle);
+		FlurryAgent.logEvent("Infosivu", titleMap);
 	}
 
 	private void setExtras() {

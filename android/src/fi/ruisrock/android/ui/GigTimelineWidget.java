@@ -1,6 +1,7 @@
 package fi.ruisrock.android.ui;
 
 import java.util.Date;
+import java.util.HashMap;
 
 import com.flurry.android.FlurryAgent;
 
@@ -73,7 +74,11 @@ public class GigTimelineWidget extends RelativeLayout {
 			setBackgroundResource(R.drawable.schedule_gig);
 			artistLabel.setTextColor(Color.parseColor("#fbf6dd"));
 		}
-		FlurryAgent.logEvent(String.format("tähti/aikajana %d %s", fav ? 1 : 0, gig.getArtist()));
+		HashMap<String, String> artistMap = new HashMap<String, String>();
+		artistMap.put("artisti", gig.getArtist());
+		artistMap.put("suosikki", fav ? "true" : "false");
+		artistMap.put("näkymä", "aikajana");
+		FlurryAgent.logEvent("tähti", artistMap);
 	}
 	
 	public Gig getGig() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="fi.ruisrock.android" android:versionCode="1"
-	android:versionName="1.0.0">
+	package="fi.ruisrock.android" android:versionCode="2"
+	android:versionName="1.0.1">
 
 	<uses-sdk android:minSdkVersion="7" />
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -44,6 +44,10 @@
 		
 		<!-- Services -->
 		<service android:enabled="true" android:name=".service.RuisrockService" />
-		
+		<receiver android:enabled="true" android:name=".service.ServiceBroadcastReceiver">
+    		<intent-filter>
+        		<action android:name="CHECK_ALARMS"/>
+    		</intent-filter>
+		</receiver>
 	</application>
 </manifest>
