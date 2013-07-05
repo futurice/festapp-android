@@ -3,9 +3,12 @@ package fi.ruisrock.android;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import com.flurry.android.FlurryAgent;
 
 import android.app.Activity;
 import android.content.Context;
@@ -396,6 +399,9 @@ public class TimelineActivity extends Activity {
 	            				mp.release();
 	            			}
 	            		});
+	            		HashMap<String, String> swipeMap = new HashMap<String, String>();
+	            		swipeMap.put("suunta", upwardMotion ? "ylšs" : "alas");
+	            		FlurryAgent.logEvent("kitara",  swipeMap);
 	            	}
             	}
             } catch (Exception e) {

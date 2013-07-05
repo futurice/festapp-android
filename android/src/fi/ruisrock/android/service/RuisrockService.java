@@ -49,7 +49,7 @@ public class RuisrockService extends Service{
 						updateGigs();
 						updateNewsArticles();
 					}
-					if (counter % 12 * 5 == 0) { // every 5 hours
+					if (counter % (12 * 5) == 0) { // every 5 hours
 						Log.i(TAG, "Executing 5-hour operations.");
 						updateFoodAndDrinkPage();
 						// TODO: Ruisrock 2012. Transportation and services not
@@ -88,7 +88,7 @@ public class RuisrockService extends Service{
 				backendTask.run();
 				Log.d(TAG, "Backend task finished");
 			}
-		}.run();
+		}.start();
 		return super.onStartCommand(intent, flags, startId);
 	}
 	private void notify(Gig gig) {
