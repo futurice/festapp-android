@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.futurice.festapp.R;
 
 public class UIUtil {

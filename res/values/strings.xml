@@ -5,9 +5,9 @@
     <string name="Artists">BANDS</string>
     <string name="app_name">FestApp</string>
     <string name="Error">Error</string>
-    <string name="Schedule">Schedule</string>
+    <string name="Schedule">SCHEDULE</string>
     <string name="Debug">Debug</string>
-    <string name="Map">Map</string>
+    <string name="Map">MAP</string>
     <string name="Save">Save</string>
     <string name="Call">Call</string>
     <string name="Cancel">Cancel</string>
@@ -87,14 +87,14 @@
     <string name="generalInfo.Tickets">Ticket sales</string>
     <string name="generalInfo.Accessibility">Accessibility</string>
     <string name="generalInfo.SafetyInstructions">Safety instructions</string>
-    <string name="generalInfo.general_info">YLEISINFO</string>
-    <string name="generalInfo.services">PALVELUT</string>
-    <string name="generalInfo.food_and_drink">RUOKA &amp; JUOMA</string>
-    <string name="generalInfo.transportation">LIIKKUMINEN</string>
+    <string name="generalInfo.general_info">INFORMATION</string>
+    <string name="generalInfo.services">SERVICES</string>
+    <string name="generalInfo.food_and_drink">FOOD &amp; DRINK</string>
+    <string name="generalInfo.transportation">TRANSPORTATION</string>
     
     <!-- Notification -->
 
     <string name="notification.news.title">Notification</string>
     
-    <string name="database_fail">Sovelluksen alustus epäonnistui.</string>
+    <string name="database_fail">Failed to initiate the application.</string>
 </resources>
