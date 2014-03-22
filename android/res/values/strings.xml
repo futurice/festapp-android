@@ -24,6 +24,7 @@
     <string name="Services">Palvelut</string>
     <string name="FoodAndDrink">Ruoka &amp; juoma</string>
     <string name="Transportation">Liikkuminen</string>
+    <string name="faq">Frequently asked questions</string>
     
     <!-- Activity labels -->
     <string name="activity.label.Artists">Ruisrock » Bändit</string>

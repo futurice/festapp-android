@@ -385,70 +385,71 @@ public final class R {
         public static final int Sunday=0x7f09000d;
         public static final int Transportation=0x7f090016;
         public static final int Yes=0x7f09000e;
-        public static final int activity_label_ArtistInfo=0x7f090018;
+        public static final int activity_label_ArtistInfo=0x7f090019;
         /**  Activity labels 
          */
-        public static final int activity_label_Artists=0x7f090017;
-        public static final int activity_label_Debug=0x7f09001a;
-        public static final int activity_label_News=0x7f090019;
-        public static final int activity_label_Schedule=0x7f09001b;
+        public static final int activity_label_Artists=0x7f090018;
+        public static final int activity_label_Debug=0x7f09001b;
+        public static final int activity_label_News=0x7f09001a;
+        public static final int activity_label_Schedule=0x7f09001c;
         public static final int app_name=0x7f090002;
-        public static final int artistInfoActivity_favoriteOff=0x7f090021;
-        public static final int artistInfoActivity_favoriteOn=0x7f090020;
+        public static final int artistInfoActivity_favoriteOff=0x7f090022;
+        public static final int artistInfoActivity_favoriteOn=0x7f090021;
         /**  ArtistInfo view 
          */
-        public static final int artistInfoActivity_invalidId=0x7f09001f;
-        public static final int artistInfoActivity_menu_OpenInSpotify=0x7f090022;
-        public static final int artistInfoActivity_no_spotify=0x7f090023;
-        public static final int fonectaActivity_callError=0x7f090033;
-        public static final int fonectaActivity_confirmation=0x7f090034;
-        public static final int fonectaActivity_showPrices_text=0x7f090032;
+        public static final int artistInfoActivity_invalidId=0x7f090020;
+        public static final int artistInfoActivity_menu_OpenInSpotify=0x7f090023;
+        public static final int artistInfoActivity_no_spotify=0x7f090024;
+        public static final int faq=0x7f090017;
+        public static final int fonectaActivity_callError=0x7f090034;
+        public static final int fonectaActivity_confirmation=0x7f090035;
+        public static final int fonectaActivity_showPrices_text=0x7f090033;
         /**  Fonecta 02 view 
          */
-        public static final int fonectaActivity_title=0x7f090031;
-        public static final int generalInfo_Accessibility=0x7f090041;
-        public static final int generalInfo_Firstaid=0x7f09003f;
+        public static final int fonectaActivity_title=0x7f090032;
+        public static final int generalInfo_Accessibility=0x7f090042;
+        public static final int generalInfo_Firstaid=0x7f090040;
         /**  General info 
          */
-        public static final int generalInfo_FrequentlyAsked=0x7f09003b;
-        public static final int generalInfo_InfoStand=0x7f09003d;
-        public static final int generalInfo_LostAndFound=0x7f09003e;
-        public static final int generalInfo_OpenHours=0x7f09003c;
-        public static final int generalInfo_SafetyInstructions=0x7f090042;
-        public static final int generalInfo_Tickets=0x7f090040;
+        public static final int generalInfo_FrequentlyAsked=0x7f09003c;
+        public static final int generalInfo_InfoStand=0x7f09003e;
+        public static final int generalInfo_LostAndFound=0x7f09003f;
+        public static final int generalInfo_OpenHours=0x7f09003d;
+        public static final int generalInfo_SafetyInstructions=0x7f090043;
+        public static final int generalInfo_Tickets=0x7f090041;
         /**  Map view 
          */
-        public static final int mapActivity_ChooseLayers=0x7f090024;
-        public static final int mapActivity_distanceToMap=0x7f090029;
-        public static final int mapActivity_gpsAccuracy=0x7f09002a;
-        public static final int mapActivity_gpsActivated=0x7f090028;
-        public static final int mapActivity_gpsWaitingForFix=0x7f09002b;
-        public static final int mapActivity_initialInfo_message=0x7f09002e;
-        public static final int mapActivity_initialInfo_title=0x7f09002d;
-        public static final int mapActivity_layer_gps=0x7f090025;
-        public static final int mapActivity_nextOnStage=0x7f09002c;
-        public static final int mapActivity_prompt_EnableGPS_message=0x7f090027;
-        public static final int mapActivity_prompt_EnableGPS_title=0x7f090026;
-        public static final int newsActivity_httpError=0x7f09001e;
-        public static final int newsActivity_invalidUrl=0x7f09001d;
+        public static final int mapActivity_ChooseLayers=0x7f090025;
+        public static final int mapActivity_distanceToMap=0x7f09002a;
+        public static final int mapActivity_gpsAccuracy=0x7f09002b;
+        public static final int mapActivity_gpsActivated=0x7f090029;
+        public static final int mapActivity_gpsWaitingForFix=0x7f09002c;
+        public static final int mapActivity_initialInfo_message=0x7f09002f;
+        public static final int mapActivity_initialInfo_title=0x7f09002e;
+        public static final int mapActivity_layer_gps=0x7f090026;
+        public static final int mapActivity_nextOnStage=0x7f09002d;
+        public static final int mapActivity_prompt_EnableGPS_message=0x7f090028;
+        public static final int mapActivity_prompt_EnableGPS_title=0x7f090027;
+        public static final int newsActivity_httpError=0x7f09001f;
+        public static final int newsActivity_invalidUrl=0x7f09001e;
         /**  News view 
          */
-        public static final int newsActivity_loadingArticles=0x7f09001c;
+        public static final int newsActivity_loadingArticles=0x7f09001d;
         /**  Notification 
          */
-        public static final int notification_news_title=0x7f090043;
-        public static final int service_Activities=0x7f090039;
-        public static final int service_BikePark=0x7f090036;
-        public static final int service_Camping=0x7f090037;
+        public static final int notification_news_title=0x7f090044;
+        public static final int service_Activities=0x7f09003a;
+        public static final int service_BikePark=0x7f090037;
+        public static final int service_Camping=0x7f090038;
         /**  Services 
          */
-        public static final int service_Cloakroom=0x7f090035;
-        public static final int service_Merchandise=0x7f090038;
-        public static final int service_PhoneCharging=0x7f09003a;
-        public static final int timelineActivity_initialInfo_msg=0x7f090030;
+        public static final int service_Cloakroom=0x7f090036;
+        public static final int service_Merchandise=0x7f090039;
+        public static final int service_PhoneCharging=0x7f09003b;
+        public static final int timelineActivity_initialInfo_msg=0x7f090031;
         /**  Timeline view 
          */
-        public static final int timelineActivity_initialInfo_title=0x7f09002f;
+        public static final int timelineActivity_initialInfo_title=0x7f090030;
     }
     public static final class style {
         /**  Dialogs 

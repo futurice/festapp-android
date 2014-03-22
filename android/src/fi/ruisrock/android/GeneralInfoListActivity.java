@@ -70,7 +70,7 @@ public class GeneralInfoListActivity extends BaseActivity {
 		list.addHeaderView(header);		
 		
 		populateListItems();
-		FlurryAgent.logEvent("Yleisinfo");
+		FlurryAgent.logEvent("Info");
 	}
 	
 	private void populateListItems() {

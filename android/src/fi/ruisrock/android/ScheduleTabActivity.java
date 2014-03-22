@@ -42,7 +42,7 @@ public class ScheduleTabActivity extends BaseTabActivity {
 			day = FestivalDay.FRIDAY;
 		}
 		tabHost.setCurrentTabByTag(day.name());
-		FlurryAgent.logEvent("Aikajana");
+		FlurryAgent.logEvent("Timeline");
 	}
 	
 	private void addTabSpec(FestivalDay festivalDay) {

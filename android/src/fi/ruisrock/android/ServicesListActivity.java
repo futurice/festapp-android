@@ -65,7 +65,7 @@ public class ServicesListActivity extends BaseActivity {
 		
 		populateListItems();
 		
-		FlurryAgent.logEvent("Palvelut");
+		FlurryAgent.logEvent("Services");
 	}
 	
 	private void populateListItems() {

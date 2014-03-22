@@ -456,27 +456,27 @@ public class GigDAO {
 		stage = stage.toLowerCase().trim();
 		String matchedStage = null;
 		switch (stageType) {
-		case RANTA_MINI:
+		case LOCATION:
 			if (stage.startsWith("mini")) {
 				matchedStage = "Minilavalla";
 			}
 			break;
-		case NIITTY:
+		case TENT:
 			if (stage.startsWith("niitty")) {
 				matchedStage = "Niittylavalla";
 			}
 			break;
-		case LOUNA:
+		case STAGE:
 			if (stage.startsWith("louna")) {
 				matchedStage = "Louna-lavalla";
 			}
 			break;
-		case RANTA:
+		case PLACE:
 			if (stage.startsWith("ranta")) {
 				matchedStage = "Rantalavalla";
 			}
 			break;
-		case TELTTA:
+		case AREA:
 			if (stage.startsWith("teltta")) {
 				matchedStage = "Teltassa";
 			}

@@ -31,15 +31,15 @@ public class InfoSubPageActivity extends BaseActivity {
 		TextView titleView = (TextView) findViewById(R.id.infoSubPageTitle);
 		titleView.setText(pageTitle);
 		if (getString(R.string.service_BikePark).equals(pageTitle)) {
-			titleView.setText("Polkupyörä-parkki");
+			titleView.setText(R.string.service_BikePark);
 		}
 
 		WebView contentView = (WebView) findViewById(R.id.infoPageWebView);
 		contentView.setBackgroundColor(Color.TRANSPARENT);
 		contentView.loadDataWithBaseURL(RuisrockConstants.RUISROCK_BASE_URL, pageContent, "text/html", "utf-8", null);
 		HashMap<String, String> titleMap = new HashMap<String, String>();
-		titleMap.put("otsikko", pageTitle);
-		FlurryAgent.logEvent("Infosivu", titleMap);
+		titleMap.put("title", pageTitle);
+		FlurryAgent.logEvent("Infopage", titleMap);
 	}
 
 	private void setExtras() {

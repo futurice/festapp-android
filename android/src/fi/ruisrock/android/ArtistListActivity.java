@@ -51,7 +51,7 @@ public class ArtistListActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.artists);
 		createArtistList();
-		FlurryAgent.logEvent("Artistit");
+		FlurryAgent.logEvent("Artists");
 	}
 	
 	private void createArtistList() {

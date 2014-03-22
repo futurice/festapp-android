@@ -116,7 +116,7 @@ public class RuisrockMainActivity extends BaseActivity {
 	private void showFAQ() {
 		Intent intent = new Intent(this, InfoSubPageActivity.class);
 		intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, getBaseContext()));
-		intent.putExtra("subPageTitle", "Usein kysytyt kysymykset");
+		intent.putExtra("subPageTitle", getString(R.string.faq));
 		startActivity(intent);
 	}
 }

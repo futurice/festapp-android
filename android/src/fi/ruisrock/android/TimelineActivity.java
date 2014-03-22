@@ -153,14 +153,6 @@ public class TimelineActivity extends Activity {
 		SharedPreferences pref = context.getSharedPreferences(RuisrockConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
 		final String key = RuisrockConstants.PREFERENCE_SHOW_FAVORITE_INFO;
 		
-		// TODO: Start DEBUG
-		/*
-		Editor ed = pref.edit();
-		ed.putBoolean(key, true);
-		ed.commit();
-		*/
-		// END DEBUG
-		
 		if (pref.getBoolean(key, true)) {
 			Editor editor = pref.edit();
 			editor.putBoolean(key, false);
@@ -223,7 +215,7 @@ public class TimelineActivity extends Activity {
 		int row = 1;
 		
 		List<String> stages = new ArrayList<String>(stageGigs.keySet());
-		String[] orderedStages = new String[]{"niitty", "ranta", "teltta", "lounta", "mini"};
+		String[] orderedStages = new String[]{"location", "area", "stage", "tent", "place"};
 		for(int i = 0; i < orderedStages.length; i++)  {
 			String stage = orderedStages[i];
 			if(stages.contains(stage)) {
@@ -348,7 +340,7 @@ public class TimelineActivity extends Activity {
 
 	private void addStages() {
 		List<String> stages = daySchedule.getStages();
-		String[] orderedStages = new String[]{"niitty", "ranta", "teltta", "lounta", "mini"};
+		String[] orderedStages = new String[]{"location", "area", "stage", "tent", "place"};
 		for(int i = 0; i < orderedStages.length; i++)  {
 			String stage = orderedStages[i];
 			if(stages.contains(stage)) {
@@ -400,8 +392,8 @@ public class TimelineActivity extends Activity {
 	            			}
 	            		});
 	            		HashMap<String, String> swipeMap = new HashMap<String, String>();
-	            		swipeMap.put("suunta", upwardMotion ? "ylšs" : "alas");
-	            		FlurryAgent.logEvent("kitara",  swipeMap);
+	            		swipeMap.put("direction", upwardMotion ? "up" : "down");
+	            		FlurryAgent.logEvent("guitar",  swipeMap);
 	            	}
             	}
             } catch (Exception e) {

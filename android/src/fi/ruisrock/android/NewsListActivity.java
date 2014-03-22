@@ -57,7 +57,7 @@ public class NewsListActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news);
 		createNewsList();
-		FlurryAgent.logEvent("Uutiset");
+		FlurryAgent.logEvent("News");
 	}
 	
 	private void createNewsList() {

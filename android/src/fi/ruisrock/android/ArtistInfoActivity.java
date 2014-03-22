@@ -55,10 +55,10 @@ public class ArtistInfoActivity extends BaseActivity {
 					Toast.makeText(getApplicationContext(), getString(R.string.artistInfoActivity_favoriteOff), Toast.LENGTH_SHORT).show();
 				}
 				HashMap<String, String> artistMap = new HashMap<String, String>();
-				artistMap.put("artisti", gig.getArtist());
-				artistMap.put("suosikki", isFavorite ? "true" : "false");
-				artistMap.put("näkymä", "profiili");
-				FlurryAgent.logEvent("tähti", artistMap);
+				artistMap.put("artist", gig.getArtist());
+				artistMap.put("favourite", isFavorite ? "true" : "false");
+				artistMap.put("view", "profile");
+				FlurryAgent.logEvent("star", artistMap);
 			}
 		}
 	};
@@ -74,8 +74,8 @@ public class ArtistInfoActivity extends BaseActivity {
 		populateViewValues();
 		showInitialInfoOnFirstVisit(this);
 		HashMap<String, String> artistMap = new HashMap<String, String>();
-		artistMap.put("artisti", gig.getArtist());
-		FlurryAgent.logEvent("artisti", artistMap);
+		artistMap.put("artist", gig.getArtist());
+		FlurryAgent.logEvent("artist", artistMap);
 	}
 	
 	private void showInitialInfoOnFirstVisit(Context context) {
@@ -158,7 +158,7 @@ public class ArtistInfoActivity extends BaseActivity {
 	public void openSpotify(View v) {
 		try {
 			HashMap<String, String> artistMap = new HashMap<String, String>();
-			artistMap.put("artisti", gig.getArtist());
+			artistMap.put("artist", gig.getArtist());
 			FlurryAgent.logEvent("Spotify", artistMap);
 			Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getSpotify()) );
 			startActivity(launcher);
@@ -169,7 +169,7 @@ public class ArtistInfoActivity extends BaseActivity {
 	
 	public void openYoutube(View v) {
 		HashMap<String, String> artistMap = new HashMap<String, String>();
-		artistMap.put("artisti", gig.getArtist());
+		artistMap.put("artist", gig.getArtist());
 		FlurryAgent.logEvent("Youtube", artistMap);
 		Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getYoutube()) );
 		startActivity(launcher);

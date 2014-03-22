@@ -54,7 +54,7 @@ public class InfoPageActivity extends BaseActivity {
 		findViewById(R.id.infoPage_btnFoodAndDrink).setOnClickListener(clickListener);
 		findViewById(R.id.infoPage_btnTransportation).setOnClickListener(clickListener);
 		
-		FlurryAgent.logEvent("Infolista");
+		FlurryAgent.logEvent("Infolist");
 	}
 
 }

@@ -199,7 +199,7 @@ public class MapActivity extends BaseActivity {
 		mapImageView.setImageMatrix(matrix);
 		
 		showInitialInfoDialog();
-		FlurryAgent.logEvent("Kartta");
+		FlurryAgent.logEvent("Map");
 	}
 	
 	@Override
@@ -348,31 +348,31 @@ public class MapActivity extends BaseActivity {
 		// Telttalava
 		if (x > 744 && x < 920 &&
 				y > 420 && y < 515) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.TELTTA, getBaseContext());
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.AREA, getBaseContext());
 		}
 		
 		// Converse
 		if (x > 1280 && x < 1370 &&
 				y > 552 && y < 620) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.LOUNA, getBaseContext());
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.STAGE, getBaseContext());
 		}
 		
 		// Niitty
 		if (x > 900 && x < 1015 &&
 				y > 837 && y < 920) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.NIITTY, getBaseContext());
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.TENT, getBaseContext());
 		}
 		
 		// Ranta
 		if (x > 1355 && x < 1465 &&
 				y > 1146 && y < 1225) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.RANTA, getBaseContext());
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.PLACE, getBaseContext());
 		}
 		
 		
 		Rect rantaMini = new Rect(1450, 850, 1530, 930);
 		if (rantaMini.contains((int)x, (int)y)) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.RANTA_MINI, getBaseContext());
+			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.LOCATION, getBaseContext());
 		}
 		
 		// Show message if applicable

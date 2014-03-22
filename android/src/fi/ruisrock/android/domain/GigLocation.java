@@ -73,7 +73,7 @@ public class GigLocation implements Comparable<GigLocation> {
 	}
 	
 	public String getTime() {
-		return (startTime != null && endTime != null) ? "klo " + sdfHoursAndMinutes.format(startTime) + " - " + sdfHoursAndMinutes.format(endTime) : "";
+		return (startTime != null && endTime != null) ? sdfHoursAndMinutes.format(startTime) + " - " + sdfHoursAndMinutes.format(endTime) : "";
 	}
 	
 	public String getStartDay() {

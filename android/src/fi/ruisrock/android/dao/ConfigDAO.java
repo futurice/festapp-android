@@ -253,14 +253,6 @@ public class ConfigDAO {
 				return;
 			}
 			
-			// Ugly hacks to content_plaintext
-			/*content = content.replace("\\u2028", "").replace("\\u017e", "ż");
-			while(content.contains("\\r\\n\\r\\n")) {
-				content = content.replace("\\r\\n\\r\\n", "\\r\\n");
-			}
-			
-			setPageFoodAndDrink(context, "<p>" + content.replace("  ", "<br /><br />") + "</ p>");
-			*/
 			setPageFoodAndDrink(context, content);
 		} catch (Exception e) {
 			Log.w(TAG, "Received invalid JSON-structure", e);

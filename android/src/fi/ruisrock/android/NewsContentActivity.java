@@ -44,7 +44,7 @@ public class NewsContentActivity extends BaseActivity {
 		}
 		HashMap<String, String> titleMap = new HashMap<String, String>();
 		titleMap.put("title", titleView.getText().toString());
-		FlurryAgent.logEvent("Uutinen", titleMap);
+		FlurryAgent.logEvent("News", titleMap);
 	}
 
 }
