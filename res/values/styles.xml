@@ -31,13 +31,13 @@
     </style>
 
     <!-- Themes -->
-    <style name="RuisrockTheme" parent="android:Theme.Light.NoTitleBar">
+    <style name="FestAppTheme" parent="android:Theme.Light.NoTitleBar">
 
         <!-- <item name="android:windowContentOverlay">@null</item> -->
         <item name="android:windowBackground">@drawable/background_plain</item>
     </style>
 
-    <style name="RuisrockTheme.Fullscreen" parent="RuisrockTheme">
+    <style name="FestAppTheme.Fullscreen" parent="FestAppTheme">
         <item name="android:windowFullscreen">true</item>
     </style>
 

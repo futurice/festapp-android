@@ -13,7 +13,7 @@ import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.domain.to.HTTPBackendResponse;
 import com.futurice.festapp.util.HTTPUtil;
 import com.futurice.festapp.util.JSONUtil;
-import com.futurice.festapp.util.RuisrockConstants;
+import com.futurice.festapp.util.FestAppConstants;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -116,7 +116,7 @@ public class NewsDAO {
 
 	public static List<NewsArticle> updateNewsOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
-		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.NEWS_JSON_URL);
+		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.NEWS_JSON_URL);
 		if (!response.isValid() || response.getContent() == null) {
 			return null;
 		}
