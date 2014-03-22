@@ -1,6 +1,5 @@
 package com.futurice.festapp;
 
-import com.futurice.festapp.dao.AnalyticsHelper;
 import com.futurice.festapp.util.FestAppConstants;
 
 import com.futurice.festapp.R;
@@ -52,8 +51,6 @@ public class SplashActivity extends Activity {
 				}
 			};
 			splashTread.start();
-
-			AnalyticsHelper.sendAnalytics(this, AnalyticsHelper.EVENT_START);
 		}
 	}
 	

@@ -2,7 +2,6 @@ package com.futurice.festapp;
 
 import java.util.List;
 
-import com.flurry.android.FlurryAgent;
 import com.futurice.festapp.dao.NewsDAO;
 import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.ui.NewsArticleAdapter;
@@ -57,7 +56,6 @@ public class NewsListActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news);
 		createNewsList();
-		FlurryAgent.logEvent("Uutiset");
 	}
 	
 	private void createNewsList() {

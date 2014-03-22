@@ -2,7 +2,6 @@ package com.futurice.festapp;
 
 import java.util.HashMap;
 
-import com.flurry.android.FlurryAgent;
 import com.futurice.festapp.util.FestAppConstants;
 
 import android.app.Activity;
@@ -44,7 +43,6 @@ public class NewsContentActivity extends BaseActivity {
 		}
 		HashMap<String, String> titleMap = new HashMap<String, String>();
 		titleMap.put("title", titleView.getText().toString());
-		FlurryAgent.logEvent("Uutinen", titleMap);
 	}
 
 }

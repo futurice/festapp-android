@@ -29,7 +29,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.flurry.android.FlurryAgent;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.to.DaySchedule;
@@ -399,7 +398,6 @@ public class TimelineActivity extends Activity {
 	            		});
 	            		HashMap<String, String> swipeMap = new HashMap<String, String>();
 	            		swipeMap.put("suunta", upwardMotion ? "yl�s" : "alas");
-	            		FlurryAgent.logEvent("kitara",  swipeMap);
 	            	}
             	}
             } catch (Exception e) {
