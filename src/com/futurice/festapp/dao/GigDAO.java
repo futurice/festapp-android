@@ -25,7 +25,7 @@ import com.futurice.festapp.util.CalendarUtil;
 import com.futurice.festapp.util.GigArtistNameComparator;
 import com.futurice.festapp.util.HTTPUtil;
 import com.futurice.festapp.util.JSONUtil;
-import com.futurice.festapp.util.RuisrockConstants;
+import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.StringUtil;
 
 import android.content.ContentValues;
@@ -218,7 +218,7 @@ public class GigDAO {
 	
 	public static void updateGigsOverHttp(Context context) throws Exception {
 		HTTPUtil httpUtil = new HTTPUtil();
-		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.GIGS_JSON_URL);
+		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.GIGS_JSON_URL);
 		if (!response.isValid() || response.getContent() == null) {
 			return;
 		}

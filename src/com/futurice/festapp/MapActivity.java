@@ -13,7 +13,7 @@ import com.futurice.festapp.ui.map.MapAnimation;
 import com.futurice.festapp.ui.map.MapAnimationCallback;
 import com.futurice.festapp.ui.map.MapImageView;
 import com.futurice.festapp.ui.map.SizeCallback;
-import com.futurice.festapp.util.RuisrockConstants;
+import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.UIUtil;
 
 import android.app.Activity;
@@ -60,7 +60,7 @@ public class MapActivity extends BaseActivity {
 	private static final int REQUEST_CODE_GPS = 33;
 	private static final double referenceLatitude = 60.42836515775148;
 	private static final double referenceLongitude = 22.18308629415958;
-	private static final Location referenceLocation = new Location("Ruisrock_MapActivity");
+	private static final Location referenceLocation = new Location("FestApp_MapActivity");
 	
 	static {
 		referenceLocation.setLatitude(referenceLatitude);
@@ -763,7 +763,7 @@ public class MapActivity extends BaseActivity {
 	}
 	
 	private void showInitialInfoDialog() {
-		SharedPreferences pref = this.getSharedPreferences(RuisrockConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
+		SharedPreferences pref = this.getSharedPreferences(FestAppConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
 		final String key = "showInitialMapInfo";
 		
 		if (pref.getBoolean(key, true)) {

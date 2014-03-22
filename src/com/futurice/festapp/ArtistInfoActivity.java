@@ -6,7 +6,7 @@ import com.flurry.android.FlurryAgent;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.GigLocation;
-import com.futurice.festapp.util.RuisrockConstants;
+import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.UIUtil;
 
 import android.content.ActivityNotFoundException;
@@ -79,8 +79,8 @@ public class ArtistInfoActivity extends BaseActivity {
 	}
 	
 	private void showInitialInfoOnFirstVisit(Context context) {
-		SharedPreferences pref = context.getSharedPreferences(RuisrockConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
-		final String key = RuisrockConstants.PREFERENCE_SHOW_FAVORITE_INFO;
+		SharedPreferences pref = context.getSharedPreferences(FestAppConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
+		final String key = FestAppConstants.PREFERENCE_SHOW_FAVORITE_INFO;
 		if (pref.getBoolean(key, true)) {
 			Editor editor = pref.edit();
 			editor.putBoolean(key, false);

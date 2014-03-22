@@ -3,7 +3,7 @@
 	<!-- Single words -->
     <string name="News">UUTISET</string>
     <string name="Artists">BÄNDIT</string>
-    <string name="app_name">Ruisrock 2013</string>
+    <string name="app_name">FestApp 2013</string>
     <string name="Error">Virhe</string>
     <string name="Schedule">Aikataulu</string>
     <string name="Debug">Debug</string>
@@ -26,11 +26,11 @@
     <string name="Transportation">Liikkuminen</string>
     
     <!-- Activity labels -->
-    <string name="activity.label.Artists">Ruisrock » Bändit</string>
-    <string name="activity.label.ArtistInfo">Ruisrock » Bändit » Info </string>
-    <string name="activity.label.News">Ruisrock » Uutiset</string>
-    <string name="activity.label.Debug">Ruisrock » Debug</string>
-    <string name="activity.label.Schedule">Ruisrock » Aikataulu</string>
+    <string name="activity.label.Artists">FestApp » Bändit</string>
+    <string name="activity.label.ArtistInfo">FestApp » Bändit » Info </string>
+    <string name="activity.label.News">FestApp » Uutiset</string>
+    <string name="activity.label.Debug">FestApp » Debug</string>
+    <string name="activity.label.Schedule">FestApp » Aikataulu</string>
     
     <!-- News view -->
     <string name="newsActivity.loadingArticles">Ladataan uutisotsikoita...</string>
@@ -86,6 +86,6 @@
     <string name="generalInfo.SafetyInstructions">Turvallisuusohjeet</string>
     
     <!-- Notification -->
-    <string name="notification.news.title">Ruisrock tiedottaa</string>
+    <string name="notification.news.title">FestApp tiedottaa</string>
     
 </resources>

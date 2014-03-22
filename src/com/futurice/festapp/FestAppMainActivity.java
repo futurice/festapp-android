@@ -10,7 +10,7 @@ import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.dao.NewsDAO;
 import com.futurice.festapp.domain.NewsArticle;
-import com.futurice.festapp.service.RuisrockService;
+import com.futurice.festapp.service.FestAppService;
 import com.futurice.festapp.util.CalendarUtil;
 
 /**
@@ -18,7 +18,7 @@ import com.futurice.festapp.util.CalendarUtil;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class RuisrockMainActivity extends BaseActivity {
+public class FestAppMainActivity extends BaseActivity {
 	
 	private View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override
@@ -52,7 +52,7 @@ public class RuisrockMainActivity extends BaseActivity {
 		setContentView(R.layout.main);
 		Date dateNow = new Date();
 		if (dateNow.before(GigDAO.getEndOfSunday())) {
-			startService(new Intent(this, RuisrockService.class));
+			startService(new Intent(this, FestAppService.class));
 		}
 		createMainMenuItems();
 		handleNotificationEvents();

@@ -36,7 +36,7 @@ import com.futurice.festapp.domain.to.DaySchedule;
 import com.futurice.festapp.domain.to.FestivalDay;
 import com.futurice.festapp.ui.GigTimelineWidget;
 import com.futurice.festapp.util.CalendarUtil;
-import com.futurice.festapp.util.RuisrockConstants;
+import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.UIUtil;
 
 /**
@@ -148,8 +148,8 @@ public class TimelineActivity extends Activity {
 	}
 	
 	private void showInitialFavoriteInfoOnFirstVisit(Context context) {
-		SharedPreferences pref = context.getSharedPreferences(RuisrockConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
-		final String key = RuisrockConstants.PREFERENCE_SHOW_FAVORITE_INFO;
+		SharedPreferences pref = context.getSharedPreferences(FestAppConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
+		final String key = FestAppConstants.PREFERENCE_SHOW_FAVORITE_INFO;
 
 		// Start DEBUG
 		/*
@@ -280,7 +280,7 @@ public class TimelineActivity extends Activity {
 		if (i < 1) {
 			i = 1;
 		}
-		int imageId = getResources().getIdentifier(RuisrockConstants.DRAWABLE_GUITAR_STRING_PREFIX + i, "drawable", getPackageName());
+		int imageId = getResources().getIdentifier(FestAppConstants.DRAWABLE_GUITAR_STRING_PREFIX + i, "drawable", getPackageName());
 		llAlso.setBackgroundResource(imageId);
 		
 		return llAlso;

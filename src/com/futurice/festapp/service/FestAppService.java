@@ -13,25 +13,25 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.futurice.festapp.FestAppMainActivity;
 import com.futurice.festapp.R;
-import com.futurice.festapp.RuisrockMainActivity;
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.dao.NewsDAO;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.util.CalendarUtil;
+import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.HTTPUtil;
-import com.futurice.festapp.util.RuisrockConstants;
 
 /**
  * Application background services.
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class RuisrockService extends Service{
+public class FestAppService extends Service{
 
-	private static final String TAG = RuisrockService.class.getSimpleName();
+	private static final String TAG = FestAppService.class.getSimpleName();
 	private int counter = -1;
 	private PendingIntent alarmIntent;
 	private TimerTask backendTask = new TimerTask() {
@@ -51,8 +51,7 @@ public class RuisrockService extends Service{
 					if (counter % (12 * 5) == 0) { // every 5 hours
 						Log.i(TAG, "Executing 5-hour operations.");
 						updateFoodAndDrinkPage();
-						// TODO: Ruisrock 2012. Transportation and services not
-						// updated from server.
+						// TODO: Transportation and services not updated from server.
 						// updateTransportationPage();
 						// updateServicesPageData();
 						updateFrequentlyAskedQuestionsPageData();
@@ -92,7 +91,7 @@ public class RuisrockService extends Service{
 	}
 	private void notify(Gig gig) {
 		Intent contentIntent = new Intent(getBaseContext(),
-				RuisrockMainActivity.class);
+				FestAppMainActivity.class);
 		contentIntent.putExtra("alert.gig.id", gig.getId());
 		int uniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
 		PendingIntent pending = PendingIntent.getActivity(getBaseContext(),
@@ -105,7 +104,7 @@ public class RuisrockService extends Service{
 
 	private void notify(NewsArticle article) {
 		Intent contentIntent = new Intent(getBaseContext(),
-				RuisrockMainActivity.class);
+				FestAppMainActivity.class);
 		contentIntent.putExtra("alert.newsArticle.url", article.getUrl());
 		int uniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
 		PendingIntent pending = PendingIntent.getActivity(getBaseContext(),
@@ -131,7 +130,7 @@ public class RuisrockService extends Service{
 
 	private void updateNewsArticles() {
 		try {
-			if (HTTPUtil.isContentUpdated(RuisrockConstants.NEWS_JSON_URL,
+			if (HTTPUtil.isContentUpdated(FestAppConstants.NEWS_JSON_URL,
 					ConfigDAO.getEtagForNews(getBaseContext()))) {
 				List<NewsArticle> newArticles = NewsDAO
 						.updateNewsOverHttp(getBaseContext());
@@ -139,7 +138,7 @@ public class RuisrockService extends Service{
 					for (NewsArticle article : newArticles) {
 						if (article.getDate() != null
 								&& CalendarUtil.getMinutesBetweenTwoDates(
-										article.getDate(), new Date()) < RuisrockConstants.SERVICE_NEWS_ALERT_THRESHOLD_IN_MINUTES) {
+										article.getDate(), new Date()) < FestAppConstants.SERVICE_NEWS_ALERT_THRESHOLD_IN_MINUTES) {
 							notify(article);
 						}
 					}
@@ -155,7 +154,7 @@ public class RuisrockService extends Service{
 
 	/*private void updateServicesPageData() {
 		try {
-			if (HTTPUtil.isContentUpdated(RuisrockConstants.SERVICES_JSON_URL,
+			if (HTTPUtil.isContentUpdated(FestAppConstants.SERVICES_JSON_URL,
 					ConfigDAO.getEtagForServices(getBaseContext()))) {
 				ConfigDAO.updateServicePagesOverHttp(getBaseContext());
 				Log.i(TAG, "Successfully updated data for Services.");
@@ -171,7 +170,7 @@ public class RuisrockService extends Service{
 		try {
 			if (HTTPUtil
 					.isContentUpdated(
-							RuisrockConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL,
+							FestAppConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL,
 							ConfigDAO
 									.getEtagForFrequentlyAskedQuestions(getBaseContext()))) {
 				ConfigDAO
@@ -189,7 +188,7 @@ public class RuisrockService extends Service{
 	private void updateFoodAndDrinkPage() {
 		try {
 			if (HTTPUtil.isContentUpdated(
-					RuisrockConstants.FOOD_AND_DRINK_HTML_URL,
+					FestAppConstants.FOOD_AND_DRINK_HTML_URL,
 					ConfigDAO.getEtagForFoodAndDrink(getBaseContext()))) {
 				ConfigDAO.updateFoodAndDrinkPageOverHttp(getBaseContext());
 				Log.i(TAG, "Successfully updated data for FoodAndDrink.");
@@ -204,7 +203,7 @@ public class RuisrockService extends Service{
 	/*private void updateTransportationPage() {
 		try {
 			if (HTTPUtil.isContentUpdated(
-					RuisrockConstants.TRANSPORTATION_HTML_URL,
+					FestAppConstants.TRANSPORTATION_HTML_URL,
 					ConfigDAO.getEtagForTransportation(getBaseContext()))) {
 				ConfigDAO.updateTransportationPageOverHttp(getBaseContext());
 				Log.i(TAG, "Successfully updated data for Transportation.");
@@ -218,7 +217,7 @@ public class RuisrockService extends Service{
 
 	private void updateGigs() {
 		try {
-			if (HTTPUtil.isContentUpdated(RuisrockConstants.GIGS_JSON_URL,
+			if (HTTPUtil.isContentUpdated(FestAppConstants.GIGS_JSON_URL,
 					ConfigDAO.getEtagForGigs(getBaseContext()))) {
 				GigDAO.updateGigsOverHttp(getBaseContext());
 				Log.i(TAG, "Successfully updated Gigs.");
@@ -236,8 +235,8 @@ public class RuisrockService extends Service{
 		Intent intent = new Intent("CHECK_ALARMS");
 		alarmIntent = PendingIntent.getBroadcast(this, 12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-		long wait = RuisrockConstants.SERVICE_INITIAL_WAIT_TIME;
-		long interval = RuisrockConstants.SERVICE_FREQUENCY;
+		long wait = FestAppConstants.SERVICE_INITIAL_WAIT_TIME;
+		long interval = FestAppConstants.SERVICE_FREQUENCY;
 		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, wait, interval, alarmIntent);;
 		Log.i(TAG, "Creating service");
 	}
