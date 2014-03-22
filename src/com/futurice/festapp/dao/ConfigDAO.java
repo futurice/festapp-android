@@ -238,7 +238,7 @@ public class ConfigDAO {
 			return;
 		}
 		setEtagForFoodAndDrink(context, response.getEtag());
-		// TODO: Ruisrock2012. Format of response needs fixing.
+
 		try {
 			String content = null;
 			JSONArray arr = new JSONArray(response.getContent());

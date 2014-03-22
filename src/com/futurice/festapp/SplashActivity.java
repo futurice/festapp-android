@@ -23,7 +23,7 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
 
-		// TODO: Added for Ruisrock2012 for a cleaner start if no splash
+		// Added for a cleaner start if no splash
 		if (!active) {
 			startActivity(new Intent(getBaseContext(), RuisrockMainActivity.class));
 			finish();
@@ -44,15 +44,14 @@ public class SplashActivity extends Activity {
 						// do nothing
 					} finally {
 						active = false;
-						// TODO: Added transitions for Ruisrock2012 for smoother activity switch
+						// Added transitions for smoother activity switch
 						SplashActivity.this.startActivity(new Intent(getBaseContext(), RuisrockMainActivity.class));
 						SplashActivity.this.finish();
 					}
 				}
 			};
 			splashTread.start();
-			
-			// TODO: Analytics for Ruisrock2012
+
 			AnalyticsHelper.sendAnalytics(this, AnalyticsHelper.EVENT_START);
 		}
 	}
