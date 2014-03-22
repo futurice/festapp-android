@@ -45,14 +45,6 @@
     <string name="artistInfoActivity.no_spotify">Asenna Spotify</string>
     
     <!-- Map view -->
-    <string name="mapActivity.ChooseLayers">Näytä kartalla</string>
-    <string name="mapActivity.layer.gps">Oma sijainti (GPS)</string>
-    <string name="mapActivity.prompt.EnableGPS.title">Aktivoi GPS</string>
-    <string name="mapActivity.prompt.EnableGPS.message">Jotta oma sijainti voidaan näyttää tarkasti, tulee puhelimen GPS-paikannus aktivoida. Haluatko siirtyä puhelimen asetuksiin ominaisuuden aktivoimiseksi?</string>
-    <string name="mapActivity.gpsActivated">Aloitetaan GPS-paikannus.</string>
-    <string name="mapActivity.distanceToMap">Etäisyys juhlapaikasta: %s km</string>
-    <string name="mapActivity.gpsAccuracy">Arvioitu GPS-tarkkuus: %s m</string>
-    <string name="mapActivity.gpsWaitingForFix">Odotetaan GPS-sijaintia...</string>
     <string name="mapActivity.nextOnStage">%1$s esiintyy %2$s\n%3$s</string>
     <string name="mapActivity.initialInfo.title">Tiesitkö?</string>
     <string name="mapActivity.initialInfo.message">Painamalla lavan nimeä kartalla näet, mikä bändi kyseisellä lavalla soittaa juuri nyt / seuraavaksi.</string>

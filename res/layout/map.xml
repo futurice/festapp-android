@@ -15,33 +15,8 @@
 		android:layout_alignParentTop="true"
 	    android:id="@+id/mapOverlays"
 	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent">
-	    
-		<ImageView
-			android:id="@+id/currentPosition"
-			android:scaleType="fitStart"
-			android:src="@drawable/ic_maps_indicator_current_position_anim" 
-			android:layout_width="@dimen/map.currentPosition.size"
-			android:layout_height="@dimen/map.currentPosition.size"></ImageView>
-		<TextView android:background="@drawable/map_bubble"
-			android:id="@+id/mapBubble"
-			android:layout_width="@dimen/mapBubble.width"
-			android:layout_height="@dimen/mapBubble.height"
-			android:textStyle="bold"
-			android:singleLine="true"
-			android:gravity="center"
-			android:text="Olet tässä" android:textColor="#ffffff" />
+	    android:layout_height="fill_parent">	    
 	</RelativeLayout>
-	
-	    
-	<TextView android:id="@+id/mapGpsStatusText"
-		android:layout_alignParentTop="true"
-		android:paddingTop="10dip"
-		android:paddingBottom="10dip"
-		android:textColor="#ffffff"
-		android:gravity="center_horizontal"
-		android:background="@drawable/artist_info_table_bg"
-		android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Etaisyys" />
     
     <include layout="@layout/map_lower_buttons"></include>
     

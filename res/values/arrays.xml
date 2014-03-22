@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-	<string-array name="map_layers">
-		<item>Oma sijainti (GPS)</item>
-	</string-array>
-</resources>
