@@ -60,7 +60,7 @@ public class MapActivity extends BaseActivity {
 	private static final int REQUEST_CODE_GPS = 33;
 	private static final double referenceLatitude = 60.42836515775148;
 	private static final double referenceLongitude = 22.18308629415958;
-	private static final Location referenceLocation = new Location("Ruisrock_MapActivity");
+	private static final Location referenceLocation = new Location("FestApp_MapActivity");
 	
 	static {
 		referenceLocation.setLatitude(referenceLatitude);

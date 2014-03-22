@@ -40,7 +40,7 @@ public class NewsContentActivity extends BaseActivity {
 			titleView.setText((String) extras.get("news.title"));
 			dateView.setText((String) extras.get("news.date"));
 			contentView.setBackgroundColor(Color.TRANSPARENT);
-			contentView.loadDataWithBaseURL(FestAppConstants.RUISROCK_BASE_URL, (String) extras.get("news.content"), "text/html", "utf-8", null);
+			contentView.loadDataWithBaseURL(FestAppConstants.WEBSITE_BASE_URL, (String) extras.get("news.content"), "text/html", "utf-8", null);
 		}
 		HashMap<String, String> titleMap = new HashMap<String, String>();
 		titleMap.put("title", titleView.getText().toString());

@@ -238,7 +238,7 @@ public class ConfigDAO {
 			return;
 		}
 		setEtagForFoodAndDrink(context, response.getEtag());
-		// TODO: Ruisrock2012. Format of response needs fixing.
+		
 		try {
 			String content = null;
 			JSONArray arr = new JSONArray(response.getContent());
@@ -281,7 +281,7 @@ public class ConfigDAO {
 
 	/*public static void updateTransportationPageOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
-		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.TRANSPORTATION_HTML_URL);
+		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.TRANSPORTATION_HTML_URL);
 		if (!response.isValid() || response.getContent() == null) {
 			return;
 		}
@@ -291,7 +291,7 @@ public class ConfigDAO {
 	
 	public static void updateServicePagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
-		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.SERVICES_JSON_URL);
+		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.SERVICES_JSON_URL);
 		if (!response.isValid() || response.getContent() == null) {
 			return;
 		}

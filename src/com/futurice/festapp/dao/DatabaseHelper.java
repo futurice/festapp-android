@@ -24,7 +24,7 @@ import com.futurice.festapp.R;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
-	private static final String DB_NAME = "ruisrock_db";
+	private static final String DB_NAME = "festapp_db";
 	private static final int DB_VERSION = 1; // Latest release at the market: 1
 	private static final String TAG = "DatabaseHelper";
 	
@@ -119,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String page = StringUtil.convertStreamToString(is);
 		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_PAGE_TRANSPORTATION, page);
 		db.insert("config", "attributeValue", values);
-//		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_TRANSPORTATION, RuisrockConstants.ETAG_TRANSPORTATION));
+//		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_TRANSPORTATION, FestAppConstants.ETAG_TRANSPORTATION));
 	}
 	
 	private void createServicePagesFromLocalFile(SQLiteDatabase db) throws Exception {
@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		for (Map.Entry<String, String> entry : services.entrySet()) {
 			db.insert("config", "attributeValue", convertMapEntryToContentValues(entry));
 		}
-//		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_SERVICES, RuisrockConstants.ETAG_SERVICES));
+//		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_SERVICES, FestAppConstants.ETAG_SERVICES));
 	}
 	
 	private void createFrequentlyAskedQuestionsPagesFromLocalFile(SQLiteDatabase db) throws Exception {

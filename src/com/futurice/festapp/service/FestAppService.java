@@ -53,8 +53,7 @@ public class FestAppService extends Service{
 					if (counter % (12 * 5) == 0) { // every 5 hours
 						Log.i(TAG, "Executing 5-hour operations.");
 						updateFoodAndDrinkPage();
-						// TODO: Ruisrock 2012. Transportation and services not
-						// updated from server.
+						// TODO: Transportation and services not updated from server.
 						// updateTransportationPage();
 						// updateServicesPageData();
 						updateFrequentlyAskedQuestionsPageData();
@@ -157,7 +156,7 @@ public class FestAppService extends Service{
 
 	/*private void updateServicesPageData() {
 		try {
-			if (HTTPUtil.isContentUpdated(RuisrockConstants.SERVICES_JSON_URL,
+			if (HTTPUtil.isContentUpdated(FestAppConstants.SERVICES_JSON_URL,
 					ConfigDAO.getEtagForServices(getBaseContext()))) {
 				ConfigDAO.updateServicePagesOverHttp(getBaseContext());
 				Log.i(TAG, "Successfully updated data for Services.");
@@ -206,7 +205,7 @@ public class FestAppService extends Service{
 	/*private void updateTransportationPage() {
 		try {
 			if (HTTPUtil.isContentUpdated(
-					RuisrockConstants.TRANSPORTATION_HTML_URL,
+					FestAppConstants.TRANSPORTATION_HTML_URL,
 					ConfigDAO.getEtagForTransportation(getBaseContext()))) {
 				ConfigDAO.updateTransportationPageOverHttp(getBaseContext());
 				Log.i(TAG, "Successfully updated data for Transportation.");

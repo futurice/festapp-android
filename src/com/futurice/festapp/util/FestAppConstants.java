@@ -2,14 +2,15 @@ package com.futurice.festapp.util;
 
 public class FestAppConstants {
 	
-	public static final String RUISROCK_BASE_URL = "http://www.ruisrock.fi/";
+	// TODO: fix URLs
 	
+	public static final String WEBSITE_BASE_URL = "http://festapp.herokuapp.com/";
 	
-	public static final String NEWS_JSON_URL = "http://www.ruisrock.fi/json.php?query=uutiset"; //action=news"; //"http://legotius.futurice.com/ruisrock/cache.php?page=news";
-	public static final String GIGS_JSON_URL = "http://www.ruisrock.fi/json.php?query=artistit"; //action=bands"; //"http://legotius.futurice.com/ruisrock/cache.php?page=bands";
+	public static final String NEWS_JSON_URL = "http://festapp.herokuapp.com/json.php?query=uutiset";
+	public static final String GIGS_JSON_URL = "http://festapp.herokuapp.com/json.php?query=artistit";
 	
-	public static final String FREQUENTLY_ASKED_QUESTIONS_JSON_URL = "http://www.ruisrock.fi/json.php?query=info"; 
-	public static final String FOOD_AND_DRINK_HTML_URL =  "http://www.ruisrock.fi/json.php?query=ohjelma";
+	public static final String FREQUENTLY_ASKED_QUESTIONS_JSON_URL = "http://festapp.herokuapp.com/json.php?query=info"; 
+	public static final String FOOD_AND_DRINK_HTML_URL =  "http://festapp.herokuapp.com/json.php?query=ohjelma";
 	
 	public static final String DRAWABLE_ARTIST_LOGO_PREFIX = "artist_";
 	public static final String DRAWABLE_GUITAR_STRING_PREFIX = "guitar_string_";
