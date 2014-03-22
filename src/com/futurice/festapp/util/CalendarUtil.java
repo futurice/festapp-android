@@ -31,17 +31,5 @@ public class CalendarUtil {
 		long diff = Math.abs(end.getTime() - start.getTime());
 		return (int) (diff / 1000 / 60);
 	}
-	
-	public static Date getNow() {
-		// TODO: return now
-		return new Date();
-		/*
-		try {
-			return new SimpleDateFormat("yyyy-MM-dd HH:mm").parse("2011-07-08 18:25");
-		} catch (Exception e) {
-			return null;
-		}
-		*/
-	}
-	
+
 }

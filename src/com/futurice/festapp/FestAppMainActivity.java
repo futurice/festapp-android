@@ -1,20 +1,17 @@
 package com.futurice.festapp;
 
-import java.io.Flushable;
+import java.util.Date;
 
-import com.flurry.android.FlurryAgent;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.dao.NewsDAO;
 import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.service.FestAppService;
 import com.futurice.festapp.util.CalendarUtil;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import com.futurice.festapp.R;
 
 /**
  * Main activity.
@@ -53,7 +50,8 @@ public class FestAppMainActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		if (CalendarUtil.getNow().before(GigDAO.getEndOfSunday())) {
+		Date dateNow = new Date();
+		if (dateNow.before(GigDAO.getEndOfSunday())) {
 			startService(new Intent(this, FestAppService.class));
 		}
 		createMainMenuItems();

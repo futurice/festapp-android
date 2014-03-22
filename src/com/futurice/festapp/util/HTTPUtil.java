@@ -150,7 +150,6 @@ public class HTTPUtil {
 			String line = null;
 			while ((line = reader.readLine()) != null) {
 				String etag = "Last-Modified: ";
-				//TODO Etag to non case sensitive?
 				if (line.startsWith(etag)) {
 					String newEtag = line.replaceFirst(etag, "").replace("\"", "");
 					if (newEtag.equals(previousEtag)) {

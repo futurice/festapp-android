@@ -6,17 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
-import com.flurry.android.FlurryAgent;
-import com.futurice.festapp.dao.GigDAO;
-import com.futurice.festapp.domain.Gig;
-import com.futurice.festapp.domain.to.DaySchedule;
-import com.futurice.festapp.domain.to.FestivalDay;
-import com.futurice.festapp.ui.GigTimelineWidget;
-import com.futurice.festapp.util.CalendarUtil;
-import com.futurice.festapp.util.FestAppConstants;
-import com.futurice.festapp.util.UIUtil;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,15 +20,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.futurice.festapp.R;
+
+import com.flurry.android.FlurryAgent;
+import com.futurice.festapp.dao.GigDAO;
+import com.futurice.festapp.domain.Gig;
+import com.futurice.festapp.domain.to.DaySchedule;
+import com.futurice.festapp.domain.to.FestivalDay;
+import com.futurice.festapp.ui.GigTimelineWidget;
+import com.futurice.festapp.util.CalendarUtil;
+import com.futurice.festapp.util.FestAppConstants;
+import com.futurice.festapp.util.UIUtil;
 
 /**
  * View for showing the Schedule.
@@ -152,8 +150,8 @@ public class TimelineActivity extends Activity {
 	private void showInitialFavoriteInfoOnFirstVisit(Context context) {
 		SharedPreferences pref = context.getSharedPreferences(FestAppConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
 		final String key = FestAppConstants.PREFERENCE_SHOW_FAVORITE_INFO;
-		
-		// TODO: Start DEBUG
+
+		// Start DEBUG
 		/*
 		Editor ed = pref.edit();
 		ed.putBoolean(key, true);
@@ -184,7 +182,7 @@ public class TimelineActivity extends Activity {
 	}
 
 	private void updateCurrentTimeline() {
-		Date now = CalendarUtil.getNow();
+		Date now = new Date();
 		if (timelineStartMoment == null || timelineEndMoment == null) {
 			return;
 		}

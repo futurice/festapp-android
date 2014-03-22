@@ -285,7 +285,7 @@ public class GigDAO {
 			db = (new DatabaseHelper(context)).getWritableDatabase();
 			db.beginTransaction();
 
-			Date nowDate = CalendarUtil.getNow();
+			Date nowDate = new Date();
 			String timeInFuture = getDateStringWithMinuteDifference(nowDate, 18);
 			String now = DB_DATE_FORMATTER.format(nowDate);
 			//cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND favorite = 1 AND alerted = 0 AND datetime(startTime) <= datetime(?) AND datetime(endTime) > datetime(?)", new String[]{timeInFuture, now}, null, null, "startTime ASC");
@@ -429,7 +429,7 @@ public class GigDAO {
 		Cursor cursor = null;
 		try {
 			db = (new DatabaseHelper(context)).getReadableDatabase();
-			String now = DB_DATE_FORMATTER.format(CalendarUtil.getNow());
+			String now = DB_DATE_FORMATTER.format(new Date());
 			//cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND stage IS NOT NULL AND startTime IS NOT NULL AND datetime(endTime) > datetime(?)", new String[]{now}, null, null, "startTime ASC");
 			cursor = db.rawQuery(GIGS_QUERY + " WHERE gig.active = 1 AND location.stage IS NOT NULL AND location.startTime IS NOT NULL AND datetime(location.endTime) > datetime(?) ORDER BY location.startTime ASC", new String[]{now});
 			while (cursor.moveToNext()) {
