@@ -3,7 +3,7 @@ package com.futurice.festapp;
 import java.util.HashMap;
 
 import com.flurry.android.FlurryAgent;
-import com.futurice.festapp.util.RuisrockConstants;
+import com.futurice.festapp.util.FestAppConstants;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -36,7 +36,7 @@ public class InfoSubPageActivity extends BaseActivity {
 
 		WebView contentView = (WebView) findViewById(R.id.infoPageWebView);
 		contentView.setBackgroundColor(Color.TRANSPARENT);
-		contentView.loadDataWithBaseURL(RuisrockConstants.RUISROCK_BASE_URL, pageContent, "text/html", "utf-8", null);
+		contentView.loadDataWithBaseURL(FestAppConstants.WEBSITE_BASE_URL, pageContent, "text/html", "utf-8", null);
 		HashMap<String, String> titleMap = new HashMap<String, String>();
 		titleMap.put("otsikko", pageTitle);
 		FlurryAgent.logEvent("Infosivu", titleMap);

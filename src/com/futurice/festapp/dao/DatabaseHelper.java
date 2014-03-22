@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.NewsArticle;
-import com.futurice.festapp.util.RuisrockConstants;
+import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.StringUtil;
 
 import android.content.ContentValues;
@@ -24,7 +24,7 @@ import com.futurice.festapp.R;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
-	private static final String DB_NAME = "ruisrock_db";
+	private static final String DB_NAME = "festapp_db";
 	private static final int DB_VERSION = 1; // Latest release at the market: 1
 	private static final String TAG = "DatabaseHelper";
 	
@@ -80,7 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				}
 			}
 		}
-		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_GIGS, RuisrockConstants.LAST_MODIFIED_GIGS);
+		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_GIGS, FestAppConstants.LAST_MODIFIED_GIGS);
 		db.insert("config", "attributeValue", values);
 	}
 	
@@ -93,7 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			ContentValues values = NewsDAO.convertNewsArticleToContentValues(article);
 			db.insert("news", "content", values);
 		}
-		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_NEWS, RuisrockConstants.LAST_MODIFIED_NEWS);
+		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_NEWS, FestAppConstants.LAST_MODIFIED_NEWS);
 		db.insert("config", "attributeValue", values);
 	}
 	
@@ -110,7 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_PAGE_FOODANDDRINK, "<p>" + page.replace("\\r\\n", "<br /><br />") + "</ p>");
 		db.insert("config", "attributeValue", values);
 		
-		values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FOODANDDRINK, RuisrockConstants.LAST_MODIFIED_FOOD_AND_DRINK);
+		values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FOODANDDRINK, FestAppConstants.LAST_MODIFIED_FOOD_AND_DRINK);
 		db.insert("config", "attributeValue", values);
 	}
 	
@@ -119,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String page = StringUtil.convertStreamToString(is);
 		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_PAGE_TRANSPORTATION, page);
 		db.insert("config", "attributeValue", values);
-//		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_TRANSPORTATION, RuisrockConstants.ETAG_TRANSPORTATION));
+//		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_TRANSPORTATION, FestAppConstants.ETAG_TRANSPORTATION));
 	}
 	
 	private void createServicePagesFromLocalFile(SQLiteDatabase db) throws Exception {
@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		for (Map.Entry<String, String> entry : services.entrySet()) {
 			db.insert("config", "attributeValue", convertMapEntryToContentValues(entry));
 		}
-//		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_SERVICES, RuisrockConstants.ETAG_SERVICES));
+//		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_SERVICES, FestAppConstants.ETAG_SERVICES));
 	}
 	
 	private void createFrequentlyAskedQuestionsPagesFromLocalFile(SQLiteDatabase db) throws Exception {
@@ -138,7 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String json = StringUtil.convertStreamToString(is);
 		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, ConfigDAO.parseFromJson(json, "content"));
 		db.insert("config", "attributeValue", values);
-		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, RuisrockConstants.LAST_MODIFIED_FAQ));	
+		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, FestAppConstants.LAST_MODIFIED_FAQ));	
 	}
 	
 	private void createGeneralInfoPagesFromLocalFile(SQLiteDatabase db) throws Exception {
