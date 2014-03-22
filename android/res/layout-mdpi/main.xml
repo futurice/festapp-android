@@ -32,7 +32,7 @@
 				<TextView android:layout_width="wrap_content"
 					android:gravity="center_vertical" android:textColor="#fbf6dd"
 					android:textStyle="bold" android:textSize="20dp"
-					android:layout_height="fill_parent" android:text="AIKATAULU" />
+					android:layout_height="fill_parent" android:text="@string/Schedule" />
 			</LinearLayout>
 			<ImageView android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
@@ -43,7 +43,7 @@
 				<TextView android:layout_width="wrap_content"
 					android:gravity="center_vertical" android:textColor="#fbf6dd"
 					android:textStyle="bold" android:textSize="20dp"
-					android:layout_height="fill_parent" android:text="BÄNDIT" />
+					android:layout_height="fill_parent" android:text="@string/Artists" />
 			</LinearLayout>
 			<ImageView android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
@@ -54,7 +54,7 @@
 				<TextView android:layout_width="wrap_content"
 					android:gravity="center_vertical" android:textColor="#fbf6dd"
 					android:textStyle="bold" android:textSize="20dp"
-					android:layout_height="fill_parent" android:text="KARTTA" />
+					android:layout_height="fill_parent" android:text="@string/Map" />
 			</LinearLayout>
 			<ImageView android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
@@ -65,7 +65,7 @@
 				<TextView android:layout_width="wrap_content"
 					android:gravity="center_vertical" android:textColor="#fbf6dd"
 					android:textStyle="bold" android:textSize="20dp"
-					android:layout_height="fill_parent" android:text="INFO" />
+					android:layout_height="fill_parent" android:text="@string/info" />
 			</LinearLayout>
 			<ImageView android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
@@ -76,7 +76,7 @@
 				<TextView android:layout_width="wrap_content"
 					android:gravity="center_vertical" android:textColor="#fbf6dd"
 					android:textStyle="bold" android:textSize="20dp"
-					android:layout_height="fill_parent" android:text="UUTISET" />
+					android:layout_height="fill_parent" android:text="@string/News" />
 			</LinearLayout>
 			<ImageView android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
@@ -87,7 +87,7 @@
 				<TextView android:layout_width="wrap_content"
 					android:gravity="center_vertical" android:textColor="#fbf6dd"
 					android:textStyle="bold" android:textSize="20dp"
-					android:layout_height="fill_parent" android:text="UKK" />
+					android:layout_height="fill_parent" android:text="@string/faq" />
 			</LinearLayout>
 			
 		</LinearLayout>

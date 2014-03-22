@@ -24,7 +24,9 @@
     <string name="Services">Palvelut</string>
     <string name="FoodAndDrink">Ruoka &amp; juoma</string>
     <string name="Transportation">Liikkuminen</string>
-    <string name="faq">Frequently asked questions</string>
+    <string name="faq">UKK</string>
+    <string name="frequently_asked_questions">Frequently asked questions</string>
+    <string name="info">INFO</string>
     
     <!-- Activity labels -->
     <string name="activity.label.Artists">Ruisrock » Bändit</string>
@@ -37,6 +39,8 @@
     <string name="newsActivity.loadingArticles">Ladataan uutisotsikoita...</string>
     <string name="newsActivity.invalidUrl">Kyseisellä uutisotsikolla ei ole sisältöä.</string>
     <string name="newsActivity.httpError">Uutisotsikoiden lataaminen epäonnistui. Suuresta kävijäjoukosta johtuen verkkoyhteyksissä voi esiintyä häiriöitä.</string>
+    <string name="newsActivity.news_item.date">Date</string>
+    <string name="newsActivity.news_item.headline">News Headline</string>
     
     <!-- ArtistInfo view -->
     <string name="artistInfoActivity.invalidId">Bändin tietoja ei löydy.</string>
@@ -44,6 +48,12 @@
     <string name="artistInfoActivity.favoriteOff">Bändin keikkamuistutus poistettiin.</string>
     <string name="artistInfoActivity.menu.OpenInSpotify">Hae Spotifysta</string>
     <string name="artistInfoActivity.no_spotify">Asenna Spotify</string>
+    <string name="artistInfoActivity.default_location">Location</string>
+    <string name="artistInfoActivity.default_time">Friday 22:00 &#8211; 23:00</string>
+    <string name="artistInfoActivity.default_artist_name">Artist name</string>
+    <string name="artistInfoActivity.mark_as_favourite">Mark as favourite</string>
+    <string name="artistInfoActivity.artist_description">Artist description</string>
+    <string name="artistInfoActivity.artist_stage_and_time">Korsolava: pe 17:00-17:45</string>
     
     <!-- Map view -->
     <string name="mapActivity.ChooseLayers">Näytä kartalla</string>
@@ -85,6 +95,10 @@
     <string name="generalInfo.Tickets">Lipunmyynti</string>
     <string name="generalInfo.Accessibility">Saavutettavuus</string>
     <string name="generalInfo.SafetyInstructions">Turvallisuusohjeet</string>
+    <string name="generalInfo.general_info">YLEISINFO</string>
+    <string name="generalInfo.services">PALVELUT</string>
+    <string name="generalInfo.food_and_drink">RUOKA &amp; JUOMA</string>
+    <string name="generalInfo.transportation">LIIKKUMINEN</string>
     
     <!-- Notification -->
     <string name="notification.news.title">Ruisrock tiedottaa</string>
