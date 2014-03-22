@@ -51,9 +51,10 @@ public class FestAppService extends Service{
 					if (counter % (12 * 5) == 0) { // every 5 hours
 						Log.i(TAG, "Executing 5-hour operations.");
 						updateFoodAndDrinkPage();
-						// TODO: Transportation and services not updated from server.
-						// updateTransportationPage();
-						// updateServicesPageData();
+
+						updateTransportationPage();
+						updateServicesPageData();
+
 						updateFrequentlyAskedQuestionsPageData();
 					}
 				} else {
@@ -152,7 +153,7 @@ public class FestAppService extends Service{
 		}
 	}
 
-	/*private void updateServicesPageData() {
+	private void updateServicesPageData() {
 		try {
 			if (HTTPUtil.isContentUpdated(FestAppConstants.SERVICES_JSON_URL,
 					ConfigDAO.getEtagForServices(getBaseContext()))) {
@@ -164,7 +165,7 @@ public class FestAppService extends Service{
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Services data.", e);
 		}
-	}*/
+	}
 
 	private void updateFrequentlyAskedQuestionsPageData() {
 		try {
@@ -200,7 +201,7 @@ public class FestAppService extends Service{
 		}
 	}
 
-	/*private void updateTransportationPage() {
+	private void updateTransportationPage() {
 		try {
 			if (HTTPUtil.isContentUpdated(
 					FestAppConstants.TRANSPORTATION_HTML_URL,
@@ -213,7 +214,7 @@ public class FestAppService extends Service{
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Transportation-page.", e);
 		}
-	}*/
+	}
 
 	private void updateGigs() {
 		try {
