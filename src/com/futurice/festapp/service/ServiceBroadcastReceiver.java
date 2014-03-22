@@ -8,7 +8,7 @@ public class ServiceBroadcastReceiver extends BroadcastReceiver {
 	 
     @Override
     public void onReceive(Context context, Intent intent ) {
-        Intent myIntent = new Intent( context, RuisrockService.class );
+        Intent myIntent = new Intent( context, FestAppService.class );
         context.startService( myIntent );
     }
 }

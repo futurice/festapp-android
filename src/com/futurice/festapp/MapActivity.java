@@ -13,7 +13,7 @@ import com.futurice.festapp.ui.map.MapAnimation;
 import com.futurice.festapp.ui.map.MapAnimationCallback;
 import com.futurice.festapp.ui.map.MapImageView;
 import com.futurice.festapp.ui.map.SizeCallback;
-import com.futurice.festapp.util.RuisrockConstants;
+import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.UIUtil;
 
 import android.app.Activity;
@@ -763,7 +763,7 @@ public class MapActivity extends BaseActivity {
 	}
 	
 	private void showInitialInfoDialog() {
-		SharedPreferences pref = this.getSharedPreferences(RuisrockConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
+		SharedPreferences pref = this.getSharedPreferences(FestAppConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
 		final String key = "showInitialMapInfo";
 		
 		if (pref.getBoolean(key, true)) {

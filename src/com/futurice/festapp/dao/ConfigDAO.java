@@ -15,7 +15,7 @@ import com.futurice.festapp.domain.to.MapLayerOptions;
 import com.futurice.festapp.domain.to.SelectableOption;
 import com.futurice.festapp.util.HTTPUtil;
 import com.futurice.festapp.util.JSONUtil;
-import com.futurice.festapp.util.RuisrockConstants;
+import com.futurice.festapp.util.FestAppConstants;
 
 import com.futurice.festapp.R;
 
@@ -233,7 +233,7 @@ public class ConfigDAO {
 
 	public static void updateFoodAndDrinkPageOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
-		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.FOOD_AND_DRINK_HTML_URL);
+		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.FOOD_AND_DRINK_HTML_URL);
 		if (!response.isValid() || response.getContent() == null) {
 			return;
 		}
@@ -305,7 +305,7 @@ public class ConfigDAO {
 	
 	public static void updateFrequentlyAskedQuestionsPagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
-		HTTPBackendResponse response = httpUtil.performGet(RuisrockConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL);
+		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL);
 		if (!response.isValid() || response.getContent() == null) {
 			return;
 		}

@@ -1,7 +1,7 @@
 package com.futurice.festapp;
 
 import com.futurice.festapp.dao.AnalyticsHelper;
-import com.futurice.festapp.util.RuisrockConstants;
+import com.futurice.festapp.util.FestAppConstants;
 
 import com.futurice.festapp.R;
 import android.app.Activity;
@@ -25,7 +25,7 @@ public class SplashActivity extends Activity {
 
 		// TODO: Added for Ruisrock2012 for a cleaner start if no splash
 		if (!active) {
-			startActivity(new Intent(getBaseContext(), RuisrockMainActivity.class));
+			startActivity(new Intent(getBaseContext(), FestAppMainActivity.class));
 			finish();
 		} else {
 			// thread for displaying the SplashScreen
@@ -34,7 +34,7 @@ public class SplashActivity extends Activity {
 				public void run() {
 					try {
 						int waited = 0;
-						while(active && (waited < RuisrockConstants.SPLASH_SCREEN_TIMEOUT)) {
+						while(active && (waited < FestAppConstants.SPLASH_SCREEN_TIMEOUT)) {
 							sleep(100);
 							if(active) {
 								waited += 100;
@@ -45,7 +45,7 @@ public class SplashActivity extends Activity {
 					} finally {
 						active = false;
 						// TODO: Added transitions for Ruisrock2012 for smoother activity switch
-						SplashActivity.this.startActivity(new Intent(getBaseContext(), RuisrockMainActivity.class));
+						SplashActivity.this.startActivity(new Intent(getBaseContext(), FestAppMainActivity.class));
 						SplashActivity.this.finish();
 					}
 				}

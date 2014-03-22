@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.NewsArticle;
-import com.futurice.festapp.util.RuisrockConstants;
+import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.StringUtil;
 
 import android.content.ContentValues;
@@ -80,7 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				}
 			}
 		}
-		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_GIGS, RuisrockConstants.LAST_MODIFIED_GIGS);
+		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_GIGS, FestAppConstants.LAST_MODIFIED_GIGS);
 		db.insert("config", "attributeValue", values);
 	}
 	
@@ -93,7 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			ContentValues values = NewsDAO.convertNewsArticleToContentValues(article);
 			db.insert("news", "content", values);
 		}
-		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_NEWS, RuisrockConstants.LAST_MODIFIED_NEWS);
+		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_NEWS, FestAppConstants.LAST_MODIFIED_NEWS);
 		db.insert("config", "attributeValue", values);
 	}
 	
@@ -110,7 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_PAGE_FOODANDDRINK, "<p>" + page.replace("\\r\\n", "<br /><br />") + "</ p>");
 		db.insert("config", "attributeValue", values);
 		
-		values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FOODANDDRINK, RuisrockConstants.LAST_MODIFIED_FOOD_AND_DRINK);
+		values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FOODANDDRINK, FestAppConstants.LAST_MODIFIED_FOOD_AND_DRINK);
 		db.insert("config", "attributeValue", values);
 	}
 	
@@ -138,7 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String json = StringUtil.convertStreamToString(is);
 		ContentValues values = ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, ConfigDAO.parseFromJson(json, "content"));
 		db.insert("config", "attributeValue", values);
-		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, RuisrockConstants.LAST_MODIFIED_FAQ));	
+		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, FestAppConstants.LAST_MODIFIED_FAQ));	
 	}
 	
 	private void createGeneralInfoPagesFromLocalFile(SQLiteDatabase db) throws Exception {
