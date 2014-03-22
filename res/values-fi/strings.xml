@@ -90,7 +90,7 @@
     <string name="generalInfo.SafetyInstructions">Turvallisuusohjeet</string>
     <string name="generalInfo.general_info">YLEISINFO</string>
     <string name="generalInfo.services">PALVELUT</string>
-    <string name="generalInfo.food_and_drink">RUOKA & JUOMA</string>
+    <string name="generalInfo.food_and_drink">RUOKA &amp; JUOMA</string>
     <string name="generalInfo.transportation">KULKUYHTEYDET</string>
     
     <!-- Notification -->
