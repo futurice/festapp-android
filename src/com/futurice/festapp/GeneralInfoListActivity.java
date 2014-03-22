@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.flurry.android.FlurryAgent;
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.ui.ListItemStringAdapter;
 
@@ -70,7 +69,6 @@ public class GeneralInfoListActivity extends BaseActivity {
 		list.addHeaderView(header);		
 		
 		populateListItems();
-		FlurryAgent.logEvent("Info");
 	}
 	
 	private void populateListItems() {

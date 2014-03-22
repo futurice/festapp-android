@@ -3,7 +3,6 @@ package com.futurice.festapp.ui;
 import java.util.Date;
 import java.util.HashMap;
 
-import com.flurry.android.FlurryAgent;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
 
@@ -78,7 +77,6 @@ public class GigTimelineWidget extends RelativeLayout {
 		artistMap.put("artist", gig.getArtist());
 		artistMap.put("favourite", fav ? "true" : "false");
 		artistMap.put("view", "timeline");
-		FlurryAgent.logEvent("star", artistMap);
 	}
 	
 	public Gig getGig() {

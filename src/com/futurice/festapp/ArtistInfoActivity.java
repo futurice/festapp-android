@@ -2,7 +2,6 @@ package com.futurice.festapp;
 
 import java.util.HashMap;
 
-import com.flurry.android.FlurryAgent;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.GigLocation;
@@ -58,7 +57,6 @@ public class ArtistInfoActivity extends BaseActivity {
 				artistMap.put("artist", gig.getArtist());
 				artistMap.put("favourite", isFavorite ? "true" : "false");
 				artistMap.put("view", "profile");
-				FlurryAgent.logEvent("star", artistMap);
 			}
 		}
 	};
@@ -75,7 +73,6 @@ public class ArtistInfoActivity extends BaseActivity {
 		showInitialInfoOnFirstVisit(this);
 		HashMap<String, String> artistMap = new HashMap<String, String>();
 		artistMap.put("artist", gig.getArtist());
-		FlurryAgent.logEvent("artist", artistMap);
 	}
 	
 	private void showInitialInfoOnFirstVisit(Context context) {
@@ -159,7 +156,6 @@ public class ArtistInfoActivity extends BaseActivity {
 		try {
 			HashMap<String, String> artistMap = new HashMap<String, String>();
 			artistMap.put("artist", gig.getArtist());
-			FlurryAgent.logEvent("Spotify", artistMap);
 			Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getSpotify()) );
 			startActivity(launcher);
 		} catch(ActivityNotFoundException anfe) {
@@ -170,7 +166,6 @@ public class ArtistInfoActivity extends BaseActivity {
 	public void openYoutube(View v) {
 		HashMap<String, String> artistMap = new HashMap<String, String>();
 		artistMap.put("artist", gig.getArtist());
-		FlurryAgent.logEvent("Youtube", artistMap);
 		Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getYoutube()) );
 		startActivity(launcher);
 	}

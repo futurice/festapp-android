@@ -2,7 +2,6 @@ package com.futurice.festapp;
 
 import java.util.List;
 
-import com.flurry.android.FlurryAgent;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.ui.ArtistAdapter;
@@ -51,7 +50,6 @@ public class ArtistListActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.artists);
 		createArtistList();
-		FlurryAgent.logEvent("Artists");
 	}
 	
 	private void createArtistList() {

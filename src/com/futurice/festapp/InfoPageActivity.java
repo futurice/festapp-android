@@ -1,6 +1,5 @@
 package com.futurice.festapp;
 
-import com.flurry.android.FlurryAgent;
 import com.futurice.festapp.dao.ConfigDAO;
 
 import android.app.Activity;
@@ -53,8 +52,6 @@ public class InfoPageActivity extends BaseActivity {
 		findViewById(R.id.infoPage_btnServices).setOnClickListener(clickListener);
 		findViewById(R.id.infoPage_btnFoodAndDrink).setOnClickListener(clickListener);
 		findViewById(R.id.infoPage_btnTransportation).setOnClickListener(clickListener);
-		
-		FlurryAgent.logEvent("Infolist");
 	}
 
 }

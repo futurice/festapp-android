@@ -2,7 +2,6 @@ package com.futurice.festapp;
 
 import java.util.HashMap;
 
-import com.flurry.android.FlurryAgent;
 import com.futurice.festapp.util.FestAppConstants;
 
 import android.app.Activity;
@@ -39,7 +38,6 @@ public class InfoSubPageActivity extends BaseActivity {
 		contentView.loadDataWithBaseURL(FestAppConstants.WEBSITE_BASE_URL, pageContent, "text/html", "utf-8", null);
 		HashMap<String, String> titleMap = new HashMap<String, String>();
 		titleMap.put("title", pageTitle);
-		FlurryAgent.logEvent("Infopage", titleMap);
 	}
 
 	private void setExtras() {

@@ -1,7 +1,6 @@
 package com.futurice.festapp;
 
 import java.util.Timer;
-import com.flurry.android.FlurryAgent;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.to.StageType;
 import com.futurice.festapp.ui.map.MapAnimation;
@@ -111,7 +110,6 @@ public class MapActivity extends BaseActivity {
 		mapImageView.setImageMatrix(matrix);
 		
 		showInitialInfoDialog();
-		FlurryAgent.logEvent("Kartta");
 	}
 	
 	@Override
@@ -249,7 +247,6 @@ public class MapActivity extends BaseActivity {
 		
 		// Show message if applicable
 		if (toastMessage != null) {
-			FlurryAgent.logEvent("Lavaa klikattu kartalla");
 			showToast(toastMessage);
 		}
 		

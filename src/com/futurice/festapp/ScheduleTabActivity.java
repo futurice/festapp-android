@@ -2,7 +2,6 @@ package com.futurice.festapp;
 
 import java.util.Date;
 
-import com.flurry.android.FlurryAgent;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.to.FestivalDay;
 
@@ -42,7 +41,6 @@ public class ScheduleTabActivity extends BaseTabActivity {
 			day = FestivalDay.FRIDAY;
 		}
 		tabHost.setCurrentTabByTag(day.name());
-		FlurryAgent.logEvent("Timeline");
 	}
 	
 	private void addTabSpec(FestivalDay festivalDay) {
