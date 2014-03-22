@@ -89,7 +89,7 @@
     <string name="generalInfo.SafetyInstructions">Safety instructions</string>
     <string name="generalInfo.general_info">INFORMATION</string>
     <string name="generalInfo.services">SERVICES</string>
-    <string name="generalInfo.food_and_drink">FOOD & DRINK</string>
+    <string name="generalInfo.food_and_drink">FOOD &amp; DRINK</string>
     <string name="generalInfo.transportation">TRANSPORTATION</string>
     
     <!-- Notification -->
