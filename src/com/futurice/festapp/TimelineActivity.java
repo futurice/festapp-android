@@ -182,7 +182,7 @@ public class TimelineActivity extends Activity {
 	}
 
 	private void updateCurrentTimeline() {
-		Date now = CalendarUtil.getNow();
+		Date now = new Date();
 		if (timelineStartMoment == null || timelineEndMoment == null) {
 			return;
 		}

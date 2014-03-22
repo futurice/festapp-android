@@ -2,9 +2,18 @@ package com.futurice.festapp.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.util.Log;
+
+import com.futurice.festapp.R;
 import com.futurice.festapp.RuisrockMainActivity;
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
@@ -14,18 +23,6 @@ import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.util.CalendarUtil;
 import com.futurice.festapp.util.HTTPUtil;
 import com.futurice.festapp.util.RuisrockConstants;
-
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.os.IBinder;
-import android.util.Log;
-import com.futurice.festapp.R;
 
 /**
  * Application background services.
@@ -43,7 +40,8 @@ public class RuisrockService extends Service{
 			Log.i(TAG, "Starting backend operations");
 			counter++;
 			try {
-				if (CalendarUtil.getNow().before(GigDAO.getEndOfSunday())) {
+				Date nowDate = new Date();
+				if (nowDate.before(GigDAO.getEndOfSunday())) {
 					alertGigs();
 					if (counter % 12 == 0) { // every hour
 						Log.i(TAG, "Executing 1-hour operations.");
