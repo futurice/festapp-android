@@ -2,6 +2,7 @@ package com.futurice.festapp;
 
 import java.util.Date;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,14 +12,13 @@ import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.dao.NewsDAO;
 import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.service.FestAppService;
-import com.futurice.festapp.util.CalendarUtil;
 
 /**
  * Main activity.
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class FestAppMainActivity extends BaseActivity {
+public class FestAppMainActivity extends Activity {
 	
 	private View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override

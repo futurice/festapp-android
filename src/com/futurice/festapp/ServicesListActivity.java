@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class ServicesListActivity extends BaseActivity {
+public class ServicesListActivity extends Activity {
 	
 	private ListView list;
 	private ListItemStringAdapter adapter;

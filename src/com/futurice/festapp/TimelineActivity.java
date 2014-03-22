@@ -124,7 +124,7 @@ public class TimelineActivity extends Activity {
 		handler.postDelayed(runnable, NOW_MARKER_FREQUENCY);
 		
 		// Gestures
-        gestureDetector = new GestureDetector(new GuitarSwipeListener());
+        gestureDetector = new GestureDetector(this, new GuitarSwipeListener());
         gestureListener = new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 if (gestureDetector.onTouchEvent(event)) {
@@ -149,14 +149,6 @@ public class TimelineActivity extends Activity {
 	private void showInitialFavoriteInfoOnFirstVisit(Context context) {
 		SharedPreferences pref = context.getSharedPreferences(FestAppConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
 		final String key = FestAppConstants.PREFERENCE_SHOW_FAVORITE_INFO;
-
-		// Start DEBUG
-		/*
-		Editor ed = pref.edit();
-		ed.putBoolean(key, true);
-		ed.commit();
-		*/
-		// END DEBUG
 		
 		if (pref.getBoolean(key, true)) {
 			Editor editor = pref.edit();
@@ -180,6 +172,7 @@ public class TimelineActivity extends Activity {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	private void updateCurrentTimeline() {
 		Date now = new Date();
 		if (timelineStartMoment == null || timelineEndMoment == null) {
@@ -269,7 +262,7 @@ public class TimelineActivity extends Activity {
 	
 	private View getGuitarString(int i) {
 		LinearLayout llAlso = new LinearLayout(this);
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, getResources().getDimensionPixelSize(R.dimen.timeline_guitarStringHeight));
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(R.dimen.timeline_guitarStringHeight));
 		llAlso.setLayoutParams(params);
 		llAlso.setOrientation(LinearLayout.HORIZONTAL);
 		

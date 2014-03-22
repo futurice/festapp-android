@@ -16,7 +16,7 @@ import com.futurice.festapp.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class InfoSubPageActivity extends BaseActivity {
+public class InfoSubPageActivity extends Activity {
 
 	private String pageTitle;
 	private String pageContent;

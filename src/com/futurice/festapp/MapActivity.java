@@ -10,6 +10,7 @@ import com.futurice.festapp.ui.map.SizeCallback;
 import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.UIUtil;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -33,7 +34,7 @@ import com.futurice.festapp.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class MapActivity extends BaseActivity {
+public class MapActivity extends Activity {
 	
 	private MapImageView mapImageView;
 	private ImageButton zoomInButton;

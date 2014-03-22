@@ -22,7 +22,8 @@ import com.futurice.festapp.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class ScheduleTabActivity extends BaseTabActivity {
+@SuppressWarnings("deprecation")
+public class ScheduleTabActivity extends TabActivity {
 	
 	private TabHost tabHost;
 	

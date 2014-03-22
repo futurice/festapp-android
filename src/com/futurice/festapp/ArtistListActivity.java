@@ -24,7 +24,7 @@ import com.futurice.festapp.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class ArtistListActivity extends BaseActivity {
+public class ArtistListActivity extends Activity {
 	
 	private ListView artistList;
 	private List<Gig> gigs;
