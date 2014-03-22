@@ -1,2 +1,6 @@
-**.DS_Store
-android/bin/**
+bin/
+gen/
+.DS_Store
+.settings
+.project
+.classpath
