@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:gravity="center_vertical"
-                android:text="Merkkaa suosikiksi"
+                android:text="@string/artistInfoActivity.mark_as_favourite"
                 android:textColor="#fbf6dd" >
             </TextView>
         </LinearLayout>
@@ -135,7 +135,7 @@
                 style="@style/Header1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Bullet for my Valentine" />
+                android:text="@string/artistInfoActivity.default_artist_name" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -148,7 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="5dp"
-                    android:text="Päälava"
+                    android:text="@string/artistInfoActivity.default_location"
                     android:textColor="#111111"
                     android:textSize="18sp" >
                 </TextView>
@@ -157,7 +157,7 @@
                     android:id="@+id/artistInfoLiveTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="pe klo 22:00 - 23:00"
+                    android:text="@string/artistInfoActivity.default_time"
                     android:textColor="#111111"
                     android:textSize="18sp" >
                 </TextView>
@@ -170,7 +170,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempor lacus ac sem consequat rutrum. Maecenas interdum odio in libero tincidunt in condimentum nibh molestie. In elementum nisl id purus pretium semper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec porta diam at nunc pulvinar ultrices. In hac habitasse platea dictumst. Mauris in porta augue. Quisque et nulla dolor, non adipiscing ligula. Suspendisse in nibh vitae nulla pellentesque imperdiet pretium venenatis lectus. Cras enim lorem, faucibus nec ultricies imperdiet, commodo congue tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla vitae justo libero. Praesent semper ipsum quis massa malesuada euismod. Suspendisse potenti. Aenean vulputate arcu orci, sed egestas felis. Donec suscipit venenatis ullamcorper. Curabitur non urna ante, vel mattis nunc. Integer sollicitudin blandit vulputate. Curabitur pharetra placerat risus et commodo. Duis blandit auctor varius. Ut sit amet adipiscing ante. Maecenas iaculis tortor vitae nibh scelerisque id ullamcorper odio consectetur. Suspendisse vehicula pellentesque nibh nec pulvinar. Aliquam pretium bibendum sagittis. Duis placerat vestibulum enim quis rutrum. Nunc porta, sem at congue malesuada, quam augue porttitor est, nec laoreet est felis eu quam. Proin in vehicula purus. Curabitur eu nisl dolor, at interdum velit. Vestibulum nunc mauris, facilisis venenatis dictum sed, placerat sed odio. Fusce lobortis interdum blandit. Suspendisse tincidunt mollis nibh. Mauris semper, elit nec commodo scelerisque, risus lectus faucibus dolor, blandit rhoncus mauris risus ac purus. "
+                android:text="@string/artistInfoActivity.artist_description"
                 android:textColor="#111111"
                 android:textSize="15sp"
                 android:lineSpacingMultiplier="1.2" />

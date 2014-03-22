@@ -220,7 +220,7 @@ public class TimelineActivity extends Activity {
 		int row = 1;
 		
 		List<String> stages = new ArrayList<String>(stageGigs.keySet());
-		String[] orderedStages = new String[]{"niitty", "ranta", "teltta", "lounta", "mini"};
+		String[] orderedStages = new String[]{"location", "area", "stage", "tent", "place"};
 		for(int i = 0; i < orderedStages.length; i++)  {
 			String stage = orderedStages[i];
 			if(stages.contains(stage)) {
@@ -345,7 +345,7 @@ public class TimelineActivity extends Activity {
 
 	private void addStages() {
 		List<String> stages = daySchedule.getStages();
-		String[] orderedStages = new String[]{"niitty", "ranta", "teltta", "lounta", "mini"};
+		String[] orderedStages = new String[]{"location", "area", "stage", "tent", "place"};
 		for(int i = 0; i < orderedStages.length; i++)  {
 			String stage = orderedStages[i];
 			if(stages.contains(stage)) {
@@ -397,7 +397,7 @@ public class TimelineActivity extends Activity {
 	            			}
 	            		});
 	            		HashMap<String, String> swipeMap = new HashMap<String, String>();
-	            		swipeMap.put("suunta", upwardMotion ? "yl�s" : "alas");
+	            		swipeMap.put("direction", upwardMotion ? "up" : "down");
 	            	}
             	}
             } catch (Exception e) {

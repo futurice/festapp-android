@@ -54,9 +54,9 @@ public class ArtistInfoActivity extends BaseActivity {
 					Toast.makeText(getApplicationContext(), getString(R.string.artistInfoActivity_favoriteOff), Toast.LENGTH_SHORT).show();
 				}
 				HashMap<String, String> artistMap = new HashMap<String, String>();
-				artistMap.put("artisti", gig.getArtist());
-				artistMap.put("suosikki", isFavorite ? "true" : "false");
-				artistMap.put("n�kym�", "profiili");
+				artistMap.put("artist", gig.getArtist());
+				artistMap.put("favourite", isFavorite ? "true" : "false");
+				artistMap.put("view", "profile");
 			}
 		}
 	};
@@ -72,7 +72,7 @@ public class ArtistInfoActivity extends BaseActivity {
 		populateViewValues();
 		showInitialInfoOnFirstVisit(this);
 		HashMap<String, String> artistMap = new HashMap<String, String>();
-		artistMap.put("artisti", gig.getArtist());
+		artistMap.put("artist", gig.getArtist());
 	}
 	
 	private void showInitialInfoOnFirstVisit(Context context) {
@@ -155,7 +155,7 @@ public class ArtistInfoActivity extends BaseActivity {
 	public void openSpotify(View v) {
 		try {
 			HashMap<String, String> artistMap = new HashMap<String, String>();
-			artistMap.put("artisti", gig.getArtist());
+			artistMap.put("artist", gig.getArtist());
 			Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getSpotify()) );
 			startActivity(launcher);
 		} catch(ActivityNotFoundException anfe) {
@@ -165,7 +165,7 @@ public class ArtistInfoActivity extends BaseActivity {
 	
 	public void openYoutube(View v) {
 		HashMap<String, String> artistMap = new HashMap<String, String>();
-		artistMap.put("artisti", gig.getArtist());
+		artistMap.put("artist", gig.getArtist());
 		Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getYoutube()) );
 		startActivity(launcher);
 	}

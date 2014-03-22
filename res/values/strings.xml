@@ -24,6 +24,9 @@
     <string name="Services">Services</string>
     <string name="FoodAndDrink">Food &amp; drink</string>
     <string name="Transportation">How to get there</string>
+    <string name="faq">UKK</string>
+    <string name="frequently_asked_questions">Frequently asked questions</string>
+    <string name="info">INFO</string>
     
     <!-- Activity labels -->
     <string name="activity.label.Artists">FestApp » Bands</string>
@@ -36,13 +39,21 @@
     <string name="newsActivity.loadingArticles">Loading articles...</string>
     <string name="newsActivity.invalidUrl">Selected article is missing content.</string>
     <string name="newsActivity.httpError">Loading articles failed, possibly due to network connectivity.</string>
+    <string name="newsActivity.news_item.date">Date</string>
+    <string name="newsActivity.news_item.headline">Headline</string>
     
     <!-- ArtistInfo view -->
     <string name="artistInfoActivity.invalidId">Band details not available.</string>
     <string name="artistInfoActivity.favoriteOn">Band selected as a favorite, alarm will be sounded 15 minutes before the set time.</string>
-    <string name="artistInfoActivity.favoriteOff">Alarm for the band's set time disabled.</string>
+    <string name="artistInfoActivity.favoriteOff">Alarm for the band\'s set time disabled.</string>
     <string name="artistInfoActivity.menu.OpenInSpotify">Search in Spotify</string>
     <string name="artistInfoActivity.no_spotify">Install Spotify</string>
+    <string name="artistInfoActivity.default_location">Location</string>
+    <string name="artistInfoActivity.default_time">Friday 22:00 &#8211; 23:00</string>
+    <string name="artistInfoActivity.default_artist_name">Artist name</string>
+    <string name="artistInfoActivity.mark_as_favourite">Mark as favourite</string>
+    <string name="artistInfoActivity.artist_description">Artist description</string>
+    <string name="artistInfoActivity.artist_stage_and_time">Korsolava: pe 17:00-17:45</string>
     
     <!-- Map view -->
     <string name="mapActivity.nextOnStage">%1$s is playing %2$s\n%3$s</string>
@@ -76,8 +87,14 @@
     <string name="generalInfo.Tickets">Ticket sales</string>
     <string name="generalInfo.Accessibility">Accessibility</string>
     <string name="generalInfo.SafetyInstructions">Safety instructions</string>
+    <string name="generalInfo.general_info">YLEISINFO</string>
+    <string name="generalInfo.services">PALVELUT</string>
+    <string name="generalInfo.food_and_drink">RUOKA &amp; JUOMA</string>
+    <string name="generalInfo.transportation">LIIKKUMINEN</string>
     
     <!-- Notification -->
 
     <string name="notification.news.title">Notification</string>
+    
+    <string name="database_fail">Sovelluksen alustus epäonnistui.</string>
 </resources>
