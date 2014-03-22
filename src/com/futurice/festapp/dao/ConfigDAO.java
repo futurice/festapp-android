@@ -145,9 +145,6 @@ public class ConfigDAO {
 	}
 	
 	private static List<String> getAllMapLayers(Context context) {
-		if (MAP_LAYER_OPTIONS.size() == 0) {
-			MAP_LAYER_OPTIONS.add(context.getString(R.string.mapActivity_layer_gps));
-		}
 		return MAP_LAYER_OPTIONS;
 	}
 	
