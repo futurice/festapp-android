@@ -54,7 +54,7 @@
 		android:textStyle="bold"
 		android:textSize="11dp"
 		android:textColor="#fbf6dd"
-		android:text="Some band" />
+		android:text="@string/artistInfoActivity.default_artist_name" />
 		
 	 
 	<View xmlns:android="http://schemas.android.com/apk/res/android"

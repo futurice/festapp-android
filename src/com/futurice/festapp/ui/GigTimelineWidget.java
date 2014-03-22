@@ -74,9 +74,9 @@ public class GigTimelineWidget extends RelativeLayout {
 			artistLabel.setTextColor(Color.parseColor("#fbf6dd"));
 		}
 		HashMap<String, String> artistMap = new HashMap<String, String>();
-		artistMap.put("artisti", gig.getArtist());
-		artistMap.put("suosikki", fav ? "true" : "false");
-		artistMap.put("n�kym�", "aikajana");
+		artistMap.put("artist", gig.getArtist());
+		artistMap.put("favourite", fav ? "true" : "false");
+		artistMap.put("view", "timeline");
 	}
 	
 	public Gig getGig() {

@@ -10,20 +10,19 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.futurice.festapp.domain.to.HTTPBackendResponse;
-import com.futurice.festapp.domain.to.MapLayerOptions;
-import com.futurice.festapp.domain.to.SelectableOption;
-import com.futurice.festapp.util.HTTPUtil;
-import com.futurice.festapp.util.JSONUtil;
-import com.futurice.festapp.util.FestAppConstants;
-
-import com.futurice.festapp.R;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.futurice.festapp.R;
+import com.futurice.festapp.domain.to.HTTPBackendResponse;
+import com.futurice.festapp.domain.to.MapLayerOptions;
+import com.futurice.festapp.domain.to.SelectableOption;
+import com.futurice.festapp.util.FestAppConstants;
+import com.futurice.festapp.util.HTTPUtil;
+import com.futurice.festapp.util.JSONUtil;
 
 /**
  * Data-access operations for Configuration options.
@@ -251,14 +250,6 @@ public class ConfigDAO {
 				return;
 			}
 			
-			// Ugly hacks to content_plaintext
-			/*content = content.replace("\\u2028", "").replace("\\u017e", "ż");
-			while(content.contains("\\r\\n\\r\\n")) {
-				content = content.replace("\\r\\n\\r\\n", "\\r\\n");
-			}
-			
-			setPageFoodAndDrink(context, "<p>" + content.replace("  ", "<br /><br />") + "</ p>");
-			*/
 			setPageFoodAndDrink(context, content);
 		} catch (Exception e) {
 			Log.w(TAG, "Received invalid JSON-structure", e);
@@ -276,7 +267,7 @@ public class ConfigDAO {
 		return content;
 	}
 
-	/*public static void updateTransportationPageOverHttp(Context context) {
+	public static void updateTransportationPageOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.TRANSPORTATION_HTML_URL);
 		if (!response.isValid() || response.getContent() == null) {
@@ -298,7 +289,7 @@ public class ConfigDAO {
 		} catch (Exception e) {
 			Log.e(TAG, "Error parsing Services JSON.", e);
 		}
-	}*/
+	}
 	
 	public static void updateFrequentlyAskedQuestionsPagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();

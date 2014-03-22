@@ -3,9 +3,9 @@
 	android:orientation="vertical" android:layout_width="fill_parent" android:background="@android:color/transparent"
 	android:layout_height="fill_parent" android:paddingLeft="10dp" android:paddingRight="10dp" android:paddingBottom="5dp" android:paddingTop="5dp">
 
-	<TextView android:text="Date" android:id="@+id/newsDate" android:textSize="13sp"
+	<TextView android:text="@string/newsActivity.news_item.date" android:id="@+id/newsDate" android:textSize="13sp"
 		android:layout_width="wrap_content" android:layout_height="wrap_content" />
-	<TextView android:text="News headline" android:id="@+id/newsTitle"
+	<TextView android:text="@string/newsActivity.news_item.headline" android:id="@+id/newsTitle"
 		android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="18sp" android:textStyle="bold" />
 
 </LinearLayout>
