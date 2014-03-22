@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="Header1">
+        <item name="android:textColor">#e32c22</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:typeface">sans</item>
+        <!-- <item name="android:shadowColor">#AAAAAA</item> -->
+        <!-- <item name="android:shadowRadius">1.5</item> -->
+        <!-- <item name="android:shadowDx">1</item> -->
+        <!-- <item name="android:shadowDy">1</item> -->
+    </style>
+
+    <style name="Header2">
+        <item name="android:textColor">#e32c22</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:typeface">sans</item>
+        <!-- <item name="android:shadowColor">#AAAAAA</item> -->
+        <!-- <item name="android:shadowRadius">1.5</item> -->
+        <!-- <item name="android:shadowDx">1</item> -->
+        <!-- <item name="android:shadowDy">1</item> -->
+    </style>
+
+    <style name="TimelineFont">
+
+        <!-- <item name="android:textColor">#00FF00</item> -->
+        <item name="android:textSize">20sp</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <!-- Themes -->
+    <style name="FestAppTheme" parent="android:Theme.Light.NoTitleBar">
+
+        <!-- <item name="android:windowContentOverlay">@null</item> -->
+        <item name="android:windowBackground">@drawable/background_plain</item>
+    </style>
+
+    <style name="FestAppTheme.Fullscreen" parent="FestAppTheme">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!-- Dialogs -->
+    <style name="Dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@color/fully_transparent</item>
+        <item name="android:colorBackground">@color/fully_transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item>
+    </style>
+</resources>
