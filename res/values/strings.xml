@@ -1,83 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- Single words -->
-    <string name="News">UUTISET</string>
-    <string name="Artists">BÄNDIT</string>
-    <string name="app_name">FestApp 2013</string>
-    <string name="Error">Virhe</string>
-    <string name="Schedule">Aikataulu</string>
+    <string name="News">NEWS</string>
+    <string name="Artists">BANDS</string>
+    <string name="app_name">FestApp</string>
+    <string name="Error">Error</string>
+    <string name="Schedule">Schedule</string>
     <string name="Debug">Debug</string>
-    <string name="Map">Kartta</string>
-    <string name="Save">Tallenna</string>
-    <string name="Call">Soita</string>
-    <string name="Cancel">Peruuta</string>
-    <string name="Close">Sulje</string>
-    <string name="Friday">Perjantai</string>
-    <string name="Saturday">Lauantai</string>
-    <string name="Sunday">Sunnuntai</string>
-    <string name="Yes">Kyllä</string>
-    <string name="No">Ei</string>
-    <string name="Stage">Lava</string>
-    <string name="PerformanceTime">Esiintymisaika</string>
-    <string name="Favorite">Suosikki</string>
-    <string name="GeneralInfo">Yleisinfo</string>
-    <string name="Services">Palvelut</string>
-    <string name="FoodAndDrink">Ruoka &amp; juoma</string>
-    <string name="Transportation">Liikkuminen</string>
+    <string name="Map">Map</string>
+    <string name="Save">Save</string>
+    <string name="Call">Call</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Close">Close</string>
+    <string name="Friday">Friday</string>
+    <string name="Saturday">Saturday</string>
+    <string name="Sunday">Sunday</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="Stage">Stage</string>
+    <string name="PerformanceTime">Set time</string>
+    <string name="Favorite">Favorite</string>
+    <string name="GeneralInfo">Information</string>
+    <string name="Services">Services</string>
+    <string name="FoodAndDrink">Food &amp; drink</string>
+    <string name="Transportation">How to get there</string>
     
     <!-- Activity labels -->
-    <string name="activity.label.Artists">FestApp » Bändit</string>
-    <string name="activity.label.ArtistInfo">FestApp » Bändit » Info </string>
-    <string name="activity.label.News">FestApp » Uutiset</string>
+    <string name="activity.label.Artists">FestApp » Bands</string>
+    <string name="activity.label.ArtistInfo">FestApp » Bands » Info </string>
+    <string name="activity.label.News">FestApp » News</string>
     <string name="activity.label.Debug">FestApp » Debug</string>
-    <string name="activity.label.Schedule">FestApp » Aikataulu</string>
+    <string name="activity.label.Schedule">FestApp » Timetable</string>
     
     <!-- News view -->
-    <string name="newsActivity.loadingArticles">Ladataan uutisotsikoita...</string>
-    <string name="newsActivity.invalidUrl">Kyseisellä uutisotsikolla ei ole sisältöä.</string>
-    <string name="newsActivity.httpError">Uutisotsikoiden lataaminen epäonnistui. Suuresta kävijäjoukosta johtuen verkkoyhteyksissä voi esiintyä häiriöitä.</string>
+    <string name="newsActivity.loadingArticles">Loading articles...</string>
+    <string name="newsActivity.invalidUrl">Selected article is missing content.</string>
+    <string name="newsActivity.httpError">Loading articles failed, possibly due to network connectivity.</string>
     
     <!-- ArtistInfo view -->
-    <string name="artistInfoActivity.invalidId">Bändin tietoja ei löydy.</string>
-    <string name="artistInfoActivity.favoriteOn">Bändi merkittiin suosikiksi. Puhelin hälyttää 15 min ennen keikan alkua.</string>
-    <string name="artistInfoActivity.favoriteOff">Bändin keikkamuistutus poistettiin.</string>
-    <string name="artistInfoActivity.menu.OpenInSpotify">Hae Spotifysta</string>
-    <string name="artistInfoActivity.no_spotify">Asenna Spotify</string>
+    <string name="artistInfoActivity.invalidId">Band details not available.</string>
+    <string name="artistInfoActivity.favoriteOn">Band selected as a favorite, alarm will be sounded 15 minutes before the set time.</string>
+    <string name="artistInfoActivity.favoriteOff">Alarm for the band's set time disabled.</string>
+    <string name="artistInfoActivity.menu.OpenInSpotify">Search in Spotify</string>
+    <string name="artistInfoActivity.no_spotify">Install Spotify</string>
     
     <!-- Map view -->
-    <string name="mapActivity.nextOnStage">%1$s esiintyy %2$s\n%3$s</string>
-    <string name="mapActivity.initialInfo.title">Tiesitkö?</string>
-    <string name="mapActivity.initialInfo.message">Painamalla lavan nimeä kartalla näet, mikä bändi kyseisellä lavalla soittaa juuri nyt / seuraavaksi.</string>
+    <string name="mapActivity.nextOnStage">%1$s is playing %2$s\n%3$s</string>
+    <string name="mapActivity.initialInfo.title">Tip</string>
+    <string name="mapActivity.initialInfo.message">Selecting the name of a stage on the map will display the band playing now and next.</string>
     
     <!-- Timeline view -->
-    <string name="timelineActivity.initialInfo.title">Tiesitkö?</string>
-    <string name="timelineActivity.initialInfo.msg">Voit luoda oman aikataulun merkitsemällä suosikkibändisi tähdellä. Suosikkibändin keikasta annetaan hälytys 15 minuuttia ennen sen alkua.</string>
+    <string name="timelineActivity.initialInfo.title">Tip</string>
+    <string name="timelineActivity.initialInfo.msg">You can create your custom timetable by selecting your favorite bands with the star. An alarm will be sounded 15 minutes before your favorites play.</string>
     
     <!-- Fonecta 02 view -->
-    <string name="fonectaActivity.title">KYSY MITÄ VAAN.</string>
-    <string name="fonectaActivity.showPrices.text">Soitto on maksullinen. Katso hintatiedot täältä »</string>
-    <string name="fonectaActivity.callError">Soitto epäonnistui. Verkossa voi esiintyä ruuhkaa festivaalialueella.</string>
-    <string name="fonectaActivity.confirmation">Olet soittamassa Fonectan maksulliseen 020202-palveluun. Haluatko jatkaa?</string>
+    <string name="fonectaActivity.title">ASK ANYTHING.</string>
+    <string name="fonectaActivity.showPrices.text">The call will be to a pay number. See pricing here »</string>
+    <string name="fonectaActivity.callError">Call failed. Network may be busy.</string>
+    <string name="fonectaActivity.confirmation">You are dialing a paid service. Do you want to continue?</string>
     
     <!-- Services -->
-    <string name="service.Cloakroom">Narikka</string>
-    <string name="service.BikePark">Polkupyöräparkki</string>
-    <string name="service.Camping">Leirintä ja majoitus</string>
-    <string name="service.Merchandise">Fanituotteet ja tavarakauppiaat</string>
-    <string name="service.Activities">Aktiviteetit</string>
-    <string name="service.PhoneCharging">Kännykkälataus</string>
+    <string name="service.Cloakroom">Cloakroom</string>
+    <string name="service.BikePark">Bicycle parking</string>
+    <string name="service.Camping">Accommodation</string>
+    <string name="service.Merchandise">Merchandise</string>
+    <string name="service.Activities">Activities</string>
+    <string name="service.PhoneCharging">Phone charging</string>
     
     <!-- General info -->
-    <string name="generalInfo.FrequentlyAsked">Usein kysyttyä</string>
-    <string name="generalInfo.OpenHours">Aukioloajat</string>
-    <string name="generalInfo.InfoStand">Infopiste</string>
-    <string name="generalInfo.LostAndFound">Löytötavarat</string>
-    <string name="generalInfo.Firstaid">Ensiapu</string>
-    <string name="generalInfo.Tickets">Lipunmyynti</string>
-    <string name="generalInfo.Accessibility">Saavutettavuus</string>
-    <string name="generalInfo.SafetyInstructions">Turvallisuusohjeet</string>
+    <string name="generalInfo.FrequentlyAsked">FAQ</string>
+    <string name="generalInfo.OpenHours">Opening hours</string>
+    <string name="generalInfo.InfoStand">Info stand</string>
+    <string name="generalInfo.LostAndFound">Lost and found</string>
+    <string name="generalInfo.Firstaid">First aid</string>
+    <string name="generalInfo.Tickets">Ticket sales</string>
+    <string name="generalInfo.Accessibility">Accessibility</string>
+    <string name="generalInfo.SafetyInstructions">Safety instructions</string>
     
     <!-- Notification -->
-    <string name="notification.news.title">FestApp tiedottaa</string>
+
+    <string name="notification.news.title">Notification</string>
     
 </resources>
