@@ -39,11 +39,13 @@
     <string name="newsActivity.loadingArticles">Loading articles...</string>
     <string name="newsActivity.invalidUrl">Selected article is missing content.</string>
     <string name="newsActivity.httpError">Loading articles failed, possibly due to network connectivity.</string>
+    <string name="newsActivity.news_item.date">Date</string>
+    <string name="newsActivity.news_item.headline">Headline</string>
     
     <!-- ArtistInfo view -->
     <string name="artistInfoActivity.invalidId">Band details not available.</string>
     <string name="artistInfoActivity.favoriteOn">Band selected as a favorite, alarm will be sounded 15 minutes before the set time.</string>
-    <string name="artistInfoActivity.favoriteOff">Alarm for the band's set time disabled.</string>
+    <string name="artistInfoActivity.favoriteOff">Alarm for the band\'s set time disabled.</string>
     <string name="artistInfoActivity.menu.OpenInSpotify">Search in Spotify</string>
     <string name="artistInfoActivity.no_spotify">Install Spotify</string>
     <string name="artistInfoActivity.default_location">Location</string>
@@ -93,4 +95,6 @@
     <!-- Notification -->
 
     <string name="notification.news.title">Notification</string>
+    
+    <string name="database_fail">Sovelluksen alustus epäonnistui.</string>
 </resources>

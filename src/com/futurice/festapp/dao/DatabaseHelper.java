@@ -52,7 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createGeneralInfoPagesFromLocalFile(db);
 		} catch (Exception e) {
 			Log.e(TAG, "Cannot create DB", e);
-			Toast.makeText(context, "Sovelluksen alustus epäonnistui.", Toast.LENGTH_LONG).show();
+			Toast.makeText(context, context.getString(R.string.database_fail), Toast.LENGTH_LONG).show();
 		}
 	}
 
