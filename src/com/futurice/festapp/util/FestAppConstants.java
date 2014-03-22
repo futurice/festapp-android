@@ -2,15 +2,16 @@ package com.futurice.festapp.util;
 
 public class FestAppConstants {
 	
-	// TODO: fix URLs
-	
 	public static final String WEBSITE_BASE_URL = "http://festapp.herokuapp.com/";
 	
-	public static final String NEWS_JSON_URL = "http://festapp.herokuapp.com/json.php?query=uutiset";
-	public static final String GIGS_JSON_URL = "http://festapp.herokuapp.com/json.php?query=artistit";
+	public static final String BASE_URL = "http://festapp.herokuapp.com";
+	public static final String NEWS_JSON_URL = "/api/news";
+	public static final String GIGS_JSON_URL = "/api/artists";
+	public static final String TRANSPORTATION_HTML_URL = "/api/arrival";
+	public static final String SERVICES_JSON_URL = "/api/services";
 	
-	public static final String FREQUENTLY_ASKED_QUESTIONS_JSON_URL = "http://festapp.herokuapp.com/json.php?query=info"; 
-	public static final String FOOD_AND_DRINK_HTML_URL =  "http://festapp.herokuapp.com/json.php?query=ohjelma";
+	public static final String FREQUENTLY_ASKED_QUESTIONS_JSON_URL = "/api/info";
+	public static final String FOOD_AND_DRINK_HTML_URL =  "/api/program";
 	
 	public static final String DRAWABLE_ARTIST_LOGO_PREFIX = "artist_";
 	public static final String DRAWABLE_GUITAR_STRING_PREFIX = "guitar_string_";
