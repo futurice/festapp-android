@@ -13,7 +13,7 @@ import com.futurice.festapp.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class InfoPageActivity extends BaseActivity {
+public class InfoPageActivity extends Activity {
 	
 	private View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override

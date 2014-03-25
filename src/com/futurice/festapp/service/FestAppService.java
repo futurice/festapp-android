@@ -115,6 +115,7 @@ public class FestAppService extends Service{
 		notify(pending, article.getUrl(), title, article.getDateString(), title);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void notify(PendingIntent pending, String tagId, String tickerText,
 			String contentTitle, String contentText) {
 		Notification notification = new Notification(R.drawable.notification,

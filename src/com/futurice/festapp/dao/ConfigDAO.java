@@ -1,7 +1,5 @@
 package com.futurice.festapp.dao;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +29,7 @@ import com.futurice.festapp.util.JSONUtil;
  */
 public class ConfigDAO {
 	
-	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 	private static final String TAG = "ConfigDAO";
 	private static final List<String> MAP_LAYER_OPTIONS = new ArrayList<String>();
 	
@@ -209,7 +207,6 @@ public class ConfigDAO {
 			cursor = db.rawQuery("SELECT attributeName, attributeValue FROM config WHERE attributeName = ?", new String[]{attributeName});
 			if (cursor.getCount() == 1) {
 				cursor.moveToFirst();
-				String value = cursor.getString(1);
 				return cursor.getString(1);
 			}
 		} finally {

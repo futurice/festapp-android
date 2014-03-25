@@ -16,7 +16,7 @@ import com.futurice.festapp.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class NewsContentActivity extends BaseActivity {
+public class NewsContentActivity extends Activity {
 	
 	private WebView contentView;
 	
