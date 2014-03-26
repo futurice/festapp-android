@@ -25,7 +25,7 @@ import com.futurice.festapp.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class NewsListActivity extends BaseActivity {
+public class NewsListActivity extends Activity {
 	
 	private ListView newsList;
 	private List<NewsArticle> articles;

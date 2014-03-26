@@ -8,6 +8,7 @@ import com.futurice.festapp.domain.GigLocation;
 import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.UIUtil;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -33,7 +34,7 @@ import com.futurice.festapp.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class ArtistInfoActivity extends BaseActivity {
+public class ArtistInfoActivity extends Activity {
 	
 	private RelativeLayout artistInfoView;
 	private Gig gig;

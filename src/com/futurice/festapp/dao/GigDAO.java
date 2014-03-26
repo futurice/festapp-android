@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -21,7 +22,6 @@ import com.futurice.festapp.domain.to.DaySchedule;
 import com.futurice.festapp.domain.to.FestivalDay;
 import com.futurice.festapp.domain.to.HTTPBackendResponse;
 import com.futurice.festapp.domain.to.StageType;
-import com.futurice.festapp.util.CalendarUtil;
 import com.futurice.festapp.util.GigArtistNameComparator;
 import com.futurice.festapp.util.HTTPUtil;
 import com.futurice.festapp.util.JSONUtil;
@@ -43,7 +43,7 @@ import com.futurice.festapp.R;
 public class GigDAO {
 	
 	private static final String TAG = "GigDAO";
-	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 	
 	private static final String GIGS_QUERY = "SELECT gig.id, gig.artist, gig.description, gig.favorite, gig.active, gig.alerted, gig.youtube, gig.spotify," +
 			"location.stage, location.startTime, location.endTime FROM gig LEFT JOIN location ON (gig.id = location.id)";
@@ -114,7 +114,6 @@ public class GigDAO {
 		Cursor cursor = null;
 		try {
 			db = (new DatabaseHelper(context)).getReadableDatabase();
-			//cursor = db.query("gig", GIG_COLUMNS, "active = 1", null, null, null, "artist ASC");
 			cursor = db.rawQuery(GIGS_QUERY + " WHERE active = 1 ORDER BY gig.artist ASC, location.startTime ASC", null);
 			while (cursor.moveToNext()) {
 				String id = cursor.getString(0);
@@ -227,7 +226,6 @@ public class GigDAO {
 		List<Gig> gigs = parseFromJson(response.getContent());
 		if (gigs != null && gigs.size() >= 2) { // Hackish fail-safe
 			SQLiteDatabase db = null;
-			Cursor cursor = null;
 			try {
 				db = (new DatabaseHelper(context)).getWritableDatabase();
 				db.beginTransaction();
@@ -288,7 +286,6 @@ public class GigDAO {
 			Date nowDate = new Date();
 			String timeInFuture = getDateStringWithMinuteDifference(nowDate, 18);
 			String now = DB_DATE_FORMATTER.format(nowDate);
-			//cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND favorite = 1 AND alerted = 0 AND datetime(startTime) <= datetime(?) AND datetime(endTime) > datetime(?)", new String[]{timeInFuture, now}, null, null, "startTime ASC");
 			cursor = db.rawQuery(GIGS_QUERY + " WHERE active = 1 AND favorite = 1 AND alerted = 0 AND datetime(location.startTime) <= datetime(?) AND datetime(location.endTime) > datetime(?)", new String[]{timeInFuture, now});
 			while (cursor.moveToNext()) {
 				String id = cursor.getString(0);
@@ -319,7 +316,6 @@ public class GigDAO {
 	}
 	
 	private static Gig findGig(SQLiteDatabase db, String id) {
-		//Cursor cursor = db.query("gig", GIG_COLUMNS, "id = " + id, null, null, null, null);
 		Cursor cursor = db.rawQuery(GIGS_QUERY + " WHERE gig.id = ?", new String[]{id});
 		
 		Gig gig = null;
@@ -353,26 +349,14 @@ public class GigDAO {
 	
 	public static ContentValues convertGigToContentValues(Gig gig) {
 		ContentValues values = new ContentValues();
-		//String startTime = (gig.getStartTime() != null) ? DB_DATE_FORMATTER.format(gig.getStartTime()) : null;
-		//String endTime = (gig.getEndTime() != null) ? DB_DATE_FORMATTER.format(gig.getEndTime()) : null;
 		values.put("id", gig.getId());
 		values.put("artist", gig.getArtist());
 		values.put("description", gig.getDescription());
-		//values.put("stage", gig.getStage());
-		//values.put("startTime", startTime);
-		//values.put("endTime", endTime);
 		values.put("active", gig.isActive());
 		values.put("favorite", gig.isFavorite());
 		values.put("alerted", gig.isAlerted());
 		values.put("youtube", gig.getYoutube());
 		values.put("spotify", gig.getSpotify());
-		/*
-		if (gig.getFestivalDay() != null) {
-			values.put("festivalDay", gig.getFestivalDay().name());
-		} else {
-			values.put("festivalDay", (String) null);
-		}
-		*/
 		return values;
 	}
 	
@@ -427,26 +411,26 @@ public class GigDAO {
 		}
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
+		String artistOnStage = null;
 		try {
 			db = (new DatabaseHelper(context)).getReadableDatabase();
 			String now = DB_DATE_FORMATTER.format(new Date());
-			//cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND stage IS NOT NULL AND startTime IS NOT NULL AND datetime(endTime) > datetime(?)", new String[]{now}, null, null, "startTime ASC");
 			cursor = db.rawQuery(GIGS_QUERY + " WHERE gig.active = 1 AND location.stage IS NOT NULL AND location.startTime IS NOT NULL AND datetime(location.endTime) > datetime(?) ORDER BY location.startTime ASC", new String[]{now});
 			while (cursor.moveToNext()) {
 				String id = cursor.getString(0);
 		        Gig gig = convertCursorToGig(cursor, id);
 		        GigLocation gigLocation = convertCursorToGigLocation(cursor, id);
 		        gig.addLocation(gigLocation);
-		        String artistOnStage = getArtistOnStageMessage(gig, stage, context);
+		        artistOnStage = getArtistOnStageMessage(gig, stage, context);
 		        if (artistOnStage != null) {
-		        	return artistOnStage;
+		        	break;
 		        }
 			}
 		} finally {
 			closeDb(db, cursor);
 		}
 		
-		return null;
+		return artistOnStage;
 	}
 	
 	private static String getArtistOnStageMessage(Gig gig, StageType stageType, Context context) {
@@ -454,7 +438,7 @@ public class GigDAO {
 		if (stage == null) {
 			return null;
 		}
-		stage = stage.toLowerCase().trim();
+		stage = stage.toLowerCase(Locale.getDefault()).trim();
 		String matchedStage = null;
 		switch (stageType) {
 		case LOCATION:
