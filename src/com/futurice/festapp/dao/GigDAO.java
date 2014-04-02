@@ -145,15 +145,15 @@ public class GigDAO {
 					isNewGig = false;
 				} else {
 					gig.setId(gigId);
-					gig.setArtist(JSONUtil.getString(gigObj, "nimi"));
-					gig.setDescription(JSONUtil.getString(gigObj, "sisalto"));
+					gig.setArtist(JSONUtil.getString(gigObj, "name"));
+					gig.setDescription(JSONUtil.getString(gigObj, "content"));
 					gig.setYoutube(JSONUtil.getString(gigObj,"youtube"));
 					gig.setSpotify(JSONUtil.getString(gigObj,"spotify"));
 				}
 								
-				Date startTime = parseJsonDate(JSONUtil.getLong(gigObj, "aika"));
-				Date endTime = parseJsonDate(JSONUtil.getLong(gigObj, "aika_stop"));
-				String stage = JSONUtil.getString(gigObj, "lava");
+				Date startTime = parseJsonDate(JSONUtil.getLong(gigObj, "time_start"));
+				Date endTime = parseJsonDate(JSONUtil.getLong(gigObj, "time_stop"));
+				String stage = JSONUtil.getString(gigObj, "stage");
 				if (startTime != null && endTime != null && StringUtil.isNotEmpty(stage)) {
 					GigLocation gigLocation = new GigLocation(stage, startTime, endTime);
 					gig.addLocation(gigLocation);
