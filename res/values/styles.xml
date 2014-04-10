@@ -30,17 +30,6 @@
         <item name="android:typeface">sans</item>
     </style>
 
-    <!-- Themes -->
-    <style name="FestAppTheme" parent="android:Theme.Light.NoTitleBar">
-
-        <!-- <item name="android:windowContentOverlay">@null</item> -->
-        <item name="android:windowBackground">@drawable/background_plain</item>
-    </style>
-
-    <style name="FestAppTheme.Fullscreen" parent="FestAppTheme">
-        <item name="android:windowFullscreen">true</item>
-    </style>
-
     <!-- Dialogs -->
     <style name="Dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@color/fully_transparent</item>
