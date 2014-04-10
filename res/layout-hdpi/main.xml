@@ -21,8 +21,6 @@
 		android:layout_marginTop="15dp"
 		android:layout_alignParentLeft="true" android:layout_below="@id/logo"
 		android:layout_height="wrap_content" android:orientation="vertical" android:isScrollContainer="true">
-		<ImageView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:src="@drawable/main_menu_start" />
 		<LinearLayout android:layout_width="wrap_content"
 			android:id="@+id/main_menu_timetable" android:paddingLeft="40dp"
 			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
@@ -32,8 +30,6 @@
 				android:textStyle="bold" android:textSize="20dp"
 				android:layout_height="fill_parent" android:text="@string/Schedule" />
 		</LinearLayout>
-		<ImageView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
 		<LinearLayout android:layout_width="wrap_content"
 			android:paddingLeft="40dp" android:id="@+id/main_menu_bands"
 			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
@@ -43,8 +39,6 @@
 				android:textStyle="bold" android:textSize="20dp"
 				android:layout_height="fill_parent" android:text="@string/Artists" />
 		</LinearLayout>
-		<ImageView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
 		<LinearLayout android:layout_width="wrap_content"
 			android:paddingLeft="40dp" android:id="@+id/main_menu_map"
 			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
@@ -54,8 +48,6 @@
 				android:textStyle="bold" android:textSize="20dp"
 				android:layout_height="fill_parent" android:text="@string/Map" />
 		</LinearLayout>
-		<ImageView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
 		<LinearLayout android:layout_width="wrap_content"
 			android:paddingLeft="40dp" android:id="@+id/main_menu_info"
 			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
@@ -65,8 +57,6 @@
 				android:textStyle="bold" android:textSize="20dp"
 				android:layout_height="fill_parent" android:text="@string/info" />
 		</LinearLayout>
-		<ImageView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
 		<LinearLayout android:layout_width="wrap_content"
 			android:paddingLeft="40dp" android:id="@+id/main_menu_news"
 			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
@@ -76,8 +66,6 @@
 				android:textStyle="bold" android:textSize="20dp"
 				android:layout_height="fill_parent" android:text="@string/News" />
 		</LinearLayout>
-		<ImageView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:src="@drawable/main_menu_middle" />
 		<LinearLayout android:layout_width="wrap_content"
 			android:paddingLeft="40dp" android:id="@+id/main_menu_faq"
 			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
@@ -87,16 +75,5 @@
 				android:textStyle="bold" android:textSize="20dp"
 				android:layout_height="fill_parent" android:text="@string/faq" />
 		</LinearLayout>
-		<ImageView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:src="@drawable/main_menu_bottom" />
 	</LinearLayout>
-
-	<ImageView android:layout_width="wrap_content" 
-		android:scaleType="matrix" android:src="@drawable/hihhuli" android:layout_marginLeft="170dp" android:layout_marginTop="140dp"
-		android:layout_height="wrap_content" android:layout_alignParentRight="true"
-		android:layout_alignParentBottom="true" />
-	<ImageView android:layout_width="wrap_content" android:src="@drawable/ankka"
-		android:paddingRight="120dp" android:layout_height="wrap_content"
-		android:layout_marginLeft="30dp" android:layout_alignParentLeft="true"
-		android:layout_alignParentBottom="true" />
 </RelativeLayout>
