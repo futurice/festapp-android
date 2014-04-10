@@ -65,12 +65,6 @@
     <string name="timelineActivity.initialInfo.title">Tiesitkö?</string>
     <string name="timelineActivity.initialInfo.msg">Voit luoda oman aikataulun merkitsemällä suosikkibändisi tähdellä. Suosikkibändin keikasta annetaan hälytys 15 minuuttia ennen sen alkua.</string>
     
-    <!-- Fonecta 02 view -->
-    <string name="fonectaActivity.title">KYSY MITÄ VAAN.</string>
-    <string name="fonectaActivity.showPrices.text">Soitto on maksullinen. Katso hintatiedot täältä »</string>
-    <string name="fonectaActivity.callError">Soitto epäonnistui. Verkossa voi esiintyä ruuhkaa festivaalialueella.</string>
-    <string name="fonectaActivity.confirmation">Olet soittamassa Fonectan maksulliseen 020202-palveluun. Haluatko jatkaa?</string>
-    
     <!-- Services -->
     <string name="service.Cloakroom">Narikka</string>
     <string name="service.BikePark">Polkupyöräparkki</string>

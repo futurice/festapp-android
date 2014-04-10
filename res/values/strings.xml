@@ -63,13 +63,7 @@
     <!-- Timeline view -->
     <string name="timelineActivity.initialInfo.title">Tip</string>
     <string name="timelineActivity.initialInfo.msg">You can create your custom timetable by selecting your favorite bands with the star. An alarm will be sounded 15 minutes before your favorites play.</string>
-    
-    <!-- Fonecta 02 view -->
-    <string name="fonectaActivity.title">ASK ANYTHING.</string>
-    <string name="fonectaActivity.showPrices.text">The call will be to a pay number. See pricing here »</string>
-    <string name="fonectaActivity.callError">Call failed. Network may be busy.</string>
-    <string name="fonectaActivity.confirmation">You are dialing a paid service. Do you want to continue?</string>
-    
+      
     <!-- Services -->
     <string name="service.Cloakroom">Cloakroom</string>
     <string name="service.BikePark">Bicycle parking</string>

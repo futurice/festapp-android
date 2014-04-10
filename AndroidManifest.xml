@@ -34,8 +34,6 @@
 		<activity android:name=".InfoPageActivity" android:label="@string/app_name" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" />
 		<activity android:name=".InfoSubPageActivity" android:label="@string/app_name" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" />
 		<activity android:name=".NewsContentActivity" android:label="@string/app_name" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" />
-		<activity android:name=".FonectaActivity" android:label="@string/app_name" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" />
-		<activity android:name=".FonectaPricesActivity" android:label="@string/app_name" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" />
 		<activity android:name=".ServicesListActivity" android:label="@string/app_name" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" />
 		<activity android:name=".GeneralInfoListActivity" android:label="@string/app_name" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" />
 		
