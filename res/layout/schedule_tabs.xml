@@ -20,7 +20,7 @@
 			android:layout_above="@id/background_bottom"
 			android:layout_toRightOf="@id/background" />
 
-		<include android:id="@+id/logo" layout="@layout/ruisrock_logo" />
+		<include android:id="@+id/logo" layout="@layout/festival_logo" />
 
 		<TabWidget android:id="@android:id/tabs" android:layout_marginTop="10dp" android:layout_marginLeft="10dp" android:layout_marginRight="20dp"
 			android:layout_centerInParent="true" android:layout_below="@id/logo" 

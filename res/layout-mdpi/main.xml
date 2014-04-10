@@ -15,7 +15,7 @@
 		android:layout_height="wrap_content" android:background="@drawable/background_right_repeat"
 		android:layout_above="@id/background_bottom" android:layout_toRightOf="@id/background" />
 
-	<include android:id="@+id/logo" layout="@layout/ruisrock_logo" />
+	<include android:id="@+id/logo" layout="@layout/festival_logo" />
 
 	<ScrollView android:layout_alignParentLeft="true" android:layout_below="@id/logo" android:layout_width="fill_parent" android:layout_height="0dp"
 	    android:layout_alignParentBottom="true" android:id="@+id/menu_container" android:scrollbars="none">

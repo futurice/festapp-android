@@ -28,7 +28,7 @@
 
     <include
         android:id="@+id/logo"
-        layout="@layout/ruisrock_logo" />
+        layout="@layout/festival_logo" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"

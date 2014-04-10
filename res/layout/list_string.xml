@@ -15,7 +15,7 @@
 		android:layout_height="wrap_content" android:layout_above="@id/background_bottom"
 		android:layout_toRightOf="@id/background" android:background="@drawable/background_right_repeat" />
 
-	<include android:id="@+id/logo" layout="@layout/ruisrock_logo" />
+	<include android:id="@+id/logo" layout="@layout/festival_logo" />
 
 	<RelativeLayout android:id="@+id/relativeLayout1"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
