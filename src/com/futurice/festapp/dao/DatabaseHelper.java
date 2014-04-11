@@ -1,12 +1,18 @@
 package com.futurice.festapp.dao;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.util.FestAppConstants;
+import com.futurice.festapp.util.JSONUtil;
 import com.futurice.festapp.util.StringUtil;
 
 import android.content.ContentValues;
@@ -15,6 +21,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.futurice.festapp.R;
 
 /**
@@ -50,6 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createServicePagesFromLocalFile(db);
 			createFrequentlyAskedQuestionsPagesFromLocalFile(db);
 			createGeneralInfoPagesFromLocalFile(db);
+			createFestivalDatesFromLocalJson(db);
 		} catch (Exception e) {
 			Log.e(TAG, "Cannot create DB", e);
 			Toast.makeText(context, context.getString(R.string.database_fail), Toast.LENGTH_LONG).show();
@@ -84,6 +92,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.insert("config", "attributeValue", values);
 	}
 	
+	private void createFestivalDatesFromLocalJson(SQLiteDatabase db) throws Exception {
+		InputStream jsonStream = context.getResources().openRawResource(R.raw.festival);
+		String json = StringUtil.convertStreamToString(jsonStream);
+		JSONArray jsonList = new JSONArray(json);
+		List<String> dateList = new ArrayList<String>();
+		
+		try {
+			JSONObject festObject = jsonList.getJSONObject(0);
+			dateList.add(JSONUtil.getString(festObject, "start_date"));
+			dateList.add(JSONUtil.getString(festObject, "end_date"));
+		} catch (Exception e) {
+			Log.w(TAG, "Received invalid JSON-structure", e);
+		}
+		
+		ContentValues values = new ContentValues();
+		
+		for (String d : dateList) {
+			values.put("festdate", d);
+		}
+		db.insert("festival", "festdate", values);
+	}
+	
 	private void createNewsArticlesFromLocalJson(SQLiteDatabase db) throws Exception {
 		InputStream jsonStream = context.getResources().openRawResource(R.raw.news);
 		String json = StringUtil.convertStreamToString(jsonStream);
@@ -102,7 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String page = StringUtil.convertStreamToString(is);
 		
 		// Ugly hacks to content_plaintext
-		page = page.replace("\\u2028", "").replace("\\u017e", "ż");
+		page = page.replace("\\u2028", "").replace("\\u017e", "��");
 		while(page.contains("\\r\\n\\r\\n")) {
 			page = page.replace("\\r\\n\\r\\n", "\\r\\n");
 		}
@@ -172,6 +202,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(sql);
 	}
 	
+	
 	private void createGigLocationTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS location");
 		String sql = "CREATE TABLE IF NOT EXISTS location (" +
@@ -180,6 +211,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"endTime DATE, " +
 				"festivalDay DATE, " +
 				"stage VARCHAR(255))";
+		db.execSQL(sql);
+	}
+	
+	private void createFestivalTable(SQLiteDatabase db) throws Exception {
+		db.execSQL("DROP TABLE IF EXISTS festival");
+		String sql = "CREATE TABLE IF NOT EXISTS festival (" +
+				"id INTEGER PRIMARY KEY AUTOINCREMENT, "+
+				"festDate DATE";
 		db.execSQL(sql);
 	}
 	
