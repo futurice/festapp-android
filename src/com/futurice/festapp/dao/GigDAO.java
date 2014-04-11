@@ -199,7 +199,7 @@ public class GigDAO {
 		try {
 			db = (new DatabaseHelper(context)).getReadableDatabase();
 			//cursor = db.query("gig", GIG_COLUMNS, "active = 1 AND festivalDay = ? AND stage IS NOT NULL", new String[]{festivalDay.name()}, null, null, "stage ASC, startTime ASC");
-			cursor = db.rawQuery(GIGS_QUERY + " WHERE gig.active = 1 AND location.festivalDay = ? AND location.stage IS NOT NULL ORDER BY location.stage ASC, location.startTime ASC", new String[]{festivalDay.name()});
+			cursor = db.rawQuery(GIGS_QUERY + " WHERE gig.active = 1 AND location.festivalDay = ? AND location.stage IS NOT NULL ORDER BY location.stage ASC, location.startTime ASC", new String[]{festivalDay.toString()});
 			while (cursor.moveToNext()) {
 		        Gig gig = convertCursorToGig(cursor, cursor.getString(0));
 		        GigLocation location = convertCursorToGigLocation(cursor, cursor.getString(0));
@@ -377,7 +377,7 @@ public class GigDAO {
 			values.put("startTime", startTime);
 			values.put("endTime", endTime);
 			if (location.getFestivalDay() != null) {
-				values.put("festivalDay", location.getFestivalDay().name());
+				values.put("festivalDay", location.getFestivalDay().toString());
 			} else {
 				values.put("festivalDay", (String) null);
 			}
@@ -471,7 +471,17 @@ public class GigDAO {
 		return (matchedStage != null) ? context.getString(R.string.mapActivity_nextOnStage, matchedStage, gig.getLocations().get(0).getTime(), gig.getArtist()) : null;
 	}
 	
+	
+	// @TODO: move to FestivalDayDAO & refacotr
 	public static FestivalDay getFestivalDay(Date startTime) {
+		List<FestivalDay> festivalDays = FestivalDayDAO.getFestivalDays();
+		for(FestivalDay f : festivalDays){
+			if(f.getDate().equals(startTime)){
+				return f;
+			}
+		}
+		return null;
+		/*
 		if (startTime.after(GigDAO.getStartOfFriday()) && startTime.before(GigDAO.getStartOfSaturday())) {
 			return FestivalDay.FRIDAY;
 		}
@@ -481,7 +491,7 @@ public class GigDAO {
 		if (startTime.after(GigDAO.getStartOfSunday()) && startTime.before(GigDAO.getEndOfSunday())) {
 			return FestivalDay.SUNDAY;
 		}
-		return null;
+		return null;*/
 	}
 	
 	private static Date parseDate(String date) {

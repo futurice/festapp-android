@@ -1,7 +1,9 @@
 package com.futurice.festapp;
 
 import java.util.Date;
+import java.util.List;
 
+import com.futurice.festapp.dao.FestivalDayDAO;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.to.FestivalDay;
 
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+
 import com.futurice.festapp.R;
 
 /**
@@ -34,18 +37,23 @@ public class ScheduleTabActivity extends TabActivity {
 		setContentView(R.layout.schedule_tabs);
 		
 		tabHost = getTabHost();
-		addTabSpec(FestivalDay.FRIDAY);
+		List<FestivalDay> festivalDays = FestivalDayDAO.getFestivalDays();
+		for(FestivalDay f : festivalDays){
+			addTabSpec(f);
+		}
+		/*addTabSpec(FestivalDay.FRIDAY);
 		addTabSpec(FestivalDay.SATURDAY);
-		addTabSpec(FestivalDay.SUNDAY);
+		addTabSpec(FestivalDay.SUNDAY);*/
+		
 		FestivalDay day = GigDAO.getFestivalDay(new Date());
 		if (day == null) {
-			day = FestivalDay.FRIDAY;
+			day = FestivalDayDAO.getFirstDayOfFestival();
 		}
-		tabHost.setCurrentTabByTag(day.name());
+		tabHost.setCurrentTabByTag(day.toString());
 	}
 	
 	private void addTabSpec(FestivalDay festivalDay) {
-		TabSpec tabSpec = tabHost.newTabSpec(festivalDay.name());
+		TabSpec tabSpec = tabHost.newTabSpec(festivalDay.toString());
 		
 		View tabView = LayoutInflater.from(tabHost.getContext()).inflate(R.layout.schedule_tab_bg, null);
 		TextView text = (TextView) tabView.findViewById(R.id.tabsText);
@@ -54,7 +62,7 @@ public class ScheduleTabActivity extends TabActivity {
 		tabSpec.setIndicator(tabView);
 		
 	    Intent intent = new Intent(getBaseContext(), TimelineActivity.class);
-	    intent.putExtra("festivalDay", festivalDay);
+	    intent.putExtra("festivalDay", festivalDay.toString());
 		tabSpec.setContent(intent);
 		tabHost.addTab(tabSpec);
 	}

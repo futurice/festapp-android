@@ -29,6 +29,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.futurice.festapp.dao.FestivalDayDAO;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.to.DaySchedule;
@@ -365,7 +366,7 @@ public class TimelineActivity extends Activity {
 	private void setFestivalDay() {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			FestivalDay festivalDay = (FestivalDay) getIntent().getExtras().get("festivalDay");
+			FestivalDay festivalDay = FestivalDayDAO.toFestivalDay((String)getIntent().getExtras().get("festivalDay"));
 			this.festivalDay = festivalDay;
 		}
 	}

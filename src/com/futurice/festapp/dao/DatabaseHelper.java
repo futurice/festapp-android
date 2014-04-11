@@ -178,7 +178,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"id TEXT NOT NULL, " +
 				"startTime DATE, " +
 				"endTime DATE, " +
-				"festivalDay VARCHAR(63), " +
+				"festivalDay DATE, " +
 				"stage VARCHAR(255))";
 		db.execSQL(sql);
 	}
