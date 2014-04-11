@@ -73,6 +73,15 @@
     <string name="service.Activities">Aktiviteetit</string>
     <string name="service.PhoneCharging">Kännykkälataus</string>
     
+     <!--  Calender Days -->
+    <string name="cMonday">Maanantai</string>
+    <string name="cTuesday">Tiistai</string>
+    <string name="cWednesday">Keskiviikko</string>
+    <string name="cThursday">Torstai</string>
+    <string name="cFriday">Perjantai</string>
+    <string name="cSaturday">Lauantai</string>
+    <string name="cSunday">Sunnuntai</string>
+    
     <!-- General info -->
     <string name="generalInfo.FrequentlyAsked">Usein kysyttyä</string>
     <string name="generalInfo.OpenHours">Aukioloajat</string>
