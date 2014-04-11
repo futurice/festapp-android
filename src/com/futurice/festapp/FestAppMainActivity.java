@@ -24,6 +24,9 @@ public class FestAppMainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
+			case R.id.main_menu_debug:
+				startActivity(new Intent(getBaseContext(), DebugActivity.class));
+				break;
 			case R.id.main_menu_bands:
 				startActivity(new Intent(getBaseContext(), ArtistListActivity.class));
 				break;
@@ -59,6 +62,7 @@ public class FestAppMainActivity extends Activity {
 	}
 	
 	private void createMainMenuItems() {
+		findViewById(R.id.main_menu_debug).setOnClickListener(clickListener);
 		findViewById(R.id.main_menu_info).setOnClickListener(clickListener);
 		findViewById(R.id.main_menu_bands).setOnClickListener(clickListener);
 		findViewById(R.id.main_menu_timetable).setOnClickListener(clickListener);
