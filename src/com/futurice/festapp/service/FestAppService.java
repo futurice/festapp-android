@@ -3,6 +3,7 @@ package com.futurice.festapp.service;
 import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -13,6 +14,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.futurice.festapp.DebugActivity;
 import com.futurice.festapp.FestAppMainActivity;
 import com.futurice.festapp.R;
 import com.futurice.festapp.dao.ConfigDAO;
@@ -34,6 +36,7 @@ public class FestAppService extends Service{
 	private static final String TAG = FestAppService.class.getSimpleName();
 	private int counter = -1;
 	private PendingIntent alarmIntent;
+	private Semaphore dataUpdateSem = new Semaphore(1);
 	private TimerTask backendTask = new TimerTask() {
 		@Override
 		public void run() {
@@ -80,16 +83,34 @@ public class FestAppService extends Service{
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		
+		final boolean force = intent.getExtras() != null && 
+				intent.getExtras().getBoolean("force");
+		
 		Log.d(TAG, "Running cron tasks");
 		new Thread() {
 			public void run() {
-				Log.d(TAG, "Running backend task");
-				backendTask.run();
-				Log.d(TAG, "Backend task finished");
+				try {
+					dataUpdateSem.acquire();
+					boolean eTagOrig = DebugActivity.F_IGNORE_ETAG;
+					if (force){
+						DebugActivity.F_IGNORE_ETAG = true;
+						Log.d(TAG, "Forced data reload");
+					}
+					Log.d(TAG, "Running backend task");
+					backendTask.run();
+					Log.d(TAG, "Backend task finished");
+					DebugActivity.F_IGNORE_ETAG = eTagOrig;
+					dataUpdateSem.release();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					return;
+				}
 			}
 		}.start();
 		return super.onStartCommand(intent, flags, startId);
 	}
+	
 	private void notify(Gig gig) {
 		Intent contentIntent = new Intent(getBaseContext(),
 				FestAppMainActivity.class);

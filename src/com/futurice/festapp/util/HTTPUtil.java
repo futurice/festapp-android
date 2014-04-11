@@ -130,6 +130,7 @@ public class HTTPUtil {
 	public static boolean isContentUpdated(String urlString, String previousEtag) throws Exception {
 
 		if (DebugActivity.F_IGNORE_ETAG){
+			Log.d(TAG, "ETAG ignored!");
 			return true;
 		}
 
