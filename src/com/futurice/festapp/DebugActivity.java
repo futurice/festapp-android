@@ -52,8 +52,9 @@ public class DebugActivity extends Activity {
 	}
 
 	private void createMenuItems() {
-		((CheckBox) findViewById(R.id.debug_menu_ignore_etag))
-				.setOnCheckedChangeListener(checkboxlistener);
+		CheckBox cb = (CheckBox) findViewById(R.id.debug_menu_ignore_etag);
+		cb.setOnCheckedChangeListener(checkboxlistener);
+		cb.setChecked(F_IGNORE_ETAG);
 		findViewById(R.id.debug_menu_clear_db)
 				.setOnClickListener(clicklistener);
 		findViewById(R.id.debug_menu_fetch_all).setOnClickListener(
