@@ -48,6 +48,7 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 
+import com.futurice.festapp.DebugActivity;
 import com.futurice.festapp.domain.to.HTTPBackendResponse;
 
 import android.util.Log;
@@ -127,6 +128,11 @@ public class HTTPUtil {
 	}
 
 	public static boolean isContentUpdated(String urlString, String previousEtag) throws Exception {
+
+		if (DebugActivity.F_IGNORE_ETAG){
+			return true;
+		}
+
 		if (previousEtag == null || previousEtag.length() == 0) {
 			return true;
 		}
