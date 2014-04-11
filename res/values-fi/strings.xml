@@ -12,6 +12,10 @@
     <string name="Call">Soita</string>
     <string name="Cancel">Peruuta</string>
     <string name="Close">Sulje</string>
+    <string name="Monday">Maanantai</string>
+    <string name="Tuesday">Tiistai</string>
+    <string name="Wednesday">Keskiviikko</string>
+    <string name="Thursday">Torstai</string>
     <string name="Friday">Perjantai</string>
     <string name="Saturday">Lauantai</string>
     <string name="Sunday">Sunnuntai</string>
