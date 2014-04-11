@@ -4,19 +4,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import com.futurice.festapp.R;
+import android.content.Context;
 
 public class CalendarUtil {
 	
 	private static final Map<Integer, String> weekDays = new HashMap<Integer, String>();
 	
-	static {
-		weekDays.put(Calendar.MONDAY, "Maanantai");
-		weekDays.put(Calendar.TUESDAY, "Tiistai");
-		weekDays.put(Calendar.WEDNESDAY, "Keskiviikko");
-		weekDays.put(Calendar.THURSDAY, "Torstai");
-		weekDays.put(Calendar.FRIDAY, "Perjantai");
-		weekDays.put(Calendar.SATURDAY, "Lauantai");
-		weekDays.put(Calendar.SUNDAY, "Sunnuntai");
+	public static void load(Context context) {
+		weekDays.put(Calendar.MONDAY, context.getResources().getString(R.string.calendar_Monday));
+		weekDays.put(Calendar.TUESDAY, context.getResources().getString(R.string.calendar_Tuesday));
+		weekDays.put(Calendar.WEDNESDAY, context.getResources().getString(R.string.calendar_Wednesday));
+		weekDays.put(Calendar.THURSDAY, context.getResources().getString(R.string.calendar_Thursday));
+		weekDays.put(Calendar.FRIDAY, context.getResources().getString(R.string.calendar_Friday));
+		weekDays.put(Calendar.SATURDAY, context.getResources().getString(R.string.calendar_Saturday));
+		weekDays.put(Calendar.SUNDAY, context.getResources().getString(R.string.calendar_Sunday));
 	}
 	
 	public static String getFullWeekdayName(int weekday) {
