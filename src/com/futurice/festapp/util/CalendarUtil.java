@@ -20,16 +20,6 @@ public class CalendarUtil {
 		weekDays.put(Calendar.FRIDAY, ContextRetriever.getContext().getResources().getString(R.string.cFriday));
 		weekDays.put(Calendar.SATURDAY, ContextRetriever.getContext().getResources().getString(R.string.cSaturday));
 		weekDays.put(Calendar.SUNDAY, ContextRetriever.getContext().getResources().getString(R.string.cSunday));
-
-
-		/*
-		weekDays.put(Calendar.MONDAY, "Maanantai");
-		weekDays.put(Calendar.TUESDAY, "Tiistai");
-		weekDays.put(Calendar.WEDNESDAY, "Keskiviikko");
-		weekDays.put(Calendar.THURSDAY, "Torstai");
-		weekDays.put(Calendar.FRIDAY, "Perjantai");
-		//weekDays.put(Calendar.SATURDAY, "Lauantai");
-		weekDays.put(Calendar.SUNDAY, "Sunnuntai"); */
 	}
 	
 	public static String getFullWeekdayName(int weekday) {
