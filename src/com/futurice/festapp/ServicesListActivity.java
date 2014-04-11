@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.futurice.festapp.analytics.AnalyticsTrackingActivity;
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.ui.ListItemStringAdapter;
 
@@ -19,7 +20,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class ServicesListActivity extends Activity {
+public class ServicesListActivity extends AnalyticsTrackingActivity {
 	
 	private ListView list;
 	private ListItemStringAdapter adapter;
