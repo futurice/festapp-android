@@ -12,6 +12,10 @@
     <string name="Call">Soita</string>
     <string name="Cancel">Peruuta</string>
     <string name="Close">Sulje</string>
+    <string name="Monday">Maanantai</string>
+    <string name="Tuesday">Tiistai</string>
+    <string name="Wednesday">Keskiviikko</string>
+    <string name="Thursday">Torstai</string>
     <string name="Friday">Perjantai</string>
     <string name="Saturday">Lauantai</string>
     <string name="Sunday">Sunnuntai</string>
@@ -92,4 +96,10 @@
 
     <string name="database_fail">Sovelluksen alustus ei onnistunut.</string>
     
+    
+    <!-- Debug View -->
+    <string name="debug.title">Debug Näkymä</string>
+    <string name="debug.ignore_etag">Ignoroi ETag</string>
+    <string name="debug.clear_db">Tyhjennä kanta</string>
+    <string name="debug.fetch_all_data">Hae kaikki data</string>
 </resources>
