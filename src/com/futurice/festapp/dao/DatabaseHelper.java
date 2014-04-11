@@ -102,7 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String page = StringUtil.convertStreamToString(is);
 		
 		// Ugly hacks to content_plaintext
-		page = page.replace("\\u2028", "").replace("\\u017e", "ż");
+		page = page.replace("\\u2028", "").replace("\\u017e", "��");
 		while(page.contains("\\r\\n\\r\\n")) {
 			page = page.replace("\\r\\n\\r\\n", "\\r\\n");
 		}
@@ -172,6 +172,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(sql);
 	}
 	
+	
 	private void createGigLocationTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS location");
 		String sql = "CREATE TABLE IF NOT EXISTS location (" +
@@ -180,6 +181,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"endTime DATE, " +
 				"festivalDay VARCHAR(63), " +
 				"stage VARCHAR(255))";
+		db.execSQL(sql);
+	}
+	
+	private void createDateTable(SQLiteDatabase db) throws Exception {
+		db.execSQL("DROP TABLE IF EXISTS festDate");
+		String sql = "CREATE TABLE IF NOT EXISTS festDate (" +
+				"id INTEGER PRIMARY KEY AUTOINCREMENT, "+
+				"festDate DATE";
 		db.execSQL(sql);
 	}
 	
