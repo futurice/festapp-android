@@ -5,7 +5,6 @@ import com.futurice.festapp.service.FestAppService;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -13,7 +12,7 @@ import android.widget.CompoundButton;
 public class DebugActivity extends Activity {
 
 	public final static boolean F_DEBUG = true;
-	public static boolean F_IGNORE_ETAG = false;
+	public volatile static boolean F_IGNORE_ETAG = false;
 
 	private View.OnClickListener clicklistener = new View.OnClickListener() {
 
@@ -24,9 +23,8 @@ public class DebugActivity extends Activity {
 				//@TODO do stuff
 				break;
 			case R.id.debug_menu_fetch_all:
-				Log.d("ADASDASD", "starting intent force data load");
 				Intent i = new Intent(DebugActivity.this, FestAppService.class);
-				i.setAction("FORCE_DATA_LOAD");
+				i.putExtra("com.futurice.festapp.service.FORCE", true);
 				startService(i);
 				
 				break;

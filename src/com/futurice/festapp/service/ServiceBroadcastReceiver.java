@@ -9,10 +9,8 @@ public class ServiceBroadcastReceiver extends BroadcastReceiver {
 	
     @Override
     public void onReceive(Context context, Intent intent ) {
-    	Log.d("CHECK", "receive intent, action = " + intent.getAction());
-        
-    	if (intent.getAction().equals("FORCE_DATA_LOAD")){
-    		Log.d("CHECK", "force data reload found");
+    	if (intent.getExtras() != null && 
+    			intent.getBooleanExtra("com.futurice.festapp.service.FORCE", false)){
             Intent myIntent = new Intent( context, FestAppService.class );
             myIntent.putExtra("force", true);
             context.startService( myIntent );

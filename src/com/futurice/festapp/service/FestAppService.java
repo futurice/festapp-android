@@ -85,7 +85,7 @@ public class FestAppService extends Service{
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		
 		final boolean force = intent.getExtras() != null && 
-				intent.getExtras().getBoolean("force");
+				intent.getBooleanExtra("com.futurice.festapp.service.FORCE", false);
 		
 		Log.d(TAG, "Running cron tasks");
 		new Thread() {
