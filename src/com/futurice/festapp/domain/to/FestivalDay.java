@@ -26,7 +26,7 @@ public enum FestivalDay {
         case FRIDAY:
 			return context.getString(R.string.Friday);
 		case SATURDAY:
-			return context.getString(R.string.Thursday);
+			return context.getString(R.string.Saturday);
 		case SUNDAY:
 			return context.getString(R.string.Sunday);
 		default:
