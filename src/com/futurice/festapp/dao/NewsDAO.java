@@ -53,49 +53,6 @@ public class NewsDAO {
 		return articles;
 	}
 	
-	/*
-	public static int deleteAll(Context context) {
-		SQLiteDatabase db = null;
-		Cursor cursor = null;
-		try {
-			db = (new DatabaseHelper(context)).getReadableDatabase();
-			int deletedArticles = db.delete("news", null, null);
-			return deletedArticles;
-		} finally {
-			if (db != null) {
-				db.close();
-			}
-			if (cursor != null) {
-				cursor.close();
-			}
-		}
-	}
-	*/
-	/*
-	public static void replaceAll(Context context, List<NewsArticle> articles) {
-		if (articles == null || articles.size() < 1) {
-			return;
-		}
-		SQLiteDatabase db = null;
-		Cursor cursor = null;
-		try {
-			db = (new DatabaseHelper(context)).getWritableDatabase();
-			int deletedArticles = db.delete("news", null, null);
-			for (NewsArticle article : articles) {
-				db.insert("news", "date", convertNewsArticleToContentValues(article));
-			}
-			Log.i(TAG, String.format("Successfully replaced %d NewsArticles with %d", deletedArticles, articles.size()));
-		} finally {
-			if (db != null) {
-				db.close();
-			}
-			if (cursor != null) {
-				cursor.close();
-			}
-		}
-	}
-	*/
-	
 	public static ContentValues convertNewsArticleToContentValues(NewsArticle article) {
 		ContentValues values = new ContentValues();
 		values.put("url", article.getUrl());
