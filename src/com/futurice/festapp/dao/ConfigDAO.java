@@ -29,8 +29,6 @@ import com.futurice.festapp.util.JSONUtil;
  */
 public class ConfigDAO {
 	
-	private static final boolean DEV = false;
-	
 //	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 	private static final String TAG = "ConfigDAO";
 	private static final List<String> MAP_LAYER_OPTIONS = new ArrayList<String>();

@@ -62,7 +62,11 @@ public class FestAppMainActivity extends Activity {
 	}
 	
 	private void createMainMenuItems() {
-		findViewById(R.id.main_menu_debug).setOnClickListener(clickListener);
+		if (DebugActivity.F_DEBUG){
+			View v = findViewById(R.id.main_menu_debug);
+			v.setVisibility(View.VISIBLE);
+			v.setOnClickListener(clickListener);
+		}
 		findViewById(R.id.main_menu_info).setOnClickListener(clickListener);
 		findViewById(R.id.main_menu_bands).setOnClickListener(clickListener);
 		findViewById(R.id.main_menu_timetable).setOnClickListener(clickListener);
