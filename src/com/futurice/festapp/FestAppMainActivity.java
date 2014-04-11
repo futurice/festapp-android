@@ -51,9 +51,7 @@ public class FestAppMainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		Date dateNow = new Date();
-		if (dateNow.before(GigDAO.getEndOfSunday())) {
-			startService(new Intent(this, FestAppService.class));
-		}
+		startService(new Intent(this, FestAppService.class));
 		createMainMenuItems();
 		handleNotificationEvents();
 	}

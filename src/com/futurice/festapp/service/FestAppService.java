@@ -40,27 +40,23 @@ public class FestAppService extends Service{
 			Log.i(TAG, "Starting backend operations");
 			counter++;
 			try {
-				Date nowDate = new Date();
-				if (nowDate.before(GigDAO.getEndOfSunday())) {
-					alertGigs();
-					if (counter % 12 == 0) { // every hour
-						Log.i(TAG, "Executing 1-hour operations.");
-						updateGigs();
-						updateNewsArticles();
-					}
-					if (counter % (12 * 5) == 0) { // every 5 hours
-						Log.i(TAG, "Executing 5-hour operations.");
-						updateFoodAndDrinkPage();
 
-						updateTransportationPage();
-						updateServicesPageData();
-
-						updateFrequentlyAskedQuestionsPageData();
-					}
-				} else {
-					Log.i(TAG, "Stopping service due to date constraint.");
-					stopSelf();
+				alertGigs();
+				if (counter % 12 == 0) { // every hour
+					Log.i(TAG, "Executing 1-hour operations.");
+					updateGigs();
+					updateNewsArticles();
 				}
+				if (counter % (12 * 5) == 0) { // every 5 hours
+					Log.i(TAG, "Executing 5-hour operations.");
+					updateFoodAndDrinkPage();
+
+					updateTransportationPage();
+					updateServicesPageData();
+
+					updateFrequentlyAskedQuestionsPageData();
+				}
+
 			} catch (Throwable t) {
 				Log.e(TAG, "Failed execute backend operations", t);
 			} finally {
