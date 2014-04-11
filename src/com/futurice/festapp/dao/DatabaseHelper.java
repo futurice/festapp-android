@@ -49,6 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createConfigTable(db);
 			createGigTable(db);
 			createGigLocationTable(db);
+			createFestivalTable(db);
 			
 			createNewsArticlesFromLocalJson(db);
 			createGigsFromLocalJson(db);
