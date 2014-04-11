@@ -25,6 +25,7 @@
 		
 		<!-- Rest of activities -->
 		<!--android:screenOrientation="portrait"-->
+		<activity android:name=".DebugActivity" android:label="@string/app_name" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" />
 		<activity android:name=".ArtistListActivity" android:label="@string/app_name" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" />
 		<activity android:name=".ArtistInfoActivity" android:label="@string/app_name" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" />
 		<activity android:name=".NewsListActivity" android:label="@string/app_name" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" />
