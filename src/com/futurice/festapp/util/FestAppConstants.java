@@ -2,9 +2,9 @@ package com.futurice.festapp.util;
 
 public class FestAppConstants {
 	
-	public static final String WEBSITE_BASE_URL = "http://festapp.herokuapp.com/";
+	public static final String WEBSITE_BASE_URL = "http://festapp-server.herokuapp.com/";
 	
-	public static final String BASE_URL = "http://festapp.herokuapp.com";
+	public static final String BASE_URL = "http://festapp-server.herokuapp.com";
 	public static final String NEWS_JSON_URL = "/api/news";
 	public static final String GIGS_JSON_URL = "/api/artists";
 	public static final String TRANSPORTATION_HTML_URL = "/api/arrival";
