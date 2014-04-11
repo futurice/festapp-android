@@ -1,6 +1,8 @@
 festapp-android
 ===============
 
+Please update this README to include everything needed to build the app.
+
 ## General
 
 #### Description
