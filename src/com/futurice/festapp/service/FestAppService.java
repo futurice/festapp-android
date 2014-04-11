@@ -1,7 +1,9 @@
 package com.futurice.festapp.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimerTask;
 
 import android.app.AlarmManager;
@@ -12,6 +14,12 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
+import android.content.Context;
+
+
+
+
+
 
 import com.futurice.festapp.FestAppMainActivity;
 import com.futurice.festapp.R;
@@ -64,6 +72,17 @@ public class FestAppService extends Service{
 			}
 		}
 	};
+	
+	interface updateSomething {
+		void runUpdate(Context context);
+		String getEtag(Context context);
+	}
+	
+	/*
+	interface IEtag {
+
+	}
+	*/
 
 	private void alertGigs() {
 		List<Gig> gigs = GigDAO.findGigsToAlert(getBaseContext());
@@ -150,15 +169,83 @@ public class FestAppService extends Service{
 		}
 	}
 
+
+	private String getEtag(String forWhat)
+	{
+		Context context = getBaseContext();
+		
+		//Why is Java select-case so limited?
+		if(forWhat == FestAppConstants.SERVICES_JSON_URL){
+			return ConfigDAO.getEtagForServices(context);
+		}
+		else if(forWhat == FestAppConstants.FESTIVAL_JSON_URL){
+			
+		}
+		else if(forWhat == FestAppConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL){
+			return ConfigDAO.getEtagForFrequentlyAskedQuestions(context);
+		}
+		else if(forWhat == FestAppConstants.FOOD_AND_DRINK_HTML_URL){
+			return ConfigDAO.getEtagForFoodAndDrink(context);
+		}
+		else if(forWhat == FestAppConstants.TRANSPORTATION_HTML_URL){
+			return ConfigDAO.getEtagForTransportation(context);
+		}
+		else if(forWhat == FestAppConstants.GIGS_JSON_URL){
+			return ConfigDAO.getEtagForGigs(context);
+		}
+		throw new Error("weird target");
+	}
+	private void runSpecificUpdate(String constant) throws Exception
+	{
+		Context context = getBaseContext();
+		
+		if(constant == FestAppConstants.SERVICES_JSON_URL){
+			ConfigDAO.updateServicePagesOverHttp(context);
+		}
+		else if(constant == FestAppConstants.FESTIVAL_JSON_URL){
+			throw new Error("Not implemented");
+			//ConfigDAO.updateFestivalStuff(context);
+		}
+		else if(constant == FestAppConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL){
+			ConfigDAO.updateFrequentlyAskedQuestionsPagesOverHttp(context);
+		}
+		else if(constant == FestAppConstants.FOOD_AND_DRINK_HTML_URL){
+			ConfigDAO.updateFoodAndDrinkPageOverHttp(context);
+			}
+		else if(constant == FestAppConstants.TRANSPORTATION_HTML_URL){
+			ConfigDAO.updateTransportationPageOverHttp(context);
+			}
+		else if(constant == FestAppConstants.GIGS_JSON_URL){
+			GigDAO.updateGigsOverHttp(context);
+		}
+	
+		throw new Error("weird target");
+
+	}
+	private void updateData(String constant){
+		try {
+			String etag = getEtag(constant);
+			if (HTTPUtil.isContentUpdated(constant,	etag)) {
+				runSpecificUpdate(constant);
+				Log.i(TAG, "Successfully updated Gigs.");
+			} else {
+				Log.i(TAG, "Gigs were up-to-date.");
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "Could not update Gigs.", e);
+		}		
+	}
+	
+	private void updateFestivalData() {
+		try {
+			updateData(FestAppConstants.FESTIVAL_JSON_URL);
+		} catch (Exception e) {
+			Log.e(TAG, "Could not update Services data.", e);
+		}
+	}
 	private void updateServicesPageData() {
 		try {
-			if (HTTPUtil.isContentUpdated(FestAppConstants.SERVICES_JSON_URL,
-					ConfigDAO.getEtagForServices(getBaseContext()))) {
-				ConfigDAO.updateServicePagesOverHttp(getBaseContext());
-				Log.i(TAG, "Successfully updated data for Services.");
-			} else {
-				Log.i(TAG, "Services data was up-to-date.");
-			}
+			updateData(FestAppConstants.SERVICES_JSON_URL);
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Services data.", e);
 		}
@@ -166,18 +253,7 @@ public class FestAppService extends Service{
 
 	private void updateFrequentlyAskedQuestionsPageData() {
 		try {
-			if (HTTPUtil
-					.isContentUpdated(
-							FestAppConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL,
-							ConfigDAO
-									.getEtagForFrequentlyAskedQuestions(getBaseContext()))) {
-				ConfigDAO
-						.updateFrequentlyAskedQuestionsPagesOverHttp(getBaseContext());
-				Log.i(TAG,
-						"Successfully updated data for FrequentlyAskedQuestions.");
-			} else {
-				Log.i(TAG, "FrequentlyAskedQuestions data was up-to-date.");
-			}
+			updateData(FestAppConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL);
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update FrequentlyAskedQuestions data.", e);
 		}
@@ -185,14 +261,7 @@ public class FestAppService extends Service{
 
 	private void updateFoodAndDrinkPage() {
 		try {
-			if (HTTPUtil.isContentUpdated(
-					FestAppConstants.FOOD_AND_DRINK_HTML_URL,
-					ConfigDAO.getEtagForFoodAndDrink(getBaseContext()))) {
-				ConfigDAO.updateFoodAndDrinkPageOverHttp(getBaseContext());
-				Log.i(TAG, "Successfully updated data for FoodAndDrink.");
-			} else {
-				Log.i(TAG, "FoodAndDrink-page was up-to-date.");
-			}
+			updateData(FestAppConstants.FOOD_AND_DRINK_HTML_URL);
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update FoodAndDrink-page.", e);
 		}
@@ -200,14 +269,7 @@ public class FestAppService extends Service{
 
 	private void updateTransportationPage() {
 		try {
-			if (HTTPUtil.isContentUpdated(
-					FestAppConstants.TRANSPORTATION_HTML_URL,
-					ConfigDAO.getEtagForTransportation(getBaseContext()))) {
-				ConfigDAO.updateTransportationPageOverHttp(getBaseContext());
-				Log.i(TAG, "Successfully updated data for Transportation.");
-			} else {
-				Log.i(TAG, "Transportation-page was up-to-date.");
-			}
+			updateData(FestAppConstants.TRANSPORTATION_HTML_URL);
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Transportation-page.", e);
 		}
@@ -215,17 +277,12 @@ public class FestAppService extends Service{
 
 	private void updateGigs() {
 		try {
-			if (HTTPUtil.isContentUpdated(FestAppConstants.GIGS_JSON_URL,
-					ConfigDAO.getEtagForGigs(getBaseContext()))) {
-				GigDAO.updateGigsOverHttp(getBaseContext());
-				Log.i(TAG, "Successfully updated Gigs.");
-			} else {
-				Log.i(TAG, "Gigs were up-to-date.");
-			}
+			updateData(FestAppConstants.GIGS_JSON_URL);
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Gigs.", e);
 		}
 	}
+	
 
 	@Override
 	public void onCreate() {
