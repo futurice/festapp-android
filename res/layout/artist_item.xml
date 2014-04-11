@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:paddingLeft="10dp" android:paddingRight="10dp" android:paddingBottom="5dp" android:paddingTop="5dp">
+
+	<TextView android:text="@string/artistInfoActivity.default_artist_name" android:id="@+id/gig.artist"
+		android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="15dp" android:textStyle="bold" />
+	<TextView android:text="@string/artistInfoActivity.artist_stage_and_time" android:id="@+id/gig.timeAndStage" android:textSize="12dp" 
+		android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+</LinearLayout>

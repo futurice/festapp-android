@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/tabsLayout" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="@drawable/schedule_tab_bg" 
+	android:gravity="center" android:orientation="vertical">
+
+	<TextView android:id="@+id/tabsText" android:layout_width="wrap_content" android:paddingLeft="10dp" android:paddingRight="10dp"
+		android:layout_height="wrap_content" android:text="Title" android:maxLines="1" android:ellipsize="end" singleLine="true"
+		android:textSize="13dp" android:textColor="#fbf6dd" android:textStyle="bold" />
+</LinearLayout>

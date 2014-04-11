@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+
+	<ImageView android:id="@+id/background" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:src="@drawable/background"
+		android:layout_alignParentLeft="true" android:scaleType="matrix" />
+
+	<ImageView android:id="@+id/background_bottom"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:background="@drawable/background_bottom_repeat"
+		android:layout_below="@id/background" />
+
+	<ImageView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:background="@drawable/background_right_repeat"
+		android:layout_above="@id/background_bottom" android:layout_toRightOf="@id/background" />
+
+	<include android:id="@+id/logo" layout="@layout/festival_logo" />
+
+	<ScrollView android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp" android:layout_marginTop="50dp"
+		android:id="@+id/scrollView1" android:layout_width="fill_parent"
+		android:layout_below="@id/logo" android:layout_height="fill_parent"
+		android:background="@drawable/text_background"
+		android:scrollbarThumbVertical="@drawable/scroll_thumb">
+
+		<LinearLayout android:id="@+id/relativeLayout1"
+			android:padding="6dp" android:orientation="vertical"
+			android:layout_width="fill_parent" android:layout_height="fill_parent">
+			<TextView android:id="@+id/newsDate" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_marginBottom="5dp"
+				android:text="" />
+
+			<TextView android:id="@+id/newsTitle" android:paddingLeft="4dp"
+				android:paddingRight="4dp" android:layout_marginBottom="10dp"
+				style="@style/Header2" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" />
+
+			<WebView android:id="@+id/newsContent" android:background="@android:color/transparent"
+				android:layout_width="fill_parent" android:layout_height="fill_parent">
+			</WebView>
+		</LinearLayout>
+	</ScrollView>
+
+</RelativeLayout>

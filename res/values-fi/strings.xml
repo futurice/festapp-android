@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Single words -->
+    <string name="News">UUTISET</string>
+    <string name="Artists">BÄNDIT</string>
+    <string name="app_name">FestApp</string>
+    <string name="Error">Virhe</string>
+    <string name="Schedule">Aikataulu</string>
+    <string name="Debug">Debug</string>
+    <string name="Map">Kartta</string>
+    <string name="Save">Tallenna</string>
+    <string name="Call">Soita</string>
+    <string name="Cancel">Peruuta</string>
+    <string name="Close">Sulje</string>
+    <string name="Friday">Perjantai</string>
+    <string name="Saturday">Lauantai</string>
+    <string name="Sunday">Sunnuntai</string>
+    <string name="Yes">Kyllä</string>
+    <string name="No">Ei</string>
+    <string name="Stage">Lava</string>
+    <string name="PerformanceTime">Esiintymisaika</string>
+    <string name="Favorite">Suosikki</string>
+    <string name="GeneralInfo">Yleisinfo</string>
+    <string name="Services">Palvelut</string>
+    <string name="FoodAndDrink">Ruoka &amp; juoma</string>
+    <string name="Transportation">Liikkuminen</string>
+    <string name="faq">UKK</string>
+    <string name="frequently_asked_questions">Usein kysytyt kysymykset</string>
+    <string name="info">INFO</string>
+    
+    <!-- Activity labels -->
+    <string name="activity.label.Artists">FestApp » Bändit</string>
+    <string name="activity.label.ArtistInfo">FestApp » Bändit » Info </string>
+    <string name="activity.label.News">FestApp » Uutiset</string>
+    <string name="activity.label.Debug">FestApp » Debug</string>
+    <string name="activity.label.Schedule">FestApp » Aikataulu</string>
+    
+    <!-- News view -->
+    <string name="newsActivity.loadingArticles">Ladataan uutisotsikoita...</string>
+    <string name="newsActivity.invalidUrl">Kyseisellä uutisotsikolla ei ole sisältöä.</string>
+    <string name="newsActivity.httpError">Uutisotsikoiden lataaminen epäonnistui. Suuresta kävijäjoukosta johtuen verkkoyhteyksissä voi esiintyä häiriöitä.</string>
+    <string name="newsActivity.news_item.date">Aika</string>
+    <string name="newsActivity.news_item.headline">Otsikko</string>
+    
+    <!-- ArtistInfo view -->
+    <string name="artistInfoActivity.invalidId">Bändin tietoja ei löydy.</string>
+    <string name="artistInfoActivity.favoriteOn">Bändi merkittiin suosikiksi. Puhelin hälyttää 15 min ennen keikan alkua.</string>
+    <string name="artistInfoActivity.favoriteOff">Bändin keikkamuistutus poistettiin.</string>
+    <string name="artistInfoActivity.menu.OpenInSpotify">Hae Spotifysta</string>
+    <string name="artistInfoActivity.no_spotify">Asenna Spotify</string>
+    <string name="artistInfoActivity.default_location">Sijainti</string>
+    <string name="artistInfoActivity.default_time">Perjantai 22:00 &#8211; 23:00</string>
+    <string name="artistInfoActivity.default_artist_name">Artistin nimi</string>
+    <string name="artistInfoActivity.mark_as_favourite">Merkitse suosikiksi</string>
+    <string name="artistInfoActivity.artist_description">Artistin kuvaus</string>
+    <string name="artistInfoActivity.artist_stage_and_time">Korsolava: pe 17:00-17:45</string>
+
+    
+    <!-- Map view -->
+    <string name="mapActivity.nextOnStage">%1$s esiintyy %2$s\n%3$s</string>
+    <string name="mapActivity.initialInfo.title">Tiesitkö?</string>
+    <string name="mapActivity.initialInfo.message">Painamalla lavan nimeä kartalla näet, mikä bändi kyseisellä lavalla soittaa juuri nyt / seuraavaksi.</string>
+    
+    <!-- Timeline view -->
+    <string name="timelineActivity.initialInfo.title">Tiesitkö?</string>
+    <string name="timelineActivity.initialInfo.msg">Voit luoda oman aikataulun merkitsemällä suosikkibändisi tähdellä. Suosikkibändin keikasta annetaan hälytys 15 minuuttia ennen sen alkua.</string>
+    
+    <!-- Services -->
+    <string name="service.Cloakroom">Narikka</string>
+    <string name="service.BikePark">Polkupyöräparkki</string>
+    <string name="service.Camping">Leirintä ja majoitus</string>
+    <string name="service.Merchandise">Fanituotteet ja tavarakauppiaat</string>
+    <string name="service.Activities">Aktiviteetit</string>
+    <string name="service.PhoneCharging">Kännykkälataus</string>
+    
+    <!-- General info -->
+    <string name="generalInfo.FrequentlyAsked">Usein kysyttyä</string>
+    <string name="generalInfo.OpenHours">Aukioloajat</string>
+    <string name="generalInfo.InfoStand">Infopiste</string>
+    <string name="generalInfo.LostAndFound">Löytötavarat</string>
+    <string name="generalInfo.Firstaid">Ensiapu</string>
+    <string name="generalInfo.Tickets">Lipunmyynti</string>
+    <string name="generalInfo.Accessibility">Saavutettavuus</string>
+    <string name="generalInfo.SafetyInstructions">Turvallisuusohjeet</string>
+    <string name="generalInfo.general_info">YLEISINFO</string>
+    <string name="generalInfo.services">PALVELUT</string>
+    <string name="generalInfo.food_and_drink">RUOKA &amp; JUOMA</string>
+    <string name="generalInfo.transportation">KULKUYHTEYDET</string>
+    
+    <!-- Notification -->
+    <string name="notification.news.title">Festivaali tiedottaa</string>
+
+    <string name="database_fail">Sovelluksen alustus ei onnistunut.</string>
+    
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="timeline.verticalLine.height">330dip</dimen> <!-- 520px -->
+	<dimen name="timeline.nowMarkerHeight">320dip</dimen>
+	<dimen name="timeline.verticalLine.marginTop">30dip</dimen>
+	
+	<dimen name="map.currentPosition.size">36px</dimen>
+	
+	<dimen name="timeline.gigContainerTopMargin">20dip</dimen>
+	<dimen name="timeline.gigHeight">36dip</dimen>
+	<dimen name="timeline.guitarStringHeight">12dip</dimen>
+	
+	<dimen name="timeline.stageHeight">40dip</dimen>
+	<dimen name="timeline.stageMarginBottom">10.5dip</dimen>
+	
+	<dimen name="timeline.hourText.offset">19dip</dimen>
+	
+	<dimen name="mapBubble.width">115dip</dimen>
+	<dimen name="mapBubble.height">55dip</dimen>
+</resources>
