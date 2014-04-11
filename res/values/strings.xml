@@ -11,7 +11,7 @@
     <string name="Save">Save</string>
     <string name="Call">Call</string>
     <string name="Cancel">Cancel</string>
-    <string name="Close">Close</string>
+    <string name="Close">Close</string>    
     <string name="Friday">Friday</string>
     <string name="Saturday">Saturday</string>
     <string name="Sunday">Sunday</string>
@@ -71,6 +71,15 @@
     <string name="service.Merchandise">Merchandise</string>
     <string name="service.Activities">Activities</string>
     <string name="service.PhoneCharging">Phone charging</string>
+    
+    <!--  Calender Days -->
+    <string name="cMonday">Maanantai</string>
+    <string name="cTuesday">Tiistai</string>
+    <string name="cWednesday">Keskiviikko</string>
+    <string name="cThursday">Torstai</string>
+    <string name="cFriday">Perjantai</string>
+    <string name="cSaturday">Lauantai</string>
+    <string name="cSunday">Sunnuntai</string>
     
     <!-- General info -->
     <string name="generalInfo.FrequentlyAsked">FAQ</string>

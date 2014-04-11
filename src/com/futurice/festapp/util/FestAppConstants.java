@@ -1,5 +1,7 @@
 package com.futurice.festapp.util;
 
+import android.content.res.Resources;
+
 public class FestAppConstants {
 	
 	public static final String WEBSITE_BASE_URL = "http://festapp-server.herokuapp.com/";
