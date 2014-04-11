@@ -1,5 +1,9 @@
 package com.futurice.festapp.domain.to;
 
+
+import com.futurice.festapp.R;
+import android.content.Context;
+
 public enum FestivalDay {
     MONDAY,
     TUESDAY,
@@ -9,22 +13,22 @@ public enum FestivalDay {
 	SATURDAY,
 	SUNDAY;
 	
-	public String getFinnishName() {
+	public String getLocalName(Context context) {
 		switch (this) {
-         case MONDAY:
-            return R.string.Monday;
-         case TUESDAY:
-            return R.string.Tuesday;
+        case MONDAY:
+            return context.getString(R.string.Monday);
+        case TUESDAY:
+            return context.getString(R.string.Tuesday);
 		case WEDNESDAY:
-            return R.string.Wednesday;
+            return context.getString(R.string.Wednesday);
         case THURSDAY:
-            return R.string.Thursday;
+            return context.getString(R.string.Thursday);
         case FRIDAY:
-			return R.string.Friday;
+			return context.getString(R.string.Friday);
 		case SATURDAY:
-			return R.string.Thursday;
+			return context.getString(R.string.Thursday);
 		case SUNDAY:
-			return R.string.Sunday;
+			return context.getString(R.string.Sunday);
 		default:
 			return null;
 		}
