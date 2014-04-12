@@ -7,9 +7,11 @@ import java.util.concurrent.Semaphore;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.Notification.Builder;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
@@ -43,24 +45,18 @@ public class FestAppService extends Service{
 			counter++;
 			try {
 				if (FestAppConstants.F_FORCE_DATA_FETCH){
-					updateGigs();
-					updateNewsArticles();
-					updateFoodAndDrinkPage();
-					updateTransportationPage();
-					updateServicesPageData();
-					updateFrequentlyAskedQuestionsPageData();
+					doAllTasks();
 					return;
 				}
-				Date nowDate = new Date();
-				if (nowDate.before(GigDAO.getEndOfSunday())) {
+				if (new Date().before(GigDAO.getEndOfSunday())) {
 					alertGigs();
 					if (counter % 12 == 0) {
 						Log.i(TAG, "Executing 1-hour operations.");
-						frequentTasks();
+						doFrequentTasks();
 					}
 					if (counter % (12 * 5) == 0) {
 						Log.i(TAG, "Executing 5-hour operations.");
-						seldomTasks();
+						doSeldomTasks();
 					}
 				} else {
 					Log.i(TAG, "Stopping service due to date constraint.");
@@ -72,32 +68,38 @@ public class FestAppService extends Service{
 				Log.i(TAG, "Finished backend operations");
 			}
 		}
+
 	};
 	
-	private void seldomTasks() {
+	private void doAllTasks() {
+		updateGigs();
+		updateNewsArticles();
 		updateFoodAndDrinkPage();
 		updateTransportationPage();
 		updateServicesPageData();
 		updateFrequentlyAskedQuestionsPageData();
 	}
 	
-	private void frequentTasks() {
-			updateGigs();
-			updateNewsArticles();
+	private void doSeldomTasks() {
+		updateFoodAndDrinkPage();
+		updateTransportationPage();
+		updateServicesPageData();
+		updateFrequentlyAskedQuestionsPageData();
+	}
+	
+	private void doFrequentTasks() {
+		updateGigs();
+		updateNewsArticles();
 	}
 
 	private void alertGigs() {
-		List<Gig> gigs = GigDAO.findGigsToAlert(getBaseContext());
-		if (gigs.size() > 0) {
-			for (Gig gig : gigs) {
-				notify(gig);
-			}
+		for (Gig gig : GigDAO.findGigsToAlert(this)) {
+			notify(gig);
 		}
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		
 		final boolean force = intent.getExtras() != null && 
 				intent.getBooleanExtra("com.futurice.festapp.service.FORCE", false);
 		
@@ -125,13 +127,11 @@ public class FestAppService extends Service{
 		return super.onStartCommand(intent, flags, startId);
 	}
 	
+	private int idCounter = 0;
 	private void notify(Gig gig) {
-		Intent contentIntent = new Intent(getBaseContext(),
-				FestAppMainActivity.class);
+		Intent contentIntent = new Intent(this, FestAppMainActivity.class);
 		contentIntent.putExtra("alert.gig.id", gig.getId());
-		int uniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
-		PendingIntent pending = PendingIntent.getActivity(getBaseContext(),
-				uniqueId, contentIntent, 0);
+		PendingIntent pending = PendingIntent.getActivity(this, idCounter++, contentIntent, 0);
 
 		String tickerText = gig.getArtist() + ": " + gig.getOnlyStageAndTime();
 		notify(pending, gig.getId(), tickerText, gig.getArtist(),
@@ -142,9 +142,8 @@ public class FestAppService extends Service{
 		Intent contentIntent = new Intent(getBaseContext(),
 				FestAppMainActivity.class);
 		contentIntent.putExtra("alert.newsArticle.url", article.getUrl());
-		int uniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
 		PendingIntent pending = PendingIntent.getActivity(getBaseContext(),
-				uniqueId, contentIntent, 0);
+				idCounter++, contentIntent, 0);
 
 		String title = article.getTitle();
 		notify(pending, article.getUrl(), title, article.getDateString(), title);
@@ -153,16 +152,18 @@ public class FestAppService extends Service{
 	@SuppressWarnings("deprecation")
 	private void notify(PendingIntent pending, String tagId, String tickerText,
 			String contentTitle, String contentText) {
-		Notification notification = new Notification(R.drawable.notification,
-				tickerText, System.currentTimeMillis());
-		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-		notification.defaults |= Notification.DEFAULT_SOUND;
-		notification.defaults |= Notification.DEFAULT_VIBRATE;
-		notification.setLatestEventInfo(getBaseContext(), contentTitle,
-				contentText, pending);
+		Builder builder = new Notification.Builder(this);
+		builder.setSmallIcon(R.drawable.notification);
+		builder.setTicker(tickerText);
+		builder.setWhen(System.currentTimeMillis());
+		builder.setAutoCancel(true);
+        builder.setContentTitle(contentTitle);
+        builder.setContentText(contentText);
+        builder.setContentIntent(pending);
+        builder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
 
 		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		notificationManager.notify(tagId, 0, notification);
+		notificationManager.notify(tagId, 0, builder.getNotification());
 	}
 
 	private void updateNewsArticles() {
@@ -175,8 +176,9 @@ public class FestAppService extends Service{
 			List<NewsArticle> newArticles = NewsDAO.updateNewsOverHttp(this);
 			if (newArticles != null && newArticles.size() > 0) {
 				for (NewsArticle article : newArticles) {
-					if (article.getDate() == null)
+					if (article.getDate() == null){
 						continue;
+					}
 					int timeBetween = CalendarUtil.getMinutesBetweenTwoDates(
 							article.getDate(), new Date());
 					if (timeBetween < FestAppConstants.SERVICE_NEWS_ALERT_THRESHOLD_IN_MINUTES) {
