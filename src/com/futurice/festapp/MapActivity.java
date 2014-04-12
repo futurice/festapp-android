@@ -175,7 +175,7 @@ public class MapActivity extends Activity {
 				return true;
 			}
 
-			if ((event.getAction() == MotionEvent.ACTION_MOVE)) {
+			if (event.getAction() == MotionEvent.ACTION_MOVE) {
 				moveHistorySize++;
 				lastTwoXMoves[1] = lastTwoXMoves[0];
 				lastTwoXMoves[0] = event.getX();

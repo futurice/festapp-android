@@ -28,12 +28,12 @@ public class InfoPageActivity extends Activity {
 				break;
 			case R.id.infoPage_btnFoodAndDrink:
 			    intent.putExtra("subPageTitle", getString(R.string.FoodAndDrink));
-			    intent.putExtra("subPageContent", ConfigDAO.getPageFoodAndDrink(getBaseContext()));
+			    intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_FOODANDDRINK, getBaseContext()));
 			    intent.putExtra("slideAnim", true);
 				break;
 			case R.id.infoPage_btnTransportation:
 				intent.putExtra("subPageTitle", getString(R.string.Transportation));
-			    intent.putExtra("subPageContent", ConfigDAO.getPageTransportation(getBaseContext()));
+			    intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_TRANSPORTATION, getBaseContext()));
 			    intent.putExtra("slideAnim", true);
 				break;
 			}

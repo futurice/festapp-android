@@ -54,20 +54,8 @@ public class FestAppService extends Service{
 				Date nowDate = new Date();
 				if (nowDate.before(GigDAO.getEndOfSunday())) {
 					alertGigs();
-					if (counter % 12 == 0) { // every hour
-						Log.i(TAG, "Executing 1-hour operations.");
-						updateGigs();
-						updateNewsArticles();
-					}
-					if (counter % (12 * 5) == 0) { // every 5 hours
-						Log.i(TAG, "Executing 5-hour operations.");
-						updateFoodAndDrinkPage();
-
-						updateTransportationPage();
-						updateServicesPageData();
-
-						updateFrequentlyAskedQuestionsPageData();
-					}
+					everyHourTask();
+					everyFiveHoursTask();
 				} else {
 					Log.i(TAG, "Stopping service due to date constraint.");
 					stopSelf();
@@ -76,6 +64,26 @@ public class FestAppService extends Service{
 				Log.e(TAG, "Failed execute backend operations", t);
 			} finally {
 				Log.i(TAG, "Finished backend operations");
+			}
+		}
+
+		private void everyFiveHoursTask() {
+			if (counter % (12 * 5) == 0) {
+				Log.i(TAG, "Executing 5-hour operations.");
+				updateFoodAndDrinkPage();
+
+				updateTransportationPage();
+				updateServicesPageData();
+
+				updateFrequentlyAskedQuestionsPageData();
+			}
+		}
+
+		private void everyHourTask() {
+			if (counter % 12 == 0) {
+				Log.i(TAG, "Executing 1-hour operations.");
+				updateGigs();
+				updateNewsArticles();
 			}
 		}
 	};
@@ -161,23 +169,24 @@ public class FestAppService extends Service{
 
 	private void updateNewsArticles() {
 		try {
-			if (HTTPUtil.isContentUpdated(FestAppConstants.NEWS_JSON_URL,
-					ConfigDAO.getEtagForNews(getBaseContext()))) {
-				List<NewsArticle> newArticles = NewsDAO
-						.updateNewsOverHttp(getBaseContext());
-				if (newArticles != null && newArticles.size() > 0) {
-					for (NewsArticle article : newArticles) {
-						if (article.getDate() != null
-								&& CalendarUtil.getMinutesBetweenTwoDates(
-										article.getDate(), new Date()) < FestAppConstants.SERVICE_NEWS_ALERT_THRESHOLD_IN_MINUTES) {
-							notify(article);
-						}
+			String etag = ConfigDAO.getAttributeValue(ConfigDAO.ATTR_ETAG_FOR_NEWS, this);
+			if (!HTTPUtil.isContentUpdated(FestAppConstants.NEWS_JSON_URL, etag)) {
+				Log.i(TAG, "News were up-to-date.");
+				return;
+			}
+			List<NewsArticle> newArticles = NewsDAO.updateNewsOverHttp(this);
+			if (newArticles != null && newArticles.size() > 0) {
+				for (NewsArticle article : newArticles) {
+					if (article.getDate() == null)
+						continue;
+					int timeBetween = CalendarUtil.getMinutesBetweenTwoDates(
+							article.getDate(), new Date());
+					if (timeBetween < FestAppConstants.SERVICE_NEWS_ALERT_THRESHOLD_IN_MINUTES) {
+						notify(article);
 					}
 				}
-				Log.i(TAG, "Successfully updated data for News.");
-			} else {
-				Log.i(TAG, "News were up-to-date.");
 			}
+			Log.i(TAG, "Successfully updated data for News.");
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update News.", e);
 		}
@@ -185,13 +194,13 @@ public class FestAppService extends Service{
 
 	private void updateServicesPageData() {
 		try {
-			if (HTTPUtil.isContentUpdated(FestAppConstants.SERVICES_JSON_URL,
-					ConfigDAO.getEtagForServices(getBaseContext()))) {
-				ConfigDAO.updateServicePagesOverHttp(getBaseContext());
-				Log.i(TAG, "Successfully updated data for Services.");
-			} else {
+			String etag = ConfigDAO.getAttributeValue(ConfigDAO.ATTR_ETAG_FOR_SERVICES, this);
+			if (!HTTPUtil.isContentUpdated(FestAppConstants.SERVICES_JSON_URL, etag)) {
 				Log.i(TAG, "Services data was up-to-date.");
+				return;
 			}
+			ConfigDAO.updateServicePagesOverHttp(getBaseContext());
+			Log.i(TAG, "Successfully updated data for Services.");
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Services data.", e);
 		}
@@ -199,18 +208,13 @@ public class FestAppService extends Service{
 
 	private void updateFrequentlyAskedQuestionsPageData() {
 		try {
-			if (HTTPUtil
-					.isContentUpdated(
-							FestAppConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL,
-							ConfigDAO
-									.getEtagForFrequentlyAskedQuestions(getBaseContext()))) {
-				ConfigDAO
-						.updateFrequentlyAskedQuestionsPagesOverHttp(getBaseContext());
-				Log.i(TAG,
-						"Successfully updated data for FrequentlyAskedQuestions.");
-			} else {
+			String etag = ConfigDAO.getAttributeValue(ConfigDAO.ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, this);
+			if (!HTTPUtil.isContentUpdated(FestAppConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL, etag)) {
 				Log.i(TAG, "FrequentlyAskedQuestions data was up-to-date.");
+				return;
 			}
+			ConfigDAO.updateFrequentlyAskedQuestionsPagesOverHttp(getBaseContext());
+			Log.i(TAG,"Successfully updated data for FrequentlyAskedQuestions.");
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update FrequentlyAskedQuestions data.", e);
 		}
@@ -218,14 +222,13 @@ public class FestAppService extends Service{
 
 	private void updateFoodAndDrinkPage() {
 		try {
-			if (HTTPUtil.isContentUpdated(
-					FestAppConstants.FOOD_AND_DRINK_HTML_URL,
-					ConfigDAO.getEtagForFoodAndDrink(getBaseContext()))) {
-				ConfigDAO.updateFoodAndDrinkPageOverHttp(getBaseContext());
-				Log.i(TAG, "Successfully updated data for FoodAndDrink.");
-			} else {
+			String etag = ConfigDAO.getAttributeValue(ConfigDAO.ATTR_ETAG_FOR_FOODANDDRINK, this);
+			if (!HTTPUtil.isContentUpdated(FestAppConstants.FOOD_AND_DRINK_HTML_URL, etag)) {
 				Log.i(TAG, "FoodAndDrink-page was up-to-date.");
+				return;
 			}
+			ConfigDAO.updateFoodAndDrinkPageOverHttp(getBaseContext());
+			Log.i(TAG, "Successfully updated data for FoodAndDrink.");
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update FoodAndDrink-page.", e);
 		}
@@ -233,14 +236,13 @@ public class FestAppService extends Service{
 
 	private void updateTransportationPage() {
 		try {
-			if (HTTPUtil.isContentUpdated(
-					FestAppConstants.TRANSPORTATION_HTML_URL,
-					ConfigDAO.getEtagForTransportation(getBaseContext()))) {
-				ConfigDAO.updateTransportationPageOverHttp(getBaseContext());
-				Log.i(TAG, "Successfully updated data for Transportation.");
-			} else {
+			String etag = ConfigDAO.getAttributeValue(ConfigDAO.ATTR_ETAG_FOR_TRANSPORTATION, this);
+			if (!HTTPUtil.isContentUpdated(FestAppConstants.TRANSPORTATION_HTML_URL, etag)) {
 				Log.i(TAG, "Transportation-page was up-to-date.");
+				return;
 			}
+			ConfigDAO.updateTransportationPageOverHttp(getBaseContext());
+			Log.i(TAG, "Successfully updated data for Transportation.");
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Transportation-page.", e);
 		}
@@ -248,13 +250,13 @@ public class FestAppService extends Service{
 
 	private void updateGigs() {
 		try {
-			if (HTTPUtil.isContentUpdated(FestAppConstants.GIGS_JSON_URL,
-					ConfigDAO.getEtagForGigs(getBaseContext()))) {
-				GigDAO.updateGigsOverHttp(getBaseContext());
-				Log.i(TAG, "Successfully updated Gigs.");
-			} else {
+			String etag = ConfigDAO.getAttributeValue(ConfigDAO.ATTR_ETAG_FOR_GIGS, this);
+			if (!HTTPUtil.isContentUpdated(FestAppConstants.GIGS_JSON_URL, etag)) {
 				Log.i(TAG, "Gigs were up-to-date.");
+				return;
 			}
+			GigDAO.updateGigsOverHttp(getBaseContext());
+			Log.i(TAG, "Successfully updated Gigs.");
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Gigs.", e);
 		}
@@ -268,7 +270,7 @@ public class FestAppService extends Service{
 		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 		long wait = FestAppConstants.SERVICE_INITIAL_WAIT_TIME;
 		long interval = FestAppConstants.SERVICE_FREQUENCY;
-		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, wait, interval, alarmIntent);;
+		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, wait, interval, alarmIntent);
 		Log.i(TAG, "Creating service");
 	}
 	

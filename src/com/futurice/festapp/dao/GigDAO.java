@@ -221,7 +221,7 @@ public class GigDAO {
 		if (!response.isValid() || response.getContent() == null) {
 			return;
 		}
-		ConfigDAO.setEtagForGigs(context, response.getEtag());
+		ConfigDAO.setAttributeValue(ConfigDAO.ATTR_ETAG_FOR_GIGS, response.getEtag(), context);
 		
 		List<Gig> gigs = parseFromJson(response.getContent());
 		if (gigs != null && gigs.size() >= 2) { // Hackish fail-safe
