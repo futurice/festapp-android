@@ -63,9 +63,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private void createNewsTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS news");
 		String sql = "CREATE TABLE IF NOT EXISTS news (" +
-				"url TEXT PRIMARY KEY, " +
+				"id TEXT PRIMARY KEY, " +
 				"title TEXT, " +
-				"newsDate DATE," +
+				"image TEXT," +
+				"teaser_text TEXT, " +
+				"content TEXT, " +
+				"time TIMESTAMP," +
+				"status TEXT," +
 				"content TEXT" +
 				")";
 		db.execSQL(sql);
