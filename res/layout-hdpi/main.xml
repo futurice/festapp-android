@@ -1,88 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical" >
 
-	<ImageView android:id="@+id/background" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:src="@drawable/background"
-		android:layout_alignParentLeft="true" android:scaleType="matrix" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
 
-	<ImageView android:id="@+id/background_bottom"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:background="@drawable/background_bottom_repeat"
-		android:layout_below="@id/background" />
+        <include
+            android:id="@+id/logo"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            layout="@layout/festival_logo" />
 
-	<ImageView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:background="@drawable/background_right_repeat"
-		android:layout_above="@id/background_bottom" android:layout_toRightOf="@id/background" />
+        <LinearLayout
+            android:id="@+id/main_menu_debug"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:visibility="gone" >
+            
+            <TextView
+                android:id="@+id/main_menu_debug_text"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:alpha="0.9"
+                android:background="#f8f8f8"
+                android:gravity="center"
+                android:text="@string/Debug"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
 
-	<include android:id="@+id/logo" layout="@layout/festival_logo" />
+    <LinearLayout
+        android:id="@+id/main_menu_schedule"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" 
+        android:alpha="0.9"
+            android:background="#ffffff"
+        android:orientation="vertical">
 
-	<LinearLayout android:layout_width="wrap_content"
-		android:layout_marginTop="15dp"
-		android:layout_alignParentLeft="true" android:layout_below="@id/logo"
-		android:layout_height="wrap_content" android:orientation="vertical" android:isScrollContainer="true">
-		<LinearLayout android:layout_width="wrap_content"
-			android:id="@+id/main_menu_debug" android:paddingLeft="40dp"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content" android:visibility="gone">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#ff0000"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/Debug" />
-		</LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:id="@+id/main_menu_timetable" android:paddingLeft="40dp"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#fbf6dd"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/Schedule" />
-		</LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:paddingLeft="40dp" android:id="@+id/main_menu_bands"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#fbf6dd"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/Artists" />
-		</LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:paddingLeft="40dp" android:id="@+id/main_menu_map"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#fbf6dd"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/Map" />
-		</LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:paddingLeft="40dp" android:id="@+id/main_menu_info"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#fbf6dd"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/info" />
-		</LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:paddingLeft="40dp" android:id="@+id/main_menu_news"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#fbf6dd"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/News" />
-		</LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:paddingLeft="40dp" android:id="@+id/main_menu_faq"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#fbf6dd"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/faq" />
-		</LinearLayout>
-	</LinearLayout>
-</RelativeLayout>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+        
+        <TextView
+            android:id="@+id/main_menu_schedule_text"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textColor="#BABABA"
+            android:text="@string/Schedule"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_menu_news"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:alpha="0.9"
+        android:background="#ececec"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" 
+            />
+        
+        <TextView
+            android:id="@+id/main_menu_news_text"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textColor="#BABABA"
+            android:text="@string/News"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:id="@+id/main_menu_bands"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:alpha="0.9"
+            android:background="#ffffff" 
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/bands_icon" >
+            </ImageView>
+
+            <TextView
+                android:id="@+id/main_menu_bands_text"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/Artists"
+                android:textColor="#BABABA"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_menu_instagram"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:alpha="0.9"
+            android:background="#f8f8f8" 
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/insta_icon" >
+            </ImageView>
+            
+            <TextView
+                android:id="@+id/main_menu_insta_text"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/Instagram"
+                android:textColor="#BABABA"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:id="@+id/main_menu_map"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" 
+            android:alpha="0.9"
+            android:background="#f8f8f8" 
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/map_icon" >
+            </ImageView>
+            
+            <TextView
+                android:id="@+id/main_menu_map_text"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/Map"
+                android:textColor="#BABABA"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_menu_info"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:alpha="0.9"
+            android:background="#ffffff" 
+            android:orientation="vertical" >
+            
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/info_icon" >
+            </ImageView>
+
+            <TextView
+                android:id="@+id/main_menu_info_text"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/info"
+                android:textColor="#BABABA"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -31,6 +31,7 @@
     <string name="faq">FAQ</string>
     <string name="frequently_asked_questions">Frequently asked questions</string>
     <string name="info">INFO</string>
+    <string name="Instagram">INSTAGRAM</string>
     
     <!-- Activity labels -->
     <string name="activity.label.Artists">FestApp » Bands</string>
