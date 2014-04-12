@@ -18,9 +18,9 @@ import com.futurice.festapp.R;
 import com.futurice.festapp.domain.to.HTTPBackendResponse;
 import com.futurice.festapp.domain.to.MapLayerOptions;
 import com.futurice.festapp.domain.to.SelectableOption;
-import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.HTTPUtil;
 import com.futurice.festapp.util.JSONUtil;
+import com.futurice.festapp.util.URLUtil;
 
 /**
  * Data-access operations for Configuration options.
@@ -226,7 +226,8 @@ public class ConfigDAO {
 
 	public static void updateFoodAndDrinkPageOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
-		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.FOOD_AND_DRINK_HTML_URL);
+		HTTPBackendResponse response =
+				httpUtil.performGet(URLUtil.getInstance(context).getUrl(URLUtil.FOOD_AND_DRINK_HTML_URL));
 		if (!response.isValid() || response.getContent() == null) {
 			return;
 		}
@@ -266,7 +267,8 @@ public class ConfigDAO {
 
 	public static void updateTransportationPageOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
-		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.TRANSPORTATION_HTML_URL);
+		HTTPBackendResponse response =
+				httpUtil.performGet(URLUtil.getInstance(context).getUrl(URLUtil.TRANSPORTATION_HTML_URL));
 		if (!response.isValid() || response.getContent() == null) {
 			return;
 		}
@@ -276,7 +278,8 @@ public class ConfigDAO {
 	
 	public static void updateServicePagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
-		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.SERVICES_JSON_URL);
+		HTTPBackendResponse response =
+				httpUtil.performGet(URLUtil.getInstance(context).getUrl(URLUtil.SERVICES_JSON_URL));
 		if (!response.isValid() || response.getContent() == null) {
 			return;
 		}
@@ -290,7 +293,8 @@ public class ConfigDAO {
 	
 	public static void updateFrequentlyAskedQuestionsPagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
-		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL);
+		HTTPBackendResponse response =
+				httpUtil.performGet(URLUtil.getInstance(context).getUrl(URLUtil.FREQUENTLY_ASKED_QUESTIONS_JSON_URL));
 		if (!response.isValid() || response.getContent() == null) {
 			return;
 		}

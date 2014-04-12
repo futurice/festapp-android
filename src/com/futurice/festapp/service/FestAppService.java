@@ -24,6 +24,7 @@ import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.util.CalendarUtil;
 import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.HTTPUtil;
+import com.futurice.festapp.util.URLUtil;
 
 /**
  * Application background services.
@@ -161,7 +162,8 @@ public class FestAppService extends Service{
 
 	private void updateNewsArticles() {
 		try {
-			if (HTTPUtil.isContentUpdated(FestAppConstants.NEWS_JSON_URL,
+			if (HTTPUtil.isContentUpdated(
+					URLUtil.getInstance(getApplicationContext()).getUrl(URLUtil.NEWS_JSON_URL),
 					ConfigDAO.getEtagForNews(getBaseContext()))) {
 				List<NewsArticle> newArticles = NewsDAO
 						.updateNewsOverHttp(getBaseContext());
@@ -185,7 +187,8 @@ public class FestAppService extends Service{
 
 	private void updateServicesPageData() {
 		try {
-			if (HTTPUtil.isContentUpdated(FestAppConstants.SERVICES_JSON_URL,
+			if (HTTPUtil.isContentUpdated(
+					URLUtil.getInstance(getApplicationContext()).getUrl(URLUtil.SERVICES_JSON_URL),
 					ConfigDAO.getEtagForServices(getBaseContext()))) {
 				ConfigDAO.updateServicePagesOverHttp(getBaseContext());
 				Log.i(TAG, "Successfully updated data for Services.");
@@ -201,7 +204,7 @@ public class FestAppService extends Service{
 		try {
 			if (HTTPUtil
 					.isContentUpdated(
-							FestAppConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL,
+							URLUtil.getInstance(getApplicationContext()).getUrl(URLUtil.FREQUENTLY_ASKED_QUESTIONS_JSON_URL),
 							ConfigDAO
 									.getEtagForFrequentlyAskedQuestions(getBaseContext()))) {
 				ConfigDAO
@@ -219,7 +222,7 @@ public class FestAppService extends Service{
 	private void updateFoodAndDrinkPage() {
 		try {
 			if (HTTPUtil.isContentUpdated(
-					FestAppConstants.FOOD_AND_DRINK_HTML_URL,
+					URLUtil.getInstance(getApplicationContext()).getUrl(URLUtil.FOOD_AND_DRINK_HTML_URL),
 					ConfigDAO.getEtagForFoodAndDrink(getBaseContext()))) {
 				ConfigDAO.updateFoodAndDrinkPageOverHttp(getBaseContext());
 				Log.i(TAG, "Successfully updated data for FoodAndDrink.");
@@ -234,7 +237,7 @@ public class FestAppService extends Service{
 	private void updateTransportationPage() {
 		try {
 			if (HTTPUtil.isContentUpdated(
-					FestAppConstants.TRANSPORTATION_HTML_URL,
+					URLUtil.getInstance(getApplicationContext()).getUrl(URLUtil.TRANSPORTATION_HTML_URL),
 					ConfigDAO.getEtagForTransportation(getBaseContext()))) {
 				ConfigDAO.updateTransportationPageOverHttp(getBaseContext());
 				Log.i(TAG, "Successfully updated data for Transportation.");
@@ -248,7 +251,7 @@ public class FestAppService extends Service{
 
 	private void updateGigs() {
 		try {
-			if (HTTPUtil.isContentUpdated(FestAppConstants.GIGS_JSON_URL,
+			if (HTTPUtil.isContentUpdated(URLUtil.getInstance(getApplicationContext()).getUrl(URLUtil.GIGS_JSON_URL),
 					ConfigDAO.getEtagForGigs(getBaseContext()))) {
 				GigDAO.updateGigsOverHttp(getBaseContext());
 				Log.i(TAG, "Successfully updated Gigs.");

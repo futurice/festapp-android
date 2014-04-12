@@ -25,14 +25,15 @@ import com.futurice.festapp.domain.to.StageType;
 import com.futurice.festapp.util.GigArtistNameComparator;
 import com.futurice.festapp.util.HTTPUtil;
 import com.futurice.festapp.util.JSONUtil;
-import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.StringUtil;
+import com.futurice.festapp.util.URLUtil;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
 import com.futurice.festapp.R;
 
 /**
@@ -217,7 +218,8 @@ public class GigDAO {
 	
 	public static void updateGigsOverHttp(Context context) throws Exception {
 		HTTPUtil httpUtil = new HTTPUtil();
-		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.GIGS_JSON_URL);
+		HTTPBackendResponse response =
+				httpUtil.performGet(URLUtil.getInstance(context).getUrl(URLUtil.GIGS_JSON_URL));
 		if (!response.isValid() || response.getContent() == null) {
 			return;
 		}
