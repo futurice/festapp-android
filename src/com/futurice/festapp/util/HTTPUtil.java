@@ -308,14 +308,12 @@ public class HTTPUtil {
 		return httpBackendResponse;
 	}
 	
-	private static String constructURL(String sub, Boolean get){
-		String url = sub;
-		
-		if(get){
+	private static String constructURL(String apiPath, boolean isGetRequest){
+		String url = FestAppConstants.BASE_URL + apiPath;
+		if(isGetRequest){
 			url += "?lang=" + LANG;
 		}
-		
-		return FestAppConstants.BASE_URL + url;
+		return url;
 		
 	}
 
