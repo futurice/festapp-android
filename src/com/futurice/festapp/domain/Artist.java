@@ -21,6 +21,10 @@ public class Artist {
 	private String status;
 	private String youtube;
 
+	public Artist() {
+		
+	}
+	
 	public Artist(List<String> albums, String contant_info, String content,
 			String credits, boolean featured, int founded, List<String> genres,
 			List<String> highlights, List<String> members, String name,
