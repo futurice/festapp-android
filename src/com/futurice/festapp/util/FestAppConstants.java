@@ -9,7 +9,7 @@ public class FestAppConstants {
 	public static final String GIGS_JSON_URL = "/api/artists";
 	public static final String TRANSPORTATION_HTML_URL = "/api/arrival";
 	public static final String SERVICES_JSON_URL = "/api/services";
-	public static final String FESTIVAL_JSON_URL = "/api/festival"
+	public static final String FESTIVAL_JSON_URL = "/api/festival";
 	
 	public static final String FREQUENTLY_ASKED_QUESTIONS_JSON_URL = "/api/info";
 	public static final String FOOD_AND_DRINK_HTML_URL =  "/api/program";
