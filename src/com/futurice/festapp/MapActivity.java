@@ -79,12 +79,23 @@ public class MapActivity extends Activity {
 	private int current_centerX = mapSizeX / 2;
 	private int current_centerY = mapSizeY / 2;
 
+	/**
+	 * This constant sets the sampling size for map image.
+	 * The value of this constant has to be set on per image 
+	 * basic.
+	 * For example, the placeholder map at the time of
+	 * development could take sampling size of 2 at max, after
+	 * that some of the lines disappeared.
+	 */
+	private static final int SAMPLING_SIZE = 2;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 		opts.inScaled = false;
+		opts.inSampleSize = SAMPLING_SIZE;
 		mapImageView = (MapImageView) findViewById(R.id.image);
 		zoomInButton = (ImageButton) findViewById(R.id.zoomIn);
 		zoomOutButton = (ImageButton) findViewById(R.id.zoomOut);
