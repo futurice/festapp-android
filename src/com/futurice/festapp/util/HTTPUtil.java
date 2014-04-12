@@ -277,7 +277,7 @@ public class HTTPUtil {
 				httpBackendResponse.setValid(false);
 				return httpBackendResponse;
 			}
-			httpBackendResponse.setContent(StringUtil.convertStreamToString(httpResponse.getEntity().getContent()));
+			httpBackendResponse.setContent(httpResponse.getEntity().getContent());
 
 			Header[] headers = httpResponse.getHeaders("ETag");
 			if(headers == null || headers.length == 0) {

@@ -222,12 +222,12 @@ public class GigDAO {
 	public static void updateGigsOverHttp(Context context) throws Exception {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.GIGS_JSON_URL);
-		if (!response.isValid() || response.getContent() == null) {
+		if (!response.isValid() || response.getStringContent() == null) {
 			return;
 		}
 		ConfigDAO.setEtagForGigs(context, response.getEtag());
 		
-		List<Gig> gigs = parseFromJson(response.getContent());
+		List<Gig> gigs = parseFromJson(response.getStringContent());
 		if (gigs != null && gigs.size() >= 2) { // Hackish fail-safe
 			SQLiteDatabase db = null;
 			try {
