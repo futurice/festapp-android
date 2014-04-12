@@ -65,7 +65,7 @@ public class FestAppMainActivity extends Activity {
 			AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 			long wait = FestAppConstants.SERVICE_INITIAL_WAIT_TIME;
 			long interval = FestAppConstants.SERVICE_FREQUENCY;
-			alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, wait, interval, alarmIntent);;
+			alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, wait, interval, alarmIntent);
 			Log.i("Init", "Creating service");
 		}
 		createMainMenuItems();
