@@ -3,15 +3,20 @@ package com.futurice.festapp;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.dao.NewsDAO;
 import com.futurice.festapp.domain.NewsArticle;
-import com.futurice.festapp.service.FestAppService;
 import com.futurice.festapp.util.FestAppConstants;
 
 /**
@@ -21,9 +26,12 @@ import com.futurice.festapp.util.FestAppConstants;
  */
 public class FestAppMainActivity extends Activity {
 	
+	private PendingIntent alarmIntent;
+	
 	private View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			
 			switch (v.getId()) {
 			case R.id.main_menu_debug:
 				startActivity(new Intent(getBaseContext(), DebugActivity.class));
@@ -31,8 +39,12 @@ public class FestAppMainActivity extends Activity {
 			case R.id.main_menu_bands:
 				startActivity(new Intent(getBaseContext(), ArtistListActivity.class));
 				break;
-			case R.id.main_menu_timetable:
+			case R.id.main_menu_schedule:
 				startActivity(new Intent(getBaseContext(), ScheduleTabActivity.class));
+				break;
+			case R.id.main_menu_instagram:
+				Log.d("Main Menu", "Invoked Instagram Activity. TODO: Implement Instagram Activity.");
+				Toast.makeText(getBaseContext(), "Instagram not yet supported!", Toast.LENGTH_SHORT).show();
 				break;
 			case R.id.main_menu_map:
 				startActivity(new Intent(getBaseContext(), MapActivity.class));
@@ -56,10 +68,33 @@ public class FestAppMainActivity extends Activity {
 		setContentView(R.layout.main);
 		Date dateNow = new Date();
 		if (dateNow.before(GigDAO.getEndOfSunday())) {
-			startService(new Intent(this, FestAppService.class));
+			Intent i = new Intent("CHECK_ALARMS");
+			alarmIntent = PendingIntent.getBroadcast(this, 12345, i, PendingIntent.FLAG_CANCEL_CURRENT);
+			AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+			long wait = FestAppConstants.SERVICE_INITIAL_WAIT_TIME;
+			long interval = FestAppConstants.SERVICE_FREQUENCY;
+			alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, wait, interval, alarmIntent);
+			Log.i("Init", "Creating service");
 		}
 		createMainMenuItems();
 		handleNotificationEvents();
+		setFonts();
+	}
+	
+	private void setFonts() {
+		setFont(findViewById(R.id.main_menu_news_text));
+		setFont(findViewById(R.id.main_menu_schedule_text));
+		setFont(findViewById(R.id.main_menu_debug_text));
+		setFont(findViewById(R.id.main_menu_bands_text));
+		setFont(findViewById(R.id.main_menu_insta_text));
+		setFont(findViewById(R.id.main_menu_map_text));
+		setFont(findViewById(R.id.main_menu_info_text));
+	}
+	
+	private void setFont(View v) {
+		Typeface mTypeface = Typeface.createFromAsset(getAssets(), "fonts/RobotoCondensed-Bold.ttf");
+
+		((TextView) v).setTypeface(mTypeface);
 	}
 	
 	private void createMainMenuItems() {
@@ -70,10 +105,10 @@ public class FestAppMainActivity extends Activity {
 		}
 		findViewById(R.id.main_menu_info).setOnClickListener(clickListener);
 		findViewById(R.id.main_menu_bands).setOnClickListener(clickListener);
-		findViewById(R.id.main_menu_timetable).setOnClickListener(clickListener);
 		findViewById(R.id.main_menu_map).setOnClickListener(clickListener);
 		findViewById(R.id.main_menu_news).setOnClickListener(clickListener);
-		findViewById(R.id.main_menu_faq).setOnClickListener(clickListener);
+		findViewById(R.id.main_menu_schedule).setOnClickListener(clickListener);
+		findViewById(R.id.main_menu_instagram).setOnClickListener(clickListener);
 	}
 	
 	private void handleNotificationEvents() {
@@ -98,6 +133,12 @@ public class FestAppMainActivity extends Activity {
 		}
 	}
 
+	@Override
+	protected void onDestroy() {
+		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+		alarmManager.cancel(alarmIntent);
+		super.onDestroy();
+	}
 	private void showFAQ() {
 		Intent intent = new Intent(this, InfoSubPageActivity.class);
 		intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, getBaseContext()));
