@@ -50,6 +50,7 @@ public class FestAppService extends Service{
 					updateTransportationPage();
 					updateServicesPageData();
 					updateFrequentlyAskedQuestionsPageData();
+					updateStages();
 					return;
 				}
 				Date nowDate = new Date();
