@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
@@ -40,6 +41,7 @@ public class FestAppMainActivity extends Activity {
 				break;
 			case R.id.main_menu_instagram:
 				Log.d("Main Menu", "Invoked Instagram Activity. TODO: Implement Instagram Activity.");
+				Toast.makeText(getBaseContext(), "Instagram not yet supported!", Toast.LENGTH_SHORT).show();
 				break;
 			case R.id.main_menu_map:
 				startActivity(new Intent(getBaseContext(), MapActivity.class));
