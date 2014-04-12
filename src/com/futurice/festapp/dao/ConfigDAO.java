@@ -41,6 +41,8 @@ public class ConfigDAO {
 	public static final String ATTR_ETAG_FOR_SERVICES = "etag_services";
 	public static final String ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS = "etag_generalinfo";
 	
+	public static final String ATTR_ETAG_FOR_FESTIVAL = "etag_festivalinfo";
+	
 	public static final String ATTR_PAGE_FOODANDDRINK = "page_foodanddrink";
 	public static final String ATTR_PAGE_TRANSPORTATION = "page_transportation";
 	
@@ -124,6 +126,9 @@ public class ConfigDAO {
 		setAttributeValue(ATTR_PAGE_FOODANDDRINK, page, context);
 	}
 	
+	public static String getEtagForFestival(Context context) {
+		return getAttributeValue(ATTR_ETAG_FOR_FESTIVAL, context);
+	}
 	
 	public static String getEtagForTransportation(Context context) {
 		return getAttributeValue(ATTR_ETAG_FOR_TRANSPORTATION, context);
