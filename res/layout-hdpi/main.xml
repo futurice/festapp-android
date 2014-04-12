@@ -23,10 +23,12 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:visibility="gone" >
-
+            
             <TextView
+                android:id="@+id/main_menu_debug_text"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:layout_weight="1"
                 android:alpha="0.9"
                 android:background="#f8f8f8"
                 android:gravity="center"
@@ -38,29 +40,58 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/main_menu_schedule"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1" >
+        android:layout_weight="1" 
+        android:alpha="0.9"
+            android:background="#ffffff"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:alpha="0.9"
-            android:background="#ffffff"
-            android:text="@string/Schedule" />
+            android:layout_weight="1" />
+        
+        <TextView
+            android:id="@+id/main_menu_schedule_text"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textColor="#BABABA"
+            android:text="@string/Schedule"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/main_menu_news"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1" >
+        android:layout_weight="1"
+        android:alpha="0.9"
+        android:background="#ececec"
+        android:orientation="vertical" >
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:alpha="0.9"
-            android:background="#ececec"
-            android:text="@string/News" />
+            android:layout_weight="1" 
+            />
+        
+        <TextView
+            android:id="@+id/main_menu_news_text"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textColor="#BABABA"
+            android:text="@string/News"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -87,13 +118,14 @@
             </ImageView>
 
             <TextView
+                android:id="@+id/main_menu_bands_text"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="3"
                 android:gravity="center"
                 android:text="@string/Artists"
-                android:textColor="#000000"
-                android:textSize="20dp"
+                android:textColor="#BABABA"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -101,17 +133,29 @@
             android:id="@+id/main_menu_instagram"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1"
+            android:alpha="0.9"
+            android:background="#f8f8f8" 
+            android:orientation="vertical" >
 
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/insta_icon" >
+            </ImageView>
+            
             <TextView
+                android:id="@+id/main_menu_insta_text"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:alpha="0.9"
-                android:background="#f8f8f8"
+                android:layout_weight="3"
                 android:gravity="center"
                 android:text="@string/Instagram"
-                android:textColor="#ff0000"
-                android:textSize="20dp"
+                android:textColor="#BABABA"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
@@ -125,35 +169,59 @@
             android:id="@+id/main_menu_map"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1" 
+            android:alpha="0.9"
+            android:background="#f8f8f8" 
+            android:orientation="vertical" >
 
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/map_icon" >
+            </ImageView>
+            
             <TextView
+                android:id="@+id/main_menu_map_text"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:alpha="0.9"
-                android:background="#f8f8f8"
+                android:layout_weight="3"
                 android:gravity="center"
                 android:text="@string/Map"
-                android:textColor="#000000"
-                android:textSize="20dp"
+                android:textColor="#BABABA"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/main_menu_mapa"
+            android:id="@+id/main_menu_info"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1"
+            android:alpha="0.9"
+            android:background="#ffffff" 
+            android:orientation="vertical" >
+            
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/info_icon" >
+            </ImageView>
 
             <TextView
+                android:id="@+id/main_menu_info_text"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:alpha="0.9"
-                android:background="#ffffff"
+                android:layout_weight="3"
                 android:gravity="center"
                 android:text="@string/info"
-                android:textColor="#000000"
-                android:textSize="20dp"
+                android:textColor="#BABABA"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
