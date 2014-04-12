@@ -1,88 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical" >
 
-	<ImageView android:id="@+id/background" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:src="@drawable/background"
-		android:layout_alignParentLeft="true" android:scaleType="matrix" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
 
-	<ImageView android:id="@+id/background_bottom"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:background="@drawable/background_bottom_repeat"
-		android:layout_below="@id/background" />
+        <include
+            android:id="@+id/logo"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            layout="@layout/festival_logo" />
 
-	<ImageView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:background="@drawable/background_right_repeat"
-		android:layout_above="@id/background_bottom" android:layout_toRightOf="@id/background" />
+        <LinearLayout
+            android:id="@+id/main_menu_debug"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:visibility="gone" >
 
-	<include android:id="@+id/logo" layout="@layout/festival_logo" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:alpha="0.9"
+                android:background="#f8f8f8"
+                android:gravity="center"
+                android:text="@string/Debug"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
 
-	<LinearLayout android:layout_width="wrap_content"
-		android:layout_marginTop="15dp"
-		android:layout_alignParentLeft="true" android:layout_below="@id/logo"
-		android:layout_height="wrap_content" android:orientation="vertical" android:isScrollContainer="true">
-		<LinearLayout android:layout_width="wrap_content"
-			android:id="@+id/main_menu_debug" android:paddingLeft="40dp"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content" android:visibility="gone">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#ff0000"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/Debug" />
-		</LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:id="@+id/main_menu_timetable" android:paddingLeft="40dp"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#fbf6dd"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/Schedule" />
-		</LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:paddingLeft="40dp" android:id="@+id/main_menu_bands"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#fbf6dd"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/Artists" />
-		</LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:paddingLeft="40dp" android:id="@+id/main_menu_map"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#fbf6dd"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/Map" />
-		</LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:paddingLeft="40dp" android:id="@+id/main_menu_info"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#fbf6dd"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/info" />
-		</LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:paddingLeft="40dp" android:id="@+id/main_menu_news"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#fbf6dd"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/News" />
-		</LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:paddingLeft="40dp" android:id="@+id/main_menu_faq"
-			android:layout_alignParentLeft="true" android:background="@drawable/btn_main_menu"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:gravity="center_vertical" android:textColor="#fbf6dd"
-				android:textStyle="bold" android:textSize="20dp"
-				android:layout_height="fill_parent" android:text="@string/faq" />
-		</LinearLayout>
-	</LinearLayout>
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:alpha="0.9"
+            android:background="#ffffff"
+            android:text="@string/Schedule" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:alpha="0.9"
+            android:background="#ececec"
+            android:text="@string/News" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:id="@+id/main_menu_bands"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:alpha="0.9"
+            android:background="#ffffff" 
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/bands_icon" >
+            </ImageView>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/Artists"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_menu_instagram"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:alpha="0.9"
+                android:background="#f8f8f8"
+                android:gravity="center"
+                android:text="@string/Instagram"
+                android:textColor="#ff0000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:id="@+id/main_menu_map"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:alpha="0.9"
+                android:background="#f8f8f8"
+                android:gravity="center"
+                android:text="@string/Map"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_menu_mapa"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:alpha="0.9"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:text="@string/info"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

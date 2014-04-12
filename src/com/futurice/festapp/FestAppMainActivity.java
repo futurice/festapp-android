@@ -4,8 +4,10 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
@@ -23,6 +25,7 @@ public class FestAppMainActivity extends Activity {
 	private View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			
 			switch (v.getId()) {
 			case R.id.main_menu_debug:
 				startActivity(new Intent(getBaseContext(), DebugActivity.class));
@@ -59,6 +62,17 @@ public class FestAppMainActivity extends Activity {
 		}
 		createMainMenuItems();
 		handleNotificationEvents();
+		//setFonts();
+	}
+	
+	private void setFonts() {
+		setFont(findViewById(R.id.main_menu_bands));
+	}
+	
+	private void setFont(View v) {
+		Typeface mTypeface = Typeface.createFromAsset(getAssets(), "RobotoCondensed-Bold.ttf");
+
+		((TextView) v).setTypeface(mTypeface);
 	}
 	
 	private void createMainMenuItems() {
@@ -67,12 +81,12 @@ public class FestAppMainActivity extends Activity {
 			v.setVisibility(View.VISIBLE);
 			v.setOnClickListener(clickListener);
 		}
-		findViewById(R.id.main_menu_info).setOnClickListener(clickListener);
-		findViewById(R.id.main_menu_bands).setOnClickListener(clickListener);
-		findViewById(R.id.main_menu_timetable).setOnClickListener(clickListener);
-		findViewById(R.id.main_menu_map).setOnClickListener(clickListener);
-		findViewById(R.id.main_menu_news).setOnClickListener(clickListener);
-		findViewById(R.id.main_menu_faq).setOnClickListener(clickListener);
+		//findViewById(R.id.main_menu_info).setOnClickListener(clickListener);
+		//findViewById(R.id.main_menu_bands).setOnClickListener(clickListener);
+		//findViewById(R.id.main_menu_timetable).setOnClickListener(clickListener);
+		//findViewById(R.id.main_menu_map).setOnClickListener(clickListener);
+		//findViewById(R.id.main_menu_news).setOnClickListener(clickListener);
+		//findViewById(R.id.main_menu_faq).setOnClickListener(clickListener);
 	}
 	
 	private void handleNotificationEvents() {
