@@ -125,7 +125,7 @@ public class HTTPUtil {
 		if (previousEtag == null || previousEtag.length() == 0) {
 			return true;
 		}
-		URL url = new URL(urlString);
+		URL url = new URL(FestAppConstants.BASE_URL + urlString);
 
 		Socket socket = null;
 		PrintWriter writer = null;
@@ -204,7 +204,7 @@ public class HTTPUtil {
 	//
 	// private methods
 	//
-	private HTTPBackendResponse performRequest(final String contentType, final String url, final String user, final String pass,
+	private HTTPBackendResponse performRequest(final String contentType, String url, final String user, final String pass,
 			final Map<String, String> headers, final Map<String, String> params, final int requestType) {
 
 		// add user and pass to client credentials if present
@@ -239,6 +239,7 @@ public class HTTPUtil {
 
 		// handle POST or GET request respectively
 		HttpRequestBase method = null;
+		url = FestAppConstants.BASE_URL + url;
 		if (requestType == HTTPUtil.POST_TYPE) {
 			method = new HttpPost(url);
 			// data - name/value params
