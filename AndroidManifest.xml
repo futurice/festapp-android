@@ -44,9 +44,6 @@
     		<intent-filter>
         		<action android:name="CHECK_ALARMS"/>
     		</intent-filter>
-    		<intent-filter >
-        		<action android:name="FORCE_DATA_LOAD"/>
-    		</intent-filter>
 		</receiver>
 	</application>
 </manifest>

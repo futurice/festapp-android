@@ -11,7 +11,7 @@ import android.widget.CompoundButton;
 
 public class DebugActivity extends Activity {
 
-	public final static boolean F_DEBUG = true;
+	public final static boolean F_DEBUG = false;
 	public volatile static boolean F_IGNORE_ETAG = false;
 
 	private View.OnClickListener clicklistener = new View.OnClickListener() {
