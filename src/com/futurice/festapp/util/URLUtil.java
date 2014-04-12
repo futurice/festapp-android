@@ -21,7 +21,7 @@ public class URLUtil {
 	public static final int SERVICES_JSON_URL = 4;
 	public static final int FREQUENTLY_ASKED_QUESTIONS_JSON_URL = 5;
 	public static final int FOOD_AND_DRINK_HTML_URL = 6;
-	
+
 	private static final String URL_OVERRIDE_PATH = "url_overrides.json";
 
 	private static final String[] urlNames = { "website_base_url",
@@ -32,33 +32,35 @@ public class URLUtil {
 	private String[] urls = { "http://festapp-server.herokuapp.com/",
 			"/api/news", "/api/artists", "/api/arrival", "/api/services",
 			"/api/info", "/api/program", };
-	
-	private static void readUrlOverride(JsonReader reader, HashMap<String, String> results) throws IOException {
+
+	private static void readUrlOverride(JsonReader reader,
+			HashMap<String, String> results) throws IOException {
 		String name = reader.nextName();
 		String value = reader.nextString();
-		
+
 		results.put(name, value);
 	}
-	
-	private static HashMap<String, String> getUrlOverrides(InputStream stream) throws IOException {
-        HashMap<String, String> overrides = new HashMap<String, String>();
-        JsonReader reader = new JsonReader(new InputStreamReader(stream));
-        
-        reader.beginObject();
-        
-        while (reader.hasNext()) {
-        	readUrlOverride(reader, overrides);
-        }
-        
-        reader.endObject();
-        
-        return overrides;
+
+	private static HashMap<String, String> getUrlOverrides(InputStream stream)
+			throws IOException {
+		HashMap<String, String> overrides = new HashMap<String, String>();
+		JsonReader reader = new JsonReader(new InputStreamReader(stream));
+
+		reader.beginObject();
+
+		while (reader.hasNext()) {
+			readUrlOverride(reader, overrides);
+		}
+
+		reader.endObject();
+
+		return overrides;
 	}
 
 	private URLUtil(Context context) {
 		AssetManager assets = context.getAssets();
 		InputStream stream = null;
-		
+
 		try {
 			stream = assets.open(URL_OVERRIDE_PATH);
 		} catch (IOException ex) {
@@ -66,10 +68,10 @@ public class URLUtil {
 			Log.v("URLUtil", "URL override file not found, using defaults.");
 			return;
 		}
-		
+
 		try {
 			HashMap<String, String> overrides = getUrlOverrides(stream);
-			
+
 			for (int urlIdx = 0; urlIdx < urlNames.length; urlIdx++) {
 				String urlName = urlNames[urlIdx];
 
@@ -83,7 +85,7 @@ public class URLUtil {
 			// Ignored.
 		}
 	}
-	
+
 	public static URLUtil getInstance(Context context) {
 		if (instance == null) {
 			instance = new URLUtil(context);
