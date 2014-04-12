@@ -46,7 +46,7 @@ public class GigDAO {
 	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 	
 	private static final String GIGS_QUERY = "SELECT gig.id, gig.artist, gig.description, gig.favorite, gig.active, gig.alerted, gig.youtube, gig.spotify," +
-			"location.stage, location.startTime, location.endTime FROM gig LEFT JOIN location ON (gig.id = location.id)";
+			"location.stage, location.startTime, location.endTime, gig.artistimage, gig.artistimagepress FROM gig LEFT JOIN location ON (gig.id = location.id)";
 	
 	private final static int GIG_ID = 0;
 	private final static int GIG_ARTIST = 1;
@@ -56,9 +56,12 @@ public class GigDAO {
 	private final static int GIG_ALERTED = 5;
 	private final static int GIG_YOUTUBE = 6;
 	private final static int GIG_SPOTIFY = 7;
-	private final static int lOCATION_STAGE = 8;
-	private final static int lOCATION_START_TIME = 9;
-	private final static int lOCATION_END_TIME = 10;
+	private final static int LOCATION_STAGE = 8;
+	private final static int LOCATION_START_TIME = 9;
+	private final static int LOCATION_END_TIME = 10;
+	
+	private final static int GIG_ARTIST_IMAGE = 11;
+	private final static int GIG_ARTIST_IMAGE_PRESS = 12;
 	
 	private static Date startOfFriday = null;
 	private static Date startOfSaturday = null;
@@ -149,6 +152,7 @@ public class GigDAO {
 					gig.setDescription(JSONUtil.getString(gigObj, "content"));
 					gig.setYoutube(JSONUtil.getString(gigObj,"youtube"));
 					gig.setSpotify(JSONUtil.getString(gigObj,"spotify"));
+					gig.setArtistImage(JSONUtil.getString(gigObj, "picture"));
 				}
 								
 				Date startTime = parseJsonDate(JSONUtil.getLong(gigObj, "time_start"));
@@ -338,14 +342,16 @@ public class GigDAO {
 				cursor.getInt(GIG_ACTIVE) > 0,
 				cursor.getInt(GIG_ALERTED) > 0,
 				cursor.getString(GIG_YOUTUBE),
-				cursor.getString(GIG_SPOTIFY));
+				cursor.getString(GIG_SPOTIFY),
+				cursor.getString(GIG_ARTIST_IMAGE));
+				
 	}
 	
 	private static GigLocation convertCursorToGigLocation(Cursor cursor, String id) {
 		return new GigLocation(
-				cursor.getString(lOCATION_STAGE),
-				parseDate(cursor.getString(lOCATION_START_TIME)),
-				parseDate(cursor.getString(lOCATION_END_TIME)));
+				cursor.getString(LOCATION_STAGE),
+				parseDate(cursor.getString(LOCATION_START_TIME)),
+				parseDate(cursor.getString(LOCATION_END_TIME)));
 	}
 	
 	public static ContentValues convertGigToContentValues(Gig gig) {
@@ -358,6 +364,7 @@ public class GigDAO {
 		values.put("alerted", gig.isAlerted());
 		values.put("youtube", gig.getYoutube());
 		values.put("spotify", gig.getSpotify());
+		values.put("artistimage", gig.getArtistImage());
 		return values;
 	}
 	
