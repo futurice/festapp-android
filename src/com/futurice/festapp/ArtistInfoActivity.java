@@ -138,18 +138,13 @@ public class ArtistInfoActivity extends Activity {
 	private void displayArtistImage() {
 		ImageView artistImage = (ImageView) findViewById(R.id.artistImage);
 		LinearLayout artistImageContainer = (LinearLayout) findViewById(R.id.artistImageContainer);
-		
 		int imageId = getResources().getIdentifier(gig.getArtistImage(),	"drawable", getPackageName());
-		
 		int flag = View.GONE;
-		
 		if (imageId != 0) {
-
 			try {
 				DisplayMetrics metrics = new DisplayMetrics();
 				getWindowManager().getDefaultDisplay().getMetrics(metrics);
 				int width = metrics.widthPixels;
-
 				int height = (int) (HEIGHT * getResources().getDisplayMetrics().density);
 				artistImage.setImageBitmap(UIUtil
 						.decodeSampledBitmapFromResource(getResources(),
@@ -161,17 +156,6 @@ public class ArtistInfoActivity extends Activity {
 		artistImageContainer.setVisibility(flag);
 	}
 	
-//	private String createImageName(Gig gig2) {
-//		String name = "";
-//		name = gig.getArtist().toLowerCase();
-//		
-//		name.replace("ä", "a");
-//		name.replace("ö","o");
-//		name.replace("å", "a");
-//		name.replaceAll("[^a-z0-9]", "");
-//		return name;
-//	}
-
 	private Gig getGig() {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {

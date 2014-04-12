@@ -102,7 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String page = StringUtil.convertStreamToString(is);
 		
 		// Ugly hacks to content_plaintext
-		page = page.replace("\\u2028", "").replace("\\u017e", "��");
+		page = page.replace("\\u2028", "").replace("\\u017e", "ż");
 		while(page.contains("\\r\\n\\r\\n")) {
 			page = page.replace("\\r\\n\\r\\n", "\\r\\n");
 		}
