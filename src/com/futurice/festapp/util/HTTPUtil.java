@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
@@ -71,6 +72,9 @@ public class HTTPUtil {
 	public static final String MIME_TEXT_PLAIN = "text/plain";
 	public static final String HTTP_RESPONSE = "HTTP_RESPONSE";
 	public static final String HTTP_RESPONSE_ERROR = "HTTP_RESPONSE_ERROR";
+	
+	public static final String LANG = Locale.getDefault().getLanguage();
+
 
 	// Establish client once, as static field with static setup block.
 	// (This is a best practice in HttpClient docs - but will leave reference until *process* stopped on Android.)
@@ -130,7 +134,7 @@ public class HTTPUtil {
 		if (previousEtag == null || previousEtag.length() == 0) {
 			return true;
 		}
-		URL url = new URL(FestAppConstants.BASE_URL + urlString);
+		URL url = new URL(constructURL(urlString, true) );
 
 		Socket socket = null;
 		PrintWriter writer = null;
@@ -244,9 +248,8 @@ public class HTTPUtil {
 
 		// handle POST or GET request respectively
 		HttpRequestBase method = null;
-		url = FestAppConstants.BASE_URL + url;
 		if (requestType == HTTPUtil.POST_TYPE) {
-			method = new HttpPost(url);
+			method = new HttpPost(constructURL(url, false));
 			// data - name/value params
 			List<NameValuePair> nvps = null;
 			if ((params != null) && (params.size() > 0)) {
@@ -264,7 +267,7 @@ public class HTTPUtil {
 				}
 			}
 		} else if (requestType == HTTPUtil.GET_TYPE) {
-			method = new HttpGet(url);
+			method = new HttpGet(constructURL(url, true));
 		}
 
 		// execute request
@@ -303,6 +306,17 @@ public class HTTPUtil {
 			httpBackendResponse.setValid(false);
 		}
 		return httpBackendResponse;
+	}
+	
+	private static String constructURL(String sub, Boolean get){
+		String url = sub;
+		
+		if(get){
+			url += "?lang=" + LANG;
+		}
+		
+		return FestAppConstants.BASE_URL + url;
+		
 	}
 
 	static class GzipDecompressingEntity extends HttpEntityWrapper {
