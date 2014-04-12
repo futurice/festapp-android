@@ -60,38 +60,23 @@ public class GigDAO {
 	private final static int LOCATION_END_TIME = 10;
 	private final static int GIG_ARTIST_IMAGE = 11;
 	
-	private static Date startOfFriday = null;
-	private static Date startOfSaturday = null;
-	private static Date startOfSunday = null;
-	private static Date endOfSunday = null;
+	private static HashMap<FestivalDay, Date> startTimes = new HashMap<FestivalDay, Date>();
+	private static Date endOfFestival = null;
 	
 	static {
 		try {
-			startOfFriday = DB_DATE_FORMATTER.parse("2013-07-05 06:00");
-			startOfSaturday = DB_DATE_FORMATTER.parse("2013-07-06 06:00");
-			startOfSunday = DB_DATE_FORMATTER.parse("2013-07-07 06:00");
-			endOfSunday = DB_DATE_FORMATTER.parse("2013-07-07 23:00");
+			startTimes.put(FestivalDay.FRIDAY, DB_DATE_FORMATTER.parse("2013-07-05 06:00"));
+			startTimes.put(FestivalDay.SATURDAY, DB_DATE_FORMATTER.parse("2013-07-06 06:00"));
+			startTimes.put(FestivalDay.SUNDAY, DB_DATE_FORMATTER.parse("2013-07-07 06:00"));
+			endOfFestival = DB_DATE_FORMATTER.parse("2099-12-31 23:59");
 		} catch (ParseException e) {
 			Log.e(TAG, "Error setting festival day intervals.");
 		}
 	}
 	
-	public static Date getStartOfFriday() {
-		return startOfFriday;
+	public static Date getEndOfFestival() {
+		return endOfFestival;
 	}
-	
-	public static Date getStartOfSaturday() {
-		return startOfSaturday;
-	}
-	
-	public static Date getStartOfSunday() {
-		return startOfSunday;
-	}
-	
-	public static Date getEndOfSunday() {
-		return endOfSunday;
-	}
-	
 	
 	public static void setFavorite(Context context, String gigId, boolean favorite) {
 		SQLiteDatabase db = null;
@@ -187,8 +172,8 @@ public class GigDAO {
 		}
 
 		
-		if(time > endOfSunday.getTime()) {
-			time = endOfSunday.getTime();
+		if(time > endOfFestival.getTime()) {
+			time = endOfFestival.getTime();
 		}
 		return new Date(time * 1000);
 	}
@@ -463,17 +448,22 @@ public class GigDAO {
 		return context.getString(R.string.mapActivity_nextOnStage, matchedStage, location.getTime(), gig.getArtist());
 	}
 
+	// still problematic with festivals of > 7 days, but more versatile than previous one
 	public static FestivalDay getFestivalDay(Date startTime) {
-		if (startTime.after(GigDAO.getStartOfFriday()) && startTime.before(GigDAO.getStartOfSaturday())) {
-			return FestivalDay.FRIDAY;
+		Date compareValue = null;
+		FestivalDay returnValue = null;
+		for (Map.Entry<FestivalDay, Date> entry : startTimes.entrySet()){
+			if (returnValue == null || compareValue == null){
+				returnValue = entry.getKey();
+				compareValue = entry.getValue();
+			} else {
+				if (startTime.after(entry.getValue()) && startTime.before(compareValue)){
+					returnValue = entry.getKey();
+					compareValue = entry.getValue();
+				}
+			}
 		}
-		if (startTime.after(GigDAO.getStartOfSaturday()) && startTime.before(GigDAO.getStartOfSunday())) {
-			return FestivalDay.SATURDAY;
-		}
-		if (startTime.after(GigDAO.getStartOfSunday()) && startTime.before(GigDAO.getEndOfSunday())) {
-			return FestivalDay.SUNDAY;
-		}
-		return null;
+		return returnValue;
 	}
 	
 	private static Date parseDate(String date) {
