@@ -19,6 +19,7 @@ import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.dao.NewsDAO;
 import com.futurice.festapp.domain.Gig;
+import com.futurice.festapp.domain.GigLocation;
 import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.util.CalendarUtil;
 import com.futurice.festapp.util.FestAppConstants;
@@ -98,9 +99,10 @@ public class FestAppService extends Service{
 		PendingIntent pending = PendingIntent.getActivity(getBaseContext(),
 				uniqueId, contentIntent, 0);
 
-		String tickerText = gig.getArtist() + ": " + gig.getOnlyStageAndTime();
+		GigLocation location = gig.getOnlyLocation();
+		String tickerText = gig.getArtist() + ": " + location.getStageAndTime();
 		notify(pending, gig.getId(), tickerText, gig.getArtist(),
-				gig.getOnlyStageAndTime());
+				location.getStageAndTime());
 	}
 
 	private void notify(NewsArticle article) {

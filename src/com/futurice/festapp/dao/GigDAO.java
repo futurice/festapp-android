@@ -204,10 +204,10 @@ public class GigDAO {
 		        Gig gig = convertCursorToGig(cursor, cursor.getString(0));
 		        GigLocation location = convertCursorToGigLocation(cursor, cursor.getString(0));
 		        gig.addLocation(location);
-		        if (!stageGigs.containsKey(gig.getOnlyStage())) {
-		        	stageGigs.put(gig.getOnlyStage(), new ArrayList<Gig>());
+		        if (!stageGigs.containsKey(location.getStage())) {
+		        	stageGigs.put(location.getStage(), new ArrayList<Gig>());
 		        }
-		        stageGigs.get(gig.getOnlyStage()).add(gig);
+		        stageGigs.get(location.getStage()).add(gig);
 			}
 		} finally {
 			closeDb(db, cursor);
@@ -434,10 +434,11 @@ public class GigDAO {
 	}
 	
 	private static String getArtistOnStageMessage(Gig gig, StageType stageType, Context context) {
-		String stage = gig.getOnlyStage();
-		if (stage == null) {
+		GigLocation location = gig.getOnlyLocation();
+		if(location == null)
 			return null;
-		}
+		String stage = gig.getOnlyLocation().getStage();
+		
 		stage = stage.toLowerCase(Locale.getDefault()).trim();
 		String matchedStage = null;
 		switch (stageType) {
