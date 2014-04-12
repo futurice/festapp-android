@@ -54,8 +54,14 @@ public class FestAppService extends Service{
 				Date nowDate = new Date();
 				if (nowDate.before(GigDAO.getEndOfSunday())) {
 					alertGigs();
-					everyHourTask();
-					everyFiveHoursTask();
+					if (counter % 12 == 0) {
+						Log.i(TAG, "Executing 1-hour operations.");
+						frequentTasks();
+					}
+					if (counter % (12 * 5) == 0) {
+						Log.i(TAG, "Executing 5-hour operations.");
+						seldomTasks();
+					}
 				} else {
 					Log.i(TAG, "Stopping service due to date constraint.");
 					stopSelf();
@@ -66,27 +72,19 @@ public class FestAppService extends Service{
 				Log.i(TAG, "Finished backend operations");
 			}
 		}
-
-		private void everyFiveHoursTask() {
-			if (counter % (12 * 5) == 0) {
-				Log.i(TAG, "Executing 5-hour operations.");
-				updateFoodAndDrinkPage();
-
-				updateTransportationPage();
-				updateServicesPageData();
-
-				updateFrequentlyAskedQuestionsPageData();
-			}
-		}
-
-		private void everyHourTask() {
-			if (counter % 12 == 0) {
-				Log.i(TAG, "Executing 1-hour operations.");
-				updateGigs();
-				updateNewsArticles();
-			}
-		}
 	};
+	
+	private void seldomTasks() {
+		updateFoodAndDrinkPage();
+		updateTransportationPage();
+		updateServicesPageData();
+		updateFrequentlyAskedQuestionsPageData();
+	}
+	
+	private void frequentTasks() {
+			updateGigs();
+			updateNewsArticles();
+	}
 
 	private void alertGigs() {
 		List<Gig> gigs = GigDAO.findGigsToAlert(getBaseContext());
