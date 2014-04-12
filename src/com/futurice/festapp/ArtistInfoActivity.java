@@ -2,6 +2,7 @@ package com.futurice.festapp;
 
 import java.util.HashMap;
 
+import com.futurice.festapp.dao.DatabaseHelper;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.GigLocation;
@@ -14,11 +15,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -40,7 +46,7 @@ public class ArtistInfoActivity extends Activity {
 	private RelativeLayout artistInfoView;
 	private Gig gig;
 	private final static int HEIGHT = 400;
-	
+	private final static String TAG = "ArtistInfoActivity";
 	private OnClickListener favoriteListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -139,18 +145,22 @@ public class ArtistInfoActivity extends Activity {
 		ImageView artistImage = (ImageView) findViewById(R.id.artistImage);
 		LinearLayout artistImageContainer = (LinearLayout) findViewById(R.id.artistImageContainer);
 		int imageId = getResources().getIdentifier(gig.getArtistImage(),	"drawable", getPackageName());
+		SQLiteDatabase db = new DatabaseHelper(this).getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT picture FROM picture WHERE id = ?", new String[]{gig.getArtistImage()});
 		int flag = View.GONE;
-		if (imageId != 0) {
+
+		if(!cursor.isNull(0)){
+			byte[] pic = cursor.getBlob(0);
 			try {
 				DisplayMetrics metrics = new DisplayMetrics();
 				getWindowManager().getDefaultDisplay().getMetrics(metrics);
 				int width = metrics.widthPixels;
 				int height = (int) (HEIGHT * getResources().getDisplayMetrics().density);
 				artistImage.setImageBitmap(UIUtil
-						.decodeSampledBitmapFromResource(getResources(),
-								imageId, width, height));
+						.decodeSampledBitmapFromByteArray(pic, width, height));
 				flag = View.VISIBLE;
 			} catch (Exception e) {
+				Log.e(TAG, "Problem loading file.");
 			}
 		}
 		artistImageContainer.setVisibility(flag);

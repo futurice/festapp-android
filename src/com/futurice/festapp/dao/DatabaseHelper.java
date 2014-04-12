@@ -176,14 +176,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String sql = "CREATE TABLE IF NOT EXISTS gig (" +
 				"id TEXT PRIMARY KEY, " +
 				"artist TEXT, " +
+				"imageID TEXT" + 
 				"description TEXT, " +
 				"active BOOLEAN, " +
 				"favorite BOOLEAN, " +
 				"alerted BOOLEAN, " +
 				"youtube TEXT, " +
-				"spotify TEXT" +
+				"spotify TEXT," +
 				"artistimage TEXT)";
 		db.execSQL(sql);
+	}
+	
+	private void createPictureTable(SQLiteDatabase db) throws Exception {
+		db.execSQL("DROP TABLE IF EXISTS gig");
+		String sql = "CREATE TABLE IF NOT EXISTS gig (" +
+				"id TEXT PRIMARY KEY" +
+				"picture BLOB)";
 	}
 	
 	private void createGigLocationTable(SQLiteDatabase db) throws Exception {

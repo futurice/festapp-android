@@ -1,5 +1,10 @@
 package com.futurice.festapp.dao;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.Buffer;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,8 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.TreeMap;
 
+import org.apache.http.entity.InputStreamEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -31,7 +38,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
+
 import com.futurice.festapp.R;
 
 /**
@@ -236,14 +246,23 @@ public class GigDAO {
 				int invalidGigs = 0, newGigs = 0, updatedGigs = 0;
 				for (Gig gig : gigs) {
 					if (isValidGig(gig)) {
+						String artistImage = gig.getArtistImage();
+						response = httpUtil.performGet(artistImage);
+						
+						ContentValues contVal = new ContentValues();
+						
+						contVal.put("picture", inputStreamToByteArray(response.getContent()));
+						contVal.put("id", gig.getArtistImage());
 						Gig existingGig = findGig(db, gig.getId());
 						if (existingGig != null) {
 							gig.setFavorite(existingGig.isFavorite());
 							gig.setAlerted(existingGig.isAlerted());
 							db.update("gig", convertGigToContentValues(gig), "id = ?", new String[] {gig.getId()});
+							db.update("picture", contVal, "id = ?", new String[] {gig.getArtistImage()});
 							updatedGigs++;
 						} else {
 							db.insert("gig", "stage", convertGigToContentValues(gig));
+							db.insert("picture", null, contVal);
 							newGigs++;
 						}
 						
@@ -265,6 +284,20 @@ public class GigDAO {
 		}
 	}
 	
+	private static byte[] inputStreamToByteArray(InputStream inputStream) throws IOException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		int reads = inputStream.read();
+		
+		
+		while(reads != -1 ){
+
+			baos.write(reads);
+			reads = inputStream.read();
+			
+		}
+		return baos.toByteArray();
+	}
+
 	public static Gig findGig(Context context, String id) {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
