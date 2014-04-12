@@ -55,12 +55,12 @@ public class StageDAO {
 	public synchronized static boolean updateStagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.BASE_URL + FestAppConstants.STAGES_JSON_URL);
-		if (!response.isValid() || response.getContent() == null) {
+		if (!response.isValid() || response.getStringContent() == null) {
 			return false;
 		}
 
 		try {
-			List<Stage> stages = parseFromJson(response.getContent());
+			List<Stage> stages = parseFromJson(response.getStringContent());
 			if (stages != null) {
 				SQLiteDatabase db = null;
 				try {
