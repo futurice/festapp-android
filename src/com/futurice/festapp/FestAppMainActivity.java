@@ -3,15 +3,17 @@ package com.futurice.festapp;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.dao.NewsDAO;
 import com.futurice.festapp.domain.NewsArticle;
-import com.futurice.festapp.service.FestAppService;
 import com.futurice.festapp.util.FestAppConstants;
 
 /**
@@ -20,6 +22,8 @@ import com.futurice.festapp.util.FestAppConstants;
  * @author Pyry-Samuli Lahti / Futurice
  */
 public class FestAppMainActivity extends Activity {
+	
+	private PendingIntent alarmIntent;
 	
 	private View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override
@@ -56,7 +60,13 @@ public class FestAppMainActivity extends Activity {
 		setContentView(R.layout.main);
 		Date dateNow = new Date();
 		if (dateNow.before(GigDAO.getEndOfSunday())) {
-			startService(new Intent(this, FestAppService.class));
+			Intent i = new Intent("CHECK_ALARMS");
+			alarmIntent = PendingIntent.getBroadcast(this, 12345, i, PendingIntent.FLAG_CANCEL_CURRENT);
+			AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+			long wait = FestAppConstants.SERVICE_INITIAL_WAIT_TIME;
+			long interval = FestAppConstants.SERVICE_FREQUENCY;
+			alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, wait, interval, alarmIntent);;
+			Log.i("Init", "Creating service");
 		}
 		createMainMenuItems();
 		handleNotificationEvents();
@@ -98,6 +108,12 @@ public class FestAppMainActivity extends Activity {
 		}
 	}
 
+	@Override
+	protected void onDestroy() {
+		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+		alarmManager.cancel(alarmIntent);
+		super.onDestroy();
+	}
 	
 	/*
 	@Override

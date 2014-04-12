@@ -34,7 +34,6 @@ public class FestAppService extends Service{
 
 	private static final String TAG = FestAppService.class.getSimpleName();
 	private int counter = -1;
-	private PendingIntent alarmIntent;
 	private Semaphore dataUpdateSem = new Semaphore(1);
 	private TimerTask backendTask = new TimerTask() {
 		@Override
@@ -263,21 +262,12 @@ public class FestAppService extends Service{
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		Intent intent = new Intent("CHECK_ALARMS");
-		alarmIntent = PendingIntent.getBroadcast(this, 12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-		long wait = FestAppConstants.SERVICE_INITIAL_WAIT_TIME;
-		long interval = FestAppConstants.SERVICE_FREQUENCY;
-		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, wait, interval, alarmIntent);;
-		Log.i(TAG, "Creating service");
 	}
 	
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		Log.i(TAG, "Destroying service");
-		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-		alarmManager.cancel(alarmIntent);
 	}
 
 	@Override
