@@ -59,4 +59,20 @@ public class TagManagerUtils {
 		dataLayer.push(DataLayer.mapOf("screenName", screenName, "event",
 				"closeScreen"));
 	}
+
+	public static void pushArtistFavoritedEvent(Context context, String artist,
+			boolean isFavorite) {
+		Log.d("TagManagerUtils", "addFavorite: " + artist + " = " + isFavorite);
+		DataLayer dataLayer = TagManager.getInstance(context).getDataLayer();
+		dataLayer.push(DataLayer.mapOf("event", "setFavorite", "artistName",
+				artist, "isFavorite", isFavorite));
+	}
+
+	public static void pushArtistPlayedEvent(Context context, String artist,
+			String medium) {
+		Log.d("TagManagerUtils", "playArtist: " + artist + " via " + medium);
+		DataLayer dataLayer = TagManager.getInstance(context).getDataLayer();
+		dataLayer.push(DataLayer.mapOf("event", "playArtist", "artistName",
+				artist, "medium", medium));
+	}
 }
