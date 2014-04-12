@@ -19,6 +19,7 @@ import com.futurice.festapp.R;
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.dao.NewsDAO;
+import com.futurice.festapp.dao.StageDAO;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.GigLocation;
 import com.futurice.festapp.domain.NewsArticle;
@@ -50,6 +51,7 @@ public class FestAppService extends Service{
 					updateTransportationPage();
 					updateServicesPageData();
 					updateFrequentlyAskedQuestionsPageData();
+					updateStages();
 					return;
 				}
 				Date nowDate = new Date();
@@ -59,6 +61,7 @@ public class FestAppService extends Service{
 						Log.i(TAG, "Executing 1-hour operations.");
 						updateGigs();
 						updateNewsArticles();
+						updateStages();
 					}
 					if (counter % (12 * 5) == 0) { // every 5 hours
 						Log.i(TAG, "Executing 5-hour operations.");
@@ -259,6 +262,16 @@ public class FestAppService extends Service{
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Gigs.", e);
+		}
+	}
+
+	private void updateStages() {
+		try {
+			if (StageDAO.updateStagesOverHttp(getBaseContext())) {
+				Log.i(TAG, "Successfully updated Stages.");
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "Could not update Stages.", e);
 		}
 	}
 
