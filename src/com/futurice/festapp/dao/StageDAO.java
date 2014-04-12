@@ -100,7 +100,7 @@ public class StageDAO {
 				int y = (int) stageObject.getLong("y");
 				int width = (int) stageObject.getLong("width");
 				int height = (int) stageObject.getLong("height");
-				stages.add(new Stage(name, x, y, x+width, y+height));
+				stages.add(new Stage(name, x, y, width, height));
 			}
 		} catch (JSONException e) {
 			Log.w(TAG, "Received invalid JSON-structure", e);
