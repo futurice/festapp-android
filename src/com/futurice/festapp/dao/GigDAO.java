@@ -432,15 +432,15 @@ public class GigDAO {
 	private static String getArtistOnStageMessage(Gig gig, String stageName, Context context) {
 		stageName = stageName.toLowerCase(Locale.getDefault()).trim();
 		String matchedStage = null;
-		if (stageName.startsWith("mini")) {
+		if (stageName.equals("mini")) {
 			matchedStage = "Minilavalla";
-		} else if (stageName.startsWith("niitty")) {
+		} else if (stageName.equals("niitty")) {
 			matchedStage = "Niittylavalla";
-		} else if (stageName.startsWith("louna")) {
+		} else if (stageName.equals("louna")) {
 			matchedStage = "Louna-lavalla";
-		} else if (stageName.startsWith("ranta")) {
+		} else if (stageName.equals("ranta")) {
 			matchedStage = "Rantalavalla";
-		} else if (stageName.startsWith("teltta")) {
+		} else if (stageName.equals("teltta")) {
 			matchedStage = "Teltassa";
 		}
 		

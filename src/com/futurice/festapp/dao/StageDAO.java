@@ -28,7 +28,7 @@ public class StageDAO {
 		Cursor cursor = null;
 		try {
 			db = (new DatabaseHelper(context)).getWritableDatabase();
-			cursor = db.rawQuery("SELECT id, x, y, width, height FROM stages", new String[]{});
+			cursor = db.rawQuery("SELECT name, x, y, width, height FROM stages", new String[]{});
 			while (cursor.moveToNext()) {
 				String name = cursor.getString(0);
 				int x = cursor.getInt(1);
@@ -112,7 +112,7 @@ public class StageDAO {
 
 	public static ContentValues convertStageToContentValues(Stage stage) {
 		ContentValues values = new ContentValues();
-		values.put("id", stage.getName());
+		values.put("name", stage.getName());
 		values.put("x", stage.getX());
 		values.put("y", stage.getY());
 		values.put("width", stage.getWidth());
