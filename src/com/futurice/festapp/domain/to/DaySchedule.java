@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import com.futurice.festapp.domain.Gig;
+import com.futurice.festapp.domain.GigLocation;
 
 
 /**
@@ -50,15 +51,16 @@ public class DaySchedule {
 	private void setEarliestAndLatestTimes() {
 		for (Map.Entry<String, List<Gig>> entry : stageGigs.entrySet()) {
 			for (Gig gig : entry.getValue()) {
+				GigLocation location = gig.getOnlyLocation();
 				if (earliestTime == null || latestTime == null) {
-					earliestTime = gig.getOnlyStartTime();
-					latestTime = gig.getOnlyEndTime();
+					earliestTime = location.getStartTime();
+					latestTime = location.getEndTime();
 				} else {
-					if (gig.getOnlyStartTime().before(earliestTime)) {
-						earliestTime = gig.getOnlyStartTime();
+					if (location.getStartTime().before(earliestTime)) {
+						earliestTime = location.getStartTime();
 					}
-					if (gig.getOnlyEndTime().after(latestTime)) {
-						latestTime = gig.getOnlyEndTime();
+					if (location.getEndTime().after(latestTime)) {
+						latestTime = location.getEndTime();
 					}
 				}
 			}
