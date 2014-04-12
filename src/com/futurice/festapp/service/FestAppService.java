@@ -3,6 +3,7 @@ package com.futurice.festapp.service;
 import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -18,7 +19,9 @@ import com.futurice.festapp.R;
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.dao.NewsDAO;
+import com.futurice.festapp.dao.StageDAO;
 import com.futurice.festapp.domain.Gig;
+import com.futurice.festapp.domain.GigLocation;
 import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.util.CalendarUtil;
 import com.futurice.festapp.util.FestAppConstants;
@@ -34,12 +37,23 @@ public class FestAppService extends Service{
 	private static final String TAG = FestAppService.class.getSimpleName();
 	private int counter = -1;
 	private PendingIntent alarmIntent;
+	private Semaphore dataUpdateSem = new Semaphore(1);
 	private TimerTask backendTask = new TimerTask() {
 		@Override
 		public void run() {
 			Log.i(TAG, "Starting backend operations");
 			counter++;
 			try {
+				if (FestAppConstants.F_FORCE_DATA_FETCH){
+					updateGigs();
+					updateNewsArticles();
+					updateFoodAndDrinkPage();
+					updateTransportationPage();
+					updateServicesPageData();
+					updateFrequentlyAskedQuestionsPageData();
+					updateStages();
+					return;
+				}
 				Date nowDate = new Date();
 				if (nowDate.before(GigDAO.getEndOfSunday())) {
 					alertGigs();
@@ -47,6 +61,7 @@ public class FestAppService extends Service{
 						Log.i(TAG, "Executing 1-hour operations.");
 						updateGigs();
 						updateNewsArticles();
+						updateStages();
 					}
 					if (counter % (12 * 5) == 0) { // every 5 hours
 						Log.i(TAG, "Executing 5-hour operations.");
@@ -80,16 +95,34 @@ public class FestAppService extends Service{
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		
+		final boolean force = intent.getExtras() != null && 
+				intent.getBooleanExtra("com.futurice.festapp.service.FORCE", false);
+		
 		Log.d(TAG, "Running cron tasks");
 		new Thread() {
 			public void run() {
-				Log.d(TAG, "Running backend task");
-				backendTask.run();
-				Log.d(TAG, "Backend task finished");
+				try {
+					dataUpdateSem.acquire();
+					if (force){
+						FestAppConstants.F_FORCE_DATA_FETCH = true;
+						Log.d(TAG, "Forced data reload");
+					}
+					Log.d(TAG, "Running backend task");
+					backendTask.run();
+					Log.d(TAG, "Backend task finished");
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					return;
+				} finally{
+					FestAppConstants.F_FORCE_DATA_FETCH = false;
+					dataUpdateSem.release();
+				}
 			}
 		}.start();
 		return super.onStartCommand(intent, flags, startId);
 	}
+	
 	private void notify(Gig gig) {
 		Intent contentIntent = new Intent(getBaseContext(),
 				FestAppMainActivity.class);
@@ -98,9 +131,10 @@ public class FestAppService extends Service{
 		PendingIntent pending = PendingIntent.getActivity(getBaseContext(),
 				uniqueId, contentIntent, 0);
 
-		String tickerText = gig.getArtist() + ": " + gig.getOnlyStageAndTime();
+		GigLocation location = gig.getOnlyLocation();
+		String tickerText = gig.getArtist() + ": " + location.getStageAndTime();
 		notify(pending, gig.getId(), tickerText, gig.getArtist(),
-				gig.getOnlyStageAndTime());
+				location.getStageAndTime());
 	}
 
 	private void notify(NewsArticle article) {
@@ -228,6 +262,16 @@ public class FestAppService extends Service{
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Gigs.", e);
+		}
+	}
+
+	private void updateStages() {
+		try {
+			if (StageDAO.updateStagesOverHttp(getBaseContext())) {
+				Log.i(TAG, "Successfully updated Stages.");
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "Could not update Stages.", e);
 		}
 	}
 

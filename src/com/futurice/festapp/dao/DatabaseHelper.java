@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.NewsArticle;
+import com.futurice.festapp.domain.Stage;
 import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.StringUtil;
 
@@ -15,6 +16,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.futurice.festapp.R;
 
 /**
@@ -42,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createConfigTable(db);
 			createGigTable(db);
 			createGigLocationTable(db);
+			createStagesTable(db);
 			
 			createNewsArticlesFromLocalJson(db);
 			createGigsFromLocalJson(db);
@@ -50,6 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createServicePagesFromLocalFile(db);
 			createFrequentlyAskedQuestionsPagesFromLocalFile(db);
 			createGeneralInfoPagesFromLocalFile(db);
+			createStagesFromLocalFile(db);
 		} catch (Exception e) {
 			Log.e(TAG, "Cannot create DB", e);
 			Toast.makeText(context, context.getString(R.string.database_fail), Toast.LENGTH_LONG).show();
@@ -122,6 +126,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_TRANSPORTATION, FestAppConstants.ETAG_TRANSPORTATION));
 	}
 	
+	private void createStagesFromLocalFile(SQLiteDatabase db) throws Exception {
+		InputStream jsonStream = context.getResources().openRawResource(R.raw.stages);
+		List<Stage> stages = StageDAO.parseFromJson(StringUtil.convertStreamToString(jsonStream));
+		for (Stage stage : stages) {
+			ContentValues values = StageDAO.convertStageToContentValues(stage);
+			db.insert("stages", null, values);
+		}
+	}
+
 	private void createServicePagesFromLocalFile(SQLiteDatabase db) throws Exception {
 		InputStream is = context.getResources().openRawResource(R.raw.services);
 		String json = StringUtil.convertStreamToString(is);
@@ -184,6 +197,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(sql);
 	}
 	
+	private void createStagesTable(SQLiteDatabase db) throws Exception {
+		db.execSQL("DROP TABLE IF EXISTS stages");
+		String sql = "CREATE TABLE IF NOT EXISTS stages (" +
+				"name TEXT PRIMARY KEY, " +
+				"x INTEGER, " +
+				"y INTEGER, " +
+				"width INTEGER, " +
+				"height INTEGER);";
+		db.execSQL(sql);
+	}
 	
 	private void createConfigTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS config");

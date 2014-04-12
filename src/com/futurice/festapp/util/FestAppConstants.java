@@ -9,6 +9,7 @@ public class FestAppConstants {
 	public static final String GIGS_JSON_URL = "/api/artists";
 	public static final String TRANSPORTATION_HTML_URL = "/api/arrival";
 	public static final String SERVICES_JSON_URL = "/api/services";
+	public static final String STAGES_JSON_URL = "/api/v1/locations";
 	
 	public static final String FREQUENTLY_ASKED_QUESTIONS_JSON_URL = "/api/info";
 	public static final String FOOD_AND_DRINK_HTML_URL =  "/api/program";
@@ -34,4 +35,7 @@ public class FestAppConstants {
 	public static final String LAST_MODIFIED_GENERAL_INFO = null;
 	public static final String LAST_MODIFIED_FAQ = null;
 		
+	// DEBUG variables
+	public final static boolean F_DEBUG = false;
+	public volatile static boolean F_FORCE_DATA_FETCH = false;
 }

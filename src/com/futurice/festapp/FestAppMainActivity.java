@@ -12,6 +12,7 @@ import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.dao.NewsDAO;
 import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.service.FestAppService;
+import com.futurice.festapp.util.FestAppConstants;
 
 /**
  * Main activity.
@@ -62,7 +63,7 @@ public class FestAppMainActivity extends Activity {
 	}
 	
 	private void createMainMenuItems() {
-		if (DebugActivity.F_DEBUG){
+		if (FestAppConstants.F_DEBUG){
 			View v = findViewById(R.id.main_menu_debug);
 			v.setVisibility(View.VISIBLE);
 			v.setOnClickListener(clickListener);
@@ -97,28 +98,6 @@ public class FestAppMainActivity extends Activity {
 		}
 	}
 
-	
-	/*
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main_menu, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int itemId = item.getItemId();
-
-		switch (itemId) {
-		case R.id.menuNews:
-			Intent settingsActivity = new Intent(getBaseContext(), NewsListActivity.class);
-			startActivity(settingsActivity);
-			break;
-		}
-		return false;
-	}
-	*/
 	private void showFAQ() {
 		Intent intent = new Intent(this, InfoSubPageActivity.class);
 		intent.putExtra("subPageContent", ConfigDAO.getAttributeValue(ConfigDAO.ATTR_PAGE_GENERALINFO_FREQUENTLY_ASKED, getBaseContext()));

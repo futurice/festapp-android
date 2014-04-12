@@ -21,7 +21,6 @@ import com.futurice.festapp.domain.GigLocation;
 import com.futurice.festapp.domain.to.DaySchedule;
 import com.futurice.festapp.domain.to.FestivalDay;
 import com.futurice.festapp.domain.to.HTTPBackendResponse;
-import com.futurice.festapp.domain.to.StageType;
 import com.futurice.festapp.util.GigArtistNameComparator;
 import com.futurice.festapp.util.HTTPUtil;
 import com.futurice.festapp.util.JSONUtil;
@@ -206,10 +205,10 @@ public class GigDAO {
 		        Gig gig = convertCursorToGig(cursor, cursor.getString(GIG_ID));
 		        GigLocation location = convertCursorToGigLocation(cursor, cursor.getString(GIG_ID));
 		        gig.addLocation(location);
-		        if (!stageGigs.containsKey(gig.getOnlyStage())) {
-		        	stageGigs.put(gig.getOnlyStage(), new ArrayList<Gig>());
+		        if (!stageGigs.containsKey(location.getStage())) {
+		        	stageGigs.put(location.getStage(), new ArrayList<Gig>());
 		        }
-		        stageGigs.get(gig.getOnlyStage()).add(gig);
+		        stageGigs.get(location.getStage()).add(gig);
 			}
 		} finally {
 			closeDb(db, cursor);
@@ -411,10 +410,7 @@ public class GigDAO {
 		}
 	}
 	
-	public static String findNextArtistOnStageMessage(StageType stage, Context context) {
-		if (stage == null) {
-			return null;
-		}
+	public static String findNextArtistOnStageMessage(String stageName, Context context) {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		String artistOnStage = null;
@@ -427,7 +423,7 @@ public class GigDAO {
 		        Gig gig = convertCursorToGig(cursor, id);
 		        GigLocation gigLocation = convertCursorToGigLocation(cursor, id);
 		        gig.addLocation(gigLocation);
-		        artistOnStage = getArtistOnStageMessage(gig, stage, context);
+		        artistOnStage = getArtistOnStageMessage(gig, stageName, context);
 		        if (artistOnStage != null) {
 		        	break;
 		        }
@@ -439,44 +435,34 @@ public class GigDAO {
 		return artistOnStage;
 	}
 	
-	private static String getArtistOnStageMessage(Gig gig, StageType stageType, Context context) {
-		String stage = gig.getOnlyStage();
-		if (stage == null) {
+
+	private static String getArtistOnStageMessage(Gig gig, String stageName, Context context) {
+		GigLocation location = gig.getOnlyLocation();
+
+		if (location == null) {
 			return null;
 		}
-		stage = stage.toLowerCase(Locale.getDefault()).trim();
+
+		stageName = stageName.toLowerCase(Locale.getDefault()).trim();
+
 		String matchedStage = null;
-		switch (stageType) {
-		case LOCATION:
-			if (stage.startsWith("mini")) {
-				matchedStage = "Minilavalla";
-			}
-			break;
-		case TENT:
-			if (stage.startsWith("niitty")) {
-				matchedStage = "Niittylavalla";
-			}
-			break;
-		case STAGE:
-			if (stage.startsWith("louna")) {
-				matchedStage = "Louna-lavalla";
-			}
-			break;
-		case PLACE:
-			if (stage.startsWith("ranta")) {
-				matchedStage = "Rantalavalla";
-			}
-			break;
-		case AREA:
-			if (stage.startsWith("teltta")) {
-				matchedStage = "Teltassa";
-			}
-			break;
+		if (stageName.equals("mini")) {
+			matchedStage = "Minilavalla";
+		} else if (stageName.equals("niitty")) {
+			matchedStage = "Niittylavalla";
+		} else if (stageName.equals("louna")) {
+			matchedStage = "Louna-lavalla";
+		} else if (stageName.equals("ranta")) {
+			matchedStage = "Rantalavalla";
+		} else if (stageName.equals("teltta")) {
+			matchedStage = "Teltassa";
+		} else {
+			return null;
 		}
-		
-		return (matchedStage != null) ? context.getString(R.string.mapActivity_nextOnStage, matchedStage, gig.getLocations().get(0).getTime(), gig.getArtist()) : null;
+
+		return context.getString(R.string.mapActivity_nextOnStage, matchedStage, location.getTime(), gig.getArtist());
 	}
-	
+
 	public static FestivalDay getFestivalDay(Date startTime) {
 		if (startTime.after(GigDAO.getStartOfFriday()) && startTime.before(GigDAO.getStartOfSaturday())) {
 			return FestivalDay.FRIDAY;

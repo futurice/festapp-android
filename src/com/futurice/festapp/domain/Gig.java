@@ -108,39 +108,11 @@ public class Gig {
 		return String.format("Gig {id: %s, artist: %s}", id, artist);
 	}
 	
-	public Date getOnlyStartTime() {
+	public GigLocation getOnlyLocation(){
 		if (locations.size() == 1) {
-			return locations.get(0).getStartTime();
+			return locations.get(0);
 		}
 		return null;
-	}
-	
-	public Date getOnlyEndTime() {
-		if (locations.size() == 1) {
-			return locations.get(0).getEndTime();
-		}
-		return null;
-	}
-	
-	public String getOnlyStage() {
-		if (locations.size() == 1) {
-			return locations.get(0).getStage();
-		}
-		return null;
-	}
-	
-	public Integer getOnlyDuration() {
-		if (locations.size() == 1) {
-			return locations.get(0).getDuration();
-		}
-		return null;
-	}
-	
-	public String getOnlyStageAndTime() {
-		if (locations.size() == 1) {
-			return locations.get(0).getStageAndTime();
-		}
-		return "";
 	}
 	
 	public String getYoutube() {
