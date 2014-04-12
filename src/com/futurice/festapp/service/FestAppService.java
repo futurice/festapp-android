@@ -42,13 +42,14 @@ public class FestAppService extends Service{
 			Log.i(TAG, "Starting backend operations");
 			counter++;
 			try {
-				if (FestAppConstants.F_IGNORE_ETAG){
+				if (FestAppConstants.F_FORCE_DATA_FETCH){
 					updateGigs();
 					updateNewsArticles();
 					updateFoodAndDrinkPage();
 					updateTransportationPage();
 					updateServicesPageData();
 					updateFrequentlyAskedQuestionsPageData();
+					return;
 				}
 				Date nowDate = new Date();
 				if (nowDate.before(GigDAO.getEndOfSunday())) {
@@ -100,7 +101,7 @@ public class FestAppService extends Service{
 				try {
 					dataUpdateSem.acquire();
 					if (force){
-						FestAppConstants.F_IGNORE_ETAG = true;
+						FestAppConstants.F_FORCE_DATA_FETCH = true;
 						Log.d(TAG, "Forced data reload");
 					}
 					Log.d(TAG, "Running backend task");
@@ -110,7 +111,7 @@ public class FestAppService extends Service{
 					e.printStackTrace();
 					return;
 				} finally{
-					FestAppConstants.F_IGNORE_ETAG = false;
+					FestAppConstants.F_FORCE_DATA_FETCH = false;
 					dataUpdateSem.release();
 				}
 			}

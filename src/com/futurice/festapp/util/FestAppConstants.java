@@ -36,5 +36,5 @@ public class FestAppConstants {
 		
 	// DEBUG variables
 	public final static boolean F_DEBUG = false;
-	public volatile static boolean F_IGNORE_ETAG = false;
+	public volatile static boolean F_FORCE_DATA_FETCH = false;
 }
