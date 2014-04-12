@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -269,7 +268,6 @@ public class FestAppService extends Service{
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		Log.i(TAG, "Destroying service");
 	}
 
 	@Override
