@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#0000ff"
+    android:background="@drawable/bg"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -72,13 +72,24 @@
             android:id="@+id/main_menu_bands"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1"
+            android:alpha="0.9"
+            android:background="#ffffff" 
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/bands_icon" >
+            </ImageView>
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:alpha="0.9"
-                android:background="#ffffff"
+                android:layout_weight="3"
                 android:gravity="center"
                 android:text="@string/Artists"
                 android:textColor="#000000"

@@ -4,8 +4,10 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
@@ -60,6 +62,17 @@ public class FestAppMainActivity extends Activity {
 		}
 		createMainMenuItems();
 		handleNotificationEvents();
+		//setFonts();
+	}
+	
+	private void setFonts() {
+		setFont(findViewById(R.id.main_menu_bands));
+	}
+	
+	private void setFont(View v) {
+		Typeface mTypeface = Typeface.createFromAsset(getAssets(), "RobotoCondensed-Bold.ttf");
+
+		((TextView) v).setTypeface(mTypeface);
 	}
 	
 	private void createMainMenuItems() {
