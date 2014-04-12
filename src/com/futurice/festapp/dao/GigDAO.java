@@ -405,10 +405,7 @@ public class GigDAO {
 		}
 	}
 	
-	public static String findNextArtistOnStageMessage(StageType stage, Context context) {
-		if (stage == null) {
-			return null;
-		}
+	public static String findNextArtistOnStageMessage(String stageName, Context context) {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		String artistOnStage = null;
@@ -421,7 +418,7 @@ public class GigDAO {
 		        Gig gig = convertCursorToGig(cursor, id);
 		        GigLocation gigLocation = convertCursorToGigLocation(cursor, id);
 		        gig.addLocation(gigLocation);
-		        artistOnStage = getArtistOnStageMessage(gig, stage, context);
+		        artistOnStage = getArtistOnStageMessage(gig, stageName, context);
 		        if (artistOnStage != null) {
 		        	break;
 		        }
@@ -433,39 +430,19 @@ public class GigDAO {
 		return artistOnStage;
 	}
 	
-	private static String getArtistOnStageMessage(Gig gig, StageType stageType, Context context) {
-		String stage = gig.getOnlyStage();
-		if (stage == null) {
-			return null;
-		}
-		stage = stage.toLowerCase(Locale.getDefault()).trim();
+	private static String getArtistOnStageMessage(Gig gig, String stageName, Context context) {
+		stageName = stageName.toLowerCase(Locale.getDefault()).trim();
 		String matchedStage = null;
-		switch (stageType) {
-		case LOCATION:
-			if (stage.startsWith("mini")) {
-				matchedStage = "Minilavalla";
-			}
-			break;
-		case TENT:
-			if (stage.startsWith("niitty")) {
-				matchedStage = "Niittylavalla";
-			}
-			break;
-		case STAGE:
-			if (stage.startsWith("louna")) {
-				matchedStage = "Louna-lavalla";
-			}
-			break;
-		case PLACE:
-			if (stage.startsWith("ranta")) {
-				matchedStage = "Rantalavalla";
-			}
-			break;
-		case AREA:
-			if (stage.startsWith("teltta")) {
-				matchedStage = "Teltassa";
-			}
-			break;
+		if (stageName.startsWith("mini")) {
+			matchedStage = "Minilavalla";
+		} else if (stageName.startsWith("niitty")) {
+			matchedStage = "Niittylavalla";
+		} else if (stageName.startsWith("louna")) {
+			matchedStage = "Louna-lavalla";
+		} else if (stageName.startsWith("ranta")) {
+			matchedStage = "Rantalavalla";
+		} else if (stageName.startsWith("teltta")) {
+			matchedStage = "Teltassa";
 		}
 		
 		return (matchedStage != null) ? context.getString(R.string.mapActivity_nextOnStage, matchedStage, gig.getLocations().get(0).getTime(), gig.getArtist()) : null;
