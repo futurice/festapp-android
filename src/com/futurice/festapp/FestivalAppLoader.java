@@ -12,7 +12,7 @@ public class FestivalAppLoader extends Application{
         super.onCreate();
         
         //Get weekdays names from resources
-        CalendarUtil.load(this);;
+        CalendarUtil.load(this);
     }
 
 }
