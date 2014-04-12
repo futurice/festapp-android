@@ -1,6 +1,7 @@
 package com.futurice.festapp;
 
 import java.util.Timer;
+
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.to.StageType;
 import com.futurice.festapp.ui.map.MapAnimation;
@@ -27,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
 import com.futurice.festapp.R;
 
 /**
@@ -185,7 +187,6 @@ public class MapActivity extends Activity {
 			}
 
 			if ((event.getAction() == MotionEvent.ACTION_MOVE)) {
-
 				moveHistorySize++;
 				lastTwoXMoves[1] = lastTwoXMoves[0];
 				lastTwoXMoves[0] = event.getX();
@@ -197,6 +198,19 @@ public class MapActivity extends Activity {
 					current_centerY += (int) ((lastTwoYMoves[1] - lastTwoYMoves[0]) * (mapSizeY / current_scale) / mapImageView.getHeight());
 
 					updateDisplay();
+					
+					if (event.getEventTime() != downTimer) {
+						float speedX = (lastTwoXMoves[1] - lastTwoXMoves[0]) * (mapSizeX / current_scale) / mapImageView.getWidth();
+						float speedY = (lastTwoYMoves[1] - lastTwoYMoves[0]) * (mapSizeY / current_scale) / mapImageView.getHeight();
+
+						speedX /= event.getEventTime() - downTimer;
+						speedY /= event.getEventTime() - downTimer;
+
+						speedX *= 30;
+						speedY *= 30;
+
+						animation.setInfo(speedX, speedY, current_centerX, current_centerY);
+					}
 				}
 			} else if (event.getAction() == MotionEvent.ACTION_DOWN) {
 				animation.stopProcess();
@@ -204,21 +218,7 @@ public class MapActivity extends Activity {
 				lastTwoYMoves[0] = event.getY();
 				downTimer = event.getEventTime();
 				moveHistorySize = 1;
-			} else if ((event.getAction() == MotionEvent.ACTION_UP) && (moveHistorySize >= 1)) {
-
-				if (event.getEventTime() != downTimer) {
-					float speedX = (lastTwoXMoves[1] - lastTwoXMoves[0]) * (mapSizeX / current_scale) / mapImageView.getWidth();
-					float speedY = (lastTwoYMoves[1] - lastTwoYMoves[0]) * (mapSizeY / current_scale) / mapImageView.getHeight();
-
-					speedX /= event.getEventTime() - downTimer;
-					speedY /= event.getEventTime() - downTimer;
-
-					speedX *= 30;
-					speedY *= 30;
-
-					animation.setInfo(speedX, speedY, current_centerX, current_centerY);
-				}
-			}
+			} 
 
 			return true;
 		}

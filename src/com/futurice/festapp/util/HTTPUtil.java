@@ -122,6 +122,11 @@ public class HTTPUtil {
 	}
 
 	public static boolean isContentUpdated(String urlString, String previousEtag) throws Exception {
+		if (FestAppConstants.F_FORCE_DATA_FETCH){
+			Log.d(TAG, "ETAG ignored!");
+			return true;
+		}
+
 		if (previousEtag == null || previousEtag.length() == 0) {
 			return true;
 		}
