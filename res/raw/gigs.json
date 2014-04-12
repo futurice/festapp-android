@@ -3,7 +3,7 @@
         "id": "1",
         "name": "Bad Finance",
         "picture": "public/BadFinance.jpg",
-        "quote": "”Having fun! Everyone altogether, let's rock!”",
+        "quote": "â€�Having fun! Everyone altogether, let's rock!â€�",
         "content": "<p>\r\nBAD finance was formed in the early 2011 by three guys, Sakari, Antti and Jari, all working at Futurice Tampere. The band started reheasing at Jari's student dorm in Hervanta but after Futurice office moved into bigger premises the boys got their own band room.</p>\r\n",
         "featured": "no",
         "status": "show",
@@ -13,7 +13,7 @@
         "time_stop": "1373149800",
         "founded": "2012",
         "genre": "Love Metal",
-        "members": "Mike Arvela|Sakari Hyöty|Antti Mattila",
+        "members": "Mike Arvela|Sakari HyÃ¶ty|Antti Mattila",
         "albums": "First Album (2012)|Second Album (2013)|Third Album (2014)",
         "highlights": "Bad Finance rocked the place at Futurice Christmas Party 2012.",
         "youtube": "https://www.youtube.com/watch?v=xRKzk0tKchE",
@@ -22,5 +22,57 @@
         "press_image": "public/BadFinance.jpg",
         "credits": "Photo: Futurice Oy",
         "place": "0"
+    },
+    
+    {
+    	"id": "2",
+    	"name": "Robot 5 shit",
+    	"picture": "",
+    	"quote": "â€�Kawaii motherfuckers!â€�"
+    	"content": "<p>\r\nRobot metal is the the brain fart of this one guy that doesn't know how to code so he was made to do these walls of test text.</p>\r\n",
+    	"featured": "no",
+    	"status": "performance",
+    	"stage": "main",
+        "day": "Tiistai",
+        "time_start": "1405458000",
+        "time_stop": "1405463400",
+        "founded": "1890",
+        "genre": "Porn Metal",
+        "members": "Nispe Sinep",
+        "albums": "All night Cobu (1899)|One night in flamero (2000)",
+        "highlights": "destroyed Dali's wax stash",
+        "youtube": "http://youtu.be/WIKqgE4BwAY",
+        "spotify": "",
+        "contact_info": "rick.ashtley(at)jippii.fi",
+        "press_image": "",
+        "credits": "ass: from the gym, bitch!",
+        "place": "2"
+    },
+    
+    {
+    	"id": "3",
+    	"name": "Faija's ukuleles",
+    	"picture": "",
+    	"quote": "â€�Mah ukuleles!â€�",
+    	"content": "<p>\r\nUKULEEEEEEEZZZZ!!!</p>\r\n",
+    	"featured": "feta Tsurbs the Slurbs",
+    	"status": "show",
+    	"stage": "alley",
+        "day": "Lauantai",
+        "time_start": "1405782000",
+        "time_stop": "1405792800",
+        "founded": "2015",
+        "genre": "ganstarap",
+        "members": "Tommi|Tsurba",
+        "albums": "What happened to HoN-shirts?",
+        "highlights": "none",
+        "youtube": "",
+        "spotify": "",
+        "contact_info": "navetta", 
+        "press_image": "",
+        "credits": "looks: we got it from our mamas",
+        "place": "1"
     }
+    
+    
 ]
