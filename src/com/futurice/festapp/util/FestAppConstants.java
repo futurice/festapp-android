@@ -34,4 +34,7 @@ public class FestAppConstants {
 	public static final String LAST_MODIFIED_GENERAL_INFO = null;
 	public static final String LAST_MODIFIED_FAQ = null;
 		
+	// DEBUG variables
+	public final static boolean F_DEBUG = false;
+	public volatile static boolean F_IGNORE_ETAG = false;
 }

@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.futurice.festapp.DebugActivity;
 import com.futurice.festapp.FestAppMainActivity;
 import com.futurice.festapp.R;
 import com.futurice.festapp.dao.ConfigDAO;
@@ -43,7 +42,7 @@ public class FestAppService extends Service{
 			Log.i(TAG, "Starting backend operations");
 			counter++;
 			try {
-				if (DebugActivity.F_IGNORE_ETAG){
+				if (FestAppConstants.F_IGNORE_ETAG){
 					updateGigs();
 					updateNewsArticles();
 					updateFoodAndDrinkPage();
@@ -101,7 +100,7 @@ public class FestAppService extends Service{
 				try {
 					dataUpdateSem.acquire();
 					if (force){
-						DebugActivity.F_IGNORE_ETAG = true;
+						FestAppConstants.F_IGNORE_ETAG = true;
 						Log.d(TAG, "Forced data reload");
 					}
 					Log.d(TAG, "Running backend task");
@@ -111,7 +110,7 @@ public class FestAppService extends Service{
 					e.printStackTrace();
 					return;
 				} finally{
-					DebugActivity.F_IGNORE_ETAG = false;
+					FestAppConstants.F_IGNORE_ETAG = false;
 					dataUpdateSem.release();
 				}
 			}
