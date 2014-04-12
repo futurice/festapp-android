@@ -101,10 +101,11 @@ public class FestAppService extends Service{
 					backendTask.run();
 					Log.d(TAG, "Backend task finished");
 					DebugActivity.F_IGNORE_ETAG = eTagOrig;
-					dataUpdateSem.release();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 					return;
+				} finally{
+					dataUpdateSem.release();
 				}
 			}
 		}.start();
