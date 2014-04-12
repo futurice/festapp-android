@@ -27,7 +27,6 @@ import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -37,7 +36,6 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.HttpEntityWrapper;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
@@ -48,7 +46,6 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 
-import com.futurice.festapp.DebugActivity;
 import com.futurice.festapp.domain.to.HTTPBackendResponse;
 
 import android.util.Log;
@@ -109,14 +106,11 @@ public class HTTPUtil {
 		});
 	}
 
-	private final ResponseHandler<String> responseHandler;
-
 	/**
 	 * Constructor.
 	 *
 	 */
 	public HTTPUtil() {
-		responseHandler = new BasicResponseHandler();
 	}
 
 	/**
@@ -128,8 +122,8 @@ public class HTTPUtil {
 	}
 
 	public static boolean isContentUpdated(String urlString, String previousEtag) throws Exception {
-
-		if (DebugActivity.F_IGNORE_ETAG){
+		if (FestAppConstants.F_FORCE_DATA_FETCH){
+			Log.d(TAG, "ETAG ignored!");
 			return true;
 		}
 
