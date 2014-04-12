@@ -237,8 +237,6 @@ public class FestAppService extends Service{
 		try {
 			if (StageDAO.updateStagesOverHttp(getBaseContext())) {
 				Log.i(TAG, "Successfully updated Stages.");
-			} else {
-				Log.i(TAG, "Stages were up-to-date.");
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "Could not update Stages.", e);
