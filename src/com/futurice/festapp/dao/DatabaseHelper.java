@@ -169,8 +169,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"alerted BOOLEAN, " +
 				"youtube TEXT, " +
 				"spotify TEXT" +
-				"aristimage TEXT" +
-				"artistimagepress TEXT)";
+				"artistimage TEXT)";
 		db.execSQL(sql);
 	}
 	
