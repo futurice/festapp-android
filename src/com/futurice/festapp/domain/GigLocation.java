@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.content.Context;
+
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.to.FestivalDay;
 import com.futurice.festapp.util.CalendarUtil;
@@ -83,11 +85,11 @@ public class GigLocation implements Comparable<GigLocation> {
 		return CalendarUtil.getFullWeekdayName(cal.get(Calendar.DAY_OF_WEEK));
 	}
 	
-	public FestivalDay getFestivalDay() {
+	public FestivalDay getFestivalDay(Context c) {
 		if (startTime == null || endTime == null) {
 			return null;
 		}
-		return GigDAO.getFestivalDay(startTime);
+		return GigDAO.getFestivalDay(startTime,c);
 	}
 
 	@Override

@@ -1,7 +1,9 @@
 package com.futurice.festapp.dao;
 
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,7 @@ import org.json.JSONObject;
 
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.NewsArticle;
+import com.futurice.festapp.domain.to.FestivalDay;
 import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.JSONUtil;
 import com.futurice.festapp.util.StringUtil;
@@ -45,6 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		try {
+			
 			createNewsTable(db);
 			createConfigTable(db);
 			createGigTable(db);
@@ -78,13 +82,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private void createGigsFromLocalJson(SQLiteDatabase db) throws Exception {
 		InputStream jsonStream = context.getResources().openRawResource(R.raw.gigs);
-		List<Gig> gigs = GigDAO.parseFromJson(StringUtil.convertStreamToString(jsonStream));
+		List<Gig> gigs = GigDAO.parseFromJson(StringUtil.convertStreamToString(jsonStream),this.context);
 		for (Gig gig : gigs) {
 			if (GigDAO.isValidGig(gig)) {
 				ContentValues values = GigDAO.convertGigToContentValues(gig);
 				db.insert("gig", "description", values);
 				
-				for (ContentValues cv : GigDAO.convertGigToLocationContentValues(gig)) {
+				for (ContentValues cv : GigDAO.convertGigToLocationContentValues(gig,this.context)) {
 					db.insert("location", null, cv);
 				}
 			}
@@ -93,24 +97,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.insert("config", "attributeValue", values);
 	}
 	
+
 	private void createFestivalDatesFromLocalJson(SQLiteDatabase db) throws Exception {
 		InputStream jsonStream = context.getResources().openRawResource(R.raw.festival);
 		String json = StringUtil.convertStreamToString(jsonStream);
 		JSONArray jsonList = new JSONArray(json);
 		List<String> dateList = new ArrayList<String>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		SimpleDateFormat sdfDB = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Calendar from = Calendar.getInstance(),to = Calendar.getInstance();
 		
 		try {
 			JSONObject festObject = jsonList.getJSONObject(0);
-			dateList.add(JSONUtil.getString(festObject, "start_date"));
-			dateList.add(JSONUtil.getString(festObject, "end_date"));
+			from.setTime(sdf.parse(JSONUtil.getString(festObject, "start_date")));
+			to.setTime(sdf.parse(JSONUtil.getString(festObject, "end_date")));
 		} catch (Exception e) {
 			Log.w(TAG, "Received invalid JSON-structure", e);
 		}
 		
 		ContentValues values = new ContentValues();
 		
-		for (String d : dateList) {
-			values.put("festdate", d);
+		for (Date date = from.getTime(); !from.after(to); from.add(Calendar.DATE, 1), date = from.getTime()) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			values.put("festdate", sdfDB.format(date));
 		}
 		db.insert("festival", "festdate", values);
 	}
@@ -218,8 +229,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private void createFestivalTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS festival");
 		String sql = "CREATE TABLE IF NOT EXISTS festival (" +
-				"id INTEGER PRIMARY KEY AUTOINCREMENT, "+
-				"festDate DATE";
+				"id INTEGER AUTO INCREMENT, "+
+				"festDate DATE)";
 		db.execSQL(sql);
 	}
 	

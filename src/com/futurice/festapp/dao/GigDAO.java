@@ -60,37 +60,7 @@ public class GigDAO {
 	// location.startTime	9
 	// location.endTime		10
 	
-	private static Date startOfFriday = null;
-	private static Date startOfSaturday = null;
-	private static Date startOfSunday = null;
-	private static Date endOfSunday = null;
-	
-	static {
-		try {
-			startOfFriday = DB_DATE_FORMATTER.parse("2013-07-05 06:00");
-			startOfSaturday = DB_DATE_FORMATTER.parse("2013-07-06 06:00");
-			startOfSunday = DB_DATE_FORMATTER.parse("2013-07-07 06:00");
-			endOfSunday = DB_DATE_FORMATTER.parse("2013-07-07 23:00");
-		} catch (ParseException e) {
-			Log.e(TAG, "Error setting festival day intervals.");
-		}
-	}
-	
-	public static Date getStartOfFriday() {
-		return startOfFriday;
-	}
-	
-	public static Date getStartOfSaturday() {
-		return startOfSaturday;
-	}
-	
-	public static Date getStartOfSunday() {
-		return startOfSunday;
-	}
-	
-	public static Date getEndOfSunday() {
-		return endOfSunday;
-	}
+
 	
 	
 	public static void setFavorite(Context context, String gigId, boolean favorite) {
@@ -129,7 +99,7 @@ public class GigDAO {
 		return gigsList; 
 	}
 	
-	public static List<Gig> parseFromJson(String json) throws Exception {
+	public static List<Gig> parseFromJson(String json,Context c) throws Exception {
 		Map<String, Gig> gigs = new HashMap<String, Gig>();
 		JSONArray list = new JSONArray(json);
 		for (int i=0; i < list.length(); i++) {
@@ -151,8 +121,8 @@ public class GigDAO {
 					gig.setSpotify(JSONUtil.getString(gigObj,"spotify"));
 				}
 								
-				Date startTime = parseJsonDate(JSONUtil.getLong(gigObj, "time_start"));
-				Date endTime = parseJsonDate(JSONUtil.getLong(gigObj, "time_stop"));
+				Date startTime = parseJsonDate(JSONUtil.getLong(gigObj, "time_start"),c);
+				Date endTime = parseJsonDate(JSONUtil.getLong(gigObj, "time_stop"),c);
 				String stage = JSONUtil.getString(gigObj, "stage");
 				if (startTime != null && endTime != null && StringUtil.isNotEmpty(stage)) {
 					GigLocation gigLocation = new GigLocation(stage, startTime, endTime);
@@ -175,7 +145,7 @@ public class GigDAO {
 		return stage.replaceAll("(?i)[- ]?(lava|stage)$", "");
 	}
 	
-	private static Date parseJsonDate(Long time) {
+	private static Date parseJsonDate(Long time,Context c) {
 		if (time == null) {
 			return null;
 		}
@@ -186,8 +156,8 @@ public class GigDAO {
 		}
 
 		
-		if(time > endOfSunday.getTime()) {
-			time = endOfSunday.getTime();
+		if(time > FestivalDayDAO.getLastDayOfFestival(c).getDate().getTime().getTime()) {
+			time = FestivalDayDAO.getLastDayOfFestival(c).getDate().getTime().getTime();
 		}
 		return new Date(time * 1000);
 	}
@@ -223,7 +193,7 @@ public class GigDAO {
 		}
 		ConfigDAO.setEtagForGigs(context, response.getEtag());
 		
-		List<Gig> gigs = parseFromJson(response.getContent());
+		List<Gig> gigs = parseFromJson(response.getContent(),context);
 		if (gigs != null && gigs.size() >= 2) { // Hackish fail-safe
 			SQLiteDatabase db = null;
 			try {
@@ -246,7 +216,7 @@ public class GigDAO {
 							newGigs++;
 						}
 						
-						for (ContentValues cv : GigDAO.convertGigToLocationContentValues(gig)) {
+						for (ContentValues cv : GigDAO.convertGigToLocationContentValues(gig,context)) {
 							db.insert("location", null, cv);
 						}
 					} else {
@@ -360,7 +330,7 @@ public class GigDAO {
 		return values;
 	}
 	
-	public static List<ContentValues> convertGigToLocationContentValues(Gig gig) {
+	public static List<ContentValues> convertGigToLocationContentValues(Gig gig,Context c) {
 		List<ContentValues> cvs = new ArrayList<ContentValues>();
 		for (GigLocation location : gig.getLocations()) {
 			ContentValues values = new ContentValues();
@@ -376,8 +346,8 @@ public class GigDAO {
 			values.put("stage", location.getStage());
 			values.put("startTime", startTime);
 			values.put("endTime", endTime);
-			if (location.getFestivalDay() != null) {
-				values.put("festivalDay", location.getFestivalDay().toString());
+			if (location.getFestivalDay(c) != null) {
+				values.put("festivalDay", location.getFestivalDay(c).toString());
 			} else {
 				values.put("festivalDay", (String) null);
 			}
@@ -473,8 +443,8 @@ public class GigDAO {
 	
 	
 	// @TODO: move to FestivalDayDAO & refacotr
-	public static FestivalDay getFestivalDay(Date startTime) {
-		List<FestivalDay> festivalDays = FestivalDayDAO.getFestivalDays();
+	public static FestivalDay getFestivalDay(Date startTime,Context c) {
+		List<FestivalDay> festivalDays = FestivalDayDAO.getFestivalDays(c);
 		for(FestivalDay f : festivalDays){
 			if(f.getDate().equals(startTime)){
 				return f;

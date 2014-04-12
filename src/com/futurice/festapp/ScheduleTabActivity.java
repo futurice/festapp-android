@@ -37,7 +37,7 @@ public class ScheduleTabActivity extends TabActivity {
 		setContentView(R.layout.schedule_tabs);
 		
 		tabHost = getTabHost();
-		List<FestivalDay> festivalDays = FestivalDayDAO.getFestivalDays();
+		List<FestivalDay> festivalDays = FestivalDayDAO.getFestivalDays(this);
 		for(FestivalDay f : festivalDays){
 			addTabSpec(f);
 		}
@@ -45,9 +45,9 @@ public class ScheduleTabActivity extends TabActivity {
 		addTabSpec(FestivalDay.SATURDAY);
 		addTabSpec(FestivalDay.SUNDAY);*/
 		
-		FestivalDay day = GigDAO.getFestivalDay(new Date());
+		FestivalDay day = GigDAO.getFestivalDay(new Date(),this);
 		if (day == null) {
-			day = FestivalDayDAO.getFirstDayOfFestival();
+			day = FestivalDayDAO.getFirstDayOfFestival(this);
 		}
 		tabHost.setCurrentTabByTag(day.toString());
 	}
