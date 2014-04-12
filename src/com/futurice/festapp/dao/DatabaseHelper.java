@@ -199,7 +199,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private void createStagesTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS stages");
 		String sql = "CREATE TABLE IF NOT EXISTS stages (" +
-				"name TEXT PRIMARY KEY, " +
+				"name TEXT, " +
 				"x INTEGER, " +
 				"y INTEGER, " +
 				"width INTEGER, " +

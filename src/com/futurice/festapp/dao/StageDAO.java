@@ -48,7 +48,7 @@ public class StageDAO {
 		SQLiteDatabase db = null;
 		try {
 			db = (new DatabaseHelper(context)).getWritableDatabase();
-			db.execSQL("DELETE FROM stages");
+			db.delete("stages", null, null);
 		} finally {
 			closeDb(db, null);
 		}
@@ -56,7 +56,7 @@ public class StageDAO {
 
 	public static boolean updateStagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
-		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.STAGES_JSON_URL);
+		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.BASE_URL + FestAppConstants.STAGES_JSON_URL);
 		if (!response.isValid() || response.getContent() == null) {
 			return false;
 		}
