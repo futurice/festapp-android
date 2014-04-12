@@ -7,16 +7,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.futurice.festapp.domain.Stage;
-import com.futurice.festapp.domain.to.HTTPBackendResponse;
-import com.futurice.festapp.util.FestAppConstants;
-import com.futurice.festapp.util.HTTPUtil;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.futurice.festapp.domain.Stage;
+import com.futurice.festapp.domain.to.HTTPBackendResponse;
+import com.futurice.festapp.util.FestAppConstants;
+import com.futurice.festapp.util.HTTPUtil;
 
 public class StageDAO {
 
@@ -44,17 +44,15 @@ public class StageDAO {
 		return stages;
 	}
 
-	private static void clear(Context context) {
-		SQLiteDatabase db = null;
-		try {
-			db = (new DatabaseHelper(context)).getWritableDatabase();
-			db.delete("stages", null, null);
-		} finally {
-			closeDb(db, null);
-		}
-	}
-
-	public static boolean updateStagesOverHttp(Context context) {
+	/**
+	 * TODO: Original issue is https://github.com/futurice/festapp-android/issues/77
+	 * 
+	 * If this function is called at the same time twice, it will break everything, so prevent
+	 * concurrent access to function by synchronized keyword. (yuck!) Should fix original issue.
+	 * 
+	 * Fixed in https://github.com/futurice/festapp-android/pull/81, but not yet merged.
+	 */
+	public synchronized static boolean updateStagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.BASE_URL + FestAppConstants.STAGES_JSON_URL);
 		if (!response.isValid() || response.getContent() == null) {
@@ -64,13 +62,11 @@ public class StageDAO {
 		try {
 			List<Stage> stages = parseFromJson(response.getContent());
 			if (stages != null) {
-				// we can expect here that given json is valid, so drop the data
-				clear(context);
-
 				SQLiteDatabase db = null;
-				Cursor cursor = null;
 				try {
 					db = (new DatabaseHelper(context)).getWritableDatabase();
+					// we can expect here that given json is valid, so drop the data
+					db.execSQL("DELETE FROM stages");
 					db.beginTransaction();
 					for (Stage stage : stages) {
 						ContentValues values = StageDAO.convertStageToContentValues(stage);
@@ -79,7 +75,7 @@ public class StageDAO {
 					db.setTransactionSuccessful();
 				} finally {
 					db.endTransaction();
-					closeDb(db, cursor);
+					closeDb(db, null);
 				}
 			}
 		} catch (Exception e) {
