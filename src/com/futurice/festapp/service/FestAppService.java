@@ -48,7 +48,8 @@ public class FestAppService extends Service{
 					doAllTasks();
 					return;
 				}
-				if (new Date().before(GigDAO.getEndOfFestival())) {
+				Date dateNow = new Date();
+				if (dateNow.before(GigDAO.getEndOfFestival())) {
 					alertGigs();
 					if (counter % 12 == 0) { // every hour
 						Log.i(TAG, "Executing 1-hour operations.");

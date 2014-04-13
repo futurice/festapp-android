@@ -456,11 +456,9 @@ public class GigDAO {
 			if (returnValue == null || compareValue == null){
 				returnValue = entry.getKey();
 				compareValue = entry.getValue();
-			} else {
-				if (startTime.after(entry.getValue()) && startTime.before(compareValue)){
-					returnValue = entry.getKey();
-					compareValue = entry.getValue();
-				}
+			} else if (startTime.after(entry.getValue()) && startTime.before(compareValue)){
+				returnValue = entry.getKey();
+				compareValue = entry.getValue();
 			}
 		}
 		return returnValue;
