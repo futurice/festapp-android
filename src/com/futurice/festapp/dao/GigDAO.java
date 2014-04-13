@@ -55,7 +55,7 @@ public class GigDAO {
 	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 	
 	private static final String GIGS_QUERY = "SELECT gig.id, gig.artist, gig.description, gig.favorite, gig.active, gig.alerted, gig.youtube, gig.spotify," +
-			"location.stage, location.startTime, location.endTime, gig.artistimage FROM gig LEFT JOIN location ON (gig.id = location.id)";
+			"location.stage, location.startTime, location.endTime, gig.artistImage FROM gig LEFT JOIN location ON (gig.id = location.id)";
 	
 	private final static int GIG_ID = 0;
 	private final static int GIG_ARTIST = 1;
@@ -246,13 +246,11 @@ public class GigDAO {
 				int invalidGigs = 0, newGigs = 0, updatedGigs = 0;
 				for (Gig gig : gigs) {
 					if (isValidGig(gig)) {
-						String artistImage = gig.getArtistImage();
-						response = httpUtil.performGet(artistImage);
-						
+						response = httpUtil.performGet(gig.getArtistImage());
 						ContentValues contVal = new ContentValues();
-						
 						contVal.put("picture", inputStreamToByteArray(response.getContent()));
 						contVal.put("id", gig.getArtistImage());
+
 						Gig existingGig = findGig(db, gig.getId());
 						if (existingGig != null) {
 							gig.setFavorite(existingGig.isFavorite());

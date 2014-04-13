@@ -144,26 +144,40 @@ public class ArtistInfoActivity extends Activity {
 	private void displayArtistImage() {
 		ImageView artistImage = (ImageView) findViewById(R.id.artistImage);
 		LinearLayout artistImageContainer = (LinearLayout) findViewById(R.id.artistImageContainer);
-		int imageId = getResources().getIdentifier(gig.getArtistImage(),	"drawable", getPackageName());
-		SQLiteDatabase db = new DatabaseHelper(this).getReadableDatabase();
-		Cursor cursor = db.rawQuery("SELECT picture FROM picture WHERE id = ?", new String[]{gig.getArtistImage()});
-		int flag = View.GONE;
 
-		if(!cursor.isNull(0)){
-			byte[] pic = cursor.getBlob(0);
-			try {
-				DisplayMetrics metrics = new DisplayMetrics();
-				getWindowManager().getDefaultDisplay().getMetrics(metrics);
-				int width = metrics.widthPixels;
-				int height = (int) (HEIGHT * getResources().getDisplayMetrics().density);
-				artistImage.setImageBitmap(UIUtil
-						.decodeSampledBitmapFromByteArray(pic, width, height));
-				flag = View.VISIBLE;
-			} catch (Exception e) {
-				Log.e(TAG, "Problem loading file.");
+		SQLiteDatabase db = null;
+		Cursor cursor = null;
+		try{
+			db = new DatabaseHelper(this).getReadableDatabase();
+			cursor = db.rawQuery("SELECT picture FROM picture WHERE id = ?", new String[]{gig.getArtistImage()});
+			cursor.moveToFirst();
+			int flag = View.GONE;
+
+			if (cursor.getCount() > 0 && !cursor.isNull(0)) {
+				byte[] pic = cursor.getBlob(0);
+				try {
+					DisplayMetrics metrics = new DisplayMetrics();
+					getWindowManager().getDefaultDisplay().getMetrics(metrics);
+					int width = metrics.widthPixels;
+					int height = (int) (HEIGHT * getResources()
+							.getDisplayMetrics().density);
+					artistImage.setImageBitmap(UIUtil
+							.decodeSampledBitmapFromByteArray(pic, width,
+									height));
+					flag = View.VISIBLE;
+				} catch (Exception e) {
+					Log.e(TAG, "Problem loading file.");
+				}
+			}
+			artistImageContainer.setVisibility(flag);
+		} finally {
+			if (db != null) {
+				db.close();
+			}
+			if (cursor != null) {
+				cursor.close();
 			}
 		}
-		artistImageContainer.setVisibility(flag);
 	}
 	
 	private Gig getGig() {

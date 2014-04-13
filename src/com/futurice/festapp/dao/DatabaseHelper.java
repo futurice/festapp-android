@@ -43,6 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createNewsTable(db);
 			createConfigTable(db);
 			createGigTable(db);
+			createPictureTable(db);
 			createGigLocationTable(db);
 			createStagesTable(db);
 			
@@ -176,28 +177,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String sql = "CREATE TABLE IF NOT EXISTS gig (" +
 				"id TEXT PRIMARY KEY, " +
 				"artist TEXT, " +
-				"imageID TEXT" + 
 				"description TEXT, " +
 				"active BOOLEAN, " +
 				"favorite BOOLEAN, " +
 				"alerted BOOLEAN, " +
 				"youtube TEXT, " +
-				"spotify TEXT," +
-				"artistimage TEXT)";
+				"spotify TEXT, " +
+				"artistImage TEXT)";
 		db.execSQL(sql);
 	}
 	
 	private void createPictureTable(SQLiteDatabase db) throws Exception {
-		db.execSQL("DROP TABLE IF EXISTS gig");
-		String sql = "CREATE TABLE IF NOT EXISTS gig (" +
-				"id TEXT PRIMARY KEY" +
+		db.execSQL("DROP TABLE IF EXISTS picture");
+		String sql = "CREATE TABLE IF NOT EXISTS picture (" +
+				"id TEXT PRIMARY KEY, " +
 				"picture BLOB)";
+		db.execSQL(sql);
 	}
 	
 	private void createGigLocationTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS location");
 		String sql = "CREATE TABLE IF NOT EXISTS location (" +
-				"id TEXT NOT NULL, " +
+				"id TEXT PRIMARY KEY, " +
 				"startTime DATE, " +
 				"endTime DATE, " +
 				"festivalDay VARCHAR(63), " +
