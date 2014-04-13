@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.domain.to.FestivalDay;
+import com.futurice.festapp.domain.Stage;
 import com.futurice.festapp.util.FestAppConstants;
 import com.futurice.festapp.util.JSONUtil;
 import com.futurice.festapp.util.StringUtil;
@@ -54,6 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createGigTable(db);
 			createGigLocationTable(db);
 			createFestivalTable(db);
+			createStagesTable(db);
 			
 			createNewsArticlesFromLocalJson(db);
 			createGigsFromLocalJson(db);
@@ -63,6 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			createFrequentlyAskedQuestionsPagesFromLocalFile(db);
 			createGeneralInfoPagesFromLocalFile(db);
 			createFestivalDatesFromLocalJson(db);
+			createStagesFromLocalFile(db);
 		} catch (Exception e) {
 			Log.e(TAG, "Cannot create DB", e);
 			Toast.makeText(context, context.getString(R.string.database_fail), Toast.LENGTH_LONG).show();
@@ -164,6 +167,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //		db.insert("config", "attributeValue", ConfigDAO.createConfigContentValues(ConfigDAO.ATTR_ETAG_FOR_TRANSPORTATION, FestAppConstants.ETAG_TRANSPORTATION));
 	}
 	
+	private void createStagesFromLocalFile(SQLiteDatabase db) throws Exception {
+		InputStream jsonStream = context.getResources().openRawResource(R.raw.stages);
+		List<Stage> stages = StageDAO.parseFromJson(StringUtil.convertStreamToString(jsonStream));
+		for (Stage stage : stages) {
+			ContentValues values = StageDAO.convertStageToContentValues(stage);
+			db.insert("stages", null, values);
+		}
+	}
+
 	private void createServicePagesFromLocalFile(SQLiteDatabase db) throws Exception {
 		InputStream is = context.getResources().openRawResource(R.raw.services);
 		String json = StringUtil.convertStreamToString(is);
@@ -210,7 +222,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"favorite BOOLEAN, " +
 				"alerted BOOLEAN, " +
 				"youtube TEXT, " +
-				"spotify TEXT)";
+				"spotify TEXT," +
+				"artistimage TEXT)";
 		db.execSQL(sql);
 	}
 	
@@ -226,6 +239,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(sql);
 	}
 	
+
 	private void createFestivalTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS festival");
 		String sql = "CREATE TABLE IF NOT EXISTS festival (" +
@@ -234,6 +248,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(sql);
 	}
 	
+
+	private void createStagesTable(SQLiteDatabase db) throws Exception {
+		db.execSQL("DROP TABLE IF EXISTS stages");
+		String sql = "CREATE TABLE IF NOT EXISTS stages (" +
+				"name TEXT PRIMARY KEY, " +
+				"x INTEGER, " +
+				"y INTEGER, " +
+				"width INTEGER, " +
+				"height INTEGER);";
+		db.execSQL(sql);
+	}
 	
 	private void createConfigTable(SQLiteDatabase db) throws Exception {
 		db.execSQL("DROP TABLE IF EXISTS config");

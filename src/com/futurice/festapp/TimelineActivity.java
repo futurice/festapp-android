@@ -32,6 +32,7 @@ import android.widget.TextView;
 import com.futurice.festapp.dao.FestivalDayDAO;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
+import com.futurice.festapp.domain.GigLocation;
 import com.futurice.festapp.domain.to.DaySchedule;
 import com.futurice.festapp.domain.to.FestivalDay;
 import com.futurice.festapp.ui.GigTimelineWidget;
@@ -87,7 +88,7 @@ public class TimelineActivity extends Activity {
 			if (v instanceof GigTimelineWidget) {
 				GigTimelineWidget gigWidget = (GigTimelineWidget) v;
 				gigWidget.setBackgroundResource(R.drawable.schedule_gig_hilight);
-				vibrator.vibrate(50l);
+				vibrator.vibrate(50L);
 				Intent artistInfo = new Intent(getBaseContext(), ArtistInfoActivity.class);
 				TimelineActivity.this.gigWidget = gigWidget;
 			    artistInfo.putExtra("gig.id", gigWidget.getGig().getId());
@@ -232,8 +233,9 @@ public class TimelineActivity extends Activity {
 
 			Date previousTime = timelineStartMoment;
 			for (Gig gig : stageGigs.get(stage)) {
-				if (previousTime.before(gig.getOnlyStartTime())) {
-					int margin = GigTimelineWidget.PIXELS_PER_MINUTE * CalendarUtil.getMinutesBetweenTwoDates(previousTime, gig.getOnlyStartTime());
+				GigLocation location = gig.getOnlyLocation();
+				if (previousTime.before(location.getStartTime())) {
+					int margin = GigTimelineWidget.PIXELS_PER_MINUTE * CalendarUtil.getMinutesBetweenTwoDates(previousTime, location.getStartTime());
 					TextView tv = new TextView(this);
 					tv.setHeight(ROW_HEIGHT);
 					tv.setWidth(margin);
@@ -242,7 +244,7 @@ public class TimelineActivity extends Activity {
 				
 				GigTimelineWidget gigWidget = new GigTimelineWidget(this, null, gig, previousTime);
 				stageRow.addView(gigWidget);
-				if (gig.getOnlyEndTime().equals(daySchedule.getLatestTime())) {
+				if (location.getEndTime().equals(daySchedule.getLatestTime())) {
 					int margin = GigTimelineWidget.PIXELS_PER_MINUTE * TIMELINE_END_OFFSET;
 					TextView tv = new TextView(this);
 					tv.setHeight(ROW_HEIGHT);
@@ -251,7 +253,7 @@ public class TimelineActivity extends Activity {
 				}
 				
 				gigWidget.setOnClickListener(gigWidgetClickListener);
-				previousTime = gig.getOnlyEndTime();
+				previousTime = location.getEndTime();
 			}
 			gigLayout.addView(getGuitarString(row++));
 			gigLayout.addView(stageRow);
@@ -382,7 +384,7 @@ public class TimelineActivity extends Activity {
 	            		boolean upwardMotion = e1.getY() - e2.getY() > 0;
 	            		MediaPlayer mp = null;
             			mp = MediaPlayer.create(getBaseContext(), upwardMotion ? R.raw.guitar1 : R.raw.guitar2);
-	            		vibrator.vibrate(150l);
+	            		vibrator.vibrate(150L);
 	            		mp.start();
 	            		mp.setOnCompletionListener(new OnCompletionListener() {
 	            			@Override

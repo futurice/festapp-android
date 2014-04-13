@@ -1,8 +1,11 @@
 package com.futurice.festapp;
 
+import java.util.List;
 import java.util.Timer;
+
 import com.futurice.festapp.dao.GigDAO;
-import com.futurice.festapp.domain.to.StageType;
+import com.futurice.festapp.dao.StageDAO;
+import com.futurice.festapp.domain.Stage;
 import com.futurice.festapp.ui.map.MapAnimation;
 import com.futurice.festapp.ui.map.MapAnimationCallback;
 import com.futurice.festapp.ui.map.MapImageView;
@@ -27,6 +30,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
 import com.futurice.festapp.R;
 
 /**
@@ -35,7 +39,7 @@ import com.futurice.festapp.R;
  * @author Pyry-Samuli Lahti / Futurice
  */
 public class MapActivity extends Activity {
-	
+
 	private MapImageView mapImageView;
 	private ImageButton zoomInButton;
 	private ImageButton zoomOutButton;
@@ -65,13 +69,8 @@ public class MapActivity extends Activity {
 	// Image size
 	private int mapSizeX = 2500;
 	private int mapSizeY = 2000;
-	
-	// Clickable areas
-	private static final Rect CLICKABLEAREA_STAGE = new Rect(100, 100, 200, 200);
-	private static final Rect CLICKABLEAREA_TENT = new Rect(300, 300, 400, 400);
-	private static final Rect CLICKABLEAREA_LOCATION = new Rect(500, 500, 600, 600);
-	private static final Rect CLICKABLEAREA_AREA = new Rect(700, 700, 800, 800);
-	private static final Rect CLICKABLEAREA_PLACE = new Rect(900, 900, 1000, 1000);
+
+	private List<Stage> stages;
 	
 	private static final float INITIAL_SCALE = (float) 1;
 	private static final float MAGNIFY_SCALE = (float) 1.9;
@@ -80,12 +79,23 @@ public class MapActivity extends Activity {
 	private int current_centerX = mapSizeX / 2;
 	private int current_centerY = mapSizeY / 2;
 
+	/**
+	 * This constant sets the sampling size for map image.
+	 * The value of this constant has to be set on per image 
+	 * basic.
+	 * For example, the placeholder map at the time of
+	 * development could take sampling size of 2 at max, after
+	 * that some of the lines disappeared.
+	 */
+	private static final int SAMPLING_SIZE = 2;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 		opts.inScaled = false;
+		opts.inSampleSize = SAMPLING_SIZE;
 		mapImageView = (MapImageView) findViewById(R.id.image);
 		zoomInButton = (ImageButton) findViewById(R.id.zoomIn);
 		zoomOutButton = (ImageButton) findViewById(R.id.zoomOut);
@@ -125,6 +135,8 @@ public class MapActivity extends Activity {
 		mapImageView.getDrawable().setFilterBitmap(true);
 		mapImageView.setImageMatrix(matrix);
 		
+		stages = StageDAO.findAll(this);
+
 		showInitialInfoDialog();
 	}
 	
@@ -173,8 +185,7 @@ public class MapActivity extends Activity {
 				return true;
 			}
 
-			if ((event.getAction() == MotionEvent.ACTION_MOVE)) {
-
+			if (event.getAction() == MotionEvent.ACTION_MOVE) {
 				moveHistorySize++;
 				lastTwoXMoves[1] = lastTwoXMoves[0];
 				lastTwoXMoves[0] = event.getX();
@@ -186,6 +197,19 @@ public class MapActivity extends Activity {
 					current_centerY += (int) ((lastTwoYMoves[1] - lastTwoYMoves[0]) * (mapSizeY / current_scale) / mapImageView.getHeight());
 
 					updateDisplay();
+					
+					if (event.getEventTime() != downTimer) {
+						float speedX = (lastTwoXMoves[1] - lastTwoXMoves[0]) * (mapSizeX / current_scale) / mapImageView.getWidth();
+						float speedY = (lastTwoYMoves[1] - lastTwoYMoves[0]) * (mapSizeY / current_scale) / mapImageView.getHeight();
+
+						speedX /= event.getEventTime() - downTimer;
+						speedY /= event.getEventTime() - downTimer;
+
+						speedX *= 30;
+						speedY *= 30;
+
+						animation.setInfo(speedX, speedY, current_centerX, current_centerY);
+					}
 				}
 			} else if (event.getAction() == MotionEvent.ACTION_DOWN) {
 				animation.stopProcess();
@@ -193,21 +217,7 @@ public class MapActivity extends Activity {
 				lastTwoYMoves[0] = event.getY();
 				downTimer = event.getEventTime();
 				moveHistorySize = 1;
-			} else if ((event.getAction() == MotionEvent.ACTION_UP) && (moveHistorySize >= 1)) {
-
-				if (event.getEventTime() != downTimer) {
-					float speedX = (lastTwoXMoves[1] - lastTwoXMoves[0]) * (mapSizeX / current_scale) / mapImageView.getWidth();
-					float speedY = (lastTwoYMoves[1] - lastTwoYMoves[0]) * (mapSizeY / current_scale) / mapImageView.getHeight();
-
-					speedX /= event.getEventTime() - downTimer;
-					speedY /= event.getEventTime() - downTimer;
-
-					speedX *= 30;
-					speedY *= 30;
-
-					animation.setInfo(speedX, speedY, current_centerX, current_centerY);
-				}
-			}
+			} 
 
 			return true;
 		}
@@ -231,36 +241,15 @@ public class MapActivity extends Activity {
 		float y = top + (bottom-top)*yRatio;
 				
 		String toastMessage = null;
-		
-		/********************/
-		/* Configure stages */
-		/********************/
-		
-		// Clicked "STAGE"
-		if (CLICKABLEAREA_STAGE.contains((int)x, (int)y)) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.STAGE, getBaseContext());
-		}
-		
-		// Clicked "AREA"
-		if (CLICKABLEAREA_AREA.contains((int)x, (int)y)) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.AREA, getBaseContext());
+
+		for (Stage s: stages) {
+			Rect r = new Rect(s.getX(), s.getY(), s.getX()+s.getWidth(), s.getY()+s.getHeight());
+			if (r.contains((int)x, (int)y)) {
+				toastMessage = GigDAO.findNextArtistOnStageMessage(s.getName(), getBaseContext());
+				break;
+			}
 		}
 
-		// Clicked "TENT"
-		if (CLICKABLEAREA_TENT.contains((int)x, (int)y)) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.TENT, getBaseContext());
-		}
-
-		// Clicked "PLACE"
-		if (CLICKABLEAREA_PLACE.contains((int)x, (int)y)) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.PLACE, getBaseContext());
-		}
-
-		// Clicked "LOCATION"
-		if (CLICKABLEAREA_LOCATION.contains((int)x, (int)y)) {
-			toastMessage = GigDAO.findNextArtistOnStageMessage(StageType.LOCATION, getBaseContext());
-		}
-		
 		// Show message if applicable
 		if (toastMessage != null) {
 			showToast(toastMessage);

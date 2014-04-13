@@ -12,6 +12,10 @@
     <string name="Call">Call</string>
     <string name="Cancel">Cancel</string>
     <string name="Close">Close</string>
+    <string name="Monday">Monday</string>
+    <string name="Tuesday">Tuesday</string>
+    <string name="Wednesday">Wednesday</string>
+    <string name="Thursday">Thursday</string>
     <string name="Friday">Friday</string>
     <string name="Saturday">Saturday</string>
     <string name="Sunday">Sunday</string>
@@ -27,6 +31,7 @@
     <string name="faq">FAQ</string>
     <string name="frequently_asked_questions">Frequently asked questions</string>
     <string name="info">INFO</string>
+    <string name="Instagram">INSTAGRAM</string>
     
     <!-- Activity labels -->
     <string name="activity.label.Artists">FestApp » Bands</string>
@@ -91,4 +96,11 @@
     <string name="notification.news.title">Notification</string>
     
     <string name="database_fail">Failed to initiate the application.</string>
+    
+    
+    <!-- Debug View -->
+    <string name="debug.title">Debug View</string>
+    <string name="debug.ignore_etag">Ignore ETag</string>
+    <string name="debug.clear_db">Clear DB</string>
+    <string name="debug.fetch_all_data">Fetch all data from server</string>
 </resources>

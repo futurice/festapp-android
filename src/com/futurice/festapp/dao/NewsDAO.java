@@ -32,6 +32,10 @@ public class NewsDAO {
 	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	private static final String TAG = "NewsDAO";
 	private static final String[] NEWS_COLUMNS = { "url", "title", "newsDate", "content" };
+	private static final int URL = 0;
+	private static final int TITLE = 1;
+	private static final int NEWS_DATE = 2;
+	private static final int CONTENT = 3;
 	
 	public static List<NewsArticle> findAll(Context context) {
 		List<NewsArticle> articles = new ArrayList<NewsArticle>();
@@ -41,10 +45,10 @@ public class NewsDAO {
 			db = (new DatabaseHelper(context)).getWritableDatabase();
 			cursor = db.rawQuery("SELECT url, title, newsDate, content FROM news ORDER BY newsDate DESC", new String[]{});
 			while (cursor.moveToNext()) {
-				String url = cursor.getString(0);
-		        String title = cursor.getString(1);
-		        Date date = getDate(cursor.getString(2));
-		        String content = cursor.getString(3);
+				String url = cursor.getString(URL);
+		        String title = cursor.getString(TITLE);
+		        Date date = getDate(cursor.getString(NEWS_DATE));
+		        String content = cursor.getString(CONTENT);
 		        articles.add(new NewsArticle(url, title, date, content));
 			}
 		} finally {
@@ -52,49 +56,6 @@ public class NewsDAO {
 		}
 		return articles;
 	}
-	
-	/*
-	public static int deleteAll(Context context) {
-		SQLiteDatabase db = null;
-		Cursor cursor = null;
-		try {
-			db = (new DatabaseHelper(context)).getReadableDatabase();
-			int deletedArticles = db.delete("news", null, null);
-			return deletedArticles;
-		} finally {
-			if (db != null) {
-				db.close();
-			}
-			if (cursor != null) {
-				cursor.close();
-			}
-		}
-	}
-	*/
-	/*
-	public static void replaceAll(Context context, List<NewsArticle> articles) {
-		if (articles == null || articles.size() < 1) {
-			return;
-		}
-		SQLiteDatabase db = null;
-		Cursor cursor = null;
-		try {
-			db = (new DatabaseHelper(context)).getWritableDatabase();
-			int deletedArticles = db.delete("news", null, null);
-			for (NewsArticle article : articles) {
-				db.insert("news", "date", convertNewsArticleToContentValues(article));
-			}
-			Log.i(TAG, String.format("Successfully replaced %d NewsArticles with %d", deletedArticles, articles.size()));
-		} finally {
-			if (db != null) {
-				db.close();
-			}
-			if (cursor != null) {
-				cursor.close();
-			}
-		}
-	}
-	*/
 	
 	public static ContentValues convertNewsArticleToContentValues(NewsArticle article) {
 		ContentValues values = new ContentValues();
@@ -117,12 +78,12 @@ public class NewsDAO {
 	public static List<NewsArticle> updateNewsOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.NEWS_JSON_URL);
-		if (!response.isValid() || response.getContent() == null) {
+		if (!response.isValid() || response.getStringContent() == null) {
 			return null;
 		}
-		ConfigDAO.setEtagForGigs(context, response.getEtag());
+		ConfigDAO.setAttributeValue(ConfigDAO.ATTR_ETAG_FOR_GIGS, response.getEtag(), context);
 		try {
-			List<NewsArticle> articles = parseFromJson(response.getContent());
+			List<NewsArticle> articles = parseFromJson(response.getStringContent());
 			
 			if (articles != null && articles.size() > 0) { // Hackish fail-safe
 				SQLiteDatabase db = null;
@@ -185,10 +146,10 @@ public class NewsDAO {
 	
 	private static NewsArticle convertCursorToNewsArticle(Cursor cursor) {
 		return new NewsArticle(
-				cursor.getString(0),
-				cursor.getString(1),
-				getDate(cursor.getString(2)),
-				cursor.getString(3));
+				cursor.getString(URL),
+				cursor.getString(TITLE),
+				getDate(cursor.getString(NEWS_DATE)),
+				cursor.getString(CONTENT));
 	}
 	
 	public static List<NewsArticle> parseFromJson(String json) throws Exception {

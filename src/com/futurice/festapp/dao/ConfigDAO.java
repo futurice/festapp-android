@@ -73,7 +73,7 @@ public class ConfigDAO {
 		}
 		return new MapLayerOptions(layers);
 	}
-	
+
 	public static void updateMapLayers(Context context, MapLayerOptions mapLayerOptions) {
 		setAttributeValue(ATTR_SELECTED_MAP_LAYERS, mapLayerOptions.getSelectedValuesAsConcatenatedString(), context);
 	}
@@ -145,13 +145,13 @@ public class ConfigDAO {
 	public static void setPageTransportation(Context context, String page) {
 		setAttributeValue(ATTR_PAGE_TRANSPORTATION, page, context);
 	}
-	
+
 	private static List<String> getAllMapLayers(Context context) {
 		return MAP_LAYER_OPTIONS;
 	}
 	
 	
-	private static void setAttributeValue(String attributeName, String attributeValue, Context context) {
+	public static void setAttributeValue(String attributeName, String attributeValue, Context context) {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
@@ -232,14 +232,14 @@ public class ConfigDAO {
 	public static void updateFoodAndDrinkPageOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.FOOD_AND_DRINK_HTML_URL);
-		if (!response.isValid() || response.getContent() == null) {
+		if (!response.isValid() || response.getStringContent() == null) {
 			return;
 		}
-		setEtagForFoodAndDrink(context, response.getEtag());
+		setAttributeValue(ATTR_ETAG_FOR_FOODANDDRINK, response.getEtag(), context);
 
 		try {
 			String content = null;
-			JSONArray arr = new JSONArray(response.getContent());
+			JSONArray arr = new JSONArray(response.getStringContent());
 			for(int i = 0; i < arr.length(); i++) {
 				JSONObject o = arr.getJSONObject(i);
 				if(o.getString("title").equals("Makuelämykset")) {
@@ -252,7 +252,7 @@ public class ConfigDAO {
 				return;
 			}
 			
-			setPageFoodAndDrink(context, content);
+			setAttributeValue(ATTR_PAGE_FOODANDDRINK, content, context);
 		} catch (Exception e) {
 			Log.w(TAG, "Received invalid JSON-structure", e);
 		}
@@ -272,22 +272,22 @@ public class ConfigDAO {
 	public static void updateTransportationPageOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.TRANSPORTATION_HTML_URL);
-		if (!response.isValid() || response.getContent() == null) {
+		if (!response.isValid() || response.getStringContent() == null) {
 			return;
 		}
-		setEtagForTransportation(context, response.getEtag());
-		setPageTransportation(context, response.getContent());
+		setAttributeValue(ATTR_ETAG_FOR_TRANSPORTATION, response.getEtag(), context);
+		setAttributeValue(ATTR_PAGE_TRANSPORTATION, response.getStringContent(), context);
 	}
 	
 	public static void updateServicePagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.SERVICES_JSON_URL);
-		if (!response.isValid() || response.getContent() == null) {
+		if (!response.isValid() || response.getStringContent() == null) {
 			return;
 		}
 		setAttributeValue(ATTR_ETAG_FOR_SERVICES, response.getEtag(), context);
 		try {
-			setAttributeValues(parseServicesMapFromJson(context, response.getContent()), context);
+			setAttributeValues(parseServicesMapFromJson(context, response.getStringContent()), context);
 		} catch (Exception e) {
 			Log.e(TAG, "Error parsing Services JSON.", e);
 		}
@@ -296,12 +296,12 @@ public class ConfigDAO {
 	public static void updateFrequentlyAskedQuestionsPagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL);
-		if (!response.isValid() || response.getContent() == null) {
+		if (!response.isValid() || response.getStringContent() == null) {
 			return;
 		}
 		setAttributeValue(ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, response.getEtag(), context);
 		try {
-			JSONArray arr = new JSONArray(response.getContent());
+			JSONArray arr = new JSONArray(response.getStringContent());
 			String content = null;
 			for(int i = 0; i < arr.length(); i++) {
 				JSONObject o = arr.getJSONObject(i);

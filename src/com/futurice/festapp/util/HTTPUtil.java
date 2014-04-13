@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
@@ -27,7 +28,6 @@ import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -37,7 +37,6 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.HttpEntityWrapper;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
@@ -73,6 +72,9 @@ public class HTTPUtil {
 	public static final String MIME_TEXT_PLAIN = "text/plain";
 	public static final String HTTP_RESPONSE = "HTTP_RESPONSE";
 	public static final String HTTP_RESPONSE_ERROR = "HTTP_RESPONSE_ERROR";
+	
+	public static final String LANG = Locale.getDefault().getLanguage();
+
 
 	// Establish client once, as static field with static setup block.
 	// (This is a best practice in HttpClient docs - but will leave reference until *process* stopped on Android.)
@@ -108,14 +110,11 @@ public class HTTPUtil {
 		});
 	}
 
-	private final ResponseHandler<String> responseHandler;
-
 	/**
 	 * Constructor.
 	 *
 	 */
 	public HTTPUtil() {
-		responseHandler = new BasicResponseHandler();
 	}
 
 	/**
@@ -127,10 +126,15 @@ public class HTTPUtil {
 	}
 
 	public static boolean isContentUpdated(String urlString, String previousEtag) throws Exception {
+		if (FestAppConstants.F_FORCE_DATA_FETCH){
+			Log.d(TAG, "ETAG ignored!");
+			return true;
+		}
+
 		if (previousEtag == null || previousEtag.length() == 0) {
 			return true;
 		}
-		URL url = new URL(urlString);
+		URL url = new URL(constructURL(urlString, true) );
 
 		Socket socket = null;
 		PrintWriter writer = null;
@@ -209,7 +213,7 @@ public class HTTPUtil {
 	//
 	// private methods
 	//
-	private HTTPBackendResponse performRequest(final String contentType, final String url, final String user, final String pass,
+	private HTTPBackendResponse performRequest(final String contentType, String url, final String user, final String pass,
 			final Map<String, String> headers, final Map<String, String> params, final int requestType) {
 
 		// add user and pass to client credentials if present
@@ -245,7 +249,7 @@ public class HTTPUtil {
 		// handle POST or GET request respectively
 		HttpRequestBase method = null;
 		if (requestType == HTTPUtil.POST_TYPE) {
-			method = new HttpPost(FestAppConstants.BASE_URL+url);
+			method = new HttpPost(constructURL(url, false));
 			// data - name/value params
 			List<NameValuePair> nvps = null;
 			if ((params != null) && (params.size() > 0)) {
@@ -263,7 +267,8 @@ public class HTTPUtil {
 				}
 			}
 		} else if (requestType == HTTPUtil.GET_TYPE) {
-			method = new HttpGet(FestAppConstants.BASE_URL + url);
+
+			method = new HttpGet(constructURL(url, true));
 		}
 
 		// execute request
@@ -282,7 +287,7 @@ public class HTTPUtil {
 				httpBackendResponse.setValid(false);
 				return httpBackendResponse;
 			}
-			httpBackendResponse.setContent(StringUtil.convertStreamToString(httpResponse.getEntity().getContent()));
+			httpBackendResponse.setContent(httpResponse.getEntity().getContent());
 
 			Header[] headers = httpResponse.getHeaders("ETag");
 			if(headers == null || headers.length == 0) {
@@ -302,6 +307,15 @@ public class HTTPUtil {
 			httpBackendResponse.setValid(false);
 		}
 		return httpBackendResponse;
+	}
+	
+	private static String constructURL(String apiPath, boolean isGetRequest){
+		String url = FestAppConstants.BASE_URL + apiPath;
+		if(isGetRequest){
+			url += "?lang=" + LANG;
+		}
+		return url;
+		
 	}
 
 	static class GzipDecompressingEntity extends HttpEntityWrapper {
