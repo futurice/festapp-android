@@ -193,11 +193,6 @@ public class GigDAO {
 			return;
 		}
 		ConfigDAO.setAttributeValue(ConfigDAO.ATTR_ETAG_FOR_GIGS, response.getEtag(), context);
-	/*	
-<<<<<<< HEAD
-		List<Gig> gigs = parseFromJson(response.getContent(),context);
-=======
-*/
 		List<Gig> gigs = parseFromJson(response.getStringContent(), context);
 		if (gigs != null && gigs.size() >= 2) { // Hackish fail-safe
 			SQLiteDatabase db = null;
@@ -446,21 +441,6 @@ public class GigDAO {
 			}
 		}
 		return null;
-		/*
-=======
-
-	public static FestivalDay getFestivalDay(Date startTime) {
->>>>>>> upstream/master
-		if (startTime.after(GigDAO.getStartOfFriday()) && startTime.before(GigDAO.getStartOfSaturday())) {
-			return FestivalDay.FRIDAY;
-		}
-		if (startTime.after(GigDAO.getStartOfSaturday()) && startTime.before(GigDAO.getStartOfSunday())) {
-			return FestivalDay.SATURDAY;
-		}
-		if (startTime.after(GigDAO.getStartOfSunday()) && startTime.before(GigDAO.getEndOfSunday())) {
-			return FestivalDay.SUNDAY;
-		}
-		return null;*/
 	}
 	
 	private static Date parseDate(String date) {
