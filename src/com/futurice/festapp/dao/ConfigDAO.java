@@ -72,81 +72,12 @@ public class ConfigDAO {
 		return new MapLayerOptions(layers);
 	}
 	
-	public static void updateMapLayers(Context context, MapLayerOptions mapLayerOptions) {
-		setAttributeValue(ATTR_SELECTED_MAP_LAYERS, mapLayerOptions.getSelectedValuesAsConcatenatedString(), context);
-	}
-	
-	public static String getEtagForGigs(Context context) {
-		return getAttributeValue(ATTR_ETAG_FOR_GIGS, context);
-	}
-	
-	public static void setEtagForGigs(Context context, String etag) {
-		setAttributeValue(ATTR_ETAG_FOR_GIGS, etag, context);
-	}
-	
-	public static String getEtagForFoodAndDrink(Context context) {
-		return getAttributeValue(ATTR_ETAG_FOR_FOODANDDRINK, context);
-	}
-	
-	public static void setEtagForFoodAndDrink(Context context, String etag) {
-		setAttributeValue(ATTR_ETAG_FOR_FOODANDDRINK, etag, context);
-	}
-	
-	public static String getEtagForNews(Context context) {
-		return getAttributeValue(ATTR_ETAG_FOR_NEWS, context);
-	}
-	
-	public static void setEtagForNews(Context context, String etag) {
-		setAttributeValue(ATTR_ETAG_FOR_NEWS, etag, context);
-	}
-	
-	public static String getEtagForServices(Context context) {
-		return getAttributeValue(ATTR_ETAG_FOR_SERVICES, context);
-	}
-	
-	public static void setEtagForServices(Context context, String etag) {
-		setAttributeValue(ATTR_ETAG_FOR_SERVICES, etag, context);
-	}
-	
-	public static String getEtagForFrequentlyAskedQuestions(Context context) {
-		return getAttributeValue(ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, context);
-	}
-	
-	public static void setEtagForGeneralInfo(Context context, String etag) {
-		setAttributeValue(ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, etag, context);
-	}
-	
-	public static String getPageFoodAndDrink(Context context) {
-		return getAttributeValue(ATTR_PAGE_FOODANDDRINK, context);
-	}
-	
-	public static void setPageFoodAndDrink(Context context, String page) {
-		setAttributeValue(ATTR_PAGE_FOODANDDRINK, page, context);
-	}
-	
-	
-	public static String getEtagForTransportation(Context context) {
-		return getAttributeValue(ATTR_ETAG_FOR_TRANSPORTATION, context);
-	}
-	
-	public static void setEtagForTransportation(Context context, String etag) {
-		setAttributeValue(ATTR_ETAG_FOR_TRANSPORTATION, etag, context);
-	}
-	
-	public static String getPageTransportation(Context context) {
-		return getAttributeValue(ATTR_PAGE_TRANSPORTATION, context);
-	}
-	
-	public static void setPageTransportation(Context context, String page) {
-		setAttributeValue(ATTR_PAGE_TRANSPORTATION, page, context);
-	}
-	
 	private static List<String> getAllMapLayers(Context context) {
 		return MAP_LAYER_OPTIONS;
 	}
 	
 	
-	private static void setAttributeValue(String attributeName, String attributeValue, Context context) {
+	public static void setAttributeValue(String attributeName, String attributeValue, Context context) {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
@@ -230,7 +161,7 @@ public class ConfigDAO {
 		if (!response.isValid() || response.getStringContent() == null) {
 			return;
 		}
-		setEtagForFoodAndDrink(context, response.getEtag());
+		setAttributeValue(ATTR_ETAG_FOR_FOODANDDRINK, response.getEtag(), context);
 
 		try {
 			String content = null;
@@ -247,7 +178,7 @@ public class ConfigDAO {
 				return;
 			}
 			
-			setPageFoodAndDrink(context, content);
+			setAttributeValue(ATTR_PAGE_FOODANDDRINK, content, context);
 		} catch (Exception e) {
 			Log.w(TAG, "Received invalid JSON-structure", e);
 		}
@@ -270,8 +201,8 @@ public class ConfigDAO {
 		if (!response.isValid() || response.getStringContent() == null) {
 			return;
 		}
-		setEtagForTransportation(context, response.getEtag());
-		setPageTransportation(context, response.getStringContent());
+		setAttributeValue(ATTR_ETAG_FOR_TRANSPORTATION, response.getEtag(), context);
+		setAttributeValue(ATTR_PAGE_TRANSPORTATION, response.getStringContent(), context);
 	}
 	
 	public static void updateServicePagesOverHttp(Context context) {

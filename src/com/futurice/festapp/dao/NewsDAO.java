@@ -81,7 +81,7 @@ public class NewsDAO {
 		if (!response.isValid() || response.getStringContent() == null) {
 			return null;
 		}
-		ConfigDAO.setEtagForGigs(context, response.getEtag());
+		ConfigDAO.setAttributeValue(ConfigDAO.ATTR_ETAG_FOR_GIGS, response.getEtag(), context);
 		try {
 			List<NewsArticle> articles = parseFromJson(response.getStringContent());
 			

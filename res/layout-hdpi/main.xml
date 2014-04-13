@@ -111,9 +111,9 @@
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:src="@drawable/bands_icon" >
             </ImageView>
 
@@ -141,9 +141,9 @@
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:src="@drawable/insta_icon" >
             </ImageView>
             
@@ -177,9 +177,9 @@
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:src="@drawable/map_icon" >
             </ImageView>
             
@@ -207,9 +207,9 @@
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:src="@drawable/info_icon" >
             </ImageView>
 
