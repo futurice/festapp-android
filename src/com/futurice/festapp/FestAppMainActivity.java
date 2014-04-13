@@ -67,7 +67,7 @@ public class FestAppMainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		Date dateNow = new Date();
-		if (dateNow.before(GigDAO.getEndOfSunday())) {
+		if (dateNow.before(GigDAO.getEndOfFestival())) {
 			Intent i = new Intent("CHECK_ALARMS");
 			alarmIntent = PendingIntent.getBroadcast(this, 12345, i, PendingIntent.FLAG_CANCEL_CURRENT);
 			AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
