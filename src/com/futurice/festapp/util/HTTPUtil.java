@@ -245,7 +245,7 @@ public class HTTPUtil {
 		// handle POST or GET request respectively
 		HttpRequestBase method = null;
 		if (requestType == HTTPUtil.POST_TYPE) {
-			method = new HttpPost(url);
+			method = new HttpPost(FestAppConstants.BASE_URL+url);
 			// data - name/value params
 			List<NameValuePair> nvps = null;
 			if ((params != null) && (params.size() > 0)) {
@@ -263,7 +263,7 @@ public class HTTPUtil {
 				}
 			}
 		} else if (requestType == HTTPUtil.GET_TYPE) {
-			method = new HttpGet(url);
+			method = new HttpGet(FestAppConstants.BASE_URL + url);
 		}
 
 		// execute request
