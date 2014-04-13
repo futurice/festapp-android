@@ -41,7 +41,7 @@ public class MapAnimation extends TimerTask {
 
 	@Override
 	public void run() {
-		if (runningMove == true) {
+		if (runningMove) {
 			float speedAbs = speedX * speedX + speedY * speedY;
 
 			if (speedAbs >= (MAX_SPEED * MAX_SPEED)) {
@@ -60,8 +60,8 @@ public class MapAnimation extends TimerTask {
 			}
 		}
 
-		if (runningScale == true) {
-			if (scaleDirectionPlus == true) {
+		if (runningScale) {
+			if (scaleDirectionPlus) {
 				current_scale += SCALE_STEP * current_scale;
 				if (current_scale >= target_scale) {
 					runningScale = false;

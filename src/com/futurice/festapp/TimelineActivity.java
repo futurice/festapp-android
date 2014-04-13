@@ -87,7 +87,7 @@ public class TimelineActivity extends Activity {
 			if (v instanceof GigTimelineWidget) {
 				GigTimelineWidget gigWidget = (GigTimelineWidget) v;
 				gigWidget.setBackgroundResource(R.drawable.schedule_gig_hilight);
-				vibrator.vibrate(50l);
+				vibrator.vibrate(50L);
 				Intent artistInfo = new Intent(getBaseContext(), ArtistInfoActivity.class);
 				TimelineActivity.this.gigWidget = gigWidget;
 			    artistInfo.putExtra("gig.id", gigWidget.getGig().getId());
@@ -383,7 +383,7 @@ public class TimelineActivity extends Activity {
 	            		boolean upwardMotion = e1.getY() - e2.getY() > 0;
 	            		MediaPlayer mp = null;
             			mp = MediaPlayer.create(getBaseContext(), upwardMotion ? R.raw.guitar1 : R.raw.guitar2);
-	            		vibrator.vibrate(150l);
+	            		vibrator.vibrate(150L);
 	            		mp.start();
 	            		mp.setOnCompletionListener(new OnCompletionListener() {
 	            			@Override
