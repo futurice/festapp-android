@@ -50,11 +50,11 @@ public class FestAppService extends Service{
 				}
 				if (new Date().before(GigDAO.getEndOfSunday())) {
 					alertGigs();
-					if (counter % 12 == 0) {
+					if (counter % 12 == 0) { // every hour
 						Log.i(TAG, "Executing 1-hour operations.");
 						doFrequentTasks();
 					}
-					if (counter % (12 * 5) == 0) {
+					if (counter % (12 * 5) == 0) {// every 5 hours
 						Log.i(TAG, "Executing 5-hour operations.");
 						doSeldomTasks();
 					}
@@ -72,12 +72,8 @@ public class FestAppService extends Service{
 	};
 	
 	private void doAllTasks() {
-		updateGigs();
-		updateNewsArticles();
-		updateFoodAndDrinkPage();
-		updateTransportationPage();
-		updateServicesPageData();
-		updateFrequentlyAskedQuestionsPageData();
+		doSeldomTasks();
+		doFrequentTasks();
 	}
 	
 	private void doSeldomTasks() {
@@ -127,7 +123,7 @@ public class FestAppService extends Service{
 		return super.onStartCommand(intent, flags, startId);
 	}
 	
-	private int idCounter = 0;
+	private int idCounter = (int)System.currentTimeMillis();
 	private void notify(Gig gig) {
 		Intent contentIntent = new Intent(this, FestAppMainActivity.class);
 		contentIntent.putExtra("alert.gig.id", gig.getId());
@@ -157,10 +153,10 @@ public class FestAppService extends Service{
 		builder.setTicker(tickerText);
 		builder.setWhen(System.currentTimeMillis());
 		builder.setAutoCancel(true);
-        builder.setContentTitle(contentTitle);
-        builder.setContentText(contentText);
-        builder.setContentIntent(pending);
-        builder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
+		builder.setContentTitle(contentTitle);
+		builder.setContentText(contentText);
+		builder.setContentIntent(pending);
+		builder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
 
 		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		notificationManager.notify(tagId, 0, builder.getNotification());
