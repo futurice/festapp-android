@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
+import com.futurice.festapp.domain.GigLocation;
 import com.futurice.festapp.domain.to.DaySchedule;
 import com.futurice.festapp.domain.to.FestivalDay;
 import com.futurice.festapp.ui.GigTimelineWidget;
@@ -231,8 +232,9 @@ public class TimelineActivity extends Activity {
 
 			Date previousTime = timelineStartMoment;
 			for (Gig gig : stageGigs.get(stage)) {
-				if (previousTime.before(gig.getOnlyStartTime())) {
-					int margin = GigTimelineWidget.PIXELS_PER_MINUTE * CalendarUtil.getMinutesBetweenTwoDates(previousTime, gig.getOnlyStartTime());
+				GigLocation location = gig.getOnlyLocation();
+				if (previousTime.before(location.getStartTime())) {
+					int margin = GigTimelineWidget.PIXELS_PER_MINUTE * CalendarUtil.getMinutesBetweenTwoDates(previousTime, location.getStartTime());
 					TextView tv = new TextView(this);
 					tv.setHeight(ROW_HEIGHT);
 					tv.setWidth(margin);
@@ -241,7 +243,7 @@ public class TimelineActivity extends Activity {
 				
 				GigTimelineWidget gigWidget = new GigTimelineWidget(this, null, gig, previousTime);
 				stageRow.addView(gigWidget);
-				if (gig.getOnlyEndTime().equals(daySchedule.getLatestTime())) {
+				if (location.getEndTime().equals(daySchedule.getLatestTime())) {
 					int margin = GigTimelineWidget.PIXELS_PER_MINUTE * TIMELINE_END_OFFSET;
 					TextView tv = new TextView(this);
 					tv.setHeight(ROW_HEIGHT);
@@ -250,7 +252,7 @@ public class TimelineActivity extends Activity {
 				}
 				
 				gigWidget.setOnClickListener(gigWidgetClickListener);
-				previousTime = gig.getOnlyEndTime();
+				previousTime = location.getEndTime();
 			}
 			gigLayout.addView(getGuitarString(row++));
 			gigLayout.addView(stageRow);

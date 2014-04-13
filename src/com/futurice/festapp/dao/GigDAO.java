@@ -21,7 +21,6 @@ import com.futurice.festapp.domain.GigLocation;
 import com.futurice.festapp.domain.to.DaySchedule;
 import com.futurice.festapp.domain.to.FestivalDay;
 import com.futurice.festapp.domain.to.HTTPBackendResponse;
-import com.futurice.festapp.domain.to.StageType;
 import com.futurice.festapp.util.GigArtistNameComparator;
 import com.futurice.festapp.util.HTTPUtil;
 import com.futurice.festapp.util.JSONUtil;
@@ -46,7 +45,7 @@ public class GigDAO {
 	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 	
 	private static final String GIGS_QUERY = "SELECT gig.id, gig.artist, gig.description, gig.favorite, gig.active, gig.alerted, gig.youtube, gig.spotify," +
-			"location.stage, location.startTime, location.endTime FROM gig LEFT JOIN location ON (gig.id = location.id)";
+			"location.stage, location.startTime, location.endTime, gig.artistimage FROM gig LEFT JOIN location ON (gig.id = location.id)";
 	
 	private final static int GIG_ID = 0;
 	private final static int GIG_ARTIST = 1;
@@ -56,9 +55,10 @@ public class GigDAO {
 	private final static int GIG_ALERTED = 5;
 	private final static int GIG_YOUTUBE = 6;
 	private final static int GIG_SPOTIFY = 7;
-	private final static int lOCATION_STAGE = 8;
-	private final static int lOCATION_START_TIME = 9;
-	private final static int lOCATION_END_TIME = 10;
+	private final static int LOCATION_STAGE = 8;
+	private final static int LOCATION_START_TIME = 9;
+	private final static int LOCATION_END_TIME = 10;
+	private final static int GIG_ARTIST_IMAGE = 11;
 	
 	private static Date startOfFriday = null;
 	private static Date startOfSaturday = null;
@@ -149,6 +149,7 @@ public class GigDAO {
 					gig.setDescription(JSONUtil.getString(gigObj, "content"));
 					gig.setYoutube(JSONUtil.getString(gigObj,"youtube"));
 					gig.setSpotify(JSONUtil.getString(gigObj,"spotify"));
+					gig.setArtistImage(JSONUtil.getString(gigObj, "picture"));
 				}
 								
 				Date startTime = parseJsonDate(JSONUtil.getLong(gigObj, "time_start"));
@@ -204,10 +205,10 @@ public class GigDAO {
 		        Gig gig = convertCursorToGig(cursor, cursor.getString(GIG_ID));
 		        GigLocation location = convertCursorToGigLocation(cursor, cursor.getString(GIG_ID));
 		        gig.addLocation(location);
-		        if (!stageGigs.containsKey(gig.getOnlyStage())) {
-		        	stageGigs.put(gig.getOnlyStage(), new ArrayList<Gig>());
+		        if (!stageGigs.containsKey(location.getStage())) {
+		        	stageGigs.put(location.getStage(), new ArrayList<Gig>());
 		        }
-		        stageGigs.get(gig.getOnlyStage()).add(gig);
+		        stageGigs.get(location.getStage()).add(gig);
 			}
 		} finally {
 			closeDb(db, cursor);
@@ -218,12 +219,12 @@ public class GigDAO {
 	public static void updateGigsOverHttp(Context context) throws Exception {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.GIGS_JSON_URL);
-		if (!response.isValid() || response.getContent() == null) {
+		if (!response.isValid() || response.getStringContent() == null) {
 			return;
 		}
 		ConfigDAO.setAttributeValue(ConfigDAO.ATTR_ETAG_FOR_GIGS, response.getEtag(), context);
 		
-		List<Gig> gigs = parseFromJson(response.getContent());
+		List<Gig> gigs = parseFromJson(response.getStringContent());
 		if (gigs != null && gigs.size() >= 2) { // Hackish fail-safe
 			SQLiteDatabase db = null;
 			try {
@@ -338,14 +339,16 @@ public class GigDAO {
 				cursor.getInt(GIG_ACTIVE) > 0,
 				cursor.getInt(GIG_ALERTED) > 0,
 				cursor.getString(GIG_YOUTUBE),
-				cursor.getString(GIG_SPOTIFY));
+				cursor.getString(GIG_SPOTIFY),
+				cursor.getString(GIG_ARTIST_IMAGE));
+				
 	}
 	
 	private static GigLocation convertCursorToGigLocation(Cursor cursor, String id) {
 		return new GigLocation(
-				cursor.getString(lOCATION_STAGE),
-				parseDate(cursor.getString(lOCATION_START_TIME)),
-				parseDate(cursor.getString(lOCATION_END_TIME)));
+				cursor.getString(LOCATION_STAGE),
+				parseDate(cursor.getString(LOCATION_START_TIME)),
+				parseDate(cursor.getString(LOCATION_END_TIME)));
 	}
 	
 	public static ContentValues convertGigToContentValues(Gig gig) {
@@ -358,6 +361,7 @@ public class GigDAO {
 		values.put("alerted", gig.isAlerted());
 		values.put("youtube", gig.getYoutube());
 		values.put("spotify", gig.getSpotify());
+		values.put("artistimage", gig.getArtistImage());
 		return values;
 	}
 	
@@ -406,10 +410,7 @@ public class GigDAO {
 		}
 	}
 	
-	public static String findNextArtistOnStageMessage(StageType stage, Context context) {
-		if (stage == null) {
-			return null;
-		}
+	public static String findNextArtistOnStageMessage(String stageName, Context context) {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		String artistOnStage = null;
@@ -422,7 +423,7 @@ public class GigDAO {
 		        Gig gig = convertCursorToGig(cursor, id);
 		        GigLocation gigLocation = convertCursorToGigLocation(cursor, id);
 		        gig.addLocation(gigLocation);
-		        artistOnStage = getArtistOnStageMessage(gig, stage, context);
+		        artistOnStage = getArtistOnStageMessage(gig, stageName, context);
 		        if (artistOnStage != null) {
 		        	break;
 		        }
@@ -434,44 +435,34 @@ public class GigDAO {
 		return artistOnStage;
 	}
 	
-	private static String getArtistOnStageMessage(Gig gig, StageType stageType, Context context) {
-		String stage = gig.getOnlyStage();
-		if (stage == null) {
+
+	private static String getArtistOnStageMessage(Gig gig, String stageName, Context context) {
+		GigLocation location = gig.getOnlyLocation();
+
+		if (location == null) {
 			return null;
 		}
-		stage = stage.toLowerCase(Locale.getDefault()).trim();
+
+		stageName = stageName.toLowerCase(Locale.getDefault()).trim();
+
 		String matchedStage = null;
-		switch (stageType) {
-		case LOCATION:
-			if (stage.startsWith("mini")) {
-				matchedStage = "Minilavalla";
-			}
-			break;
-		case TENT:
-			if (stage.startsWith("niitty")) {
-				matchedStage = "Niittylavalla";
-			}
-			break;
-		case STAGE:
-			if (stage.startsWith("louna")) {
-				matchedStage = "Louna-lavalla";
-			}
-			break;
-		case PLACE:
-			if (stage.startsWith("ranta")) {
-				matchedStage = "Rantalavalla";
-			}
-			break;
-		case AREA:
-			if (stage.startsWith("teltta")) {
-				matchedStage = "Teltassa";
-			}
-			break;
+		if (stageName.equals("mini")) {
+			matchedStage = "Minilavalla";
+		} else if (stageName.equals("niitty")) {
+			matchedStage = "Niittylavalla";
+		} else if (stageName.equals("louna")) {
+			matchedStage = "Louna-lavalla";
+		} else if (stageName.equals("ranta")) {
+			matchedStage = "Rantalavalla";
+		} else if (stageName.equals("teltta")) {
+			matchedStage = "Teltassa";
+		} else {
+			return null;
 		}
-		
-		return (matchedStage != null) ? context.getString(R.string.mapActivity_nextOnStage, matchedStage, gig.getLocations().get(0).getTime(), gig.getArtist()) : null;
+
+		return context.getString(R.string.mapActivity_nextOnStage, matchedStage, location.getTime(), gig.getArtist());
 	}
-	
+
 	public static FestivalDay getFestivalDay(Date startTime) {
 		if (startTime.after(GigDAO.getStartOfFriday()) && startTime.before(GigDAO.getStartOfSaturday())) {
 			return FestivalDay.FRIDAY;

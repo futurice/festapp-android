@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
+import com.futurice.festapp.domain.GigLocation;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+
 import com.futurice.festapp.R;
 
 /**
@@ -49,14 +51,15 @@ public class GigTimelineWidget extends RelativeLayout {
 		starIcon.setChecked(gig.isFavorite());
 		starIcon.setOnCheckedChangeListener(favoriteListener);
 		setFavorite(gig.isFavorite());
-		if (gig.getOnlyDuration() < 20) {
+		GigLocation location = gig.getOnlyLocation();
+		if (location.getDuration() < 20) {
 			starIcon.setVisibility(View.GONE);
 		} else {
 			starIcon.setVisibility(View.VISIBLE);
 		}
 		
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-		int width = PIXELS_PER_MINUTE * gig.getOnlyDuration();
+		int width = PIXELS_PER_MINUTE * location.getDuration();
 		params.width = width;
 		int height = (int) getResources().getDimension(R.dimen.timeline_gigHeight);
 		params.height = height;

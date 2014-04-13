@@ -158,14 +158,14 @@ public class ConfigDAO {
 	public static void updateFoodAndDrinkPageOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.FOOD_AND_DRINK_HTML_URL);
-		if (!response.isValid() || response.getContent() == null) {
+		if (!response.isValid() || response.getStringContent() == null) {
 			return;
 		}
 		setAttributeValue(ATTR_ETAG_FOR_FOODANDDRINK, response.getEtag(), context);
 
 		try {
 			String content = null;
-			JSONArray arr = new JSONArray(response.getContent());
+			JSONArray arr = new JSONArray(response.getStringContent());
 			for(int i = 0; i < arr.length(); i++) {
 				JSONObject o = arr.getJSONObject(i);
 				if(o.getString("title").equals("Makuelämykset")) {
@@ -198,22 +198,22 @@ public class ConfigDAO {
 	public static void updateTransportationPageOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.TRANSPORTATION_HTML_URL);
-		if (!response.isValid() || response.getContent() == null) {
+		if (!response.isValid() || response.getStringContent() == null) {
 			return;
 		}
 		setAttributeValue(ATTR_ETAG_FOR_TRANSPORTATION, response.getEtag(), context);
-		setAttributeValue(ATTR_PAGE_TRANSPORTATION, response.getContent(), context);
+		setAttributeValue(ATTR_PAGE_TRANSPORTATION, response.getStringContent(), context);
 	}
 	
 	public static void updateServicePagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.SERVICES_JSON_URL);
-		if (!response.isValid() || response.getContent() == null) {
+		if (!response.isValid() || response.getStringContent() == null) {
 			return;
 		}
 		setAttributeValue(ATTR_ETAG_FOR_SERVICES, response.getEtag(), context);
 		try {
-			setAttributeValues(parseServicesMapFromJson(context, response.getContent()), context);
+			setAttributeValues(parseServicesMapFromJson(context, response.getStringContent()), context);
 		} catch (Exception e) {
 			Log.e(TAG, "Error parsing Services JSON.", e);
 		}
@@ -222,12 +222,12 @@ public class ConfigDAO {
 	public static void updateFrequentlyAskedQuestionsPagesOverHttp(Context context) {
 		HTTPUtil httpUtil = new HTTPUtil();
 		HTTPBackendResponse response = httpUtil.performGet(FestAppConstants.FREQUENTLY_ASKED_QUESTIONS_JSON_URL);
-		if (!response.isValid() || response.getContent() == null) {
+		if (!response.isValid() || response.getStringContent() == null) {
 			return;
 		}
 		setAttributeValue(ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS, response.getEtag(), context);
 		try {
-			JSONArray arr = new JSONArray(response.getContent());
+			JSONArray arr = new JSONArray(response.getStringContent());
 			String content = null;
 			for(int i = 0; i < arr.length(); i++) {
 				JSONObject o = arr.getJSONObject(i);

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.Notification.Builder;
 import android.app.NotificationManager;
@@ -21,7 +20,9 @@ import com.futurice.festapp.R;
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.dao.NewsDAO;
+import com.futurice.festapp.dao.StageDAO;
 import com.futurice.festapp.domain.Gig;
+import com.futurice.festapp.domain.GigLocation;
 import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.util.CalendarUtil;
 import com.futurice.festapp.util.FestAppConstants;
@@ -36,7 +37,6 @@ public class FestAppService extends Service{
 
 	private static final String TAG = FestAppService.class.getSimpleName();
 	private int counter = -1;
-	private PendingIntent alarmIntent;
 	private Semaphore dataUpdateSem = new Semaphore(1);
 	private TimerTask backendTask = new TimerTask() {
 		@Override
@@ -84,6 +84,7 @@ public class FestAppService extends Service{
 	}
 	
 	private void doFrequentTasks() {
+		updateStages();
 		updateGigs();
 		updateNewsArticles();
 	}
@@ -129,9 +130,10 @@ public class FestAppService extends Service{
 		contentIntent.putExtra("alert.gig.id", gig.getId());
 		PendingIntent pending = PendingIntent.getActivity(this, idCounter++, contentIntent, 0);
 
-		String tickerText = gig.getArtist() + ": " + gig.getOnlyStageAndTime();
+		GigLocation location = gig.getOnlyLocation();
+		String tickerText = gig.getArtist() + ": " + location.getStageAndTime();
 		notify(pending, gig.getId(), tickerText, gig.getArtist(),
-				gig.getOnlyStageAndTime());
+				location.getStageAndTime());
 	}
 
 	private void notify(NewsArticle article) {
@@ -258,25 +260,16 @@ public class FestAppService extends Service{
 		}
 	}
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		Intent intent = new Intent("CHECK_ALARMS");
-		alarmIntent = PendingIntent.getBroadcast(this, 12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-		long wait = FestAppConstants.SERVICE_INITIAL_WAIT_TIME;
-		long interval = FestAppConstants.SERVICE_FREQUENCY;
-		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, wait, interval, alarmIntent);
-		Log.i(TAG, "Creating service");
+	private void updateStages() {
+		try {
+			if (StageDAO.updateStagesOverHttp(getBaseContext())) {
+				Log.i(TAG, "Successfully updated Stages.");
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "Could not update Stages.", e);
+		}
 	}
 	
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		Log.i(TAG, "Destroying service");
-		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-		alarmManager.cancel(alarmIntent);
-	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
