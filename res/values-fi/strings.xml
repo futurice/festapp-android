@@ -19,6 +19,13 @@
     <string name="Friday">Perjantai</string>
     <string name="Saturday">Lauantai</string>
     <string name="Sunday">Sunnuntai</string>
+    <string name="Mon">Ma</string>
+    <string name="Tue">Ti</string>
+    <string name="Wed">Ke</string>
+    <string name="Thu">To</string>
+    <string name="Fri">Pe</string>
+    <string name="Sat">La</string>
+    <string name="Sun">Su</string>
     <string name="Yes">Kyllä</string>
     <string name="No">Ei</string>
     <string name="Stage">Lava</string>

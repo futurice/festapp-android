@@ -19,6 +19,13 @@
     <string name="Friday">Friday</string>
     <string name="Saturday">Saturday</string>
     <string name="Sunday">Sunday</string>
+    <string name="Mon">Mon</string>
+    <string name="Tue">Tue</string>
+    <string name="Wed">Wed</string>
+    <string name="Thu">Thu</string>
+    <string name="Fri">Fri</string>
+    <string name="Sat">Sat</string>
+    <string name="Sun">Sun</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     <string name="Stage">Stage</string>

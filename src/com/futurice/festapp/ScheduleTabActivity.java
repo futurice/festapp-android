@@ -49,7 +49,7 @@ public class ScheduleTabActivity extends TabActivity {
 		
 		View tabView = LayoutInflater.from(tabHost.getContext()).inflate(R.layout.schedule_tab_bg, null);
 		TextView text = (TextView) tabView.findViewById(R.id.tabsText);
-		text.setText(festivalDay.getLocalName(this));
+		text.setText(festivalDay.getLocalAbbrv(this));
 		
 		tabSpec.setIndicator(tabView);
 		
