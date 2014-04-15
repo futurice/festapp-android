@@ -4,30 +4,31 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <ImageView
+    <View
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/splash" />
-	<TextView
-	    android:id="@+id/splashLineOne"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="FestApp - Version Blank"
-	    android:layout_centerHorizontal="true"
-	    android:layout_above="@+id/splashLineTwo"
-	    android:textSize="18dp"
-	    android:textColor="#ff600926"/>
-	<TextView
-	    android:id="@+id/splashLineTwo"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="Open-sourced by Fonecta and Futurice"
-	    android:layout_centerHorizontal="true"
-	    android:layout_alignParentBottom="true"
-	    android:paddingBottom="8dp"
-	    android:textSize="18dp"
-	    android:textColor="#ff600926"/>
-	
-	
+        android:background="@drawable/splash"
+        android:orientation="vertical" />
+
+    <TextView
+        android:id="@+id/splashLineOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/splashLineTwo"
+        android:layout_centerHorizontal="true"
+        android:text="FestApp - Version Blank"
+        android:textColor="#ff600926"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/splashLineTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="8dp"
+        android:text="Open-sourced by Fonecta and Futurice"
+        android:textColor="#ff600926"
+        android:textSize="18dp" />
+
 </RelativeLayout>
