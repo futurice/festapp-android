@@ -104,7 +104,6 @@ public class GigDAO {
 	
 	public static List<Gig> findAllActive(Context context) {
 		Map<String, Gig> gigs = new HashMap<String, Gig>();
-		
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
@@ -130,9 +129,7 @@ public class GigDAO {
 		for (int i=0; i < list.length(); i++) {
 			try {
 				JSONObject gigObj = list.getJSONObject(i);
-								
 				String gigId = JSONUtil.getString(gigObj, "id");
-				
 				Gig gig = new Gig();
 				boolean isNewGig = true;
 				if (gigs.containsKey(gigId)) {
@@ -175,13 +172,10 @@ public class GigDAO {
 		if (time == null) {
 			return null;
 		}
-		
 		// Backend returns false timestamps
 		if (time == 4213275300L) {
 			time = 1373220900L;
 		}
-
-		
 		if(time > endOfFestival.getTime()) {
 			time = endOfFestival.getTime();
 		}
@@ -231,24 +225,17 @@ public class GigDAO {
 				int invalidGigs = 0, newGigs = 0, updatedGigs = 0;
 				for (Gig gig : gigs) {
 					if (isValidGig(gig)) {
-						response = httpUtil.performGet(gig.getArtistImage());
-						ContentValues contVal = new ContentValues();
-						contVal.put("picture", inputStreamToByteArray(response.getContent()));
-						contVal.put("id", gig.getArtistImage());
-
+						PictureDAO.updateOverHttp(gig, context);
 						Gig existingGig = findGig(db, gig.getId());
 						if (existingGig != null) {
 							gig.setFavorite(existingGig.isFavorite());
 							gig.setAlerted(existingGig.isAlerted());
 							db.update("gig", convertGigToContentValues(gig), "id = ?", new String[] {gig.getId()});
-							db.update("picture", contVal, "id = ?", new String[] {gig.getArtistImage()});
 							updatedGigs++;
 						} else {
 							db.insert("gig", "stage", convertGigToContentValues(gig));
-							db.insert("picture", null, contVal);
 							newGigs++;
 						}
-						
 						for (ContentValues cv : GigDAO.convertGigToLocationContentValues(gig)) {
 							db.insert("location", null, cv);
 						}
@@ -265,20 +252,6 @@ public class GigDAO {
 		} else {
 			Log.w(TAG, "Could not update Gigs.");
 		}
-	}
-	
-	private static byte[] inputStreamToByteArray(InputStream inputStream) throws IOException {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		int reads = inputStream.read();
-		
-		
-		while(reads != -1 ){
-
-			baos.write(reads);
-			reads = inputStream.read();
-			
-		}
-		return baos.toByteArray();
 	}
 
 	public static Gig findGig(Context context, String id) {

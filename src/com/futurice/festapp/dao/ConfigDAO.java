@@ -40,6 +40,7 @@ public class ConfigDAO {
 	public static final String ATTR_ETAG_FOR_TRANSPORTATION = "etag_transportation";
 	public static final String ATTR_ETAG_FOR_SERVICES = "etag_services";
 	public static final String ATTR_ETAG_FOR_FREQUENTLY_ASKED_QUESTIONS = "etag_generalinfo";
+	public static final String ATTR_ETAG_FOR_PICTURE = "etag_picture";
 	
 	public static final String ATTR_PAGE_FOODANDDRINK = "page_foodanddrink";
 	public static final String ATTR_PAGE_TRANSPORTATION = "page_transportation";

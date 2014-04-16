@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.futurice.festapp.dao.DatabaseHelper;
 import com.futurice.festapp.dao.GigDAO;
+import com.futurice.festapp.dao.PictureDAO;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.GigLocation;
 import com.futurice.festapp.util.FestAppConstants;
@@ -42,26 +43,31 @@ import com.futurice.festapp.R;
  * @author Pyry-Samuli Lahti / Futurice
  */
 public class ArtistInfoActivity extends Activity {
-	
+
 	private RelativeLayout artistInfoView;
 	private Gig gig;
 	private final static int HEIGHT = 400;
-	private final static String TAG = "ArtistInfoActivity";
 	private OnClickListener favoriteListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			if (v.getId() == R.id.artistInfoFavorite || v.getId() == R.id.artistInfoTable) {
+			if (v.getId() == R.id.artistInfoFavorite
+					|| v.getId() == R.id.artistInfoTable) {
 				ToggleButton favoriteButton = (ToggleButton) findViewById(R.id.artistInfoFavorite);
-				if(v.getId() == R.id.artistInfoTable) {
+				if (v.getId() == R.id.artistInfoTable) {
 					favoriteButton.setChecked(!favoriteButton.isChecked());
 				}
 				boolean isFavorite = favoriteButton.isChecked();
-				GigDAO.setFavorite(ArtistInfoActivity.this, gig.getId(), isFavorite);
+				GigDAO.setFavorite(ArtistInfoActivity.this, gig.getId(),
+						isFavorite);
 				gig.setFavorite(isFavorite);
 				if (isFavorite) {
-					Toast.makeText(getApplicationContext(), getString(R.string.artistInfoActivity_favoriteOn), Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),
+							getString(R.string.artistInfoActivity_favoriteOn),
+							Toast.LENGTH_SHORT).show();
 				} else {
-					Toast.makeText(getApplicationContext(), getString(R.string.artistInfoActivity_favoriteOff), Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),
+							getString(R.string.artistInfoActivity_favoriteOff),
+							Toast.LENGTH_SHORT).show();
 				}
 				HashMap<String, String> artistMap = new HashMap<String, String>();
 				artistMap.put("artist", gig.getArtist());
@@ -70,13 +76,13 @@ public class ArtistInfoActivity extends Activity {
 			}
 		}
 	};
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.artist_info);
-		
+
 		artistInfoView = (RelativeLayout) findViewById(R.id.artistInfoView);
 		gig = getGig();
 		populateViewValues();
@@ -84,26 +90,30 @@ public class ArtistInfoActivity extends Activity {
 		HashMap<String, String> artistMap = new HashMap<String, String>();
 		artistMap.put("artist", gig.getArtist());
 	}
-	
+
 	private void showInitialInfoOnFirstVisit(Context context) {
-		SharedPreferences pref = context.getSharedPreferences(FestAppConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
+		SharedPreferences pref = context.getSharedPreferences(
+				FestAppConstants.PREFERENCE_GLOBAL, Context.MODE_PRIVATE);
 		final String key = FestAppConstants.PREFERENCE_SHOW_FAVORITE_INFO;
 		if (pref.getBoolean(key, true)) {
 			Editor editor = pref.edit();
 			editor.putBoolean(key, false);
 			editor.commit();
-			UIUtil.showDialog(context.getString(R.string.timelineActivity_initialInfo_title), context.getString(R.string.timelineActivity_initialInfo_msg), context);
+			UIUtil.showDialog(
+					context.getString(R.string.timelineActivity_initialInfo_title),
+					context.getString(R.string.timelineActivity_initialInfo_msg),
+					context);
 		}
 	}
-	
-	
+
 	private void populateViewValues() {
 		if (gig == null) {
 			artistInfoView.setVisibility(View.GONE);
-			UIUtil.showDialog(getString(R.string.Error), getString(R.string.artistInfoActivity_invalidId), this);
+			UIUtil.showDialog(getString(R.string.Error),
+					getString(R.string.artistInfoActivity_invalidId), this);
 			return;
 		}
-		
+
 		artistInfoView.setVisibility(View.VISIBLE);
 		TextView artistName = (TextView) findViewById(R.id.artistName);
 		artistName.setText(gig.getArtist());
@@ -130,7 +140,7 @@ public class ArtistInfoActivity extends Activity {
 		infoTable.bringToFront();
 
 		displayArtistImage();
-		
+
 		TextView artistDescription = (TextView) findViewById(R.id.artistDescription);
 		artistDescription.setMovementMethod(LinkMovementMethod.getInstance());
 		artistDescription.setText(Html.fromHtml(gig.getDescription()));
@@ -138,48 +148,25 @@ public class ArtistInfoActivity extends Activity {
 				gig.getSpotify() != null ? View.VISIBLE : View.GONE);
 		findViewById(R.id.youtube).setVisibility(
 				gig.getYoutube() != null ? View.VISIBLE : View.GONE);
-		
+
 	}
 
 	private void displayArtistImage() {
 		ImageView artistImage = (ImageView) findViewById(R.id.artistImage);
 		LinearLayout artistImageContainer = (LinearLayout) findViewById(R.id.artistImageContainer);
-
-		SQLiteDatabase db = null;
-		Cursor cursor = null;
-		try{
-			db = new DatabaseHelper(this).getReadableDatabase();
-			cursor = db.rawQuery("SELECT picture FROM picture WHERE id = ?", new String[]{gig.getArtistImage()});
-			cursor.moveToFirst();
-			int flag = View.GONE;
-
-			if (cursor.getCount() > 0 && !cursor.isNull(0)) {
-				byte[] pic = cursor.getBlob(0);
-				try {
-					DisplayMetrics metrics = new DisplayMetrics();
-					getWindowManager().getDefaultDisplay().getMetrics(metrics);
-					int width = metrics.widthPixels;
-					int height = (int) (HEIGHT * getResources()
-							.getDisplayMetrics().density);
-					artistImage.setImageBitmap(UIUtil
-							.decodeSampledBitmapFromByteArray(pic, width,
-									height));
-					flag = View.VISIBLE;
-				} catch (Exception e) {
-					Log.e(TAG, "Problem loading file.");
-				}
-			}
-			artistImageContainer.setVisibility(flag);
-		} finally {
-			if (db != null) {
-				db.close();
-			}
-			if (cursor != null) {
-				cursor.close();
-			}
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		int width = metrics.widthPixels;
+		int height = (int) (HEIGHT * metrics.density);
+		Bitmap bitmap = PictureDAO.getFromDatabase(gig, width, height, this);
+		if (bitmap == null) {
+			artistImageContainer.setVisibility(View.GONE);
+			return;
 		}
+		artistImage.setImageBitmap(bitmap);
+		artistImageContainer.setVisibility(View.VISIBLE);
 	}
-	
+
 	private Gig getGig() {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -190,22 +177,25 @@ public class ArtistInfoActivity extends Activity {
 		}
 		return null;
 	}
-		
+
 	public void openSpotify(View v) {
 		try {
 			HashMap<String, String> artistMap = new HashMap<String, String>();
 			artistMap.put("artist", gig.getArtist());
-			Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getSpotify()) );
+			Intent launcher = new Intent(Intent.ACTION_VIEW, Uri.parse(gig
+					.getSpotify()));
 			startActivity(launcher);
-		} catch(ActivityNotFoundException anfe) {
-			Toast.makeText(this, R.string.artistInfoActivity_no_spotify, Toast.LENGTH_SHORT).show();
+		} catch (ActivityNotFoundException anfe) {
+			Toast.makeText(this, R.string.artistInfoActivity_no_spotify,
+					Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	public void openYoutube(View v) {
 		HashMap<String, String> artistMap = new HashMap<String, String>();
 		artistMap.put("artist", gig.getArtist());
-		Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getYoutube()) );
+		Intent launcher = new Intent(Intent.ACTION_VIEW, Uri.parse(gig
+				.getYoutube()));
 		startActivity(launcher);
 	}
 }
