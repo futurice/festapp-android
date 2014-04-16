@@ -1,5 +1,10 @@
 package com.futurice.festapp.dao;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.Buffer;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,8 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.TreeMap;
 
+import org.apache.http.entity.InputStreamEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -31,7 +38,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
+
 import com.futurice.festapp.R;
 
 /**
@@ -45,7 +55,7 @@ public class GigDAO {
 	private static final DateFormat DB_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 	
 	private static final String GIGS_QUERY = "SELECT gig.id, gig.artist, gig.description, gig.favorite, gig.active, gig.alerted, gig.youtube, gig.spotify," +
-			"location.stage, location.startTime, location.endTime, gig.artistimage FROM gig LEFT JOIN location ON (gig.id = location.id)";
+			"location.stage, location.startTime, location.endTime, gig.artistImage FROM gig LEFT JOIN location ON (gig.id = location.id)";
 	
 	private final static int GIG_ID = 0;
 	private final static int GIG_ARTIST = 1;
@@ -94,7 +104,6 @@ public class GigDAO {
 	
 	public static List<Gig> findAllActive(Context context) {
 		Map<String, Gig> gigs = new HashMap<String, Gig>();
-		
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
@@ -120,9 +129,7 @@ public class GigDAO {
 		for (int i=0; i < list.length(); i++) {
 			try {
 				JSONObject gigObj = list.getJSONObject(i);
-								
 				String gigId = JSONUtil.getString(gigObj, "id");
-				
 				Gig gig = new Gig();
 				boolean isNewGig = true;
 				if (gigs.containsKey(gigId)) {
@@ -165,13 +172,10 @@ public class GigDAO {
 		if (time == null) {
 			return null;
 		}
-		
 		// Backend returns false timestamps
 		if (time == 4213275300L) {
 			time = 1373220900L;
 		}
-
-		
 		if(time > endOfFestival.getTime()) {
 			time = endOfFestival.getTime();
 		}
@@ -221,6 +225,7 @@ public class GigDAO {
 				int invalidGigs = 0, newGigs = 0, updatedGigs = 0;
 				for (Gig gig : gigs) {
 					if (isValidGig(gig)) {
+						PictureDAO.updateOverHttp(gig, context);
 						Gig existingGig = findGig(db, gig.getId());
 						if (existingGig != null) {
 							gig.setFavorite(existingGig.isFavorite());
@@ -231,7 +236,6 @@ public class GigDAO {
 							db.insert("gig", "stage", convertGigToContentValues(gig));
 							newGigs++;
 						}
-						
 						for (ContentValues cv : GigDAO.convertGigToLocationContentValues(gig)) {
 							db.insert("location", null, cv);
 						}
@@ -249,7 +253,7 @@ public class GigDAO {
 			Log.w(TAG, "Could not update Gigs.");
 		}
 	}
-	
+
 	public static Gig findGig(Context context, String id) {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;

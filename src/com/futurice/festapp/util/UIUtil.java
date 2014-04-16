@@ -40,6 +40,18 @@ public class UIUtil {
 	    return BitmapFactory.decodeResource(res, resId, options);
 	}
 	
+	public static Bitmap decodeSampledBitmapFromByteArray(byte[] array, int reqWidth, int reqHeight) {
+	    final BitmapFactory.Options options = new BitmapFactory.Options();
+	    options.inJustDecodeBounds = true;
+		BitmapFactory.decodeByteArray(array, 0, array.length, options);
+
+
+	    options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+	    options.inJustDecodeBounds = false;
+
+	    return BitmapFactory.decodeByteArray(array, 0, array.length, options);
+	}
+
 	private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
     final int height = options.outHeight;
     final int width = options.outWidth;
