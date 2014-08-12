@@ -1,8 +1,9 @@
 package de.serviceexperiencecamp.android.network;
 
-import de.serviceexperiencecamp.android.models.pojo.SearchEngineResults;
+import de.serviceexperiencecamp.android.models.pojo.Event;
 import com.squareup.okhttp.OkHttpClient;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import retrofit.RestAdapter;
@@ -11,20 +12,20 @@ import retrofit.client.OkClient;
 import rx.Observable;
 
 /**
- * Entry point for all requests to **My Project** API.
+ * Entry point for all requests to Service Experience Camp API.
  * Uses Retrofit library to abstract the actual REST API into a service.
  */
-public class MyProjectApi {
+public class SecApi {
 
-    private static MyProjectApi instance;
-    private SearchEngineService searchService;
+    private static SecApi instance;
+    private ConferenceService conferenceService;
 
     /**
      * Returns the instance of this singleton.
      */
-    public static MyProjectApi getInstance() {
+    public static SecApi getInstance() {
         if (instance == null) {
-            instance = new MyProjectApi();
+            instance = new SecApi();
         }
         return instance;
     }
@@ -32,9 +33,9 @@ public class MyProjectApi {
     /**
      * Private singleton constructor.
      */
-    private MyProjectApi() {
+    private SecApi() {
         RestAdapter restAdapter = buildRestAdapter();
-        this.searchService = restAdapter.create(SearchEngineService.class);
+        this.conferenceService = restAdapter.create(ConferenceService.class);
     }
 
     /**
@@ -43,8 +44,6 @@ public class MyProjectApi {
     private RestAdapter buildRestAdapter() {
         return new RestAdapter.Builder()
             .setEndpoint(ApiConstants.BASE_URL)
-            // Out-comment the following line if you want to use the default converter Gson.
-            .setConverter(new JacksonConverter())
             .setClient(getHttpClient())
             .build();
     }
@@ -59,13 +58,7 @@ public class MyProjectApi {
         return new OkClient(httpClient);
     }
 
-    /**
-     * Does a text search for a given query, and returns an Observable of the results.
-     *
-     * @param query the query string
-     * @return an Observable with the results
-     */
-    public Observable<SearchEngineResults> getSearchEngineResults(String query) {
-        return this.searchService.search(query);
+    public Observable<List<Event>> getAllEvents() {
+        return this.conferenceService.getAllEvents();
     }
 }

@@ -41,10 +41,6 @@
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.** { *; }
 
-# Keep Jackson stuff
--keep class org.codehaus.** { *; }
--keep class com.fasterxml.jackson.annotation.** { *; }
-
 # Keep these for GSON and Jackson
 -keepattributes Signature
 -keepattributes *Annotation*
