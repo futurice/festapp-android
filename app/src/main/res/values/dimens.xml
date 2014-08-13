@@ -13,4 +13,6 @@
     <dimen name="font_size_normal">16dp</dimen>
     <dimen name="font_size_small">12dp</dimen>
 
+    <dimen name="timeline_event_height">36dp</dimen>
+
 </resources>
