@@ -1,11 +1,10 @@
 package de.serviceexperiencecamp.android.fragments;
 
 import android.app.Fragment;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,7 +24,7 @@ import de.serviceexperiencecamp.android.utils.SubscriptionUtils;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,19 +44,19 @@ public class ScheduleFragment extends Fragment {
 
     private TextView bookNameTextView;
 
-    private static final int HOUR_MARKER_WIDTH = 24;
-    private static int ROW_HEIGHT = 66;
-    private static final int TIMELINE_END_OFFSET = 30;
+    private static int ROW_HEIGHT = 66; // dp
+    private static final int TIMELINE_END_OFFSET = 30; // minutes
     private static final int SWIPE_MIN_DISTANCE = 100;
     private static final int SWIPE_THRESHOLD_VELOCITY = 100;
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
+    private int hourMarkerWidthPx = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventsModel = EventsModel.getInstance();
-
+        hourMarkerWidthPx = getResources().getDimensionPixelSize(R.dimen.timeline_hour_marker_width);
     }
 
     @Override
@@ -129,14 +128,14 @@ public class ScheduleFragment extends Fragment {
     private void updateCurrentTimeline(DaySchedule daySchedule) {
         DateTime timelineStartMoment = getTimelineStartMoment(daySchedule);
         DateTime timelineEndMoment = getTimelineEndMoment(daySchedule);
-        DateTime now = DateTime.now();
+        DateTime now = daySchedule.getEarliestTime().plusMinutes(50);  // DateTime.now();
         View line = getView().findViewById(R.id.timelineNowLine);
         line.bringToFront();
         if (now.isAfter(timelineStartMoment) && now.isBefore(timelineEndMoment)) {
             line.setVisibility(View.VISIBLE);
             TextView marginView = (TextView) getView().findViewById(R.id.timelineNowMargin);
             int duration = getDurationInMinutes(timelineStartMoment, now);
-            int leftMargin = duration * EventTimelineView.PIXELS_PER_MINUTE - HOUR_MARKER_WIDTH/2 - 3;
+            int leftMargin = duration * dpToPx(EventTimelineView.MINUTE_WIDTH) - hourMarkerWidthPx/2 - 3;
             //initialScrollTo = leftMargin - getWindowManager().getDefaultDisplay().getWidth()/2;
             marginView.setWidth(leftMargin);
         } else {
@@ -153,42 +152,42 @@ public class ScheduleFragment extends Fragment {
 
         DateTime cursor = timelineStartMoment;
 
+        // Left margin on the earliest time number layout
         int minutes = 60 - cursor.getMinuteOfHour();
         TextView tv = new TextView(getActivity());
-        tv.setHeight(ROW_HEIGHT);
-        tv.setWidth(EventTimelineView.PIXELS_PER_MINUTE * minutes - getResources().getDimensionPixelSize(R.dimen.timeline_hourText_offset));
+        tv.setHeight(dpToPx(ROW_HEIGHT));
+        tv.setWidth(dpToPx(EventTimelineView.MINUTE_WIDTH) * minutes);
         numbersLayout.addView(tv);
 
+        // Left margin on the earliest time vertical line
         tv = new TextView(getActivity());
-        tv.setWidth(EventTimelineView.PIXELS_PER_MINUTE * minutes - HOUR_MARKER_WIDTH / 2);
+        tv.setWidth(dpToPx(EventTimelineView.MINUTE_WIDTH) * minutes);
         timelineVerticalLines.addView(tv);
         cursor = cursor.plusMinutes(minutes);
 
         while (cursor.isBefore(timelineEndMoment)) {
-            tv = new TextView(this.getActivity());
-            tv.setTextColor(Color.parseColor("#e32c22"));
-            tv.setTypeface(null, Typeface.BOLD);
+            minutes = getDurationInMinutes(cursor, timelineEndMoment);
+            minutes = (minutes < 60) ? minutes : 60;
 
+            // Add the hour text
+            tv = new TextView(this.getActivity());
+            tv.setTextColor(getResources().getColor(R.color.orange));
             String hour = "" + cursor.getHourOfDay() + ":00";
             if (hour.length() == 4) {
                 hour = "0" + hour;
             }
             tv.setText(hour);
-            tv.setMinHeight(ROW_HEIGHT);
-            minutes = getDurationInMinutes(cursor, timelineEndMoment);
-            minutes = (minutes < 60) ? minutes : 60;
-            tv.setMinWidth(EventTimelineView.PIXELS_PER_MINUTE * minutes);
+            tv.setGravity(Gravity.LEFT|Gravity.BOTTOM);
+            tv.setWidth(dpToPx(EventTimelineView.MINUTE_WIDTH) * minutes);
+            tv.setHeight(getResources().getDimensionPixelSize(R.dimen.spacing_large));
             numbersLayout.addView(tv);
 
+            // Add vertical line
             this.getActivity().getLayoutInflater().inflate(R.layout.timeline_hour_marker, timelineVerticalLines);
 
+            // Add right margin for the vertical line
             tv = new TextView(this.getActivity());
-            tv.setTextColor(Color.parseColor("#e32c22"));
-            tv.setTypeface(null, Typeface.BOLD);
-
-            tv.setText("");
-            int width = EventTimelineView.PIXELS_PER_MINUTE * minutes - (HOUR_MARKER_WIDTH);
-            tv.setWidth(width);
+            tv.setWidth(dpToPx(EventTimelineView.MINUTE_WIDTH) * minutes - hourMarkerWidthPx);
             timelineVerticalLines.addView(tv);
 
             cursor = cursor.plusHours(1);
@@ -210,7 +209,7 @@ public class ScheduleFragment extends Fragment {
         ViewGroup gigLayout = (ViewGroup) getView().findViewById(R.id.gigLayout);
         TextView textView = new TextView(this.getActivity());
         textView.setText("");
-        textView.setHeight(ROW_HEIGHT);
+        textView.setHeight(dpToPx(ROW_HEIGHT));
         textView.setPadding(1, 10, 1, 1);
         gigLayout.addView(textView);
 
@@ -227,14 +226,14 @@ public class ScheduleFragment extends Fragment {
             stageRow.setOrientation(LinearLayout.HORIZONTAL);
 
             DateTime previousTime = timelineStartMoment;
-            for (Event event : eventsByLocation.get(location)) {
+            for (Event event : getSortedEventsOfLocation(eventsByLocation, location)) {
                 DateTime eventStartTime = new DateTime(event.start_time);
                 DateTime eventEndTime = new DateTime(event.end_time);
                 if (previousTime.isBefore(eventStartTime)) {
                     int duration = getDurationInMinutes(previousTime, eventStartTime);
-                    int margin = EventTimelineView.PIXELS_PER_MINUTE * duration;
+                    int margin = dpToPx(EventTimelineView.MINUTE_WIDTH) * duration;
                     TextView tv = new TextView(getActivity());
-                    tv.setHeight(ROW_HEIGHT);
+                    tv.setHeight(dpToPx(ROW_HEIGHT));
                     tv.setWidth(margin);
                     stageRow.addView(tv);
                 }
@@ -247,9 +246,9 @@ public class ScheduleFragment extends Fragment {
                 );
                 stageRow.addView(gigWidget);
                 if (eventEndTime.equals(daySchedule.getLatestTime())) {
-                    int margin = EventTimelineView.PIXELS_PER_MINUTE * TIMELINE_END_OFFSET;
+                    int margin = dpToPx(EventTimelineView.MINUTE_WIDTH) * TIMELINE_END_OFFSET;
                     TextView tv = new TextView(getActivity());
-                    tv.setHeight(ROW_HEIGHT);
+                    tv.setHeight(dpToPx(ROW_HEIGHT));
                     tv.setWidth(margin);
                     stageRow.addView(tv);
                 }
@@ -259,6 +258,24 @@ public class ScheduleFragment extends Fragment {
             }
             gigLayout.addView(stageRow);
         }
+    }
+
+    private static List<Event> getSortedEventsOfLocation(
+        Map<String, List<Event>> eventsByLocation,
+        String location)
+    {
+        List<Event> listEvents = eventsByLocation.get(location);
+        java.util.Collections.sort(listEvents, new Comparator<Event>() { @Override public int compare(Event lhs, Event rhs) {
+            DateTime lhsStart = new DateTime(lhs.start_time);
+            DateTime rhsStart = new DateTime(rhs.start_time);
+            if (lhsStart.isAfter(rhsStart))
+                return 1;
+            else if (lhsStart.isBefore(rhsStart))
+                return -1;
+            else
+                return 0;
+        }});
+        return listEvents;
     }
 
     class GuitarSwipeListener extends GestureDetector.SimpleOnGestureListener {
@@ -281,6 +298,18 @@ public class ScheduleFragment extends Fragment {
             }
             return false;
         }
+    }
+
+    private int dpToPx(int dp) {
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        float displayDensity = metrics.density;
+        return (int) (dp * displayDensity);
+    }
+
+    private int pxToDp(int px) {
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        float displayDensity = metrics.density;
+        return (int) (px / displayDensity);
     }
 
     private void subscribeTextView(Observable<String> observable, final TextView textView) {

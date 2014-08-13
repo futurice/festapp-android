@@ -1,16 +1,11 @@
 <LinearLayout
-    style="@style/ContentContainer"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    style="@style/AgendaFragment"
     >
-
-    <!--<ListView android:id="@+id/list_events"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--/>-->
 
     <TextView
         android:id="@+id/title"
@@ -19,24 +14,7 @@
         android:layout_height="wrap_content"
         />
 
-    <!--<ImageView-->
-        <!--android:id="@+id/timelineVerticalBg"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="@dimen/timeline_vertical_line_height"-->
-        <!--android:scaleType="fitXY"-->
-        <!--android:background="#660044"-->
-        <!--/>-->
-
-    <!--<ImageView-->
-        <!--android:id="@+id/timelineWoodenBg"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="@dimen/spacing_large"-->
-        <!--android:layout_below="@id/timelineVerticalBg"-->
-        <!--android:scaleType="fitXY"-->
-        <!--android:background="@color/blue"-->
-        <!--/>-->
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="330dp"
         android:orientation="horizontal"
@@ -47,57 +25,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="top"
-            android:background="@color/black"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
             >
 
             <TextView
-                style="@style/AgendaLocation"
                 android:text="Galerie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/AgendaLocation"
                 />
 
             <TextView
-                style="@style/AgendaLocation"
                 android:text="Raum 2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/AgendaLocation"
                 />
 
             <TextView
-                style="@style/AgendaLocation"
                 android:text="Raum 3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/AgendaLocation"
                 />
 
             <TextView
-                style="@style/AgendaLocation"
                 android:text="Loft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/AgendaLocation"
                 />
 
             <TextView
-                style="@style/AgendaLocation"
                 android:text="Raum 5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/AgendaLocation"
                 />
 
             <TextView
-                style="@style/AgendaLocation"
                 android:text="Atelier"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/AgendaLocation"
                 />
         </LinearLayout>
 
         <HorizontalScrollView
             android:id="@+id/timelineScrollView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/stageLayout"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:fadingEdge="none"
             android:scrollbarThumbHorizontal="@drawable/scroll_thumb"
             >
@@ -118,14 +87,13 @@
 
                     <LinearLayout
                         android:id="@+id/timelineNumbers"
-                        style="@style/ContentText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/spacing_small"
                         android:adjustViewBounds="true"
                         android:orientation="horizontal"
+                        style="@style/ContentText"
                         />
 
                     <LinearLayout
@@ -133,7 +101,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
-                        android:layout_marginTop="@dimen/spacing_normal"
+                        android:layout_marginTop="@dimen/spacing_large"
                         android:orientation="horizontal"
                         />
 
@@ -161,6 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_below="@+id/RelativeLayout1"
                     >
 
                     <LinearLayout
@@ -175,6 +144,7 @@
 
             </RelativeLayout>
         </HorizontalScrollView>
-    </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

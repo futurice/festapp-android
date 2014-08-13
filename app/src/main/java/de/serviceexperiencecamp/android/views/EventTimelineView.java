@@ -3,45 +3,44 @@ package de.serviceexperiencecamp.android.views;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
 import java.util.Date;
-import java.util.HashMap;
 
 import de.serviceexperiencecamp.android.R;
 import de.serviceexperiencecamp.android.models.pojo.Event;
 
 public class EventTimelineView extends RelativeLayout {
 
-    public static final int PIXELS_PER_MINUTE = 5;
+    public static final int MINUTE_WIDTH = 2; // dp
     private Event event;
+    private TextView eventTitle;
+
 //    private ToggleButton starIcon;
-    private TextView artistLabel;
-    private CompoundButton.OnCheckedChangeListener favoriteListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//    private CompoundButton.OnCheckedChangeListener favoriteListener = new CompoundButton.OnCheckedChangeListener() {
+//        @Override
+//        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //            GigDAO.setFavorite(getContext(), gig.getId(), isChecked);
 //            setFavorite(isChecked);
-        }
-    };
+//        }
+//    };
 
     public EventTimelineView(Context context, AttributeSet attrs, Event event, Date previousTime) {
         super(context, attrs);
         this.event = event;
         LayoutInflater.from(context).inflate(R.layout.event_timeline_box, this, true);
-        artistLabel = (TextView) findViewById(R.id.artistName);
-        artistLabel.setTextColor(Color.parseColor("#FFFFFF"));
-        artistLabel.setText(event.artists);
+        eventTitle = (TextView) findViewById(R.id.artistName);
+        eventTitle.setTextColor(Color.parseColor("#FFFFFF"));
+        eventTitle.setText(event.title);
 
-        this.setBackgroundColor(Color.parseColor("#000000"));
+        this.setBackgroundColor(Color.parseColor("#008800"));
 //        starIcon = (ToggleButton) findViewById(R.id.starIcon);
 //        starIcon.setChecked(false/*gig.isFavorite()*/);
 //        starIcon.setOnCheckedChangeListener(favoriteListener);
@@ -53,12 +52,27 @@ public class EventTimelineView extends RelativeLayout {
 //            starIcon.setVisibility(View.VISIBLE);
 //        }
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        int width = PIXELS_PER_MINUTE * getDuration(event);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.WRAP_CONTENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        int width = dpToPx(MINUTE_WIDTH) * getDuration(event);
         params.width = width;
         int height = (int) getResources().getDimension(R.dimen.timeline_event_height);
         params.height = height;
         setLayoutParams(params);
+    }
+
+    private int dpToPx(int dp) {
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        float displayDensity = metrics.density;
+        return (int) (dp * displayDensity);
+    }
+
+    private int pxToDp(int px) {
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        float displayDensity = metrics.density;
+        return (int) (px / displayDensity);
     }
 
     /**
@@ -76,10 +90,10 @@ public class EventTimelineView extends RelativeLayout {
 //        starIcon.setChecked(fav);
 //        if (fav) {
 //            setBackgroundResource(R.drawable.schedule_gig_favorite);
-//            artistLabel.setTextColor(Color.parseColor("#a95800"));
+//            eventTitle.setTextColor(Color.parseColor("#a95800"));
 //        } else {
 //            setBackgroundResource(R.drawable.schedule_gig);
-//            artistLabel.setTextColor(Color.parseColor("#fbf6dd"));
+//            eventTitle.setTextColor(Color.parseColor("#fbf6dd"));
 //        }
 //        HashMap<String, String> artistMap = new HashMap<String, String>();
 //        artistMap.put("artist", gig.getArtist());

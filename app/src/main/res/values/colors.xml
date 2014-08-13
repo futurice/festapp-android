@@ -2,16 +2,17 @@
 <resources>
 
     <!-- Grayscale -->
-    <color name="white"     >#FFFFFF</color>
+    <color name="white"     >#F5F5F5</color>
     <color name="gray_light">#DFDFDF</color>
-    <color name="gray"      >#939393</color>
-    <color name="gray_dark" >#5F5F5F</color>
-    <color name="black"     >#303030</color>
+    <color name="gray"      >#363636</color>
+    <color name="gray_dark" >#202020</color>
+    <color name="black"     >#000000</color>
 
     <!-- Basic colors -->
     <color name="green">#27D34D</color>
     <color name="blue">#2A91BD</color>
-    <color name="orange">#FF9D2F</color>
+    <color name="orange">#ff9600</color>
+    <color name="pink">#e20e79</color>
     <color name="red">#FF432F</color>
 
 </resources>
