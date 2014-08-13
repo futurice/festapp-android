@@ -23,7 +23,7 @@ public class EventTimelineView extends RelativeLayout {
 
     public static final int PIXELS_PER_MINUTE = 5;
     private Event event;
-    private ToggleButton starIcon;
+//    private ToggleButton starIcon;
     private TextView artistLabel;
     private CompoundButton.OnCheckedChangeListener favoriteListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -38,17 +38,20 @@ public class EventTimelineView extends RelativeLayout {
         this.event = event;
         LayoutInflater.from(context).inflate(R.layout.event_timeline_box, this, true);
         artistLabel = (TextView) findViewById(R.id.artistName);
+        artistLabel.setTextColor(Color.parseColor("#FFFFFF"));
         artistLabel.setText(event.artists);
 
-        starIcon = (ToggleButton) findViewById(R.id.starIcon);
-        starIcon.setChecked(false/*gig.isFavorite()*/);
-        starIcon.setOnCheckedChangeListener(favoriteListener);
+        this.setBackgroundColor(Color.parseColor("#000000"));
+//        starIcon = (ToggleButton) findViewById(R.id.starIcon);
+//        starIcon.setChecked(false/*gig.isFavorite()*/);
+//        starIcon.setOnCheckedChangeListener(favoriteListener);
+//        starIcon.setVisibility(View.GONE);
         /*setFavorite(gig.isFavorite());*/
-        if (getDuration(event) < 20) {
-            starIcon.setVisibility(View.GONE);
-        } else {
-            starIcon.setVisibility(View.VISIBLE);
-        }
+//        if (getDuration(event) < 20) {
+//            starIcon.setVisibility(View.GONE);
+//        } else {
+//            starIcon.setVisibility(View.VISIBLE);
+//        }
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         int width = PIXELS_PER_MINUTE * getDuration(event);

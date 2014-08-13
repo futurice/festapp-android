@@ -23,9 +23,12 @@ import de.serviceexperiencecamp.android.models.EventsModel;
 import de.serviceexperiencecamp.android.models.pojo.Event;
 import de.serviceexperiencecamp.android.utils.SubscriptionUtils;
 
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.serviceexperiencecamp.android.views.EventTimelineView;
 import rx.Observable;
@@ -82,9 +85,8 @@ public class ScheduleFragment extends Fragment {
         getDaySchedule$(eventsModel.getEvents$())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<DaySchedule>() { @Override public void call(DaySchedule daySchedule) {
-                Log.d("asderf", "subscriber to daySchedule");
                 addTimeline(daySchedule);
-                // addGigs(daySchedule);
+                addGigs(daySchedule);
             }});
     }
 
@@ -133,7 +135,7 @@ public class ScheduleFragment extends Fragment {
         if (now.isAfter(timelineStartMoment) && now.isBefore(timelineEndMoment)) {
             line.setVisibility(View.VISIBLE);
             TextView marginView = (TextView) getView().findViewById(R.id.timelineNowMargin);
-            int duration = (int) (new Duration(timelineStartMoment, now)).getStandardMinutes();
+            int duration = getDurationInMinutes(timelineStartMoment, now);
             int leftMargin = duration * EventTimelineView.PIXELS_PER_MINUTE - HOUR_MARKER_WIDTH/2 - 3;
             //initialScrollTo = leftMargin - getWindowManager().getDefaultDisplay().getWidth()/2;
             marginView.setWidth(leftMargin);
@@ -173,7 +175,7 @@ public class ScheduleFragment extends Fragment {
             }
             tv.setText(hour);
             tv.setMinHeight(ROW_HEIGHT);
-            minutes = (int) (new Duration(cursor, timelineEndMoment)).getStandardMinutes();
+            minutes = getDurationInMinutes(cursor, timelineEndMoment);
             minutes = (minutes < 60) ? minutes : 60;
             tv.setMinWidth(EventTimelineView.PIXELS_PER_MINUTE * minutes);
             numbersLayout.addView(tv);
@@ -194,64 +196,70 @@ public class ScheduleFragment extends Fragment {
         updateCurrentTimeline(daySchedule);
     }
 
-//    private void addGigs(DaySchedule daySchedule) {
-//        Map<String, List<Gig>> stageGigs = daySchedule.getStageGigs();
-//
-//        TextView textView = new TextView(this);
-//        textView.setText("");
-//        textView.setHeight(ROW_HEIGHT);
-//        textView.setPadding(1, 10, 1, 1);
-//        gigLayout.addView(textView);
-//        int row = 1;
-//
-//        List<String> stages = new ArrayList<String>(stageGigs.keySet());
-//        String[] orderedStages = new String[]{"location", "area", "stage", "tent", "place"};
-//        for(int i = 0; i < orderedStages.length; i++)  {
-//            String stage = orderedStages[i];
-//            if(stages.contains(stage)) {
-//                stages.remove(stage);
-//                stages.add(i, stage);
-//            }
-//        }
-//
-//        for (String stage : stages) {
-//            LinearLayout stageRow = new LinearLayout(this);
-//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+    private static int getDurationInMinutes(DateTime before, DateTime after) {
+        if (before.isAfter(after)) {
+            throw new InvalidParameterException("Dont invert the order of duration DateTime params");
+        }
+        return (int) (new Duration(before, after).getStandardMinutes());
+    }
+
+    private void addGigs(DaySchedule daySchedule) {
+        DateTime timelineStartMoment = getTimelineStartMoment(daySchedule);
+        Map<String, List<Event>> eventsByLocation = daySchedule.getEventsByLocation();
+
+        ViewGroup gigLayout = (ViewGroup) getView().findViewById(R.id.gigLayout);
+        TextView textView = new TextView(this.getActivity());
+        textView.setText("");
+        textView.setHeight(ROW_HEIGHT);
+        textView.setPadding(1, 10, 1, 1);
+        gigLayout.addView(textView);
+
+        List<String> locations = new ArrayList<String>(eventsByLocation.keySet());
+
+        for (String location : locations) {
+            LinearLayout stageRow = new LinearLayout(getActivity());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            );
 //            params.setMargins(0, 2, 0, 2);
-//            stageRow.setLayoutParams(params);
-//            stageRow.setOrientation(LinearLayout.HORIZONTAL);
-//
-//            Date previousTime = timelineStartMoment;
-//            for (Gig gig : stageGigs.get(stage)) {
-//                GigLocation location = gig.getOnlyLocation();
-//                if (previousTime.before(location.getStartTime())) {
-//                    int margin = GigTimelineWidget.PIXELS_PER_MINUTE * CalendarUtil.getMinutesBetweenTwoDates(previousTime, location.getStartTime());
-//                    TextView tv = new TextView(this);
-//                    tv.setHeight(ROW_HEIGHT);
-//                    tv.setWidth(margin);
-//                    stageRow.addView(tv);
-//                }
-//
-//                GigTimelineWidget gigWidget = new GigTimelineWidget(this, null, gig, previousTime);
-//                stageRow.addView(gigWidget);
-//                if (location.getEndTime().equals(daySchedule.getLatestTime())) {
-//                    int margin = GigTimelineWidget.PIXELS_PER_MINUTE * TIMELINE_END_OFFSET;
-//                    TextView tv = new TextView(this);
-//                    tv.setHeight(ROW_HEIGHT);
-//                    tv.setWidth(margin);
-//                    stageRow.addView(tv);
-//                }
-//
-//                gigWidget.setOnClickListener(gigWidgetClickListener);
-//                previousTime = location.getEndTime();
-//            }
-//            gigLayout.addView(getGuitarString(row++));
-//            gigLayout.addView(stageRow);
-//        }
-//        if (row > 1) {
-//            gigLayout.addView(getGuitarString(row++));
-//        }
-//    }
+            stageRow.setLayoutParams(params);
+            stageRow.setOrientation(LinearLayout.HORIZONTAL);
+
+            DateTime previousTime = timelineStartMoment;
+            for (Event event : eventsByLocation.get(location)) {
+                DateTime eventStartTime = new DateTime(event.start_time);
+                DateTime eventEndTime = new DateTime(event.end_time);
+                if (previousTime.isBefore(eventStartTime)) {
+                    int duration = getDurationInMinutes(previousTime, eventStartTime);
+                    int margin = EventTimelineView.PIXELS_PER_MINUTE * duration;
+                    TextView tv = new TextView(getActivity());
+                    tv.setHeight(ROW_HEIGHT);
+                    tv.setWidth(margin);
+                    stageRow.addView(tv);
+                }
+
+                EventTimelineView gigWidget = new EventTimelineView(
+                    getActivity(),
+                    null,
+                    event,
+                    previousTime.toDate()
+                );
+                stageRow.addView(gigWidget);
+                if (eventEndTime.equals(daySchedule.getLatestTime())) {
+                    int margin = EventTimelineView.PIXELS_PER_MINUTE * TIMELINE_END_OFFSET;
+                    TextView tv = new TextView(getActivity());
+                    tv.setHeight(ROW_HEIGHT);
+                    tv.setWidth(margin);
+                    stageRow.addView(tv);
+                }
+
+                //gigWidget.setOnClickListener(gigWidgetClickListener);
+                previousTime = eventEndTime;
+            }
+            gigLayout.addView(stageRow);
+        }
+    }
 
     class GuitarSwipeListener extends GestureDetector.SimpleOnGestureListener {
         @Override

@@ -32,25 +32,24 @@
     />
     -->
 
-    <ToggleButton
-        android:id="@+id/starIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4px"
-        android:textOff=""
-        android:textOn=""
-        />
+    <!--<ToggleButton-->
+        <!--android:id="@+id/starIcon"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="4px"-->
+        <!--android:textOff=""-->
+        <!--android:textOn=""-->
+        <!--/>-->
         <!--android:background="@drawable/star"-->
 
     <!-- android:layout_toLeftOf="@id/icon"-->
     <!-- android:ellipsize="marquee" -->
     <TextView
         android:id="@+id/artistName"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/starIcon"
         android:ellipsize="marquee"
         android:gravity="center"
         android:paddingBottom="1px"
