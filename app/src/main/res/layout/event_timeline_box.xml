@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="30dp"
+    android:layout_marginBottom="0px"
+    android:layout_marginLeft="0px"
+    android:layout_marginTop="0px"
+    >
+
+    <!-- LEFT -->
+    <View
+        android:layout_width="1px"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#ffffff"
+        />
+
+    <!-- TOP
+    <View xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="2px"
+        android:background="#ffffff"
+        android:layout_alignParentTop="true"
+    />
+    -->
+
+    <!-- BOTTOM
+    <View xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="2px"
+        android:background="#ffffff"
+        android:layout_alignParentBottom="true"
+    />
+    -->
+
+    <ToggleButton
+        android:id="@+id/starIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4px"
+        android:textOff=""
+        android:textOn=""
+        />
+        <!--android:background="@drawable/star"-->
+
+    <!-- android:layout_toLeftOf="@id/icon"-->
+    <!-- android:ellipsize="marquee" -->
+    <TextView
+        android:id="@+id/artistName"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/starIcon"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:paddingBottom="1px"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="1px"
+        android:text="speaker name"
+        android:textColor="#fbf6dd"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        />
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="#ffffff"
+        />
+
+</RelativeLayout>

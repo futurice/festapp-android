@@ -41,12 +41,12 @@ public class DaySchedule {
         return eventsByLocation;
     }
 
-    public Date getEarliestTime() {
-        return earliestTime.toDate();
+    public DateTime getEarliestTime() {
+        return earliestTime;
     }
 
-    public Date getLatestTime() {
-        return latestTime.toDate();
+    public DateTime getLatestTime() {
+        return latestTime;
     }
 
     public List<String> getStages() {

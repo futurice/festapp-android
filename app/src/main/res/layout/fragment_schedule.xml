@@ -22,8 +22,9 @@
     <!--<ImageView-->
         <!--android:id="@+id/timelineVerticalBg"-->
         <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="30dip"-->
+        <!--android:layout_height="@dimen/timeline_vertical_line_height"-->
         <!--android:scaleType="fitXY"-->
+        <!--android:background="#660044"-->
         <!--/>-->
 
     <!--<ImageView-->

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<View xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="24px"
+    android:layout_height="@dimen/timeline_vertical_line_height"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_gravity="top"
+    android:adjustViewBounds="true"
+    android:background="#007700"
+    android:tag="verticalHourLine"
+    />

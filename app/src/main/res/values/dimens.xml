@@ -14,5 +14,7 @@
     <dimen name="font_size_small">12dp</dimen>
 
     <dimen name="timeline_event_height">36dp</dimen>
+    <dimen name="timeline_vertical_line_height">300dp</dimen>
+    <dimen name="timeline.hourText.offset">19dp</dimen>
 
 </resources>
