@@ -6,7 +6,7 @@
     <TextView
         android:id="@+id/artistName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/touchable_ui_height"
         android:ellipsize="marquee"
         android:gravity="center"
         android:paddingBottom="1dp"
@@ -14,8 +14,8 @@
         android:paddingRight="4dp"
         android:paddingTop="1dp"
         android:text="speaker name"
-        android:textColor="@color/orange"
-        android:background="@color/pink"
+        android:textColor="@color/black"
+        android:background="@color/orange"
         android:textSize="12sp"
         />
 

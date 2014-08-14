@@ -18,6 +18,6 @@
     <dimen name="timeline_vertical_line_height">300dp</dimen>
     <dimen name="timeline.hourText.offset">19dp</dimen>
     <dimen name="guitar_string_line_height">2dp</dimen>
-    <dimen name="timeline_hour_marker_width">1dp</dimen>
+    <dimen name="timeline_hour_marker_width">1px</dimen>
 
 </resources>

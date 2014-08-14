@@ -3,6 +3,7 @@ package de.serviceexperiencecamp.android.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -155,8 +156,8 @@ public class ScheduleFragment extends Fragment {
         // Left margin on the earliest time number layout
         int minutes = 60 - cursor.getMinuteOfHour();
         TextView tv = new TextView(getActivity());
-        tv.setHeight(dpToPx(ROW_HEIGHT));
         tv.setWidth(dpToPx(EventTimelineView.MINUTE_WIDTH) * minutes);
+        tv.setHeight(getResources().getDimensionPixelSize(R.dimen.spacing_large));
         numbersLayout.addView(tv);
 
         // Left margin on the earliest time vertical line
@@ -177,6 +178,7 @@ public class ScheduleFragment extends Fragment {
                 hour = "0" + hour;
             }
             tv.setText(hour);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
             tv.setGravity(Gravity.LEFT|Gravity.BOTTOM);
             tv.setWidth(dpToPx(EventTimelineView.MINUTE_WIDTH) * minutes);
             tv.setHeight(getResources().getDimensionPixelSize(R.dimen.spacing_large));
@@ -203,60 +205,60 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void addGigs(DaySchedule daySchedule) {
-        DateTime timelineStartMoment = getTimelineStartMoment(daySchedule);
+        String[] locations = DaySchedule.ALL_ROOMS;
         Map<String, List<Event>> eventsByLocation = daySchedule.getEventsByLocation();
-
         ViewGroup gigLayout = (ViewGroup) getView().findViewById(R.id.gigLayout);
-        TextView textView = new TextView(this.getActivity());
-        textView.setText("");
-        textView.setHeight(dpToPx(ROW_HEIGHT));
-        textView.setPadding(1, 10, 1, 1);
-        gigLayout.addView(textView);
-
-        List<String> locations = new ArrayList<String>(eventsByLocation.keySet());
 
         for (String location : locations) {
-            LinearLayout stageRow = new LinearLayout(getActivity());
+            LinearLayout locationRow = new LinearLayout(getActivity());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             );
-//            params.setMargins(0, 2, 0, 2);
-            stageRow.setLayoutParams(params);
-            stageRow.setOrientation(LinearLayout.HORIZONTAL);
+            params.height = (getResources().getDimensionPixelSize(R.dimen.touchable_ui_height));
+            locationRow.setLayoutParams(params);
+            locationRow.setOrientation(LinearLayout.HORIZONTAL);
 
-            DateTime previousTime = timelineStartMoment;
+            DateTime previousTime = getTimelineStartMoment(daySchedule);
+
+            // Render each event
             for (Event event : getSortedEventsOfLocation(eventsByLocation, location)) {
                 DateTime eventStartTime = new DateTime(event.start_time);
                 DateTime eventEndTime = new DateTime(event.end_time);
+
+                // Make left margin
                 if (previousTime.isBefore(eventStartTime)) {
                     int duration = getDurationInMinutes(previousTime, eventStartTime);
                     int margin = dpToPx(EventTimelineView.MINUTE_WIDTH) * duration;
                     TextView tv = new TextView(getActivity());
-                    tv.setHeight(dpToPx(ROW_HEIGHT));
                     tv.setWidth(margin);
-                    stageRow.addView(tv);
+                    tv.setHeight(getResources().getDimensionPixelSize(R.dimen.touchable_ui_height));
+                    locationRow.addView(tv);
                 }
 
-                EventTimelineView gigWidget = new EventTimelineView(
+                // Make event view
+                EventTimelineView eventView = new EventTimelineView(
                     getActivity(),
                     null,
                     event,
                     previousTime.toDate()
                 );
-                stageRow.addView(gigWidget);
+                locationRow.addView(eventView);
+
+                // Make right margin
                 if (eventEndTime.equals(daySchedule.getLatestTime())) {
                     int margin = dpToPx(EventTimelineView.MINUTE_WIDTH) * TIMELINE_END_OFFSET;
                     TextView tv = new TextView(getActivity());
-                    tv.setHeight(dpToPx(ROW_HEIGHT));
                     tv.setWidth(margin);
-                    stageRow.addView(tv);
+                    tv.setHeight(getResources().getDimensionPixelSize(R.dimen.touchable_ui_height));
+                    locationRow.addView(tv);
                 }
 
                 //gigWidget.setOnClickListener(gigWidgetClickListener);
                 previousTime = eventEndTime;
             }
-            gigLayout.addView(stageRow);
+
+            gigLayout.addView(locationRow);
         }
     }
 

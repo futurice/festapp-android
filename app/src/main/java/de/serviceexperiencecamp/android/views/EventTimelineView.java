@@ -37,10 +37,7 @@ public class EventTimelineView extends RelativeLayout {
         this.event = event;
         LayoutInflater.from(context).inflate(R.layout.event_timeline_box, this, true);
         eventTitle = (TextView) findViewById(R.id.artistName);
-        eventTitle.setTextColor(Color.parseColor("#FFFFFF"));
         eventTitle.setText(event.title);
-
-        this.setBackgroundColor(Color.parseColor("#008800"));
 //        starIcon = (ToggleButton) findViewById(R.id.starIcon);
 //        starIcon.setChecked(false/*gig.isFavorite()*/);
 //        starIcon.setOnCheckedChangeListener(favoriteListener);
@@ -56,10 +53,7 @@ public class EventTimelineView extends RelativeLayout {
             RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
         );
-        int width = dpToPx(MINUTE_WIDTH) * getDuration(event);
-        params.width = width;
-        int height = (int) getResources().getDimension(R.dimen.timeline_event_height);
-        params.height = height;
+        params.width = dpToPx(MINUTE_WIDTH) * getDuration(event);
         setLayoutParams(params);
     }
 

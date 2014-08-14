@@ -1,5 +1,8 @@
 package de.serviceexperiencecamp.android.models;
 
+import android.util.Log;
+
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,6 +17,7 @@ import de.serviceexperiencecamp.android.models.pojo.Event;
 
 public class DaySchedule {
 
+    public static final String[] ALL_ROOMS = {"Galerie", "Raum 2", "Raum 3", "Loft", "Raum 5", "Atelier"};
     private String conferenceDay;
     private Map<String, List<Event>> eventsByLocation = new TreeMap<String, List<Event>>();
     private DateTime earliestTime;
@@ -22,11 +26,19 @@ public class DaySchedule {
     public DaySchedule(String conferenceDay, List<Event> events) {
         this.conferenceDay = conferenceDay;
         this.eventsByLocation = new HashMap<String, List<Event>>();
+
+        // Initialize eventsByLocation with all the rooms, ordered correctly
+        for (String location : ALL_ROOMS) {
+            this.eventsByLocation.put(location, new ArrayList<Event>());
+        }
+
+        // Organize given list of events into eventsByLocation
         for (Event ev : events) {
             if (!ev.day.equals(conferenceDay)) continue;
 
             if (this.eventsByLocation.get(ev.location) == null) {
-                this.eventsByLocation.put(ev.location, new ArrayList<Event>());
+                Log.e("DaySchedule", "Unknown/unexpected location: "+ev.location);
+                continue;
             }
             this.eventsByLocation.get(ev.location).add(ev);
         }
@@ -38,6 +50,7 @@ public class DaySchedule {
     }
 
     public Map<String, List<Event>> getEventsByLocation() {
+
         return eventsByLocation;
     }
 
