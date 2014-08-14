@@ -23,11 +23,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        if (savedInstanceState == null) {
-//            getFragmentManager().beginTransaction()
-//                .replace(R.id.container, new MenuFragment())
-//                .commit();
-//        }
         menuFragment = new MenuFragment();
         scheduleFragment = new ScheduleFragment();
 
@@ -48,8 +43,10 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        getFragmentManager().popBackStack();
-        //super.onBackPressed();
+        getFragmentManager().popBackStackImmediate();
+        if (getFragmentManager().getBackStackEntryCount() == 0) {
+            super.onBackPressed();
+        }
     }
 
     @Override
