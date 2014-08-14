@@ -150,6 +150,8 @@ public class ScheduleFragment extends Fragment {
 
         LinearLayout numbersLayout = (LinearLayout) getView().findViewById(R.id.timelineNumbers);
         LinearLayout timelineVerticalLines = (LinearLayout) getView().findViewById(R.id.timelineVerticalLines);
+        numbersLayout.removeAllViews();
+        timelineVerticalLines.removeAllViews();
 
         DateTime cursor = timelineStartMoment;
 
@@ -208,6 +210,7 @@ public class ScheduleFragment extends Fragment {
         String[] locations = DaySchedule.ALL_ROOMS;
         Map<String, List<Event>> eventsByLocation = daySchedule.getEventsByLocation();
         ViewGroup gigLayout = (ViewGroup) getView().findViewById(R.id.gigLayout);
+        gigLayout.removeAllViews();
 
         for (String location : locations) {
             LinearLayout locationRow = new LinearLayout(getActivity());
