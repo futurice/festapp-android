@@ -12,12 +12,11 @@ import java.util.TreeMap;
 
 import org.joda.time.DateTime;
 
-
 import de.serviceexperiencecamp.android.models.pojo.Event;
 
 public class DaySchedule {
 
-    public static final String[] ALL_ROOMS = {"Galerie", "Raum 2", "Raum 3", "Loft", "Raum 5", "Atelier"};
+    public static final String[] ALL_ROOMS = {"Galerie", "Raum 2", "Raum 3", "Raum 4", "Raum 5", "Atelier", "Loft"};
     private String conferenceDay;
     private Map<String, List<Event>> eventsByLocation = new TreeMap<String, List<Event>>();
     private DateTime earliestTime;

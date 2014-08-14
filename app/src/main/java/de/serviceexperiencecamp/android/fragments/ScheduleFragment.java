@@ -41,9 +41,9 @@ public class ScheduleFragment extends Fragment {
 
     final private CompositeSubscription compositeSubscription = new CompositeSubscription();
     private EventsModel eventsModel;
-    private Observable<Event> firstEvent$ = Observable.empty(); // instead of null as default
+//    private Observable<Event> firstEvent$ = Observable.empty(); // instead of null as default
 
-    private TextView bookNameTextView;
+//    private TextView bookNameTextView;
 
     private static int ROW_HEIGHT = 66; // dp
     private static final int TIMELINE_END_OFFSET = 30; // minutes
@@ -80,20 +80,20 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bookNameTextView = (TextView) getView().findViewById(R.id.title);
-        firstEvent$ = getFirstEvent$(eventsModel.getEvents$());
+//        bookNameTextView = (TextView) getView().findViewById(R.id.title);
+//        firstEvent$ = getFirstEvent$(eventsModel.getEvents$());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getDaySchedule$(eventsModel.getEvents$())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<DaySchedule>() { @Override public void call(DaySchedule daySchedule) {
                 addTimeline(daySchedule);
                 addGigs(daySchedule);
             }});
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        subscribeTextView(getEventTitle$(firstEvent$), bookNameTextView);
+//        subscribeTextView(getEventTitle$(firstEvent$), bookNameTextView);
     }
 
     private static Observable<Event> getFirstEvent$(Observable<List<Event>> events$) {

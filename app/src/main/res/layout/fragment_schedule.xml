@@ -6,16 +6,17 @@
     style="@style/AgendaFragment"
     >
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/ContentText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+    <!--<TextView-->
+        <!--android:id="@+id/title"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--style="@style/ContentText"-->
+        <!--/>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="368dp"
+        android:layout_marginTop="@dimen/spacing_large"
         android:orientation="horizontal"
         >
 
@@ -44,7 +45,7 @@
                 />
 
             <TextView
-                android:text="Loft"
+                android:text="Raum 4"
                 style="@style/AgendaLocation"
                 />
 
@@ -55,6 +56,11 @@
 
             <TextView
                 android:text="Atelier"
+                style="@style/AgendaLocation"
+                />
+
+            <TextView
+                android:text="Loft"
                 style="@style/AgendaLocation"
                 />
         </LinearLayout>

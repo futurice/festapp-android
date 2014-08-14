@@ -2,12 +2,12 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/timelineNowLine"
-    android:layout_height="320dp"
+    android:layout_height="368dp"
     android:layout_width="wrap_content"
     >
 
     <View
-        android:layout_width="2dp"
+        android:layout_width="1dp"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:layout_centerHorizontal="true"
