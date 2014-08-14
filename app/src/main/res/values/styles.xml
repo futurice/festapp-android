@@ -17,6 +17,25 @@
         <item name="android:paddingBottom">@dimen/spacing_normal</item>
     </style>
 
+    <style name="HorizontalLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/orange</item>
+    </style>
+
+    <style name="MainMenuItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/spacing_normal</item>
+        <item name="android:layout_marginRight">@dimen/spacing_normal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:paddingTop">@dimen/spacing_normal</item>
+        <item name="android:paddingBottom">@dimen/spacing_normal</item>
+        <item name="android:background">@drawable/pressable_black</item>
+    </style>
+
     <style name="AgendaFragment">
         <item name="android:background">@color/black</item>
     </style>

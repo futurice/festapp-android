@@ -1,0 +1,87 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/black"
+    >
+
+    <LinearLayout android:id="@+id/body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/badges_picture"
+                android:alpha="0.25"
+                android:scaleType="centerCrop"
+                />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/sec_logo"
+                />
+        </RelativeLayout>
+
+        <View style="@style/HorizontalLine" />
+
+        <TextView android:id="@+id/agenda"
+            android:text="Agenda"
+            style="@style/MainMenuItem"
+            />
+
+        <View
+            android:layout_marginLeft="@dimen/spacing_normal"
+            android:layout_marginRight="@dimen/spacing_normal"
+            style="@style/HorizontalLine"
+            />
+
+        <TextView android:id="@+id/keytalks"
+            android:text="Key talks"
+            style="@style/MainMenuItem"
+            />
+
+        <View
+            android:layout_marginLeft="@dimen/spacing_normal"
+            android:layout_marginRight="@dimen/spacing_normal"
+            style="@style/HorizontalLine"
+            />
+
+        <TextView android:id="@+id/venue"
+            android:text="Venue"
+            style="@style/MainMenuItem"
+            />
+
+        <View
+            android:layout_marginLeft="@dimen/spacing_normal"
+            android:layout_marginRight="@dimen/spacing_normal"
+            style="@style/HorizontalLine"
+            />
+
+        <TextView android:id="@+id/wifi"
+            android:text="Wifi"
+            style="@style/MainMenuItem"
+            />
+    </LinearLayout>
+
+
+    <TextView android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/orange"
+        android:textColor="@color/black"
+        android:textAllCaps="true"
+        android:padding="@dimen/spacing_normal"
+        android:text="This app was hand-crafted by Futurice"
+        />
+</RelativeLayout>

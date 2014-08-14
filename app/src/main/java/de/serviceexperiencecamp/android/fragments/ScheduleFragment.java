@@ -24,7 +24,6 @@ import de.serviceexperiencecamp.android.models.pojo.Event;
 import de.serviceexperiencecamp.android.utils.SubscriptionUtils;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -78,15 +77,10 @@ public class ScheduleFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-//        bookNameTextView = (TextView) getView().findViewById(R.id.title);
-//        firstEvent$ = getFirstEvent$(eventsModel.getEvents$());
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
+//        bookNameTextView = (TextView) getView().findViewById(R.id.title);
+//        firstEvent$ = getFirstEvent$(eventsModel.getEvents$());
         getDaySchedule$(eventsModel.getEvents$())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<DaySchedule>() { @Override public void call(DaySchedule daySchedule) {
