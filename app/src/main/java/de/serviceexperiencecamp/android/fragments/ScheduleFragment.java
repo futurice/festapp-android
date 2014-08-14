@@ -128,7 +128,7 @@ public class ScheduleFragment extends Fragment {
     private void updateCurrentTimeline(DaySchedule daySchedule) {
         DateTime timelineStartMoment = getTimelineStartMoment(daySchedule);
         DateTime timelineEndMoment = getTimelineEndMoment(daySchedule);
-        DateTime now = daySchedule.getEarliestTime().plusMinutes(50);  // DateTime.now();
+        DateTime now = daySchedule.getEarliestTime().plusMinutes(20);  // DateTime.now();
         View line = getView().findViewById(R.id.timelineNowLine);
         line.bringToFront();
         if (now.isAfter(timelineStartMoment) && now.isBefore(timelineEndMoment)) {

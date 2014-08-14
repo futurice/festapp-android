@@ -105,6 +105,24 @@
                         android:orientation="horizontal"
                         />
 
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/gigLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:orientation="vertical"
+                        />
+
                     <LinearLayout
                         android:id="@+id/timelineNow"
                         android:layout_width="match_parent"
@@ -122,24 +140,6 @@
 
                         <include layout="@layout/timeline_now_marker"/>
                     </LinearLayout>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/RelativeLayout2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_normal"
-                    android:layout_below="@+id/RelativeLayout1"
-                    >
-
-                    <LinearLayout
-                        android:id="@+id/gigLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:orientation="vertical"
-                        />
                 </RelativeLayout>
 
             </RelativeLayout>
