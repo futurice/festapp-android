@@ -90,7 +90,7 @@ public class ScheduleFragment extends Fragment {
             .subscribe(new Action1<DaySchedule>() { @Override public void call(DaySchedule daySchedule) {
                 addTimeline(daySchedule);
                 addGigs(daySchedule);
-                flingScrollView();
+                //flingScrollView();
             }});
         compositeSubscription.add(s);
 //        subscribeTextView(getEventTitle$(firstEvent$), bookNameTextView);
