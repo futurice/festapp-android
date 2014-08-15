@@ -28,9 +28,11 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import de.serviceexperiencecamp.android.views.EventTimelineView;
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -51,6 +53,7 @@ public class ScheduleFragment extends Fragment {
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
     private int hourMarkerWidthPx = 1;
+    private HorizontalScrollView horizontalScrollView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,14 +67,14 @@ public class ScheduleFragment extends Fragment {
         Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
-        HorizontalScrollView scrollView = (HorizontalScrollView) view.findViewById(R.id.timelineScrollView);
+        horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.timelineScrollView);
 
         // Gestures
         gestureDetector = new GestureDetector(getActivity(), new GuitarSwipeListener());
         gestureListener = new View.OnTouchListener() { public boolean onTouch(View v, MotionEvent event) {
             return gestureDetector.onTouchEvent(event);
         }};
-        scrollView.setOnTouchListener(gestureListener);
+        horizontalScrollView.setOnTouchListener(gestureListener);
 
         return view;
     }
@@ -81,13 +84,27 @@ public class ScheduleFragment extends Fragment {
         super.onResume();
 //        bookNameTextView = (TextView) getView().findViewById(R.id.title);
 //        firstEvent$ = getFirstEvent$(eventsModel.getEvents$());
-        getDaySchedule$(eventsModel.getEvents$())
+        Subscription s = getDaySchedule$(eventsModel.getEvents$())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<DaySchedule>() { @Override public void call(DaySchedule daySchedule) {
                 addTimeline(daySchedule);
                 addGigs(daySchedule);
+                flingScrollView();
             }});
+        compositeSubscription.add(s);
 //        subscribeTextView(getEventTitle$(firstEvent$), bookNameTextView);
+    }
+
+    private void flingScrollView() {
+        compositeSubscription.add(
+            Observable.timer(50, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() { @Override public void call(Long aLong) {
+                    if (horizontalScrollView != null) {
+                        horizontalScrollView.pageScroll(View.FOCUS_RIGHT);
+                    }
+                }})
+        );
     }
 
     private static Observable<Event> getFirstEvent$(Observable<List<Event>> events$) {
