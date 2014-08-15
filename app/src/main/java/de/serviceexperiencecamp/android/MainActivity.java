@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import de.serviceexperiencecamp.android.fragments.MenuFragment;
 import de.serviceexperiencecamp.android.fragments.ScheduleFragment;
 import rx.functions.Action1;
@@ -22,6 +24,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        JodaTimeAndroid.init(this);
         setContentView(R.layout.activity_main);
         menuFragment = new MenuFragment();
         scheduleFragment = new ScheduleFragment();
