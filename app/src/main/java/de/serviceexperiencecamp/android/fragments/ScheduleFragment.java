@@ -17,6 +17,7 @@ import android.widget.TextView;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
+import de.serviceexperiencecamp.android.MainActivity;
 import de.serviceexperiencecamp.android.R;
 import de.serviceexperiencecamp.android.models.DaySchedule;
 import de.serviceexperiencecamp.android.models.EventsModel;
@@ -236,7 +237,7 @@ public class ScheduleFragment extends Fragment {
             DateTime previousTime = getTimelineStartMoment(daySchedule);
 
             // Render each event
-            for (Event event : getSortedEventsOfLocation(eventsByLocation, location)) {
+            for (final Event event : getSortedEventsOfLocation(eventsByLocation, location)) {
                 DateTime eventStartTime = new DateTime(event.start_time);
                 DateTime eventEndTime = new DateTime(event.end_time);
 
@@ -257,6 +258,22 @@ public class ScheduleFragment extends Fragment {
                     event,
                     previousTime.toDate()
                 );
+                // When event clicked, tell activity to open EventFragment
+                eventView.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+                    MainActivity activity = (MainActivity) getActivity();
+                    EventFragment fragment = new EventFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", event.title);
+                    bundle.putString("artists", event.artists);
+                    bundle.putString("start_time", event.start_time);
+                    bundle.putString("end_time", event.end_time);
+                    bundle.putString("day", event.day);
+                    bundle.putString("location", event.location);
+                    bundle.putString("subheader", event.subheader);
+                    bundle.putString("description", event.description);
+                    fragment.setArguments(bundle);
+                    activity.fragment$.onNext(fragment);
+                }});
                 locationRow.addView(eventView);
 
                 // Make right margin

@@ -1,1 +1,4 @@
-- TODO Make EventFragment, linked from ScheduleFragment
++ DONE Make EventFragment, linked from ScheduleFragment
+- TODO Comment out the scrolling affordance in ScheduleFragment
+- TODO Load event image in EventFragment, using Picasso and RxJava
+- TODO Make EventListFragment ("Key Talks")

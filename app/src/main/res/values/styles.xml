@@ -6,9 +6,25 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="H1Text">
+        <item name="android:textSize">@dimen/font_size_large</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="H2Text">
+        <item name="android:textSize">@dimen/font_size_large</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="ContentText">
         <item name="android:textSize">@dimen/font_size_normal</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="MinorContentText">
+        <item name="android:textSize">@dimen/font_size_normal</item>
+        <item name="android:textColor">@color/gray</item>
     </style>
 
     <style name="ContentContainer">
