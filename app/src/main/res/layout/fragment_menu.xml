@@ -34,7 +34,7 @@
 
         <View style="@style/HorizontalLine" />
 
-        <TextView android:id="@+id/agenda"
+        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/agenda"
             android:text="Agenda"
             style="@style/MainMenuItem"
             />
@@ -45,7 +45,7 @@
             style="@style/HorizontalLine"
             />
 
-        <TextView android:id="@+id/keytalks"
+        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/keytalks"
             android:text="Key talks"
             style="@style/MainMenuItem"
             />
@@ -56,7 +56,7 @@
             style="@style/HorizontalLine"
             />
 
-        <TextView android:id="@+id/venue"
+        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/venue"
             android:text="Venue"
             style="@style/MainMenuItem"
             />
@@ -67,7 +67,7 @@
             style="@style/HorizontalLine"
             />
 
-        <TextView android:id="@+id/wifi"
+        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/wifi"
             android:text="Wifi"
             style="@style/MainMenuItem"
             />

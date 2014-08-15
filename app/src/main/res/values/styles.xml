@@ -35,6 +35,7 @@
         <item name="android:paddingTop">@dimen/spacing_normal</item>
         <item name="android:paddingBottom">@dimen/spacing_normal</item>
         <item name="android:background">@drawable/pressable_black</item>
+        <item name="ttf_font">VerdanaBold</item>
     </style>
 
     <style name="AgendaFragment">
