@@ -1,0 +1,44 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        android:background="@color/black"
+        >
+
+        <de.serviceexperiencecamp.android.views.TTFTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Saturday"
+            style="@style/EventListHeader"
+            />
+        <View style="@style/HorizontalLine" />
+
+        <LinearLayout android:id="@+id/saturday_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            />
+
+        <de.serviceexperiencecamp.android.views.TTFTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Sunday"
+            style="@style/EventListHeader"
+            />
+        <View style="@style/HorizontalLine" />
+
+        <LinearLayout android:id="@+id/sunday_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            />
+
+    </LinearLayout>
+</ScrollView>

@@ -9,16 +9,11 @@ import android.widget.TextView;
 
 import de.serviceexperiencecamp.android.MainActivity;
 import de.serviceexperiencecamp.android.R;
-import de.serviceexperiencecamp.android.utils.SubscriptionUtils;
-import rx.Observable;
-import rx.subscriptions.CompositeSubscription;
 
 public class MenuFragment extends Fragment {
 
-    final private CompositeSubscription compositeSubscription = new CompositeSubscription();
-//    private Observable<Event> firstEvent$ = Observable.empty(); // instead of null as default
-
     private View agendaView;
+    private View keyTalksView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,25 +26,26 @@ public class MenuFragment extends Fragment {
     {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
         agendaView = view.findViewById(R.id.agenda);
+        keyTalksView = view.findViewById(R.id.keytalks);
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        final MainActivity activity = (MainActivity) getActivity();
         agendaView.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
-            MainActivity activity = (MainActivity) getActivity();
             activity.fragment$.onNext(activity.scheduleFragment);
         }});
-    }
-
-    private void subscribeTextView(Observable<String> observable, final TextView textView) {
-        compositeSubscription.add(SubscriptionUtils.subscribeTextViewText(observable, textView));
+        keyTalksView.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+            activity.fragment$.onNext(activity.eventListFragment);
+        }});
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        compositeSubscription.clear();
+        agendaView.setOnClickListener(null);
+        keyTalksView.setOnClickListener(null);
     }
 }

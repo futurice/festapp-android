@@ -22,6 +22,7 @@ import de.serviceexperiencecamp.android.R;
 import de.serviceexperiencecamp.android.models.DaySchedule;
 import de.serviceexperiencecamp.android.models.EventsModel;
 import de.serviceexperiencecamp.android.models.pojo.Event;
+import de.serviceexperiencecamp.android.utils.DateUtils;
 import de.serviceexperiencecamp.android.utils.SubscriptionUtils;
 
 import java.security.InvalidParameterException;
@@ -306,16 +307,7 @@ public class ScheduleFragment extends Fragment {
         String location)
     {
         List<Event> listEvents = eventsByLocation.get(location);
-        java.util.Collections.sort(listEvents, new Comparator<Event>() { @Override public int compare(Event lhs, Event rhs) {
-            DateTime lhsStart = new DateTime(lhs.start_time);
-            DateTime rhsStart = new DateTime(rhs.start_time);
-            if (lhsStart.isAfter(rhsStart))
-                return 1;
-            else if (lhsStart.isBefore(rhsStart))
-                return -1;
-            else
-                return 0;
-        }});
+        DateUtils.sortEventsByStartTime(listEvents);
         return listEvents;
     }
 

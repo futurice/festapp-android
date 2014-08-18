@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
+import de.serviceexperiencecamp.android.fragments.EventListFragment;
 import de.serviceexperiencecamp.android.fragments.MenuFragment;
 import de.serviceexperiencecamp.android.fragments.ScheduleFragment;
 import rx.functions.Action1;
@@ -20,6 +21,7 @@ public class MainActivity extends Activity {
 
     public MenuFragment menuFragment;
     public ScheduleFragment scheduleFragment;
+    public EventListFragment eventListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         menuFragment = new MenuFragment();
         scheduleFragment = new ScheduleFragment();
+        eventListFragment = new EventListFragment();
 
         fragment$.subscribe(new Action1<Fragment>() { @Override public void call(Fragment frag) {
             MainActivity.this.getFragmentManager().beginTransaction()

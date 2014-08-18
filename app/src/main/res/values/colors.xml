@@ -2,12 +2,12 @@
 <resources>
 
     <!-- Grayscale -->
-    <color name="white"     >#F5F5F5</color>
-    <color name="gray_light">#DFDFDF</color>
-    <color name="gray"      >#7f7f7f</color>
-    <!--<color name="gray"      >#363636</color>-->
-    <color name="gray_dark" >#202020</color>
-    <color name="black"     >#000000</color>
+    <color name="white"       >#F5F5F5</color>
+    <color name="gray_light"  >#DFDFDF</color>
+    <color name="gray"        >#7f7f7f</color>
+    <color name="gray_dark"   >#363636</color>
+    <color name="gray_darkest">#202020</color>
+    <color name="black"       >#000000</color>
 
     <!-- Basic colors -->
     <color name="green">#27D34D</color>

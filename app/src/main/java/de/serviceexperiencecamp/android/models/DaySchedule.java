@@ -48,8 +48,15 @@ public class DaySchedule {
         return conferenceDay;
     }
 
-    public Map<String, List<Event>> getEventsByLocation() {
+    public List<Event> getEvents() {
+        ArrayList<Event> list = new ArrayList<Event>();
+        for (List<Event> subList : eventsByLocation.values()) {
+            list.addAll(subList);
+        }
+        return list;
+    }
 
+    public Map<String, List<Event>> getEventsByLocation() {
         return eventsByLocation;
     }
 
