@@ -16,9 +16,8 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.6.1'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile 'com.squareup.picasso:picasso:2.3.+'
     compile 'net.danlew:android.joda:2.4.0'
-
-    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.1'
 }
 
 android {
@@ -61,6 +60,7 @@ android {
         exclude 'META-INF/NOTICE'
     }
 }
+
 task checkstyle(type: Checkstyle) {
     description 'Checks if the code is somewhat acceptable'
     configFile file('./checkstyle.xml')

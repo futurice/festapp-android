@@ -11,6 +11,7 @@ public class Event {
     public String subheader;
     public String twitter_handle;
     public String linkedin_url;
+    public String image_url;
     public Boolean bar_camp;
     public String day;
     public String artists;

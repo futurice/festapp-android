@@ -1,6 +1,6 @@
 + DONE Make EventFragment, linked from ScheduleFragment
 + DONE Comment out the scrolling affordance in ScheduleFragment
-- TODO Load event image in EventFragment, using Picasso and RxJava
++ DONE Load event image in EventFragment, using Picasso and RxJava
 - TODO Make EventListFragment ("Key Talks")
 - TODO Make "now marker" really follow the current time, in ScheduleFragment
 - TODO Style ScheduleFragment properly

@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
 
@@ -31,6 +34,7 @@ public class EventFragment extends Fragment {
         TextView dayView = (TextView) view.findViewById(R.id.day);
         TextView locationView = (TextView) view.findViewById(R.id.location);
         TextView descriptionView = (TextView) view.findViewById(R.id.description);
+        ImageView imageView = (ImageView) view.findViewById(R.id.image);
 
         // Set the bundle arguments as the content for the views
         Bundle bundle = getArguments();
@@ -44,6 +48,17 @@ public class EventFragment extends Fragment {
         dayView.setText(bundle.getString("day"));
         locationView.setText(bundle.getString("location"));
         descriptionView.setText(bundle.getString("description"));
+        if (bundle.getString("image_url") != null) {
+            Picasso.with(getActivity())
+                .load(bundle.getString("image_url"))
+                .error(R.drawable.event_placeholder)
+                .into(imageView);
+        }
+        else {
+            Picasso.with(getActivity())
+                .load(R.drawable.event_placeholder)
+                .into(imageView);
+        }
 
         return view;
     }
