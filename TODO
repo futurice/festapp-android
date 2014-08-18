@@ -2,6 +2,7 @@
 + DONE Comment out the scrolling affordance in ScheduleFragment
 + DONE Load event image in EventFragment, using Picasso and RxJava
 + DONE Make EventListFragment ("Key Talks")
++ DONE Segoe UI Light font and Futurice logo on MenuFragment footer
 - TODO Make Saturday/Sunday selector on ScheduleFragment
 - TODO Prettify EventListFragment, specially the orange divider
 - TODO Make "now marker" really follow the current time, in ScheduleFragment

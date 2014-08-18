@@ -1,5 +1,6 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
@@ -74,14 +75,36 @@
     </LinearLayout>
 
 
-    <TextView android:id="@+id/footer"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:background="@color/orange"
-        android:textColor="@color/black"
-        android:textAllCaps="true"
-        android:padding="@dimen/spacing_normal"
-        android:text="This app was hand-crafted by Futurice"
-        />
+        android:paddingLeft="@dimen/spacing_normal"
+        android:paddingRight="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_small"
+        android:gravity="center"
+        >
+        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/footer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textAllCaps="true"
+            android:text="This app was hand-crafted by"
+            android:layout_gravity="center"
+            app:ttf_font="SegoeUILight"
+            />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:layout_marginLeft="@dimen/spacing_tiny"
+            android:src="@drawable/futurice_horiz_bw"
+            />
+
+    </LinearLayout>
 </RelativeLayout>
