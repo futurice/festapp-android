@@ -38,6 +38,14 @@ public class EventTimelineView extends RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.event_timeline_box, this, true);
         eventTitle = (TextView) findViewById(R.id.artistName);
         eventTitle.setText(event.title);
+
+        if (event.bar_camp) {
+            this.setBackgroundColor(getResources().getColor(R.color.orange));
+        }
+        else {
+            this.setBackground(getResources().getDrawable(R.drawable.gradient_horiz));
+        }
+
 //        starIcon = (ToggleButton) findViewById(R.id.starIcon);
 //        starIcon.setChecked(false/*gig.isFavorite()*/);
 //        starIcon.setOnCheckedChangeListener(favoriteListener);

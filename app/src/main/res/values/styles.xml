@@ -67,13 +67,14 @@
     </style>
 
     <style name="AgendaLocation">
-        <item name="android:textSize">@dimen/font_size_normal</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:background">@color/white_transparent_strong</item>
-        <item name="android:gravity">center_vertical|left</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/touchable_ui_height</item>
-        <item name="android:paddingLeft">@dimen/spacing_tiny</item>
+        <item name="android:background">@color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="ttf_font">SegoeUILight</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:paddingLeft">@dimen/spacing_small</item>
         <item name="android:paddingRight">@dimen/spacing_small</item>
     </style>
 

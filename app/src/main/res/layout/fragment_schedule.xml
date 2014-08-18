@@ -29,37 +29,37 @@
             android:layout_alignParentLeft="true"
             >
 
-            <TextView
+            <de.serviceexperiencecamp.android.views.TTFTextView
                 android:text="Galerie"
                 style="@style/AgendaLocation"
                 />
 
-            <TextView
+            <de.serviceexperiencecamp.android.views.TTFTextView
                 android:text="Raum 2"
                 style="@style/AgendaLocation"
                 />
 
-            <TextView
+            <de.serviceexperiencecamp.android.views.TTFTextView
                 android:text="Raum 3"
                 style="@style/AgendaLocation"
                 />
 
-            <TextView
+            <de.serviceexperiencecamp.android.views.TTFTextView
                 android:text="Raum 4"
                 style="@style/AgendaLocation"
                 />
 
-            <TextView
+            <de.serviceexperiencecamp.android.views.TTFTextView
                 android:text="Raum 5"
                 style="@style/AgendaLocation"
                 />
 
-            <TextView
+            <de.serviceexperiencecamp.android.views.TTFTextView
                 android:text="Atelier"
                 style="@style/AgendaLocation"
                 />
 
-            <TextView
+            <de.serviceexperiencecamp.android.views.TTFTextView
                 android:text="Loft"
                 style="@style/AgendaLocation"
                 />
@@ -87,16 +87,6 @@
                     >
 
                     <LinearLayout
-                        android:id="@+id/gigLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/spacing_large"
-                        />
-
-                    <LinearLayout
                         android:id="@+id/timelineNow"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -110,6 +100,16 @@
                             />
                         <include layout="@layout/timeline_now_marker"/>
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/gigLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/spacing_large"
+                        />
 
                 </RelativeLayout>
 

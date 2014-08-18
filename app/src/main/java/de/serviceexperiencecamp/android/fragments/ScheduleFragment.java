@@ -234,6 +234,8 @@ public class ScheduleFragment extends Fragment {
             params.height = (getResources().getDimensionPixelSize(R.dimen.touchable_ui_height));
             locationRow.setLayoutParams(params);
             locationRow.setOrientation(LinearLayout.HORIZONTAL);
+            locationRow.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            locationRow.setBackground(getResources().getDrawable(R.drawable.dotted_line));
 
             DateTime previousTime = getTimelineStartMoment(daySchedule);
 
@@ -264,7 +266,6 @@ public class ScheduleFragment extends Fragment {
                     locationRow.addView(tv);
                 }
 
-                //gigWidget.setOnClickListener(gigWidgetClickListener);
                 previousTime = eventEndTime;
             }
 

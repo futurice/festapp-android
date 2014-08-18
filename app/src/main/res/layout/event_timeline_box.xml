@@ -15,7 +15,6 @@
         android:paddingTop="1dp"
         android:text="speaker name"
         android:textColor="@color/black"
-        android:background="@color/orange"
         android:textSize="12sp"
         />
 
