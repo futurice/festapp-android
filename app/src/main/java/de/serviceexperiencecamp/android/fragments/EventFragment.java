@@ -40,7 +40,7 @@ public class EventFragment extends Fragment {
         Bundle bundle = getArguments();
         titleView.setText(bundle.getString("title"));
         subheaderView.setText(makeSubheaderString(
-            bundle.getString("artists"), bundle.getString("subheader"))
+            bundle.getString("artists"), bundle.getString("speaker_role"))
         );
         timeView.setText(makeTimeString(
             bundle.getString("start_time"), bundle.getString("end_time"))
@@ -48,7 +48,7 @@ public class EventFragment extends Fragment {
         dayView.setText(bundle.getString("day"));
         locationView.setText(bundle.getString("location"));
         descriptionView.setText(bundle.getString("description"));
-        if (bundle.getString("image_url") != null) {
+        if (bundle.getString("image_url") != null && bundle.getString("image_url").length() > 0) {
             Picasso.with(getActivity())
                 .load(bundle.getString("image_url"))
                 .error(R.drawable.event_placeholder)

@@ -23,7 +23,6 @@ import de.serviceexperiencecamp.android.models.DaySchedule;
 import de.serviceexperiencecamp.android.models.EventsModel;
 import de.serviceexperiencecamp.android.models.pojo.Event;
 import de.serviceexperiencecamp.android.utils.DateUtils;
-import de.serviceexperiencecamp.android.utils.SubscriptionUtils;
 
 import java.security.InvalidParameterException;
 import java.util.HashMap;
@@ -109,8 +108,7 @@ public class ScheduleFragment extends Fragment {
                 if ("Saturday".equals(day)) {
                     saturdayButton.setSelected(true);
                     sundayButton.setSelected(false);
-                }
-                else if ("Sunday".equals(day)) {
+                } else if ("Sunday".equals(day)) {
                     saturdayButton.setSelected(false);
                     sundayButton.setSelected(true);
                 }
@@ -314,7 +312,7 @@ public class ScheduleFragment extends Fragment {
             bundle.putString("image_url", event.image_url);
             bundle.putString("day", event.day);
             bundle.putString("location", event.location);
-            bundle.putString("subheader", event.subheader);
+            bundle.putString("speaker_role", event.speaker_role);
             bundle.putString("description", event.description);
             fragment.setArguments(bundle);
             activity.fragment$.onNext(fragment);

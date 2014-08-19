@@ -100,11 +100,11 @@ public class EventListFragment extends Fragment {
         if (event.start_time != null && event.start_time.length() > 0) {
             secondaryString += (new DateTime(event.start_time)).toString("HH:mm");
         }
-        if (event.subheader != null && event.subheader.length() > 0) {
+        if (event.speaker_role != null && event.speaker_role.length() > 0) {
             if (secondaryString.length() > 0) {
                 secondaryString += " \u2014 ";
             }
-            secondaryString += event.subheader;
+            secondaryString += event.speaker_role;
         }
 
         primaryText.setText(event.title);
@@ -121,7 +121,7 @@ public class EventListFragment extends Fragment {
             bundle.putString("image_url", event.image_url);
             bundle.putString("day", event.day);
             bundle.putString("location", event.location);
-            bundle.putString("subheader", event.subheader);
+            bundle.putString("speaker_role", event.speaker_role);
             bundle.putString("description", event.description);
             fragment.setArguments(bundle);
             activity.fragment$.onNext(fragment);

@@ -5,7 +5,9 @@
 + DONE Segoe UI Light font and Futurice logo on MenuFragment footer
 + DONE Style ScheduleFragment properly
 + DONE Make Saturday/Sunday selector on ScheduleFragment
-- TODO Prettify EventListFragment, specially the orange divider
+- TODO Style EventListFragment according to design
+  - Change data schema on the backend too
 - TODO EventListFragment should only show events which are bar_camp==false
+- TODO Prettify EventListFragment, specially the orange divider
 - TODO Make "now marker" really follow the current time, in ScheduleFragment
 >>> v1.0
