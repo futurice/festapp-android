@@ -85,7 +85,9 @@ public class EventListFragment extends Fragment {
             List<Event> listEvents = daySchedule.getEvents();
             DateUtils.sortEventsByStartTime(listEvents);
             for (final Event event : listEvents) {
-                dayList.addView(makeEventListItem(event));
+                if (event.bar_camp == false) {
+                    dayList.addView(makeEventListItem(event));
+                }
             }
         }
     }
