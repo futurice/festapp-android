@@ -2,6 +2,7 @@
     <!-- Based on http://developer.android.com/design/style/metrics-grids.html -->
 
     <dimen name="touchable_ui_height">48dp</dimen>
+    <dimen name="touchable_ui_height_small">40dp</dimen>
 
     <!-- Spacing constants (for margins and paddings) -->
     <dimen name="spacing_large">32dp</dimen>

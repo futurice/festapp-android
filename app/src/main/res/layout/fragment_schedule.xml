@@ -1,8 +1,8 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     style="@style/AgendaFragment"
     >
 
@@ -13,18 +13,35 @@
         <!--style="@style/ContentText"-->
         <!--/>-->
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_normal"
+        >
+        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/saturday_button"
+            android:text="@string/Saturday"
+            style="@style/AgendaDayButton"
+            />
+
+        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/sunday_button"
+            android:layout_marginLeft="@dimen/spacing_normal"
+            android:text="@string/Sunday"
+            style="@style/AgendaDayButton"
+            />
+    </LinearLayout>
+
     <RelativeLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="380.5dp"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:orientation="horizontal"
         >
 
         <LinearLayout
             android:id="@+id/stageLayout"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             >

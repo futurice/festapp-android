@@ -26,7 +26,6 @@ import de.serviceexperiencecamp.android.utils.DateUtils;
 import de.serviceexperiencecamp.android.utils.SubscriptionUtils;
 
 import java.security.InvalidParameterException;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,21 +33,17 @@ import java.util.concurrent.TimeUnit;
 
 import de.serviceexperiencecamp.android.views.EventTimelineView;
 import rx.Observable;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
 
 public class ScheduleFragment extends Fragment {
 
     final private CompositeSubscription compositeSubscription = new CompositeSubscription();
     private EventsModel eventsModel;
-//    private Observable<Event> firstEvent$ = Observable.empty(); // instead of null as default
 
-//    private TextView bookNameTextView;
-
-    private static int ROW_HEIGHT = 66; // dp
     private static final int TIMELINE_END_OFFSET = 30; // minutes
     private static final int SWIPE_MIN_DISTANCE = 100;
     private static final int SWIPE_THRESHOLD_VELOCITY = 100;
@@ -56,6 +51,9 @@ public class ScheduleFragment extends Fragment {
     View.OnTouchListener gestureListener;
     private int hourMarkerWidthPx = 1;
     private HorizontalScrollView horizontalScrollView;
+    private View saturdayButton;
+    private View sundayButton;
+    private BehaviorSubject<String> selectedDay = BehaviorSubject.create("Saturday");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +68,8 @@ public class ScheduleFragment extends Fragment {
     {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
         horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.timelineScrollView);
+        saturdayButton = view.findViewById(R.id.saturday_button);
+        sundayButton = view.findViewById(R.id.sunday_button);
 
         // Gestures
         gestureDetector = new GestureDetector(getActivity(), new GuitarSwipeListener());
@@ -78,25 +78,47 @@ public class ScheduleFragment extends Fragment {
         }};
         horizontalScrollView.setOnTouchListener(gestureListener);
 
+        saturdayButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+            selectedDay.onNext("Saturday");
+        }});
+
+        sundayButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+            selectedDay.onNext("Sunday");
+        }});
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        bookNameTextView = (TextView) getView().findViewById(R.id.title);
-//        firstEvent$ = getFirstEvent$(eventsModel.getEvents$());
-        Subscription s = getDaySchedule$(eventsModel.getEvents$())
+        compositeSubscription.add(selectedDay
+            .flatMap(new Func1<String, Observable<DaySchedule>>() { @Override public Observable<DaySchedule> call(String day) {
+                return getDaySchedule$(eventsModel.getEvents$(), day);
+            }})
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<DaySchedule>() { @Override public void call(DaySchedule daySchedule) {
                 addTimeline(daySchedule);
-                addGigs(daySchedule);
-                //flingScrollView();
-            }});
-        compositeSubscription.add(s);
-//        subscribeTextView(getEventTitle$(firstEvent$), bookNameTextView);
+                    addGigs(daySchedule);
+            }})
+        );
+
+        compositeSubscription.add(selectedDay
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<String>() { @Override public void call(String day) {
+                if ("Saturday".equals(day)) {
+                    saturdayButton.setSelected(true);
+                    sundayButton.setSelected(false);
+                }
+                else if ("Sunday".equals(day)) {
+                    saturdayButton.setSelected(false);
+                    sundayButton.setSelected(true);
+                }
+            }})
+        );
     }
 
+    @Deprecated
     private void flingScrollView() {
         compositeSubscription.add(
             Observable.timer(50, TimeUnit.MILLISECONDS)
@@ -109,26 +131,16 @@ public class ScheduleFragment extends Fragment {
         );
     }
 
-    private static Observable<Event> getFirstEvent$(Observable<List<Event>> events$) {
-        return events$
-            .map(new Func1<List<Event>, Event>() { @Override public Event call(List<Event> events) {
-                return events.get(0);
-            }});
-    }
-
-    private static Observable<String> getEventTitle$(Observable<Event> event$) {
-        return event$
-            .map(new Func1<Event, String>() { @Override public String call(Event event) {
-                return event.title;
-            }})
-            .startWith("Loading...");
-    }
-
-    private Observable<DaySchedule> getDaySchedule$(Observable<List<Event>> events$) {
-        return events$
-            .map(new Func1<List<Event>, DaySchedule>() { @Override public DaySchedule call(List<Event> events) {
-                return new DaySchedule("Saturday", events);
-            }});
+    private Observable<DaySchedule> getDaySchedule$(
+        Observable<List<Event>> events$,
+        final String day)
+    {
+        return events$.map(new Func1<List<Event>, DaySchedule>() {
+            @Override
+            public DaySchedule call(List<Event> events) {
+                return new DaySchedule(day, events);
+            }
+        });
     }
 
     private DateTime getTimelineStartMoment(DaySchedule daySchedule) {
@@ -354,13 +366,15 @@ public class ScheduleFragment extends Fragment {
         return (int) (px / displayDensity);
     }
 
-    private void subscribeTextView(Observable<String> observable, final TextView textView) {
-        compositeSubscription.add(SubscriptionUtils.subscribeTextViewText(observable, textView));
-    }
-
     @Override
     public void onPause() {
         super.onPause();
         compositeSubscription.clear();
+        if (saturdayButton != null) {
+            saturdayButton.setOnClickListener(null);
+        }
+        if (sundayButton != null) {
+            sundayButton.setOnClickListener(null);
+        }
     }
 }
