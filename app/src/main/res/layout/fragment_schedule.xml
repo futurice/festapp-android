@@ -15,7 +15,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="368dp"
+        android:layout_height="380.5dp"
         android:layout_marginTop="@dimen/spacing_large"
         android:orientation="horizontal"
         >

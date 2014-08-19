@@ -225,6 +225,7 @@ public class ScheduleFragment extends Fragment {
         ViewGroup gigLayout = (ViewGroup) getView().findViewById(R.id.gigLayout);
         gigLayout.removeAllViews();
 
+        gigLayout.addView(makeDottedLine(gigLayout));
         for (String location : locations) {
             LinearLayout locationRow = new LinearLayout(getActivity());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -234,8 +235,6 @@ public class ScheduleFragment extends Fragment {
             params.height = (getResources().getDimensionPixelSize(R.dimen.touchable_ui_height));
             locationRow.setLayoutParams(params);
             locationRow.setOrientation(LinearLayout.HORIZONTAL);
-            locationRow.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-            locationRow.setBackground(getResources().getDrawable(R.drawable.dotted_line));
 
             DateTime previousTime = getTimelineStartMoment(daySchedule);
 
@@ -270,7 +269,16 @@ public class ScheduleFragment extends Fragment {
             }
 
             gigLayout.addView(locationRow);
+            gigLayout.addView(makeDottedLine(gigLayout));
         }
+    }
+
+    private View makeDottedLine(ViewGroup container) {
+        return LayoutInflater.from(getActivity()).inflate(
+            R.layout.view_dotted_line,
+            container,
+            false
+        );
     }
 
     private EventTimelineView makeEventView(final Event event, final DateTime previousTime) {
