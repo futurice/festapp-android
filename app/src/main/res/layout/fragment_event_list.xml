@@ -23,6 +23,8 @@
         <LinearLayout android:id="@+id/saturday_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/spacing_normal"
+            android:paddingRight="@dimen/spacing_normal"
             android:orientation="vertical"
             />
 
@@ -37,6 +39,8 @@
         <LinearLayout android:id="@+id/sunday_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/spacing_normal"
+            android:paddingRight="@dimen/spacing_normal"
             android:orientation="vertical"
             />
 

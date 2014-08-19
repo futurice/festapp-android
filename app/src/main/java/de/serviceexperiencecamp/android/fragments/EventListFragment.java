@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
 
@@ -84,12 +87,25 @@ public class EventListFragment extends Fragment {
             dayList.removeAllViews();
             List<Event> listEvents = daySchedule.getEvents();
             DateUtils.sortEventsByStartTime(listEvents);
+            boolean firstWasRendered = false;
             for (final Event event : listEvents) {
-                if (event.bar_camp == false) {
+                if (!event.bar_camp) {
+                    if (firstWasRendered) {
+                        dayList.addView(makeHorizontalLine(dayList));
+                    }
                     dayList.addView(makeEventListItem(event));
+                    firstWasRendered = true;
                 }
             }
         }
+    }
+
+    private View makeHorizontalLine(final ViewGroup container) {
+        return LayoutInflater.from(getActivity()).inflate(
+            R.layout.view_horizontal_line,
+            container,
+            false
+        );
     }
 
     private View makeEventListItem(final Event event) {
@@ -97,20 +113,32 @@ public class EventListFragment extends Fragment {
             .inflate(R.layout.view_event_list_item, null, false);
         TextView primaryText = (TextView) view.findViewById(R.id.primary);
         TextView secondaryText = (TextView) view.findViewById(R.id.secondary);
+        ImageView imageView = (ImageView) view.findViewById(R.id.image);
 
         String secondaryString = "";
-        if (event.start_time != null && event.start_time.length() > 0) {
-            secondaryString += (new DateTime(event.start_time)).toString("HH:mm");
+        if (event.artists != null && event.artists.length() > 0) {
+            secondaryString += event.artists;
         }
         if (event.speaker_role != null && event.speaker_role.length() > 0) {
             if (secondaryString.length() > 0) {
-                secondaryString += " \u2014 ";
+                secondaryString += ", ";
             }
             secondaryString += event.speaker_role;
         }
 
         primaryText.setText(event.title);
         secondaryText.setText(secondaryString);
+        if (event.speaker_image_url != null && event.speaker_image_url.length() > 0) {
+            Picasso.with(getActivity())
+                .load(event.speaker_image_url)
+                .error(R.drawable.person_placeholder)
+                .into(imageView);
+        }
+        else {
+            Picasso.with(getActivity())
+                .load(R.drawable.person_placeholder)
+                .into(imageView);
+        }
 
         view.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             MainActivity activity = (MainActivity) getActivity();

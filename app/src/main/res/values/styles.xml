@@ -28,11 +28,13 @@
     </style>
 
     <style name="EventListHeader">
-        <item name="android:background">@color/gray_dark</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/orange</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/font_size_large</item>
-        <item name="android:padding">@dimen/spacing_normal</item>
-        <item name="ttf_font">VerdanaBold</item>
+        <item name="android:padding">@dimen/spacing_small</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+        <item name="ttf_font">SegoeUILight</item>
     </style>
 
     <style name="ContentContainer">

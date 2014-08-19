@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingBottom="@dimen/spacing_small"
+    android:background="@drawable/pressable_black"
     >
 
-    <View
-        android:layout_marginLeft="@dimen/spacing_normal"
-        android:layout_marginRight="@dimen/spacing_normal"
-        style="@style/HorizontalLine"
+    <de.serviceexperiencecamp.android.views.CircleImageView android:id="@+id/image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/spacing_small"
+        android:scaleType="centerCrop"
         />
 
-    <LinearLayout
+    <TextView android:id="@+id/primary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="@dimen/spacing_normal"
-        android:layout_marginRight="@dimen/spacing_normal"
-        android:paddingTop="@dimen/spacing_small"
-        android:paddingBottom="@dimen/spacing_small"
-        android:background="@drawable/pressable_black"
-        >
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/image"
+        style="@style/ContentText"
+        />
 
-        <TextView android:id="@+id/primary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/ContentText"
-            />
+    <TextView android:id="@+id/secondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/primary"
+        android:layout_toRightOf="@+id/image"
+        android:textSize="@dimen/font_size_small"
+        style="@style/MinorContentText"
+        />
 
-        <TextView android:id="@+id/secondary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/MinorContentText"
-            />
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

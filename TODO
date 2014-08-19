@@ -6,7 +6,6 @@
 + DONE Style ScheduleFragment properly
 + DONE Make Saturday/Sunday selector on ScheduleFragment
 + DONE EventListFragment should only show events which are bar_camp==false
-- TODO Style EventListFragment according to design
-- TODO Prettify EventListFragment, specially the orange divider
++ DONE Style EventListFragment according to design
 - TODO Make "now marker" really follow the current time, in ScheduleFragment
 >>> v1.0
