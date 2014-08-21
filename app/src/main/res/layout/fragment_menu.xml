@@ -35,10 +35,18 @@
 
         <View style="@style/HorizontalLine" />
 
-        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/agenda"
-            android:text="Agenda"
+        <LinearLayout android:id="@+id/agenda"
             style="@style/MainMenuItem"
-            />
+            >
+            <ImageView
+                android:src="@drawable/ic_icon_agenda"
+                style="@style/MainMenuItemIcon"
+                />
+            <de.serviceexperiencecamp.android.views.TTFTextView
+                android:text="Agenda"
+                style="@style/MainMenuItemText"
+                />
+        </LinearLayout>
 
         <View
             android:layout_marginLeft="@dimen/spacing_normal"
@@ -46,10 +54,18 @@
             style="@style/HorizontalLine"
             />
 
-        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/keytalks"
-            android:text="Key talks"
+        <LinearLayout android:id="@+id/keytalks"
             style="@style/MainMenuItem"
-            />
+            >
+            <ImageView
+                android:src="@drawable/ic_icon_key_talks"
+                style="@style/MainMenuItemIcon"
+                />
+            <de.serviceexperiencecamp.android.views.TTFTextView
+                android:text="Key talks"
+                style="@style/MainMenuItemText"
+                />
+        </LinearLayout>
 
         <View
             android:layout_marginLeft="@dimen/spacing_normal"
@@ -57,10 +73,18 @@
             style="@style/HorizontalLine"
             />
 
-        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/venue"
-            android:text="Venue"
+        <LinearLayout android:id="@+id/venue"
             style="@style/MainMenuItem"
-            />
+            >
+            <ImageView
+                android:src="@drawable/ic_icon_venue"
+                style="@style/MainMenuItemIcon"
+                />
+            <de.serviceexperiencecamp.android.views.TTFTextView
+                android:text="Venue"
+                style="@style/MainMenuItemText"
+                />
+        </LinearLayout>
 
         <View
             android:layout_marginLeft="@dimen/spacing_normal"
@@ -68,10 +92,18 @@
             style="@style/HorizontalLine"
             />
 
-        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/wifi"
-            android:text="Wifi"
+        <LinearLayout android:id="@+id/Wifi"
             style="@style/MainMenuItem"
-            />
+            >
+            <ImageView
+                android:src="@drawable/ic_icon_wifi"
+                style="@style/MainMenuItemIcon"
+                />
+            <de.serviceexperiencecamp.android.views.TTFTextView
+                android:text="WiFi"
+                style="@style/MainMenuItemText"
+                />
+        </LinearLayout>
     </LinearLayout>
 
 

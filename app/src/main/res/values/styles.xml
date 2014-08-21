@@ -53,14 +53,28 @@
     <style name="MainMenuItem">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">@dimen/spacing_normal</item>
-        <item name="android:layout_marginRight">@dimen/spacing_normal</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:orientation">horizontal</item>
         <item name="android:paddingTop">@dimen/spacing_normal</item>
         <item name="android:paddingBottom">@dimen/spacing_normal</item>
         <item name="android:background">@drawable/pressable_black</item>
+        <item name="android:layout_marginLeft">@dimen/spacing_normal</item>
+        <item name="android:layout_marginRight">@dimen/spacing_normal</item>
+    </style>
+
+    <style name="MainMenuItemIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">@dimen/spacing_small</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="MainMenuItemText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_gravity">center_vertical</item>
         <item name="ttf_font">VerdanaBold</item>
     </style>
 
