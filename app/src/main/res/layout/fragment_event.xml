@@ -42,13 +42,44 @@
 
         <View style="@style/HorizontalLine" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_normal"
+            android:layout_marginRight="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_normal"
+            >
+            <ImageView android:id="@+id/linkedin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="@dimen/spacing_normal"
+                android:src="@drawable/ic_linkedin_icon"
+                />
+
+            <ImageView android:id="@+id/twitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_twitter_icon"
+                android:layout_toRightOf="@+id/linkedin"
+                />
+
+            <de.serviceexperiencecamp.android.views.TTFTextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/touchable_ui_height_small"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/ic_star"
+                android:text="Save as favorite"
+                style="@style/EventFavoriteButton"
+                />
+        </RelativeLayout>
+
         <TextView android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/spacing_normal"
             android:layout_marginRight="@dimen/spacing_normal"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginBottom="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_normal"
             style="@style/H1Text"
             />
 

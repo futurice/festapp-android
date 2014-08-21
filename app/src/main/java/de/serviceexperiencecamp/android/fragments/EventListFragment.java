@@ -143,17 +143,7 @@ public class EventListFragment extends Fragment {
         view.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             MainActivity activity = (MainActivity) getActivity();
             EventFragment fragment = new EventFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("title", event.title);
-            bundle.putString("artists", event.artists);
-            bundle.putString("start_time", event.start_time);
-            bundle.putString("end_time", event.end_time);
-            bundle.putString("image_url", event.image_url);
-            bundle.putString("day", event.day);
-            bundle.putString("location", event.location);
-            bundle.putString("speaker_role", event.speaker_role);
-            bundle.putString("description", event.description);
-            fragment.setArguments(bundle);
+            fragment.setArguments(event.getBundle());
             activity.fragment$.onNext(fragment);
         }});
 

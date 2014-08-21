@@ -9,8 +9,9 @@ DONE EventListFragment should only show events which are bar_camp==false
 DONE Style EventListFragment according to design
 DONE Tweak style of non bar camp event on ScheduleFragment
 DONE Icons on MenuFragment
-TODO Favoriting events
-  Favorite marker on ScheduleFragment event
+DONE Social media icons on EventFragment
+TODO Favoriting events on EventFragment
+  Saving to shared prefs
 TODO InfoFragment
   WiFi, Parking, What to bring
 TODO Make "now marker" really follow the current time, in ScheduleFragment
