@@ -1,11 +1,16 @@
-+ DONE Make EventFragment, linked from ScheduleFragment
-+ DONE Comment out the scrolling affordance in ScheduleFragment
-+ DONE Load event image in EventFragment, using Picasso and RxJava
-+ DONE Make EventListFragment ("Key Talks")
-+ DONE Segoe UI Light font and Futurice logo on MenuFragment footer
-+ DONE Style ScheduleFragment properly
-+ DONE Make Saturday/Sunday selector on ScheduleFragment
-+ DONE EventListFragment should only show events which are bar_camp==false
-+ DONE Style EventListFragment according to design
-- TODO Make "now marker" really follow the current time, in ScheduleFragment
+DONE Make EventFragment, linked from ScheduleFragment
+DONE Comment out the scrolling affordance in ScheduleFragment
+DONE Load event image in EventFragment, using Picasso and RxJava
+DONE Make EventListFragment ("Key Talks")
+DONE Segoe UI Light font and Futurice logo on MenuFragment footer
+DONE Style ScheduleFragment properly
+DONE Make Saturday/Sunday selector on ScheduleFragment
+DONE EventListFragment should only show events which are bar_camp==false
+DONE Style EventListFragment according to design
+DONE Tweak style of non bar camp event on ScheduleFragment
+TODO Favoriting events
+  Favorite marker on ScheduleFragment event
+TODO InfoFragment
+  WiFi, Parking, What to bring
+TODO Make "now marker" really follow the current time, in ScheduleFragment
 >>> v1.0

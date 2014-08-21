@@ -43,7 +43,7 @@ public class EventTimelineView extends RelativeLayout {
             this.setBackgroundColor(getResources().getColor(R.color.orange));
         }
         else {
-            this.setBackground(getResources().getDrawable(R.drawable.gradient_horiz));
+            this.setBackgroundColor(getResources().getColor(R.color.pink));
         }
 
 //        starIcon = (ToggleButton) findViewById(R.id.starIcon);
