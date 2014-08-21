@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.joda.time.DateTime;
-
 import java.util.List;
 
 import de.serviceexperiencecamp.android.MainActivity;
@@ -114,20 +112,10 @@ public class EventListFragment extends Fragment {
         TextView primaryText = (TextView) view.findViewById(R.id.primary);
         TextView secondaryText = (TextView) view.findViewById(R.id.secondary);
         ImageView imageView = (ImageView) view.findViewById(R.id.image);
-
-        String secondaryString = "";
-        if (event.artists != null && event.artists.length() > 0) {
-            secondaryString += event.artists;
-        }
-        if (event.speaker_role != null && event.speaker_role.length() > 0) {
-            if (secondaryString.length() > 0) {
-                secondaryString += ", ";
-            }
-            secondaryString += event.speaker_role;
-        }
+        View star = view.findViewById(R.id.star);
 
         primaryText.setText(event.title);
-        secondaryText.setText(secondaryString);
+        secondaryText.setText(makeSecondaryString(event));
         if (event.speaker_image_url != null && event.speaker_image_url.length() > 0) {
             Picasso.with(getActivity())
                 .load(event.speaker_image_url)
@@ -147,7 +135,28 @@ public class EventListFragment extends Fragment {
             activity.fragment$.onNext(fragment);
         }});
 
+        if (Event.getIsFavoriteFromPreferences(getActivity(), event._id)) {
+            star.setVisibility(View.VISIBLE);
+        }
+        else {
+            star.setVisibility(View.INVISIBLE);
+        }
+
         return view;
+    }
+
+    private static String makeSecondaryString(Event event) {
+        String secondaryString = "";
+        if (event.artists != null && event.artists.length() > 0) {
+            secondaryString += event.artists;
+        }
+        if (event.speaker_role != null && event.speaker_role.length() > 0) {
+            if (secondaryString.length() > 0) {
+                secondaryString += ", ";
+            }
+            secondaryString += event.speaker_role;
+        }
+        return secondaryString;
     }
 
     @Override

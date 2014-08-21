@@ -15,8 +15,11 @@ import com.squareup.picasso.Picasso;
 import org.joda.time.DateTime;
 
 import de.serviceexperiencecamp.android.R;
+import de.serviceexperiencecamp.android.models.pojo.Event;
 
 public class EventFragment extends Fragment {
+
+    private boolean isFavorite;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,11 +30,13 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
+        final Bundle bundle = getArguments();
         View view = inflater.inflate(R.layout.fragment_event, container, false);
 
         // Find the views
         View linkedin = view.findViewById(R.id.linkedin);
         View twitter = view.findViewById(R.id.twitter);
+        final TextView favoriteButton = (TextView) view.findViewById(R.id.favorite_button);
         TextView titleView = (TextView) view.findViewById(R.id.title);
         TextView subheaderView = (TextView) view.findViewById(R.id.subheader);
         TextView timeView = (TextView) view.findViewById(R.id.time);
@@ -41,20 +46,48 @@ public class EventFragment extends Fragment {
         ImageView imageView = (ImageView) view.findViewById(R.id.image);
 
         // Set the bundle arguments as the content for the views
-        final Bundle bundle = getArguments();
         titleView.setText(bundle.getString("title"));
         subheaderView.setText(makeSubheaderString(
-            bundle.getString("artists"), bundle.getString("speaker_role"))
+                bundle.getString("artists"), bundle.getString("speaker_role"))
         );
         timeView.setText(makeTimeString(
-            bundle.getString("start_time"), bundle.getString("end_time"))
+                bundle.getString("start_time"), bundle.getString("end_time"))
         );
         dayView.setText(bundle.getString("day"));
         locationView.setText(bundle.getString("location"));
         descriptionView.setText(bundle.getString("description"));
-        if (!isNullOrEmpty(bundle.getString("image_url"))) {
+        setImageViewContent(imageView, bundle.getString("image_url"));
+        setLinkedInContent(linkedin, bundle.getString("linkedin_url"));
+        setTwitterContent(twitter, bundle.getString("twitter_handle"));
+
+        final String _id = bundle.getString("_id");
+        isFavorite = Event.getIsFavoriteFromPreferences(getActivity(), _id);
+        setFavoriteButtonStatus(favoriteButton, isFavorite);
+        favoriteButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+            isFavorite = !isFavorite;
+            setFavoriteButtonStatus(favoriteButton, isFavorite);
+            Event.setIsFavoriteFromPreferences(getActivity(), _id, isFavorite);
+        }});
+
+        return view;
+    }
+
+    private void setFavoriteButtonStatus(TextView favoriteButton, boolean isFavorite) {
+        favoriteButton.setSelected(isFavorite);
+        if (isFavorite) {
+            favoriteButton.setText(getResources().getString(R.string.unfavorite));
+            favoriteButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_star_black,0,0,0);
+        }
+        else {
+            favoriteButton.setText(getResources().getString(R.string.save_as_favorite));
+            favoriteButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_star, 0, 0, 0);
+        }
+    }
+
+    private void setImageViewContent(ImageView imageView, String image_url) {
+        if (!isNullOrEmpty(image_url)) {
             Picasso.with(getActivity())
-                .load(bundle.getString("image_url"))
+                .load(image_url)
                 .error(R.drawable.event_placeholder)
                 .into(imageView);
         }
@@ -63,34 +96,38 @@ public class EventFragment extends Fragment {
                 .load(R.drawable.event_placeholder)
                 .into(imageView);
         }
-
-        final String linkedin_url = bundle.getString("linkedin_url");
-        if (!isNullOrEmpty(linkedin_url)) {
-            linkedin.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkedin_url));
-                startActivity(browserIntent);
-            }});
-        }
-        else {
-            linkedin.setVisibility(View.GONE);
-        }
-
-        final String twitter_handle = bundle.getString("twitter_handle");
-        if (!isNullOrEmpty(twitter_handle)) {
-            twitter.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
-                String twitter_url = "https://twitter.com/" + twitter_handle;
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitter_url));
-                startActivity(browserIntent);
-            }});
-        }
-        else {
-            twitter.setVisibility(View.GONE);
-        }
-
-        return view;
     }
 
+    private void setLinkedInContent(View view, final String linkedin_url) {
+        if (!isNullOrEmpty(linkedin_url)) {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkedin_url));
+                    startActivity(browserIntent);
+                }
+            });
+        }
+        else {
+            view.setVisibility(View.GONE);
+        }
+    }
 
+    private void setTwitterContent(View view, final String twitter_handle) {
+        if (!isNullOrEmpty(twitter_handle)) {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String twitter_url = "https://twitter.com/" + twitter_handle;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitter_url));
+                    startActivity(browserIntent);
+                }
+            });
+        }
+        else {
+            view.setVisibility(View.GONE);
+        }
+    }
 
     private static boolean isNullOrEmpty(final String input) {
         return (input == null || input.length() <= 0);

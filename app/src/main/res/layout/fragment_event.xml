@@ -64,12 +64,12 @@
                 android:layout_toRightOf="@+id/linkedin"
                 />
 
-            <de.serviceexperiencecamp.android.views.TTFTextView
+            <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/favorite_button"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/touchable_ui_height_small"
                 android:layout_alignParentRight="true"
                 android:drawableLeft="@drawable/ic_star"
-                android:text="Save as favorite"
+                android:text="@string/save_as_favorite"
                 style="@style/EventFavoriteButton"
                 />
         </RelativeLayout>

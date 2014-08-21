@@ -1,10 +1,12 @@
 package de.serviceexperiencecamp.android.models.pojo;
 
+import android.content.Context;
 import android.os.Bundle;
 
-import java.util.List;
+import de.serviceexperiencecamp.android.utils.PreferenceUtils;
 
 public class Event {
+    public String _id;
     public String title;
     public String start_time;
     public String end_time;
@@ -22,6 +24,7 @@ public class Event {
 
     public Bundle getBundle() {
         Bundle bundle = new Bundle();
+        bundle.putString("_id", _id);
         bundle.putString("title", title);
         bundle.putString("artists", artists);
         bundle.putString("start_time", start_time);
@@ -34,5 +37,29 @@ public class Event {
         bundle.putString("twitter_handle", twitter_handle);
         bundle.putString("description", description);
         return bundle;
+    }
+
+    public static Boolean getIsFavoriteFromPreferences(Context context, String _id) {
+        if (isNullOrEmpty(_id)) {
+            return false;
+        }
+        String value = PreferenceUtils.getValue(context, _id);
+        if ("true".equals(value)) {
+            return true;
+        }
+        else if ("false".equals(value)) {
+            return false;
+        }
+        setIsFavoriteFromPreferences(context, _id, false);
+        return false;
+    }
+
+    public static void setIsFavoriteFromPreferences(Context context, String _id, Boolean value) {
+        if (isNullOrEmpty(_id)) { return; }
+        PreferenceUtils.setValue(context, _id, value ? "true" : "false");
+    }
+
+    private static boolean isNullOrEmpty(final String input) {
+        return (input == null || input.length() <= 0);
     }
 }

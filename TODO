@@ -10,8 +10,8 @@ DONE Style EventListFragment according to design
 DONE Tweak style of non bar camp event on ScheduleFragment
 DONE Icons on MenuFragment
 DONE Social media icons on EventFragment
-TODO Favoriting events on EventFragment
-  Saving to shared prefs
+DONE Favoriting events on EventFragment
+TODO Fix day selection bug related to ScheduleFragment's lifecycle
 TODO InfoFragment
   WiFi, Parking, What to bring
 TODO Make "now marker" really follow the current time, in ScheduleFragment
