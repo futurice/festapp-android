@@ -33,7 +33,8 @@ public class DaySchedule {
 
         // Organize given list of events into eventsByLocation
         for (Event ev : events) {
-            if (!ev.day.equals(conferenceDay)) continue;
+            if (ev.day == null) { continue; }
+            if (!ev.day.equals(conferenceDay)) { continue; }
 
             if (this.eventsByLocation.get(ev.location) == null) {
                 Log.e("DaySchedule", "Unknown/unexpected location: "+ev.location);
