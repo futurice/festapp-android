@@ -116,18 +116,18 @@ public class ScheduleFragment extends Fragment {
         );
     }
 
-    @Deprecated
-    private void flingScrollView() {
-        compositeSubscription.add(
-            Observable.timer(50, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>() { @Override public void call(Long aLong) {
-                    if (horizontalScrollView != null) {
-                        horizontalScrollView.pageScroll(View.FOCUS_RIGHT);
-                    }
-                }})
-        );
-    }
+//    @Deprecated
+//    private void flingScrollView() {
+//        compositeSubscription.add(
+//            Observable.timer(50, TimeUnit.MILLISECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Action1<Long>() { @Override public void call(Long aLong) {
+//                    if (horizontalScrollView != null) {
+//                        horizontalScrollView.pageScroll(View.FOCUS_RIGHT);
+//                    }
+//                }})
+//        );
+//    }
 
     private Observable<DaySchedule> getDaySchedule$(
         Observable<List<Event>> events$,
@@ -358,6 +358,11 @@ public class ScheduleFragment extends Fragment {
     public void onPause() {
         super.onPause();
         compositeSubscription.clear();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
         if (saturdayButton != null) {
             saturdayButton.setOnClickListener(null);
         }
