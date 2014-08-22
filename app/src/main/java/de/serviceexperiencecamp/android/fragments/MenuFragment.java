@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import de.serviceexperiencecamp.android.MainActivity;
 import de.serviceexperiencecamp.android.R;
@@ -14,6 +13,7 @@ public class MenuFragment extends Fragment {
 
     private View agendaView;
     private View keyTalksView;
+    private View info;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,7 @@ public class MenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
         agendaView = view.findViewById(R.id.agenda);
         keyTalksView = view.findViewById(R.id.keytalks);
+        info = view.findViewById(R.id.info);
         return view;
     }
 
@@ -40,6 +41,12 @@ public class MenuFragment extends Fragment {
         keyTalksView.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             activity.fragment$.onNext(activity.eventListFragment);
         }});
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.fragment$.onNext(activity.infoListFragment);
+            }
+        });
     }
 
     @Override

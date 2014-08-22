@@ -6,6 +6,7 @@ import com.squareup.okhttp.OkHttpClient;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import de.serviceexperiencecamp.android.models.pojo.Info;
 import retrofit.RestAdapter;
 import retrofit.client.Client;
 import retrofit.client.OkClient;
@@ -60,5 +61,9 @@ public class SecApi {
 
     public Observable<List<Event>> getAllEvents() {
         return this.conferenceService.getAllEvents();
+    }
+
+    public Observable<List<Info>> getAllInfo() {
+        return this.conferenceService.getAllInfo();
     }
 }

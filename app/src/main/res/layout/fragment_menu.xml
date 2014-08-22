@@ -48,11 +48,7 @@
                 />
         </LinearLayout>
 
-        <View
-            android:layout_marginLeft="@dimen/spacing_normal"
-            android:layout_marginRight="@dimen/spacing_normal"
-            style="@style/HorizontalLine"
-            />
+        <View style="@style/HorizontalLineSideMargins" />
 
         <LinearLayout android:id="@+id/keytalks"
             style="@style/MainMenuItem"
@@ -67,11 +63,7 @@
                 />
         </LinearLayout>
 
-        <View
-            android:layout_marginLeft="@dimen/spacing_normal"
-            android:layout_marginRight="@dimen/spacing_normal"
-            style="@style/HorizontalLine"
-            />
+        <View style="@style/HorizontalLineSideMargins" />
 
         <LinearLayout android:id="@+id/venue"
             style="@style/MainMenuItem"
@@ -86,21 +78,17 @@
                 />
         </LinearLayout>
 
-        <View
-            android:layout_marginLeft="@dimen/spacing_normal"
-            android:layout_marginRight="@dimen/spacing_normal"
-            style="@style/HorizontalLine"
-            />
+        <View style="@style/HorizontalLineSideMargins" />
 
-        <LinearLayout android:id="@+id/Wifi"
+        <LinearLayout android:id="@+id/info"
             style="@style/MainMenuItem"
             >
             <ImageView
-                android:src="@drawable/ic_icon_wifi"
+                android:src="@drawable/ic_icon_info"
                 style="@style/MainMenuItemIcon"
                 />
             <de.serviceexperiencecamp.android.views.TTFTextView
-                android:text="WiFi"
+                android:text="Info"
                 style="@style/MainMenuItemText"
                 />
         </LinearLayout>

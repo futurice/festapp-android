@@ -12,7 +12,8 @@ DONE Icons on MenuFragment
 DONE Social media icons on EventFragment
 DONE Favoriting events on EventFragment
 DONE Fix day selection bug related to ScheduleFragment's lifecycle
-TODO InfoFragment
-  WiFi, Parking, What to bring
+DONE InfoListFragment and InfoFragment getting data from backend
+TODO MapFragment
+  With PhotoView using a placeholder image
 TODO Make "now marker" really follow the current time, in ScheduleFragment
 >>> v1.0

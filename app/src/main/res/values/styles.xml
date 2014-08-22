@@ -50,6 +50,11 @@
         <item name="android:background">@color/orange</item>
     </style>
 
+    <style name="HorizontalLineSideMargins" parent="HorizontalLine">
+        <item name="android:layout_marginLeft">@dimen/spacing_normal</item>
+        <item name="android:layout_marginRight">@dimen/spacing_normal</item>
+    </style>
+
     <style name="MainMenuItem">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

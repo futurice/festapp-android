@@ -2,7 +2,6 @@ package de.serviceexperiencecamp.android;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +9,7 @@ import android.view.MenuItem;
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import de.serviceexperiencecamp.android.fragments.EventListFragment;
+import de.serviceexperiencecamp.android.fragments.InfoListFragment;
 import de.serviceexperiencecamp.android.fragments.MenuFragment;
 import de.serviceexperiencecamp.android.fragments.ScheduleFragment;
 import rx.functions.Action1;
@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
     public MenuFragment menuFragment;
     public ScheduleFragment scheduleFragment;
     public EventListFragment eventListFragment;
+    public InfoListFragment infoListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class MainActivity extends Activity {
         menuFragment = new MenuFragment();
         scheduleFragment = new ScheduleFragment();
         eventListFragment = new EventListFragment();
+        infoListFragment = new InfoListFragment();
 
         fragment$.subscribe(new Action1<Fragment>() { @Override public void call(Fragment frag) {
             MainActivity.this.getFragmentManager().beginTransaction()
