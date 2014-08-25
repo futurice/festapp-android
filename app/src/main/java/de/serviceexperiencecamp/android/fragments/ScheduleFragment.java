@@ -235,7 +235,7 @@ public class ScheduleFragment extends Fragment {
         ViewGroup gigLayout = (ViewGroup) getView().findViewById(R.id.gigLayout);
         gigLayout.removeAllViews();
 
-        gigLayout.addView(makeDottedLine(gigLayout));
+        gigLayout.addView(makeSubtleHorizontalLine(gigLayout));
         for (String location : locations) {
             LinearLayout locationRow = new LinearLayout(getActivity());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -279,8 +279,16 @@ public class ScheduleFragment extends Fragment {
             }
 
             gigLayout.addView(locationRow);
-            gigLayout.addView(makeDottedLine(gigLayout));
+            gigLayout.addView(makeSubtleHorizontalLine(gigLayout));
         }
+    }
+
+    private View makeSubtleHorizontalLine(ViewGroup container) {
+        return LayoutInflater.from(getActivity()).inflate(
+            R.layout.view_subtle_line,
+            container,
+            false
+        );
     }
 
     private View makeDottedLine(ViewGroup container) {

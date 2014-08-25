@@ -18,7 +18,7 @@ import de.serviceexperiencecamp.android.models.pojo.Event;
 
 public class EventTimelineView extends RelativeLayout {
 
-    public static final int MINUTE_WIDTH = 2; // dp
+    public static final int MINUTE_WIDTH = 3; // dp
 
     public EventTimelineView(Context context) {
         super(context, null);
@@ -40,10 +40,10 @@ public class EventTimelineView extends RelativeLayout {
         View star = findViewById(R.id.star);
 
         if (event.bar_camp) {
-            this.setBackgroundColor(getResources().getColor(R.color.orange));
+            eventTitle.setBackgroundColor(getResources().getColor(R.color.orange));
         }
         else {
-            this.setBackgroundColor(getResources().getColor(R.color.pink));
+            eventTitle.setBackgroundColor(getResources().getColor(R.color.pink));
         }
 
         if (Event.getIsFavoriteFromPreferences(getContext(), event._id)) {
