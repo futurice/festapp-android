@@ -55,7 +55,7 @@ public class EventFragment extends Fragment {
         );
         dayView.setText(bundle.getString("day"));
         locationView.setText(bundle.getString("location"));
-        descriptionView.setText(bundle.getString("description"));
+        descriptionView.setText(processDescriptionString(bundle.getString("description")));
         setImageViewContent(imageView, bundle.getString("image_url"));
         setLinkedInContent(linkedin, bundle.getString("linkedin_url"));
         setTwitterContent(twitter, bundle.getString("twitter_handle"));
@@ -140,6 +140,11 @@ public class EventFragment extends Fragment {
         else {
             return input;
         }
+    }
+
+    private String processDescriptionString(String s) {
+        if (s == null) { return ""; }
+        return s.replaceAll("\\\\n", "\n");
     }
 
     private String makeTimeString(final String startInput, final String endInput) {
