@@ -38,7 +38,8 @@ public class EventFragment extends Fragment {
         View twitter = view.findViewById(R.id.twitter);
         final TextView favoriteButton = (TextView) view.findViewById(R.id.favorite_button);
         TextView titleView = (TextView) view.findViewById(R.id.title);
-        TextView subheaderView = (TextView) view.findViewById(R.id.subheader);
+        TextView speakerView = (TextView) view.findViewById(R.id.speaker);
+        TextView speakerRoleView = (TextView) view.findViewById(R.id.speaker_role);
         TextView timeView = (TextView) view.findViewById(R.id.time);
         TextView dayView = (TextView) view.findViewById(R.id.day);
         TextView locationView = (TextView) view.findViewById(R.id.location);
@@ -47,9 +48,8 @@ public class EventFragment extends Fragment {
 
         // Set the bundle arguments as the content for the views
         titleView.setText(bundle.getString("title"));
-        subheaderView.setText(makeSubheaderString(
-                bundle.getString("artists"), bundle.getString("speaker_role"))
-        );
+        speakerView.setText(prepareString(bundle.getString("artists")));
+        speakerRoleView.setText(prepareString(bundle.getString("speaker_role")));
         timeView.setText(makeTimeString(
                 bundle.getString("start_time"), bundle.getString("end_time"))
         );
@@ -133,8 +133,13 @@ public class EventFragment extends Fragment {
         return (input == null || input.length() <= 0);
     }
 
-    private String makeSubheaderString(final String speaker, final String subheaderContent) {
-        return speaker + " \u2014 " + subheaderContent;
+    private static String prepareString(final String input) {
+        if (input == null) {
+            return "";
+        }
+        else {
+            return input;
+        }
     }
 
     private String makeTimeString(final String startInput, final String endInput) {

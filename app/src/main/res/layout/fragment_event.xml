@@ -98,12 +98,21 @@
             android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginBottom="@dimen/spacing_small"
             >
+            <ImageView android:id="@+id/ic_clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_clock"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="@dimen/spacing_small"
+                />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/ic_clock"
                 >
                 <TextView android:id="@+id/time"
                     android:layout_width="wrap_content"
@@ -118,27 +127,23 @@
                     />
             </LinearLayout>
 
-            <LinearLayout
+            <TextView android:id="@+id/location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="90dp"
-                android:orientation="vertical"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Stage"
-                    style="@style/ContentText"
-                    />
+                style="@style/ContentText"
+                />
 
-                <TextView android:id="@+id/location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/MinorContentText"
-                    />
-            </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_stage"
+                android:layout_toLeftOf="@+id/location"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="@dimen/spacing_tiny"
+                />
         </RelativeLayout>
 
         <View
@@ -147,11 +152,22 @@
             style="@style/HorizontalLine"
             />
 
-        <TextView android:id="@+id/subheader"
+        <TextView android:id="@+id/speaker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginLeft="@dimen/spacing_normal"
+            android:layout_marginRight="@dimen/spacing_normal"
             style="@style/H2Text"
+            />
+
+        <TextView android:id="@+id/speaker_role"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_normal"
+            android:layout_marginRight="@dimen/spacing_normal"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            style="@style/ContentText"
             />
 
         <TextView android:id="@+id/description"
