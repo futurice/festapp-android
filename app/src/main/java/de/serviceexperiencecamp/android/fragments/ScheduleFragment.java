@@ -28,7 +28,6 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import de.serviceexperiencecamp.android.views.EventTimelineView;
 import rx.Observable;
@@ -153,18 +152,20 @@ public class ScheduleFragment extends Fragment {
         DateTime timelineStartMoment = getTimelineStartMoment(daySchedule);
         DateTime timelineEndMoment = getTimelineEndMoment(daySchedule);
         DateTime now = daySchedule.getEarliestTime().plusMinutes(20);  // DateTime.now();
-        View line = getView().findViewById(R.id.timelineNowLine);
-        line.bringToFront();
+        View nowLine = getView().findViewById(R.id.timelineNowLine);
+        nowLine.bringToFront();
         if (now.isAfter(timelineStartMoment) && now.isBefore(timelineEndMoment)) {
-            line.setVisibility(View.VISIBLE);
+            nowLine.setVisibility(View.VISIBLE);
             TextView marginView = (TextView) getView().findViewById(R.id.timelineNowMargin);
             int duration = getDurationInMinutes(timelineStartMoment, now);
             int leftMargin = duration * dpToPx(EventTimelineView.MINUTE_WIDTH) - hourMarkerWidthPx/2 - 3;
             //initialScrollTo = leftMargin - getWindowManager().getDefaultDisplay().getWidth()/2;
             marginView.setWidth(leftMargin);
         } else {
-            line.setVisibility(View.GONE);
+            nowLine.setVisibility(View.GONE);
         }
+
+        nowLine.setVisibility(View.INVISIBLE); // HIDE THIS FEATURE FOR NOW
     }
 
     private void addTimeline(DaySchedule daySchedule) {

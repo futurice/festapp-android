@@ -17,5 +17,7 @@ DONE Fix location name of "Gallerie"
 DONE Make description in Event a selectable text
 DONE Fix timezone bug
 DONE VenueFragment using placeholder map
-TODO Make "now marker" really follow the current time, in ScheduleFragment
+DONE Hide 'now marker' in ScheduleFragment
 >>> v1.0
+
+TODO Make "now marker" really follow the current time, in ScheduleFragment
