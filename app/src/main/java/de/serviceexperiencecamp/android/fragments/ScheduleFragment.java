@@ -97,7 +97,9 @@ public class ScheduleFragment extends Fragment {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<DaySchedule>() { @Override public void call(DaySchedule daySchedule) {
                 addTimeline(daySchedule);
-                    addGigs(daySchedule);
+                addGigs(daySchedule);
+                addStages(daySchedule);
+                hideLoading();
             }})
         );
 
@@ -166,6 +168,22 @@ public class ScheduleFragment extends Fragment {
         }
 
         nowLine.setVisibility(View.INVISIBLE); // HIDE THIS FEATURE FOR NOW
+    }
+
+    private void hideLoading() {
+        View loadingView = getView().findViewById(R.id.loading);
+        loadingView.setVisibility(View.GONE);
+    }
+
+    private void addStages(DaySchedule daySchedule) {
+        LinearLayout stagesLayout = (LinearLayout) getView().findViewById(R.id.stageLayout);
+        stagesLayout.removeAllViews();
+        for (String stageName : DaySchedule.ALL_ROOMS) {
+            LayoutInflater layoutInflater = this.getActivity().getLayoutInflater();
+            TextView stage = (TextView) layoutInflater.inflate(R.layout.view_stage_label, stagesLayout, false);
+            stage.setText(stageName);
+            stagesLayout.addView(stage);
+        }
     }
 
     private void addTimeline(DaySchedule daySchedule) {

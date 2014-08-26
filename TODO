@@ -20,4 +20,8 @@ DONE VenueFragment using placeholder map
 DONE Hide 'now marker' in ScheduleFragment
 >>> v1.0
 
+DONE Fixed stages ordering
+DONE Added loading indicator for schedule
+>>> v1.1
+
 TODO Make "now marker" really follow the current time, in ScheduleFragment

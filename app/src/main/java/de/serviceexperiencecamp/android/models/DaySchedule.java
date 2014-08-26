@@ -17,7 +17,7 @@ import de.serviceexperiencecamp.android.models.pojo.Event;
 
 public class DaySchedule {
 
-    public static final String[] ALL_ROOMS = {"Gallerie", "Raum 2", "Raum 3", "Raum 4", "Raum 5", "Atelier", "Loft"};
+    public static final String[] ALL_ROOMS = {"Gallerie", "Raum 2", "Raum 3", "Raum 4", "Loft", "Raum 5", "Atelier"};
     private String conferenceDay;
     private Map<String, List<Event>> eventsByLocation = new TreeMap<String, List<Event>>();
     private DateTime earliestTime;
