@@ -24,4 +24,7 @@ DONE Fixed stages ordering
 DONE Added loading indicator for schedule
 >>> v1.1
 
+TODO Rename "Gallerie" to "Galerie"
+>>> v1.2
+
 TODO Make "now marker" really follow the current time, in ScheduleFragment
