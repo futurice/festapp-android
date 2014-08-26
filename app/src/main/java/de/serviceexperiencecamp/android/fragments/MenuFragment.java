@@ -13,6 +13,7 @@ public class MenuFragment extends Fragment {
 
     private View agendaView;
     private View keyTalksView;
+    private View venue;
     private View info;
 
     @Override
@@ -27,6 +28,7 @@ public class MenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
         agendaView = view.findViewById(R.id.agenda);
         keyTalksView = view.findViewById(R.id.keytalks);
+        venue = view.findViewById(R.id.venue);
         info = view.findViewById(R.id.info);
         return view;
     }
@@ -41,12 +43,12 @@ public class MenuFragment extends Fragment {
         keyTalksView.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             activity.fragment$.onNext(activity.eventListFragment);
         }});
-        info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.fragment$.onNext(activity.infoListFragment);
-            }
-        });
+        venue.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+            activity.fragment$.onNext(activity.venueFragment);
+        }});
+        info.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+            activity.fragment$.onNext(activity.infoListFragment);
+        }});
     }
 
     @Override

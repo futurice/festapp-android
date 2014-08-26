@@ -12,6 +12,7 @@ import de.serviceexperiencecamp.android.fragments.EventListFragment;
 import de.serviceexperiencecamp.android.fragments.InfoListFragment;
 import de.serviceexperiencecamp.android.fragments.MenuFragment;
 import de.serviceexperiencecamp.android.fragments.ScheduleFragment;
+import de.serviceexperiencecamp.android.fragments.VenueFragment;
 import rx.functions.Action1;
 import rx.subjects.BehaviorSubject;
 
@@ -22,6 +23,7 @@ public class MainActivity extends Activity {
     public MenuFragment menuFragment;
     public ScheduleFragment scheduleFragment;
     public EventListFragment eventListFragment;
+    public VenueFragment venueFragment;
     public InfoListFragment infoListFragment;
 
     @Override
@@ -32,6 +34,7 @@ public class MainActivity extends Activity {
         menuFragment = new MenuFragment();
         scheduleFragment = new ScheduleFragment();
         eventListFragment = new EventListFragment();
+        venueFragment = new VenueFragment();
         infoListFragment = new InfoListFragment();
 
         fragment$.subscribe(new Action1<Fragment>() { @Override public void call(Fragment frag) {
