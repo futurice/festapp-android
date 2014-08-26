@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import de.serviceexperiencecamp.android.models.pojo.Event;
 
@@ -80,8 +81,8 @@ public class DaySchedule {
         for (Map.Entry<String, List<Event>> entry : eventsByLocation.entrySet()) {
             for (Event event : entry.getValue()) {
                 try {
-                    DateTime startTime = new DateTime(event.start_time);
-                    DateTime endTime = new DateTime(event.end_time);
+                    DateTime startTime = new DateTime(event.start_time, DateTimeZone.UTC);
+                    DateTime endTime = new DateTime(event.end_time, DateTimeZone.UTC);
                     if (startTime.isBefore(earliestTime)) {
                         earliestTime = startTime;
                     }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import de.serviceexperiencecamp.android.R;
 import de.serviceexperiencecamp.android.models.pojo.Event;
@@ -51,7 +52,7 @@ public class EventFragment extends Fragment {
         speakerView.setText(prepareString(bundle.getString("artists")));
         speakerRoleView.setText(prepareString(bundle.getString("speaker_role")));
         timeView.setText(makeTimeString(
-                bundle.getString("start_time"), bundle.getString("end_time"))
+            bundle.getString("start_time"), bundle.getString("end_time"))
         );
         dayView.setText(bundle.getString("day"));
         locationView.setText(bundle.getString("location"));
@@ -148,8 +149,8 @@ public class EventFragment extends Fragment {
     }
 
     private String makeTimeString(final String startInput, final String endInput) {
-        DateTime startDateTime = new DateTime(startInput);
-        DateTime endDateTime = new DateTime(endInput);
+        DateTime startDateTime = new DateTime(startInput, DateTimeZone.UTC);
+        DateTime endDateTime = new DateTime(endInput, DateTimeZone.UTC);
         String startOutput = startDateTime.toString("HH:mm");
         String endOutput = endDateTime.toString("HH:mm");
         return startOutput + "\u2014" + endOutput;

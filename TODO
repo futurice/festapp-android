@@ -15,6 +15,7 @@ DONE Fix day selection bug related to ScheduleFragment's lifecycle
 DONE InfoListFragment and InfoFragment getting data from backend
 DONE Fix location name of "Gallerie"
 DONE Make description in Event a selectable text
+DONE Fix timezone bug
 TODO MapFragment
   With PhotoView using a placeholder image
 TODO Make "now marker" really follow the current time, in ScheduleFragment
