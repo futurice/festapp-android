@@ -27,4 +27,7 @@ DONE Added loading indicator for schedule
 DONE Rename "Gallerie" to "Galerie"
 >>> v1.2
 
+DONE Change pink color
+>>> v1.3
+
 TODO Make "now marker" really follow the current time, in ScheduleFragment
