@@ -30,4 +30,7 @@ DONE Rename "Gallerie" to "Galerie"
 DONE Change pink color
 >>> v1.3
 
+DONE Substituted dummy map with real map
+>>> v1.4
+
 TODO Make "now marker" really follow the current time, in ScheduleFragment
