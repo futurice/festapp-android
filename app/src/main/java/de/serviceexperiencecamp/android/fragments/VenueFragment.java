@@ -26,6 +26,7 @@ public class VenueFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_venue, container, false);
         ImageView imageView = (ImageView) view.findViewById(R.id.map);
         PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(imageView);
+        photoViewAttacher.setScaleType(ImageView.ScaleType.CENTER_CROP);
         return view;
     }
 }
