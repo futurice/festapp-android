@@ -60,10 +60,10 @@ public class SecApi {
     }
 
     public Observable<List<Event>> getAllEvents() {
-        return this.conferenceService.getAllEvents();
+        return this.conferenceService.getAllEvents().retry(50);
     }
 
     public Observable<List<Info>> getAllInfo() {
-        return this.conferenceService.getAllInfo();
+        return this.conferenceService.getAllInfo().retry(50);
     }
 }
