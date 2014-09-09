@@ -9,6 +9,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
+        android:name="de.serviceexperiencecamp.android.SecApp"
         >
         <activity
             android:name="de.serviceexperiencecamp.android.MainActivity"
