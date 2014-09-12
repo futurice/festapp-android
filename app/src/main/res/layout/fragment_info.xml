@@ -22,15 +22,24 @@
             style="@style/H1Text"
             />
 
-        <TextView android:id="@+id/content"
+        <!--<TextView android:id="@+id/content"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/spacing_normal"-->
+            <!--android:layout_marginRight="@dimen/spacing_normal"-->
+            <!--android:layout_marginBottom="@dimen/spacing_normal"-->
+            <!--android:singleLine="false"-->
+            <!--android:textIsSelectable="true"-->
+            <!--style="@style/ContentText"-->
+            <!--/>-->
+
+        <WebView android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/spacing_normal"
             android:layout_marginRight="@dimen/spacing_normal"
             android:layout_marginBottom="@dimen/spacing_normal"
-            android:singleLine="false"
             android:textIsSelectable="true"
-            style="@style/ContentText"
             />
 
     </LinearLayout>

@@ -2,9 +2,12 @@ package de.serviceexperiencecamp.android.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import de.serviceexperiencecamp.android.R;
@@ -25,12 +28,23 @@ public class InfoFragment extends Fragment {
 
         // Find the views
         TextView titleView = (TextView) view.findViewById(R.id.title);
-        TextView contentView = (TextView) view.findViewById(R.id.content);
+        WebView contentView = (WebView) view.findViewById(R.id.content);
 
         // Set the bundle arguments as the content for the views
         titleView.setText(processString(bundle.getString("title")));
-        contentView.setText(processString(bundle.getString("content")));
 
+        String html = "<html><head>"
+            + "<meta http-equiv='Content-Type' content='text/html' charset='UTF-8' />"
+            + "<style type=\"text/css\">"
+            + "body {color: #FFFFFF; background-color: #000000;}"
+            + "p {margin: 0; padding: 0;}"
+            + "a {color: #f08e0c}"
+            + "</style>"
+            + "</head>"
+            + "<body>"
+            + bundle.getString("content")
+            + "</body></html>";
+        contentView.loadData(html, "text/html; charset=UTF-8", "UTF-8");
         return view;
     }
 
