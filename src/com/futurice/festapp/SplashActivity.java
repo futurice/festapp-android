@@ -1,8 +1,15 @@
 package com.futurice.festapp;
 
+import com.futurice.festapp.analytics.TagManagerUtils;
 import com.futurice.festapp.util.FestAppConstants;
 
 import com.futurice.festapp.R;
+import com.google.tagmanager.Container;
+import com.google.tagmanager.ContainerOpener;
+import com.google.tagmanager.ContainerOpener.OpenType;
+import com.google.tagmanager.Logger.LogLevel;
+import com.google.tagmanager.TagManager;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +29,15 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
 
+		TagManagerUtils.initTagManager(this, new Runnable() {
+			@Override
+			public void run() {
+				showSplash();
+			}
+		});
+	}
+
+	public void showSplash() {
 		// Added for a cleaner start if no splash
 		if (!active) {
 			startActivity(new Intent(getBaseContext(), FestAppMainActivity.class));

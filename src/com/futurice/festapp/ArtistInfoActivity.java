@@ -2,6 +2,7 @@ package com.futurice.festapp;
 
 import java.util.HashMap;
 
+import com.futurice.festapp.analytics.AnalyticsTrackingActivity;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.GigLocation;
@@ -29,13 +30,14 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.futurice.festapp.R;
+import com.google.tagmanager.TagManager;
 
 /**
  * View for Artist-info.
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class ArtistInfoActivity extends Activity {
+public class ArtistInfoActivity extends AnalyticsTrackingActivity {
 	
 	private RelativeLayout artistInfoView;
 	private Gig gig;

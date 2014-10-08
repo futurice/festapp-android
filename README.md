@@ -17,6 +17,14 @@ Please update this README to include everything needed to build the app.
 
 #### Credits
 
+## Building
+
+#### Android client
+
+The analytics library used requires Google Play Services.
+Follow the steps listed [here](http://developer.android.com/google/play-services/setup.html#Install) to install the library.
+See [this](http://developer.android.com/tools/projects/projects-eclipse.html#ReferencingLibraryProject) to see how library projects are referenced in Eclipse.
+
 ## Getting a working test setup
 
 #### How to deploy the test server
