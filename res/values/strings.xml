@@ -77,6 +77,15 @@
     <string name="service.Activities">Activities</string>
     <string name="service.PhoneCharging">Phone charging</string>
     
+    <!--  Calender Days -->
+    <string name="calendar.Monday">Monday</string>
+    <string name="calendar.Tuesday">Tuesday</string>
+    <string name="calendar.Wednesday">Wednesday</string>
+    <string name="calendar.Thursday">Thursday</string>
+    <string name="calendar.Friday">Friday</string>
+    <string name="calendar.Saturday">Saturday</string>
+    <string name="calendar.Sunday">Sunday</string>
+    
     <!-- General info -->
     <string name="generalInfo.FrequentlyAsked">FAQ</string>
     <string name="generalInfo.OpenHours">Opening hours</string>
