@@ -2,6 +2,8 @@ package com.futurice.festapp;
 
 import java.util.List;
 
+import com.futurice.festapp.analytics.AnalyticsTrackingActivity;
+import com.futurice.festapp.analytics.TagManagerUtils;
 import com.futurice.festapp.dao.NewsDAO;
 import com.futurice.festapp.domain.NewsArticle;
 import com.futurice.festapp.ui.NewsArticleAdapter;
@@ -11,6 +13,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,7 +28,7 @@ import com.futurice.festapp.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class NewsListActivity extends Activity {
+public class NewsListActivity extends AnalyticsTrackingActivity {
 	
 	private ListView newsList;
 	private List<NewsArticle> articles;

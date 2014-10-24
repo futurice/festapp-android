@@ -2,6 +2,7 @@ package com.futurice.festapp;
 
 import java.util.List;
 
+import com.futurice.festapp.analytics.AnalyticsTrackingActivity;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.ui.ArtistAdapter;
@@ -24,7 +25,7 @@ import com.futurice.festapp.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class ArtistListActivity extends Activity {
+public class ArtistListActivity extends AnalyticsTrackingActivity {
 	
 	private ListView artistList;
 	private List<Gig> gigs;

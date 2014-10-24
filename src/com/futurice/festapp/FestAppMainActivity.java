@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.futurice.festapp.analytics.AnalyticsTrackingActivity;
+import com.futurice.festapp.analytics.TagManagerUtils;
 import com.futurice.festapp.dao.ConfigDAO;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.dao.NewsDAO;
@@ -24,7 +26,7 @@ import com.futurice.festapp.util.FestAppConstants;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class FestAppMainActivity extends Activity {
+public class FestAppMainActivity extends AnalyticsTrackingActivity {
 	
 	private PendingIntent alarmIntent;
 	

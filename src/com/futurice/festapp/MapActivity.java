@@ -3,6 +3,7 @@ package com.futurice.festapp;
 import java.util.List;
 import java.util.Timer;
 
+import com.futurice.festapp.analytics.AnalyticsTrackingActivity;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.dao.StageDAO;
 import com.futurice.festapp.domain.Stage;
@@ -38,7 +39,7 @@ import com.futurice.festapp.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class MapActivity extends Activity {
+public class MapActivity extends AnalyticsTrackingActivity {
 
 	private MapImageView mapImageView;
 	private ImageButton zoomInButton;

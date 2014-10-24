@@ -29,6 +29,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.futurice.festapp.analytics.AnalyticsTrackingActivity;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.GigLocation;
@@ -44,7 +45,7 @@ import com.futurice.festapp.util.UIUtil;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class TimelineActivity extends Activity {
+public class TimelineActivity extends AnalyticsTrackingActivity {
 	
 	private static final String TAG = "TimelineActivity";
 	

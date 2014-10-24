@@ -2,6 +2,7 @@ package com.futurice.festapp;
 
 import java.util.HashMap;
 
+import com.futurice.festapp.analytics.AnalyticsTrackingActivity;
 import com.futurice.festapp.util.FestAppConstants;
 
 import android.app.Activity;
@@ -16,7 +17,7 @@ import com.futurice.festapp.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class NewsContentActivity extends Activity {
+public class NewsContentActivity extends AnalyticsTrackingActivity {
 	
 	private WebView contentView;
 	

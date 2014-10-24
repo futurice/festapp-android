@@ -1,5 +1,6 @@
 package com.futurice.festapp;
 
+import com.futurice.festapp.analytics.AnalyticsTrackingActivity;
 import com.futurice.festapp.dao.ConfigDAO;
 
 import android.app.Activity;
@@ -13,7 +14,7 @@ import com.futurice.festapp.R;
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class InfoPageActivity extends Activity {
+public class InfoPageActivity extends AnalyticsTrackingActivity {
 	
 	private View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override

@@ -2,6 +2,7 @@ package com.futurice.festapp;
 
 import java.util.Date;
 
+import com.futurice.festapp.analytics.TagManagerUtils;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.to.FestivalDay;
 
@@ -42,6 +43,18 @@ public class ScheduleTabActivity extends TabActivity {
 			day = FestivalDay.FRIDAY;
 		}
 		tabHost.setCurrentTabByTag(day.name());
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		TagManagerUtils.pushOpenScreenEvent(this, getClass().getName());
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		TagManagerUtils.pushCloseScreenEvent(this, getClass().getName());
 	}
 	
 	private void addTabSpec(FestivalDay festivalDay) {

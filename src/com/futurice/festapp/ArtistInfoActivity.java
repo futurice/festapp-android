@@ -2,6 +2,8 @@ package com.futurice.festapp;
 
 import java.util.HashMap;
 
+import com.futurice.festapp.analytics.AnalyticsTrackingActivity;
+import com.futurice.festapp.analytics.TagManagerUtils;
 import com.futurice.festapp.dao.GigDAO;
 import com.futurice.festapp.domain.Gig;
 import com.futurice.festapp.domain.GigLocation;
@@ -29,13 +31,14 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.futurice.festapp.R;
+import com.google.tagmanager.TagManager;
 
 /**
  * View for Artist-info.
  * 
  * @author Pyry-Samuli Lahti / Futurice
  */
-public class ArtistInfoActivity extends Activity {
+public class ArtistInfoActivity extends AnalyticsTrackingActivity {
 	
 	private RelativeLayout artistInfoView;
 	private Gig gig;
@@ -57,6 +60,8 @@ public class ArtistInfoActivity extends Activity {
 				} else {
 					Toast.makeText(getApplicationContext(), getString(R.string.artistInfoActivity_favoriteOff), Toast.LENGTH_SHORT).show();
 				}
+				TagManagerUtils.pushArtistFavoritedEvent(ArtistInfoActivity.this, gig.getArtist(), isFavorite);
+
 				HashMap<String, String> artistMap = new HashMap<String, String>();
 				artistMap.put("artist", gig.getArtist());
 				artistMap.put("favourite", isFavorite ? "true" : "false");
@@ -169,6 +174,8 @@ public class ArtistInfoActivity extends Activity {
 		
 	public void openSpotify(View v) {
 		try {
+			TagManagerUtils.pushArtistPlayedEvent(this, gig.getArtist(), "spotify");
+
 			HashMap<String, String> artistMap = new HashMap<String, String>();
 			artistMap.put("artist", gig.getArtist());
 			Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getSpotify()) );
@@ -179,6 +186,8 @@ public class ArtistInfoActivity extends Activity {
 	}
 	
 	public void openYoutube(View v) {
+		TagManagerUtils.pushArtistPlayedEvent(this, gig.getArtist(), "youtube");
+
 		HashMap<String, String> artistMap = new HashMap<String, String>();
 		artistMap.put("artist", gig.getArtist());
 		Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(gig.getYoutube()) );
