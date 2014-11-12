@@ -64,7 +64,8 @@
                 android:layout_toRightOf="@+id/linkedin"
                 />
 
-            <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/favorite_button"
+            <com.futurice.festapp.android.views.TTFTextView
+                android:id="@+id/favorite_button"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/touchable_ui_height_small"
                 android:layout_alignParentRight="true"

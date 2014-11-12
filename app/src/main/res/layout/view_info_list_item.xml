@@ -7,7 +7,8 @@
     android:orientation="vertical"
     >
 
-    <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/title"
+    <com.futurice.festapp.android.views.TTFTextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/spacing_normal"

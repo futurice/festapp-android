@@ -11,7 +11,7 @@
         android:orientation="vertical"
         >
 
-        <de.serviceexperiencecamp.android.views.TTFTextView
+        <com.futurice.festapp.android.views.TTFTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Saturday"
@@ -27,7 +27,7 @@
             android:orientation="vertical"
             />
 
-        <de.serviceexperiencecamp.android.views.TTFTextView
+        <com.futurice.festapp.android.views.TTFTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Sunday"

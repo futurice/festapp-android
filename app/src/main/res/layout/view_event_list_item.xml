@@ -8,7 +8,8 @@
     android:background="@drawable/pressable_black"
     >
 
-    <de.serviceexperiencecamp.android.views.CircleImageView android:id="@+id/image"
+    <com.futurice.festapp.android.views.CircleImageView
+        android:id="@+id/image"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"

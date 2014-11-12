@@ -35,7 +35,7 @@
 
 
 # Keep the pojos used by GSON or Jackson
--keep class de.serviceexperiencecamp.android.models.pojo.** { *; }
+-keep class com.futurice.festapp.android.models.pojo.** { *; }
 
 # Keep GSON stuff
 -keep class sun.misc.Unsafe { *; }

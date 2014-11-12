@@ -19,12 +19,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_normal"
         >
-        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/saturday_button"
+        <com.futurice.festapp.android.views.TTFTextView
+            android:id="@+id/saturday_button"
             android:text="@string/Saturday"
             style="@style/AgendaDayButton"
             />
 
-        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/sunday_button"
+        <com.futurice.festapp.android.views.TTFTextView
+            android:id="@+id/sunday_button"
             android:layout_marginLeft="@dimen/spacing_normal"
             android:text="@string/Sunday"
             style="@style/AgendaDayButton"
@@ -36,7 +38,8 @@
         android:layout_height="380.5dp"
         >
 
-        <de.serviceexperiencecamp.android.views.TTFTextView android:id="@+id/loading"
+        <com.futurice.festapp.android.views.TTFTextView
+            android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/H1Text"

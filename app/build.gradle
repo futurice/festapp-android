@@ -85,13 +85,13 @@ def adb = localProperties.getProperty('sdk.dir') + '/platform-tools/adb'
 task runDebug(dependsOn: 'installDebug') {
     description 'Runs the debug-flavour of the app on the connected device'
     doLast {
-        exec{commandLine "$adb", "shell", "am", "start", "-n", "de.serviceexperiencecamp.android/.MainActivity"}
+        exec{commandLine "$adb", "shell", "am", "start", "-n", "com.futurice.festapp.android/.MainActivity"}
     }
 }
 
 task runRelease(dependsOn: 'installRelease') {
     description 'Runs the release-flavour of the app on the connected device'
     doLast {
-        exec{commandLine "$adb", "shell", "am", "start", "-n", "de.serviceexperiencecamp.android/.MainActivity"}
+        exec{commandLine "$adb", "shell", "am", "start", "-n", "com.futurice.festapp.android/.MainActivity"}
     }
 }
