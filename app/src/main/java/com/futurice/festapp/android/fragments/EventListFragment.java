@@ -17,7 +17,7 @@ import com.futurice.festapp.android.MainActivity;
 import com.futurice.festapp.android.R;
 import com.futurice.festapp.android.models.DaySchedule;
 import com.futurice.festapp.android.models.EventsModel;
-import com.futurice.festapp.android.models.pojo.Event;
+import com.futurice.festapp.android.models.pojo.Gig;
 import com.futurice.festapp.android.utils.DateUtils;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -61,10 +61,10 @@ public class EventListFragment extends Fragment {
         );
     }
 
-    private Observable<DaySchedule> getDaySchedule$(final String day, Observable<List<Event>> events$) {
+    private Observable<DaySchedule> getDaySchedule$(final String day, Observable<List<Gig>> events$) {
         return events$
-            .map(new Func1<List<Event>, DaySchedule>() { @Override public DaySchedule call(List<Event> events) {
-                return new DaySchedule(day, events);
+            .map(new Func1<List<Gig>, DaySchedule>() { @Override public DaySchedule call(List<Gig> gigs) {
+                return new DaySchedule(day, gigs);
             }});
     }
 
@@ -83,17 +83,15 @@ public class EventListFragment extends Fragment {
             }
 
             dayList.removeAllViews();
-            List<Event> listEvents = daySchedule.getEvents();
-            DateUtils.sortEventsByStartTime(listEvents);
+            List<Gig> listGigs = daySchedule.getEvents();
+            DateUtils.sortEventsByStartTime(listGigs);
             boolean firstWasRendered = false;
-            for (final Event event : listEvents) {
-                if (!event.bar_camp) {
-                    if (firstWasRendered) {
-                        dayList.addView(makeHorizontalLine(dayList));
-                    }
-                    dayList.addView(makeEventListItem(event));
-                    firstWasRendered = true;
+            for (final Gig gig : listGigs) {
+                if (firstWasRendered) {
+                    dayList.addView(makeHorizontalLine(dayList));
                 }
+                dayList.addView(makeEventListItem(gig));
+                firstWasRendered = true;
             }
         }
     }
@@ -106,7 +104,7 @@ public class EventListFragment extends Fragment {
         );
     }
 
-    private View makeEventListItem(final Event event) {
+    private View makeEventListItem(final Gig gig) {
         View view = LayoutInflater.from(getActivity())
             .inflate(R.layout.view_event_list_item, null, false);
         TextView primaryText = (TextView) view.findViewById(R.id.primary);
@@ -114,47 +112,23 @@ public class EventListFragment extends Fragment {
         ImageView imageView = (ImageView) view.findViewById(R.id.image);
         View star = view.findViewById(R.id.star);
 
-        primaryText.setText(event.title);
-        secondaryText.setText(makeSecondaryString(event));
-        if (event.speaker_image_url != null && event.speaker_image_url.length() > 0) {
-            Picasso.with(getActivity())
-                .load(event.speaker_image_url)
-                .error(R.drawable.person_placeholder)
-                .into(imageView);
-        }
-        else {
-            Picasso.with(getActivity())
-                .load(R.drawable.person_placeholder)
-                .into(imageView);
-        }
+        primaryText.setText(gig.name);
+        secondaryText.setText(makeSecondaryString(gig));
 
         view.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             MainActivity activity = (MainActivity) getActivity();
             EventFragment fragment = new EventFragment();
-            fragment.setArguments(event.getBundle());
+            //fragment.setArguments(gig.getBundle());
             activity.fragment$.onNext(fragment);
         }});
-
-        if (Event.getIsFavoriteFromPreferences(getActivity(), event._id)) {
-            star.setVisibility(View.VISIBLE);
-        }
-        else {
-            star.setVisibility(View.INVISIBLE);
-        }
 
         return view;
     }
 
-    private static String makeSecondaryString(Event event) {
+    private static String makeSecondaryString(Gig gig) {
         String secondaryString = "";
-        if (event.artists != null && event.artists.length() > 0) {
-            secondaryString += event.artists;
-        }
-        if (event.speaker_role != null && event.speaker_role.length() > 0) {
-            if (secondaryString.length() > 0) {
-                secondaryString += ", ";
-            }
-            secondaryString += event.speaker_role;
+        if (gig.artist != null && gig.artist.name != null) {
+            secondaryString += gig.artist;
         }
         return secondaryString;
     }

@@ -21,7 +21,7 @@ import com.futurice.festapp.android.MainActivity;
 import com.futurice.festapp.android.R;
 import com.futurice.festapp.android.models.DaySchedule;
 import com.futurice.festapp.android.models.EventsModel;
-import com.futurice.festapp.android.models.pojo.Event;
+import com.futurice.festapp.android.models.pojo.Gig;
 import com.futurice.festapp.android.utils.DateUtils;
 
 import java.security.InvalidParameterException;
@@ -131,13 +131,13 @@ public class ScheduleFragment extends Fragment {
 //    }
 
     private Observable<DaySchedule> getDaySchedule$(
-        Observable<List<Event>> events$,
+        Observable<List<Gig>> events$,
         final String day)
     {
-        return events$.map(new Func1<List<Event>, DaySchedule>() {
+        return events$.map(new Func1<List<Gig>, DaySchedule>() {
             @Override
-            public DaySchedule call(List<Event> events) {
-                return new DaySchedule(day, events);
+            public DaySchedule call(List<Gig> gigs) {
+                return new DaySchedule(day, gigs);
             }
         });
     }
@@ -250,7 +250,7 @@ public class ScheduleFragment extends Fragment {
 
     private void addGigs(DaySchedule daySchedule) {
         String[] locations = DaySchedule.ALL_ROOMS;
-        Map<String, List<Event>> eventsByLocation = daySchedule.getEventsByLocation();
+        Map<String, List<Gig>> eventsByLocation = daySchedule.getEventsByLocation();
         ViewGroup gigLayout = (ViewGroup) getView().findViewById(R.id.gigLayout);
         gigLayout.removeAllViews();
 
@@ -268,9 +268,9 @@ public class ScheduleFragment extends Fragment {
             DateTime previousTime = getTimelineStartMoment(daySchedule);
 
             // Render each event
-            for (final Event event : getSortedEventsOfLocation(eventsByLocation, location)) {
-                DateTime eventStartTime = new DateTime(event.start_time);
-                DateTime eventEndTime = new DateTime(event.end_time);
+            for (final Gig gig : getSortedEventsOfLocation(eventsByLocation, location)) {
+                DateTime eventStartTime = new DateTime(gig.startTime);
+                DateTime eventEndTime = new DateTime(gig.endTime);
 
                 // Make left margin
                 if (previousTime.isBefore(eventStartTime)) {
@@ -283,7 +283,7 @@ public class ScheduleFragment extends Fragment {
                 }
 
                 // Make event view
-                locationRow.addView(makeEventView(event, previousTime));
+                locationRow.addView(makeEventView(gig, previousTime));
 
                 // Make right margin
                 if (eventEndTime.equals(daySchedule.getLatestTime())) {
@@ -318,12 +318,12 @@ public class ScheduleFragment extends Fragment {
         );
     }
 
-    private EventTimelineView makeEventView(final Event event, final DateTime previousTime) {
+    private EventTimelineView makeEventView(final Gig gig, final DateTime previousTime) {
         // Make event view
         EventTimelineView eventView = new EventTimelineView(
             getActivity(),
             null,
-            event,
+            gig,
             previousTime.toDate()
         );
 
@@ -331,20 +331,20 @@ public class ScheduleFragment extends Fragment {
         eventView.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             MainActivity activity = (MainActivity) getActivity();
             EventFragment fragment = new EventFragment();
-            fragment.setArguments(event.getBundle());
+            //fragment.setArguments(gig.getBundle());
             activity.fragment$.onNext(fragment);
         }});
 
         return eventView;
     }
 
-    private static List<Event> getSortedEventsOfLocation(
-        Map<String, List<Event>> eventsByLocation,
+    private static List<Gig> getSortedEventsOfLocation(
+        Map<String, List<Gig>> eventsByLocation,
         String location)
     {
-        List<Event> listEvents = eventsByLocation.get(location);
-        DateUtils.sortEventsByStartTime(listEvents);
-        return listEvents;
+        List<Gig> listGigs = eventsByLocation.get(location);
+        DateUtils.sortEventsByStartTime(listGigs);
+        return listGigs;
     }
 
     class GuitarSwipeListener extends GestureDetector.SimpleOnGestureListener {

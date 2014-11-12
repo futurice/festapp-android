@@ -16,11 +16,9 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import com.futurice.festapp.android.R;
-import com.futurice.festapp.android.models.pojo.Event;
+import com.futurice.festapp.android.models.pojo.Gig;
 
 public class EventFragment extends Fragment {
-
-    private boolean isFavorite;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,29 +58,7 @@ public class EventFragment extends Fragment {
         setImageViewContent(imageView, bundle.getString("image_url"));
         setLinkedInContent(linkedin, bundle.getString("linkedin_url"));
         setTwitterContent(twitter, bundle.getString("twitter_handle"));
-
-        final String _id = bundle.getString("_id");
-        isFavorite = Event.getIsFavoriteFromPreferences(getActivity(), _id);
-        setFavoriteButtonStatus(favoriteButton, isFavorite);
-        favoriteButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
-            isFavorite = !isFavorite;
-            setFavoriteButtonStatus(favoriteButton, isFavorite);
-            Event.setIsFavoriteFromPreferences(getActivity(), _id, isFavorite);
-        }});
-
         return view;
-    }
-
-    private void setFavoriteButtonStatus(TextView favoriteButton, boolean isFavorite) {
-        favoriteButton.setSelected(isFavorite);
-        if (isFavorite) {
-            favoriteButton.setText(getResources().getString(R.string.unfavorite));
-            favoriteButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_star_black,0,0,0);
-        }
-        else {
-            favoriteButton.setText(getResources().getString(R.string.save_as_favorite));
-            favoriteButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_star, 0, 0, 0);
-        }
     }
 
     private void setImageViewContent(ImageView imageView, String image_url) {

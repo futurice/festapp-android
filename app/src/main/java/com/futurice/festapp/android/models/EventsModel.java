@@ -1,6 +1,6 @@
 package com.futurice.festapp.android.models;
 
-import com.futurice.festapp.android.models.pojo.Event;
+import com.futurice.festapp.android.models.pojo.Gig;
 import com.futurice.festapp.android.network.FestAppApi;
 
 import java.util.List;
@@ -19,8 +19,8 @@ public class EventsModel {
 
     private EventsModel() { }
 
-    public Observable<List<Event>> getEvents$() {
-        return FestAppApi.getInstance().getAllEvents();
+    public Observable<List<Gig>> getEvents$() {
+        return FestAppApi.getInstance().getAllGigs();
     }
 
 }

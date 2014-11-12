@@ -14,7 +14,7 @@ import org.joda.time.Duration;
 import java.util.Date;
 
 import com.futurice.festapp.android.R;
-import com.futurice.festapp.android.models.pojo.Event;
+import com.futurice.festapp.android.models.pojo.Gig;
 
 public class EventTimelineView extends RelativeLayout {
 
@@ -32,32 +32,17 @@ public class EventTimelineView extends RelativeLayout {
         super(context, attrs, defStyle);
     }
 
-    public EventTimelineView(Context context, AttributeSet attrs, Event event, Date previousTime) {
+    public EventTimelineView(Context context, AttributeSet attrs, Gig gig, Date previousTime) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.event_timeline_box, this, true);
         TextView eventTitle = (TextView) findViewById(R.id.artistName);
-        eventTitle.setText(event.title);
+        eventTitle.setText(gig.name);
         View star = findViewById(R.id.star);
-
-        if (event.bar_camp) {
-            eventTitle.setBackgroundColor(getResources().getColor(R.color.orange));
-        }
-        else {
-            eventTitle.setBackgroundColor(getResources().getColor(R.color.pink));
-        }
-
-        if (Event.getIsFavoriteFromPreferences(getContext(), event._id)) {
-            star.setVisibility(View.VISIBLE);
-        }
-        else {
-            star.setVisibility(View.INVISIBLE);
-        }
-
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
         );
-        params.width = dpToPx(MINUTE_WIDTH) * getDuration(event);
+        params.width = dpToPx(MINUTE_WIDTH) * getDuration(gig);
         setLayoutParams(params);
     }
 
@@ -77,9 +62,9 @@ public class EventTimelineView extends RelativeLayout {
     /**
      * @return duration in minutes
      */
-    public static int getDuration(Event event) {
-        DateTime startTime = new DateTime(event.start_time);
-        DateTime endTime = new DateTime(event.end_time);
+    public static int getDuration(Gig gig) {
+        DateTime startTime = new DateTime(gig.startTime);
+        DateTime endTime = new DateTime(gig.endTime);
         Duration duration = new Duration(startTime, endTime);
         return (int) duration.getStandardMinutes();
     }

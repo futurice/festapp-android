@@ -1,6 +1,6 @@
 package com.futurice.festapp.android.network;
 
-import com.futurice.festapp.android.models.pojo.Event;
+import com.futurice.festapp.android.models.pojo.Gig;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -69,10 +69,10 @@ public class FestAppApi {
         return new OkClient(httpClient);
     }
 
-    public List<Event> getAllEventsFromCache() {
+    public List<Gig> getAllEventsFromCache() {
         String eventsString = FileUtils.readFromCacheFile(EVENT_CACHE_FILE);
         Gson gson = new GsonBuilder().create();
-        Type type = new TypeToken<List<Event>>(){}.getType();
+        Type type = new TypeToken<List<Gig>>(){}.getType();
         if (eventsString == null || eventsString.length() <= 0) {
             return null;
         }
@@ -97,10 +97,10 @@ public class FestAppApi {
         }
     }
 
-    public void writeEventsToCache(List<Event> events) {
+    public void writeEventsToCache(List<Gig> gigs) {
         Gson gson = new GsonBuilder().create();
-        Type type = new TypeToken<List<Event>>(){}.getType();
-        String json = gson.toJson(events, type);
+        Type type = new TypeToken<List<Gig>>(){}.getType();
+        String json = gson.toJson(gigs, type);
         FileUtils.writeToCacheFile(EVENT_CACHE_FILE, json);
     }
 
@@ -111,26 +111,26 @@ public class FestAppApi {
         FileUtils.writeToCacheFile(INFO_CACHE_FILE, json);
     }
 
-    public Observable<List<Event>> getAllEvents() {
+    public Observable<List<Gig>> getAllGigs() {
         return Observable.just(getAllEventsFromCache())
-            .mergeWith(this.festBackendService.getAllEvents())
+            .mergeWith(this.festBackendService.getAllGigs())
             .retry(3)
-            .onErrorReturn(new Func1<Throwable, List<Event>>() {
+            .onErrorReturn(new Func1<Throwable, List<Gig>>() {
                 @Override
-                public List<Event> call(Throwable throwable) {
+                public List<Gig> call(Throwable throwable) {
                     return null;
                 }
             })
-            .filter(new Func1<List<Event>, Boolean>() {
+            .filter(new Func1<List<Gig>, Boolean>() {
                 @Override
-                public Boolean call(List<Event> events) {
-                    return events != null;
+                public Boolean call(List<Gig> gigs) {
+                    return gigs != null;
                 }
             })
-            .doOnNext(new Action1<List<Event>>() {
+            .doOnNext(new Action1<List<Gig>>() {
                 @Override
-                public void call(List<Event> events) {
-                    writeEventsToCache(events);
+                public void call(List<Gig> gigs) {
+                    writeEventsToCache(gigs);
                 }
             });
     }

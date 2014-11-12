@@ -65,7 +65,7 @@ public class InfoListFragment extends Fragment {
         view.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             MainActivity activity = (MainActivity) getActivity();
             InfoFragment fragment = new InfoFragment();
-            fragment.setArguments(info.getBundle());
+            //fragment.setArguments(info.getBundle());
             activity.fragment$.onNext(fragment);
         }});
 
