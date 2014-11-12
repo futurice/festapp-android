@@ -124,7 +124,7 @@ public class SecApi {
             .filter(new Func1<List<Event>, Boolean>() {
                 @Override
                 public Boolean call(List<Event> events) {
-                    return (events != null);
+                    return events != null;
                 }
             })
             .doOnNext(new Action1<List<Event>>() {
