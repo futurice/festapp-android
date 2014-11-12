@@ -1,6 +1,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/glipp_light"
@@ -9,38 +10,63 @@
     <LinearLayout android:id="@+id/body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_marginRight="@dimen/spacing_normal"
         android:orientation="vertical"
         >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:src="@drawable/badges_picture"
-                android:alpha="0.25"
-                android:scaleType="centerCrop"
-                />
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/sec_logo"
-                />
-        </RelativeLayout>
-
-        <View style="@style/HorizontalLine"
+        <ImageView
+            android:layout_marginTop="@dimen/spacing_large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:layout_gravity="right"
+            android:scaleType="centerInside"
             />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            >
+            <ImageView android:id="@+id/gig_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:scaleType="centerCrop"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black_transparent_strong"
+                android:layout_alignParentTop="true"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/gig_title"
+                    tools:text="Next up: Lily Allen in 15 minutes"
+                    android:layout_marginLeft="@dimen/spacing_small"
+                    android:textColor="@color/glipp_light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/gig_stage"
+                    tools:text="Stallman Stage"
+                    android:layout_marginLeft="@dimen/spacing_small"
+                    android:textColor="@color/gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+        
         <LinearLayout android:id="@+id/agenda"
             style="@style/MainMenuItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             >
             <ImageView
                 android:src="@drawable/ic_icon_agenda"
@@ -56,15 +82,11 @@
                 />
         </LinearLayout>
 
-        <View style="@style/HorizontalLineSideMargins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-
         <LinearLayout android:id="@+id/keytalks"
             style="@style/MainMenuItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             >
             <ImageView
                 android:src="@drawable/ic_icon_key_talks"
@@ -80,15 +102,11 @@
                 />
         </LinearLayout>
 
-        <View style="@style/HorizontalLineSideMargins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-
         <LinearLayout android:id="@+id/venue"
             style="@style/MainMenuItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             >
             <ImageView
                 android:src="@drawable/ic_icon_venue"
@@ -104,15 +122,11 @@
                 />
         </LinearLayout>
 
-        <View style="@style/HorizontalLineSideMargins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-
         <LinearLayout android:id="@+id/info"
             style="@style/MainMenuItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             >
             <ImageView
                 android:src="@drawable/ic_icon_info"

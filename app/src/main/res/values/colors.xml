@@ -15,6 +15,7 @@
     <color name="glipp">#8eb0bf</color>
     <color name="glipp_light">#c4d8e4</color>
 
-    <color name="white_transparent_strong">#99F5F5F5</color>
+    <color name="white_transparent_strong">#99FFFFFF</color>
+    <color name="black_transparent_strong">#99000000</color>
 
 </resources>

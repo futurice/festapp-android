@@ -18,18 +18,18 @@ import rx.Observable;
  */
 public interface FestBackendService {
 
-    @GET("/artists")
+    @GET("/api/artists")
     public Observable<List<Artist>> getAllArtists();
 
-    @GET("/gigs")
+    @GET("/api/gigs")
     public Observable<List<Gig>> getAllGigs();
 
-    @GET("/news")
+    @GET("/api/news")
     public Observable<List<News>> getAllNews();
 
-    @GET("/info")
+    @GET("/api/info")
     public Observable<List<Info>> getAllInfo();
 
-    @GET("/festival")
+    @GET("/api/festival")
     public Observable<Festival> getFestival();
 }

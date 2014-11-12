@@ -2,6 +2,7 @@ package com.futurice.festapp.android.network;
 
 import com.futurice.festapp.android.models.pojo.Gig;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -16,6 +17,7 @@ import com.futurice.festapp.android.utils.FileUtils;
 import retrofit.RestAdapter;
 import retrofit.client.Client;
 import retrofit.client.OkClient;
+import retrofit.converter.GsonConverter;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -53,8 +55,12 @@ public class FestAppApi {
      * Creates the RestAdapter by setting custom HttpClient.
      */
     private RestAdapter buildRestAdapter() {
+        Gson gson = new GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
+            .create();
         return new RestAdapter.Builder()
             .setEndpoint(ApiConstants.BASE_URL)
+            .setConverter(new GsonConverter(gson))
             .setClient(getHttpClient())
             .build();
     }
@@ -109,6 +115,10 @@ public class FestAppApi {
         Type type = new TypeToken<List<Info>>(){}.getType();
         String json = gson.toJson(infos, type);
         FileUtils.writeToCacheFile(INFO_CACHE_FILE, json);
+    }
+
+    public String getImageFullUrl(String partialUrl) {
+        return ApiConstants.BASE_URL + partialUrl;
     }
 
     public Observable<List<Gig>> getAllGigs() {
