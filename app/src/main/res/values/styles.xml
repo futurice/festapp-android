@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
         <item name="android:windowBackground">@color/black</item>
         <!-- Customize your theme here. -->
     </style>
@@ -28,7 +28,7 @@
     </style>
 
     <style name="EventListHeader">
-        <item name="android:background">@color/orange</item>
+        <item name="android:background">@color/flapp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/font_size_large</item>
         <item name="android:padding">@dimen/spacing_small</item>
@@ -47,7 +47,7 @@
     <style name="HorizontalLine">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/orange</item>
+        <item name="android:background">@color/slopp</item>
     </style>
 
     <style name="HorizontalLineSideMargins" parent="HorizontalLine">

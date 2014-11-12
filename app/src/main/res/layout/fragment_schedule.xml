@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             style="@style/H1Text"
             android:text="Loading..."
-            android:textColor="@color/gray_dark"
+            android:textColor="@color/gray"
             android:layout_centerInParent="true"
             />
 

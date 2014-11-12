@@ -6,6 +6,6 @@
     android:layout_centerHorizontal="true"
     android:layout_gravity="top"
     android:adjustViewBounds="true"
-    android:background="@color/orange"
+    android:background="@color/glipp"
     android:tag="verticalHourLine"
     />

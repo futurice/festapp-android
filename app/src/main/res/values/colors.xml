@@ -2,20 +2,18 @@
 <resources>
 
     <!-- Grayscale -->
-    <color name="white"       >#F5F5F5</color>
-    <color name="gray_light"  >#DFDFDF</color>
-    <color name="gray"        >#7f7f7f</color>
-    <color name="gray_dark"   >#363636</color>
-    <color name="gray_darkest">#202020</color>
-    <color name="black"       >#000000</color>
+    <color name="white"       >#FFFFFF</color>
+    <color name="gray_lighter">#e8eaeb</color>
+    <color name="gray_light"  >#bababa</color>
+    <color name="gray"        >#606060</color>
+    <color name="black"       >#231f20</color>
 
     <!-- Basic colors -->
-    <color name="green">#27D34D</color>
-    <color name="blue">#2A91BD</color>
-    <color name="orange">#f08e0c</color>
-    <color name="orange_dark">#ffc7601c</color>
-    <color name="pink">#e20d7a</color>
-    <color name="red">#FF432F</color>
+    <color name="flapp">#3b485d</color>
+    <color name="slopp">#617d86</color>
+    <color name="clepp">#83a0ab</color>
+    <color name="glipp">#8eb0bf</color>
+    <color name="glipp_light">#c4d8e4</color>
 
     <color name="white_transparent_strong">#99F5F5F5</color>
 

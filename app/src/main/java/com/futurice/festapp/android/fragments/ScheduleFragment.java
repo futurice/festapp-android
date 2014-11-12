@@ -216,7 +216,7 @@ public class ScheduleFragment extends Fragment {
 
             // Add the hour text
             tv = new TextView(this.getActivity());
-            tv.setTextColor(getResources().getColor(R.color.orange));
+            tv.setTextColor(getResources().getColor(R.color.clepp));
             String hour = "" + cursor.getHourOfDay() + ":00";
             if (hour.length() == 4) {
                 hour = "0" + hour;
